@@ -4,4 +4,5 @@ mini game project
 도원 v  
 민우 v   
   혜린 v  
-  윤재 v
+  윤재 v  
+  민영 v
