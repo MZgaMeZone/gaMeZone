@@ -1,0 +1,182 @@
+@font-face {
+  font-family: "neodgm";
+  src: url("../../font/neodgm.ttf");
+}
+
+* {
+  font-family: "neodgm", cursive;
+}
+
+/* 가장 바깥 게임박스 배경 */
+.game {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border: 3px solid black;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px rgb(55, 55, 55);
+  width: auto;
+  height: auto;
+  background-color: rgb(238, 238, 238);
+}
+#title-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid;
+  width: 370px;
+  height: 30px;
+}
+#title-text:hover {
+  font-size: 21px;
+  background-color: antiquewhite;
+}
+
+/* 액정 부분 */
+.gamebox {
+  clear: both;
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: rgb(233, 246, 248);
+  width: auto;
+  height: 230px;
+}
+/* game title */
+#game-title {
+  padding: 5px;
+  margin: 5px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  border: 2px solid rgb(99, 134, 231);
+  border-radius: 5px;
+  background-color: rgb(152, 206, 238);
+}
+/* 게임버튼 : Start - Finish - Restart */
+#game-button {
+  margin: 5px;
+  width: 75px;
+  /* font-size: 25px; */
+  background-color: #eee;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  transition-duration: 0.3s;
+}
+#game-button:active {
+  margin: 5px;
+  width: 75px;
+  background-color: #ccc;
+  box-shadow: none;
+}
+/* 게임모드 : visible&invisible */
+#option-button {
+  text-align: center;
+  margin: 5px;
+  width: 90px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  background-color: #eee;
+}
+#option-button:active {
+  background-color: #ccc;
+  border-radius: 20px;
+  box-shadow: none;
+}
+#game-start-end-time {
+  margin: 5px 3px;
+  padding: 10px 0px;
+}
+/* 블라인드 모드 텍스트 */
+.blindmode-text {
+  display: inline-flex;
+  align-items: center;
+  font-size: 15px;
+  width: 70%;
+  overflow: hidden;
+}
+
+.blindmode-text span {
+  display: inline-block;
+  animation: slide-left 4s linear infinite;
+}
+.blindmode-text:hover span {
+  animation-play-state: paused;
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 기록실 */
+.record-board {
+  background-color: beige;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  font-size: 15px;
+}
+/* 기록실 상단 바 */
+.record-board #record-title {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+
+  padding: 18px 18px;
+  height: 30px;
+  background-color: rgb(194, 200, 201);
+  border-radius: 5px;
+  justify-content: center;
+}
+/* 리셋/제출 버튼 */
+#reset-button {
+  margin-right: auto;
+  box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  background-color: #eee;
+  border-radius: 20px;
+}
+#reset-button:active {
+  background-color: #ccc;
+  border-radius: 20px;
+  box-shadow: none;
+}
+#submit-button {
+  margin-left: auto;
+  box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  background-color: #eee;
+  border-radius: 20px;
+}
+#submit-button:active {
+  background-color: #ccc;
+  border-radius: 20px;
+  box-shadow: none;
+}
+/* 기록 분석실 */
+#best-record-text {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0px;
+  background-color: rgb(182, 224, 154);
+}
+#worst-record-text {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0px;
+  background-color: rgb(218, 180, 175);
+}
+#average-gap-text {
+  display: flex;
+  justify-content: center;
+  padding: 1px 0px;
+  background-color: rgb(232, 233, 179);
+}

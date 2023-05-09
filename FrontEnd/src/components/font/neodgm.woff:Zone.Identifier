@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://neodgm.dalgona.dev/
+HostUrl=https://objects.githubusercontent.com/github-production-release-asset-2e65be/82669006/2d0fe397-609c-480c-9ca2-c481d6f77ab9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20230508%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230508T112610Z&X-Amz-Expires=300&X-Amz-Signature=406c611cc3ea02a783d4868be705a9a2dbb0b1446ead9ce091faea20dcc36747&X-Amz-SignedHeaders=host&actor_id=59162652&key_id=0&repo_id=82669006&response-content-disposition=attachment%3B%20filename%3Dneodgm.woff&response-content-type=application%2Foctet-stream
