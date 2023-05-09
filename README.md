@@ -9,4 +9,4 @@ mini game project
  혜린 v  
  윤재 v  
  민영 v
-성경 v
+  성경 v
