@@ -9,13 +9,13 @@ const Score = mongoose.model("scores", ScoreSchema);
 
 class GameModel {
   async createNewGame(data) {
-    // 새 게임정보 등록하기
+    // 새 게임정보 등록하기. [Joi에서 사전 검증할 예정임]
     const newGame = await Game.create(data);
     return newGame;
   }
 
   async findAllGames() {
-    // 등록된 모든 게임목록을 불러오기
+    // 등록된 모든 게임목록을 불러오기. 없을 경우 에러가아니라 빈 배열을 리턴함.
     const findGames = await Game.find({});
     if (findGames.length < 1) {
       console.log(`등록된 게임이 없습니다.`);
@@ -36,7 +36,7 @@ class GameModel {
   }
 
   async updateGame(id, data) {
-    // id로 검색하고, data로 전달한 게임정보를 수정하기
+    // id로 검색하고, data로 전달한 게임정보를 수정하기 [Joi에서 사전 검증할 예정임]
     const updateGame = await Game.findOneAndUpdate(
       { _id: id },
       { $set: data },
@@ -47,7 +47,7 @@ class GameModel {
 }
 
 const gameModel = new GameModel();
-// **Custom Database**
+// // **Custom Database**
 // // ----- New Game Data -----
 // const data = {
 //   gameTitle: "귀엽네게임",
