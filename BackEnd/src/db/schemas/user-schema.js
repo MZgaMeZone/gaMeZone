@@ -56,7 +56,7 @@ const UserSchema = new Schema(
     //   default: 1,
     // },
   },
-  { timestamps: true }
+  { timestamps: true, collection: "users" }
 );
 
-export { UserSchema };
+export default UserSchema;

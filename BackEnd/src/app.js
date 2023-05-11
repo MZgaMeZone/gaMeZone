@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { userRouter } from "./routers/user-routers.js";
-import { orderRouter } from "./routers/order-routers.js";
+// import { orderRouter } from "./routers/order-routers.js";
 // import { productRouter } from "./routers/product-routers.js";
 import { viewsRouter } from "./routers/view-routers.js";
 // import { categoryRouter } from "./routers/category-routers.js";
@@ -23,7 +23,7 @@ app.use(
 );
 // 라우터 등록
 app.use("/api/users", userRouter);
-app.use("/api/orders", orderRouter);
+// app.use("/api/orders", orderRouter);
 // app.use("/api/products", productRouter);
 // app.use("/api/categories", categoryRouter);
 app.use("/", viewsRouter);
