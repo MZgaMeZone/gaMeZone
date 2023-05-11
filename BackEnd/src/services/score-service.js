@@ -24,4 +24,4 @@ class ScoreService {
 }
 
 const scoreService = new ScoreService(scoreModel);
-export default scoreService;
+export { scoreService };

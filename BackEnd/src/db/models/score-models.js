@@ -87,4 +87,4 @@ const scoreModel = new ScoreModel();
 // const id = "645d06e53dcefd63e6ce72a9";
 // scoreModel.calculateRanking(id, option);
 
-export default scoreModel;
+export { scoreModel };

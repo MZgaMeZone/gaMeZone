@@ -6,20 +6,27 @@ class GameService {
   constructor() {
     this.gameModel = gameModel;
   }
-
+  //POST
   async createNewGame(data) {
     return await gameModel.createNewGame(data);
   }
+  //GET
   async findAllGames() {
     return await gameModel.findAllGames();
   }
+  //DELETE
   async deleteGame(id) {
     return await gameModel.deleteGame(id);
   }
+  //PATCH
   async updateGame(id, data) {
     return await gameModel.updateGame(id, data);
+  }
+  //PATCH
+  async changeStatus(id, status) {
+    return await gameModel.changeGameStatus(id, status);
   }
 }
 
 const gameService = new GameService(gameModel);
-export default gameService;
+export { gameService };
