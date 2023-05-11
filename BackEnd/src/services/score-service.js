@@ -6,8 +6,21 @@ class ScoreService {
   constructor() {
     this.scoreModel = scoreModel;
   }
-
-  // 필요한 기능 : 랭킹조회, 랭킹초기화, 랭킹삭제
+  async findScoresByGame(id) {
+    return await scoreModel.fundScoresByGame(id);
+  }
+  async findSocresById(id) {
+    return await scoreModel.findSocresById(id);
+  }
+  async createScoreBoard(data) {
+    return await scoreModel.createScoreBoard(data);
+  }
+  async calculateRanking(id, option) {
+    return await scoreModel.calculateRanking(id, option);
+  }
+  async deleteScore(id) {
+    return await scoreModel.deleteScore(id);
+  }
 }
 
 const scoreService = new ScoreService(scoreModel);

@@ -52,8 +52,18 @@ class ScoreModel {
           : a[nonOption] - b[nonOption]
         : a[option] - b[option]
     );
-
     return ranking;
+  }
+
+  async deleteScore(id) {
+    // 부정한 방법으로 달성한 기록을 말소하기 위한 운영자 기능
+    try {
+      const deleteData = await Score.deleteOne({ _id: id });
+      return deleteData;
+    } catch (e) {
+      console.log(`[기록 삭제 실패] 입력한 id를 다시 확인해주세요`);
+      throw new Error(e);
+    }
   }
 }
 
