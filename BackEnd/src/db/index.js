@@ -19,6 +19,4 @@ mongoose.connection.on("error", () => {
 
 //models의 user-model.js에서 export하는 것을 전부다 export한다.
 export * from "./models/user-models.js";
-export * from "./models/order-models.js";
-// export * from "./models/product-models.js";
-// export * from "./models/category-models.js";
+export * from "./models/game-models.js";
