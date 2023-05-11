@@ -35,6 +35,11 @@ const GameSchema = new Schema(
       type: String,
       required: true,
     },
+    gameServiceStatus: {
+      // 게임 서비스 상태 (온라인, 점검중, 숨김)
+      type: String,
+      requried: true,
+    },
   },
   {
     // 타임스탬프와 DB에서 사용할 컬렉션 이름 설정
