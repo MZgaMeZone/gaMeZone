@@ -7,7 +7,7 @@ class ScoreService {
     this.scoreModel = scoreModel;
   }
 
-  // 필요한 기능 : 게임정보 추가, 게임정보 수정, 게임 삭제
+  // 필요한 기능 : 랭킹조회, 랭킹초기화, 랭킹삭제
 }
 
 const scoreService = new ScoreService(scoreModel);

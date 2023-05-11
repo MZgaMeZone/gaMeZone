@@ -8,20 +8,13 @@ const GameSchema = new Schema(
       required: true,
     },
     gameCategory: {
-      // 게임 카테고리 : 카테고리는 여러 개 존재할 수 있다.
-      type: [
-        {
-          _id: false,
-          category: String,
-          required: true,
-        },
-      ],
-      required: true,
+      type: [String],
       validate: {
         validator: (v) => v.length > 0,
         message: "카테고리는 1개 이상 존재해야 합니다.",
       },
     },
+
     gameIconUrl: {
       // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다.
       type: String,
@@ -34,12 +27,12 @@ const GameSchema = new Schema(
     },
     gameDescription: {
       // 게임 요약정보
-      type: Text,
+      type: String,
       required: true,
     },
     gameManual: {
       // 게임 설명서
-      type: Text,
+      type: String,
       required: true,
     },
   },

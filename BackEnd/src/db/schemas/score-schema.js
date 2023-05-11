@@ -6,19 +6,21 @@ const ScoreSchema = new Schema(
     gameTitle: {
       type: Schema.Types.ObjectId,
       ref: "Game", // 참조할 모델 이름
+      required: true,
     },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User", // 참조할 모델 이름
+      required: true,
     },
     totalScores: {
       //해당 회차에 시행한 모든 점수
       score: [
         {
           type: Number,
+          required: true,
         },
       ],
-      required: true,
     },
     averageScore: {
       //평균 점수
