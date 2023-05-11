@@ -3,25 +3,27 @@ import { Schema } from "mongoose";
 const ScoreSchema = new Schema(
   {
     // 게임 기록정보는 게임명, 유저아이디, 날짜, 기록이 저장되어야 할 것임.
-    gameTitle: {
+    gameId: {
       type: Schema.Types.ObjectId,
       ref: "Game", // 참조할 모델 이름
       required: true,
     },
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User", // 참조할 모델 이름
+    userNickname: {
+      //닉네임은 중복 검증작업을 할 예정이므로, 고유한 값임.
+      type: String,
       required: true,
     },
     totalScores: {
-      //해당 회차에 시행한 모든 점수
-      score: [
-        {
-          type: Number,
-          required: true,
+      type: [Number],
+      required: true,
+      validate: {
+        validator: function (v) {
+          return v.length >= 1;
         },
-      ],
+        message: "랭킹에 반영하기 위해서는 최소 1게임 이상 진행해야 합니다.",
+      },
     },
+
     averageScore: {
       //평균 점수
       type: Number,
