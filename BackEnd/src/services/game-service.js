@@ -6,9 +6,23 @@ class GameService {
   constructor() {
     this.gameModel = gameModel;
   }
-
-  // 필요한 기능 : 게임정보 추가, 게임정보 수정, 게임 삭제
+  //POST
+  async createNewGame(data) {
+    return await gameModel.createNewGame(data);
+  }
+  //GET
+  async findAllGames() {
+    return await gameModel.findAllGames();
+  }
+  //DELETE
+  async deleteGame(id) {
+    return await gameModel.deleteGame(id);
+  }
+  //PATCH
+  async updateGame(id, data) {
+    return await gameModel.updateGame(id, data);
+  }
 }
 
 const gameService = new GameService(gameModel);
-export default gameService;
+export { gameService };

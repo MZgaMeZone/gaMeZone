@@ -70,4 +70,4 @@ const gameModel = new GameModel();
 // // ----- find all games -----
 // gameModel.findAllGames();
 
-export default gameModel;
+export { gameModel };
