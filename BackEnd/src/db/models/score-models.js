@@ -15,7 +15,6 @@ class ScoreModel {
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
-    console.log(findScores, "스코어모델 출력확인");
     return findScores;
   }
 
@@ -52,8 +51,18 @@ class ScoreModel {
           : a[nonOption] - b[nonOption]
         : a[option] - b[option]
     );
-
     return ranking;
+  }
+
+  async deleteScore(id) {
+    // 부정한 방법으로 달성한 기록을 말소하기 위한 운영자 기능
+    try {
+      const deleteData = await Score.deleteOne({ _id: id });
+      return deleteData;
+    } catch (e) {
+      console.log(`[기록 삭제 실패] 입력한 id를 다시 확인해주세요`);
+      throw new Error(e);
+    }
   }
 }
 
@@ -77,4 +86,4 @@ const scoreModel = new ScoreModel();
 // const id = "645d06e53dcefd63e6ce72a9";
 // scoreModel.calculateRanking(id, option);
 
-export default scoreModel;
+export { scoreModel };
