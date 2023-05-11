@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-import { UserSchema } from "../schemas/user-schema.js";
+import UserSchema from "../schemas/user-schema.js";
 
 // UserSchema를 기준으로 User라는 모델 생성
 const User = model("User", UserSchema);
