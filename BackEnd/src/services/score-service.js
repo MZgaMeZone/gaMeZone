@@ -6,18 +6,23 @@ class ScoreService {
   constructor() {
     this.scoreModel = scoreModel;
   }
+  //GET
   async findScoresByGame(id) {
-    return await scoreModel.fundScoresByGame(id);
+    return await scoreModel.findScoresByGame(id);
   }
-  async findSocresById(id) {
-    return await scoreModel.findSocresById(id);
+  //GET
+  async findScoresById(id) {
+    return await scoreModel.findScoresById(id);
   }
+  //POST
   async createScoreBoard(data) {
     return await scoreModel.createScoreBoard(data);
   }
+  //GET
   async calculateRanking(id, option) {
     return await scoreModel.calculateRanking(id, option);
   }
+  //DELETE
   async deleteScore(id) {
     return await scoreModel.deleteScore(id);
   }

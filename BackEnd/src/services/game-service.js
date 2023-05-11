@@ -22,10 +22,6 @@ class GameService {
   async updateGame(id, data) {
     return await gameModel.updateGame(id, data);
   }
-  //PATCH
-  async changeStatus(id, status) {
-    return await gameModel.changeGameStatus(id, status);
-  }
 }
 
 const gameService = new GameService(gameModel);

@@ -22,6 +22,7 @@ gameRouter.get("/", async (req, res, next) => {
 // 새 게임정보를 등록하는 POST 요청
 gameRouter.post("/", async (req, res, next) => {
   try {
+    const data = req.body;
     console.log("🖐️ 새 게임을 등록합니다.");
     const newGame = await gameService.createNewGame(data);
     console.log("✔️ 게임 등록이 완료되었습니다!");
@@ -33,10 +34,12 @@ gameRouter.post("/", async (req, res, next) => {
 });
 
 // 게임정보를 수정하는 PATCH 요청
-gameRouter.patch("/", async (req, res, next) => {
+gameRouter.patch("/:id", async (req, res, next) => {
   try {
+    const gameId = req.params.id;
+    const data = req.body;
     console.log("🖐️ 게임정보를 수정합니다.");
-    const updateGame = await gameService.updateGame(id, data);
+    const updateGame = await gameService.updateGame(gameId, data);
     console.log("✔️ 게임정보 수정이 완료되었습니다!");
     res.status(201).json(updateGame);
   } catch (err) {
@@ -45,25 +48,12 @@ gameRouter.patch("/", async (req, res, next) => {
   }
 });
 
-// 게임 서비스 상태를 변경하는 PATCH 요청
-gameRouter.patch("/:status", async (req, res, next) => {
-  try {
-    const status = req.params.status;
-    console.log("🖐️ 게임 서비스 상태를 변경합니다.");
-    const updateGame = await gameService.changeStatus(id, status);
-    console.log(`✔️ 서비스 상태가 ${status}로 변경 완료되었습니다!`);
-    res.status(201).json(updateGame);
-  } catch (err) {
-    console.log(`❌ ${err}`);
-    next(err);
-  }
-});
-
 // 게임정보를 삭제하는 DELETE 요청
-gameRouter.delete("/", async (req, res, next) => {
+gameRouter.delete("/:id", async (req, res, next) => {
   try {
+    const gameId = req.params.id;
     console.log("🖐️ 등록된 게임을 삭제합니다.");
-    await gameService.deleteGame(id);
+    await gameService.deleteGame(gameId);
     console.log("✔️ 게임정보 삭제 완료!");
     res.status(201).send("게임정보 삭제 완료");
   } catch (err) {

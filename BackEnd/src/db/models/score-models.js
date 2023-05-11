@@ -15,7 +15,6 @@ class ScoreModel {
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
-    console.log(findScores, "스코어모델 출력확인");
     return findScores;
   }
 

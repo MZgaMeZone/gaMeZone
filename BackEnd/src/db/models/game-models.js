@@ -44,15 +44,6 @@ class GameModel {
     );
     return updateGame;
   }
-  async changeGameStatus(id, status) {
-    // id로 검색하고, 게임 서비스 상태를 변경하기
-    const gameStatus = await Game.findOneAndUpdate(
-      { _id: id },
-      { $set: status },
-      { new: true }
-    );
-    return gameStatus;
-  }
 }
 
 const gameModel = new GameModel();
