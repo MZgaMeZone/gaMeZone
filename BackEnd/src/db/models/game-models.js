@@ -16,13 +16,6 @@ class GameModel {
     }
     return findGames;
   }
-
-  async findAllScores(game) {
-    // 게임명으로 검색하여 모든 기록정보를 불러오기
-    // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
-    const findScores = await Score.find({ gameTitle: game });
-    return findScores;
-  }
 }
 
 const gameModel = new GameModel();
