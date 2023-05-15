@@ -9,6 +9,7 @@ import {
 import "./App.css";
 import TimeStopGame from "./components/Games/StopWatch/timeStop";
 import GameStarter from "./components/gameStart";
+import Admin from "./pages/adminPage/admin";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route  path="/" element={ <TimeStopGame />} />
+        <Route  path="/admin" element={ <Admin />} />
       </Routes>
     </BrowserRouter>
   );
