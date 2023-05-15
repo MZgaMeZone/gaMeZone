@@ -40,10 +40,6 @@ const GameSchema = new Schema(
       type: String,
       requried: true,
     },
-    gameMode: {
-      type: Number, // 디폴트 : 일반모드(1) , 특수모드(2)
-      required: true,
-    },
   },
   {
     // 타임스탬프와 DB에서 사용할 컬렉션 이름 설정
