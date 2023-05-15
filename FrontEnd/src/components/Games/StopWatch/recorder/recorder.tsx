@@ -52,7 +52,7 @@ function Recorder(props: RecorderProps) {
           >
             Reset
           </button>
-          기록실{" "}
+          기록실
           <button id="submit-button" onClick={scoreSubmit}>
             Submit
           </button>
