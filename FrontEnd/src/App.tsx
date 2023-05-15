@@ -8,7 +8,7 @@ import GameStarter from "./components/gameStart";
 function App() {
   return (
     <div>
-      <GameStarter></GameStarter>
+      {/* <GameStarter></GameStarter> */}
       <TimeStopGame />
     </div>
   );

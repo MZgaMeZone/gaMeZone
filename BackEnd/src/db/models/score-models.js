@@ -29,6 +29,7 @@ class ScoreModel {
   async createScoreBoard(data) {
     // 새 기록을 저장하기
     const newScore = await Score.create(data);
+
     return newScore;
   }
 
