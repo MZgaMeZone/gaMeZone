@@ -13,18 +13,18 @@ import Rootpage from "./pages/rootPage";
 import Community from "./pages/communityPage/community";
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Rootpage />} />
-                <Route path="/main" element={<Main />} />
-                <Route path="/game1" element={<TimeStopGame />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/community/*" element={<Community />} />
-                <Route path="/gameLoading" element={<GameLoading />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Rootpage />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/game1" element={<TimeStopGame />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/community/*" element={<Community />} />
+        <Route path="/gameLoading" element={<GameLoading />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
