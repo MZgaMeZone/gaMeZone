@@ -1,6 +1,10 @@
+<<<<<<< HEAD
+@import url(../src/style/style.css);
+=======
 html {
   font-size: 10px;
 }
+>>>>>>> c9ad60bb8c58a03c4192143daf4c96d91512be67
 
 body {
   margin: 0;
@@ -9,6 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background--green);
 }
 
 code {

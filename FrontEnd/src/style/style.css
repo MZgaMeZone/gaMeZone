@@ -1,0 +1,46 @@
+.dn {
+  display: none;
+}
+
+.w500 {
+  position: relative;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.w800 {
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.w1000 {
+  position: relative;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.w1140 {
+  position: relative;
+  width: 1140px;
+  margin: 0 auto;
+}
+
+:root {
+  --color--header: #000080;
+  --background--gray: #c0c0c0;
+  --background--green: #008080;
+}
+
+/* button_layout */
+
+.border {
+  border-radius: 5px;
+}
+
+.btn_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}

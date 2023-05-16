@@ -7,6 +7,7 @@ import TimeStopGame from "./components/Games/StopWatch/timeStop";
 import GameStarter from "./components/gameStart";
 import Admin from "./pages/adminPage/admin";
 import Community from "./pages/communityPage/community";
+import MyPage from "./pages/myPage/mypage";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
 
