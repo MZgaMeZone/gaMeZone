@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "../../../src/style/admin.module.css";
 import Menu from "./menu";
-const Admin = () =>{
+const AdminInfomation = () =>{
   return(
   <>
   <Menu />
     <div className={styles.container}>
-      <header><p>대시보드</p></header>
+      <header><p>게임 정보 관리</p></header>
       <nav>
         <button><p>방문자 현황</p></button>
         <button><p >일자별 요약</p></button>
@@ -23,4 +23,4 @@ const Admin = () =>{
   </>
   )
 }
-export default Admin
+export default AdminInfomation
