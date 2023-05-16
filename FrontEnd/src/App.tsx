@@ -8,6 +8,7 @@ import GameStarter from "./components/gameStart";
 import Admin from "./pages/adminPage/admin";
 import Community from "./pages/communityPage/community";
 import GameLoading from "./pages/gamePages/gameLoading";
+import CreatePost from "./components/Boards/CreatePost";
 import MyPage from "./pages/myPage/mypage";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/gameLoading" element={<GameLoading />} />
+                <Route path="/community/write" element={<CreatePost />} />
             </Routes>
         </BrowserRouter>
     );
