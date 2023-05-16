@@ -27,7 +27,11 @@ const Community = () => {
 export default Community;
 
 const CommunitySection = styled.div`
-  margin: 7rem 0 0 30rem;
+  background-color: var(--background--gray);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: var(--background--gray);
   width: 128rem;
   height: 72rem;

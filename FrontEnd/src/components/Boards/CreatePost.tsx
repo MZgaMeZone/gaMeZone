@@ -72,7 +72,10 @@ export default CreatePost;
 
 const PostSection = styled.div`
   background-color: var(--background--gray);
-  margin: 7rem 0 0 30rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 128rem;
   height: 72rem;
   padding: 0.5rem 0;
@@ -126,15 +129,16 @@ const MainLabel = styled.p`
 
 const MainInput = styled.textarea`
   width: 50rem;
-  height: 46rem;
+  height: 44rem;
   font-size: 2rem;
   border: 1px solid black;
 `
 
 const PostButton = styled.button`
   align-self: end;
+  word-wrap: normal;
   margin: 0 3rem 2rem;
-  height: 2rem;
+  height: 3rem;
   background-color: var(--background--gray);
   border: none;
   font-size: 1.5rem;

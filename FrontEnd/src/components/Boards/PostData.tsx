@@ -29,6 +29,54 @@ const postData = [
     createdAt: '2023-05-14T14:30:00.000Z',
     author: '작성자 2',
   },
+  {
+    _id: '6',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '7',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '8',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '9',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '10',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '11',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '12',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
+  {
+    _id: '13',
+    title: '게시물 제목 5',
+    createdAt: '2023-05-14T14:30:00.000Z',
+    author: '작성자 2',
+  },
 ];
 
 export default postData;
