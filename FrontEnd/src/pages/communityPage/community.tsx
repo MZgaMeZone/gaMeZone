@@ -2,27 +2,24 @@ import React from "react";
 import { useNavigate, NavLink  } from 'react-router-dom';
 import styled, {createGlobalStyle} from 'styled-components';
 
+import NoticeComponent from "../../components/Boards/NoticeComponent";
+
 const Community = () => {
   return (
     <CommunitySection>
-      <CommunityHeader>커뮤니티</CommunityHeader>
-      <CommunityBody>
-        <Header>
-          <CommunityTitle>MZ 오락실</CommunityTitle>
-          <CurrentLink to="/community">자유게시판</CurrentLink>
-          <CommunityLink to="/">노하우</CommunityLink>
-          <CommunityLink to="/">인증게시판</CommunityLink>
-          <CommunityLink to="/">건의</CommunityLink>
-        </Header>
-        <Body>
-          <LabelContainer>
-            <Label>글 번호</Label>
-            <Label>제목</Label>
-            <Label>작성자</Label>
-            <Label>작성일</Label>
-          </LabelContainer>
-        </Body>
-      </CommunityBody>
+      <CommunityContainer>
+        <CommunityHeader>커뮤니티</CommunityHeader>
+        <CommunityBody>
+          <Header>
+            <CommunityTitle>MZ 오락실</CommunityTitle>
+            <CurrentLink to="/community">자유게시판</CurrentLink>
+            <CommunityLink to="/">노하우</CommunityLink>
+            <CommunityLink to="/">인증게시판</CommunityLink>
+            <CommunityLink to="/">건의</CommunityLink>
+          </Header>
+          <NoticeComponent />
+        </CommunityBody>
+      </CommunityContainer>
     </CommunitySection>
   )
 };
@@ -30,15 +27,23 @@ const Community = () => {
 export default Community;
 
 const CommunitySection = styled.div`
-  background-color: #C0C0C0;
+  margin: 7rem 0 0 30rem;
+  background-color: var(--background--gray);
+  width: 128rem;
+  height: 72rem;
+`
+
+const CommunityContainer = styled.div`
+  background-color: var(--background--gray);
+  padding: 0.5rem 0;
 `
 
 const CommunityHeader = styled.div`
   margin: 1rem;
   padding: 1rem;
-  background: linear-gradient(90deg, #000080, #1782E4);
+  background-color: var(--color--header);
   color: white;
-  font-size: 1.5rem;
+  font-size: 2rem;
 `
 
 const CommunityBody = styled.div`
@@ -48,20 +53,21 @@ const CommunityBody = styled.div`
 
 const Header = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin: 2rem;
+  margin: 0 2rem 2rem 2rem;
   border-bottom: 2px solid black;
 `
 
 const CommunityTitle = styled.h2`
-  margin-right: 2rem;
-  font-size: 2rem;
+  margin: 2rem;
+  font-size: 2.5rem;
 `
 
 const CurrentLink = styled(NavLink)`
   margin: auto 4rem;
   padding-top: 0.6rem;
-  font-size: 1.4rem;
+  font-size: 2rem;
 
   text-decoration: none;
   color: blue;
@@ -70,23 +76,8 @@ const CurrentLink = styled(NavLink)`
 const CommunityLink = styled(NavLink)`
   margin: auto 4rem;
   padding-top: 0.6rem;
-  font-size: 1.4rem;
+  font-size: 2rem;
 
   text-decoration: none;
   color: black;
-`
-
-const Body = styled.div`
-  display: flex;
-`
-
-const LabelContainer = styled.div`
-  display: flex;
-  margin-bottom: 10rem;
-`
-
-const Label = styled.p`
-  margin: 0rem 13rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bold;
 `
