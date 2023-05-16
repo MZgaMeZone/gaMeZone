@@ -129,13 +129,14 @@ const MainLabel = styled.p`
 
 const MainInput = styled.textarea`
   width: 50rem;
-  height: 46rem;
+  height: 44rem;
   font-size: 2rem;
   border: 1px solid black;
 `
 
 const PostButton = styled.button`
   align-self: end;
+  word-wrap: normal;
   margin: 0 3rem 2rem;
   height: 3rem;
   background-color: var(--background--gray);
