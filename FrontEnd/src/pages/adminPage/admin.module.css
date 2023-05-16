@@ -1,13 +1,12 @@
-/* body {
-  background-color: #008080;
-} */
+@import url(../../../src/style/reset.css);
+
 .container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 105.6rem;
-  height: 76rem;
+  width: 128rem;
+  height: 72rem;
   box-sizing: border-box;
   background-color: #c0c0c0;
   border: 0.1rem solid #000000;
@@ -20,7 +19,6 @@
 .header p {
   position: relative;
   left: 5.4rem;
-  margin: 0;
   line-height: 4rem;
   font-size: 2.4rem;
   font-weight: 500;
