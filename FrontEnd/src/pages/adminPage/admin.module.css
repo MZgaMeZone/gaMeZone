@@ -1,0 +1,28 @@
+body {
+  background-color: #008080;
+}
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 105.6rem;
+  height: 76rem;
+  box-sizing: border-box;
+  background-color: #c0c0c0;
+  border: 0.1rem solid #000000;
+  box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+}
+.header {
+  height: 3.8rem;
+  background: #000080;
+}
+.header p {
+  position: relative;
+  left: 5.4rem;
+  margin: 0;
+  line-height: 4rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: #ffffff;
+}
