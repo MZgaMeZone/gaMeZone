@@ -4,7 +4,7 @@ import Menu from "./menu";
 const Admin = () =>{
   return(
   <>
-  <Menu />
+  <Menu idx={0} />
     <div className={styles.container}>
       <header><p>대시보드</p></header>
       <nav>

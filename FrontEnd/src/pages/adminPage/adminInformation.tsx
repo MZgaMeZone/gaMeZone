@@ -4,13 +4,12 @@ import Menu from "./menu";
 const AdminInfomation = () =>{
   return(
   <>
-  <Menu />
+   <Menu idx={1} />
     <div className={styles.container}>
       <header><p>게임 정보 관리</p></header>
       <nav>
-        <button><p>방문자 현황</p></button>
-        <button><p >일자별 요약</p></button>
-        <button><p >통계</p></button>        
+        <button><p>게임 정보 관리</p></button>
+        <button><p >게임 목록</p></button>    
       </nav>
       <main>
         <div className={styles.content}></div>
