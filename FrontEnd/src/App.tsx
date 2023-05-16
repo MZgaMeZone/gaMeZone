@@ -11,6 +11,7 @@ import MyPage from "./pages/myPage/mypage";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
 import Community from "./pages/communityPage/community";
+import Login from "./pages/loginPage/login";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/community/*" element={<Community />} />
         <Route path="/gameLoading" element={<GameLoading />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
