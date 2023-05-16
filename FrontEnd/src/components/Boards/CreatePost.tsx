@@ -137,7 +137,7 @@ const MainInput = styled.textarea`
 const PostButton = styled.button`
   align-self: end;
   margin: 0 3rem 2rem;
-  height: 2rem;
+  height: 3rem;
   background-color: var(--background--gray);
   border: none;
   font-size: 1.5rem;

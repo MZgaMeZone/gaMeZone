@@ -41,13 +41,13 @@ const PageNav = styled.div`
 `
 
 const PageNation = styled.ul`
-  
+  display: flex;
 `
 
 const PageNationList = styled.li`
-  
+  margin: 0.5rem;
 `
 
 const PageLink = styled.a`
-
+  cursor: pointer;
 `;
