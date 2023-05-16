@@ -23,9 +23,20 @@ const Main = () => {
 
   // 출력 컴포넌트
   return (
-    <div style={{ backgroundColor: "#008080" }}>
+    <div
+      style={{
+        backgroundColor: "#008080",
+        height: "97vh",
+        width: "100vw",
+        minHeight: "480px",
+        minWidth: "640px",
+      }}
+    >
       <LeftBar>
-        <HitGame>1번</HitGame>
+        <HitGame>
+          <img />
+          1번
+        </HitGame>
         <HitGame>2번</HitGame>
         <HitGame>3번</HitGame>
         <HitGame>4번</HitGame>
@@ -45,7 +56,6 @@ const Main = () => {
 export default Main;
 
 const LeftBar = styled.div`
-  background-color: #008080;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,24 +64,30 @@ const LeftBar = styled.div`
 `;
 const HitGame = styled.div`
   display: flex;
-  margin: 1rem 1rem;
+  margin: 2rem 2rem;
   justify-content: center;
+  align-items: center;
   padding: 1.5rem 0rem;
-  width: 70%;
+  width: 6.6rem;
+  height: 3.5rem;
   background-color: #d9d9d9;
 `;
 
 const FooterBar = styled.div`
   background-color: #c0c0c0;
   display: flex;
+  margin-bottom: auto;
   align-items: center;
   height: 2.3rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
 `;
 
 const MainContainer = styled.div`
   display: flex;
-  height: 38rem;
-  background-color: #008080;
+  height: 100%;
+  width: 90%;
 `;
 
 const StartButton = styled.button`
@@ -102,7 +118,7 @@ const Clock = styled.div`
   width: 5rem;
   height: 1.8rem;
   margin-left: auto;
-  margin-right: 1rem;
+  margin-right: 2rem;
   padding: 0.22rem;
   height: 1.6rem;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
