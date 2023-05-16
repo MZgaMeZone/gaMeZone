@@ -1,34 +1,57 @@
 import styled from "styled-components";
+import "../../style/reset.css";
+import "../myPage/mypage.css";
+
+const user = { name: "혜린" };
 
 function MyPage() {
   return (
     <Container>
       <Header_Bar>
-        <p>마이페이지</p>
+        <div className="title">
+          <p>마이페이지</p>
+        </div>
+        <div className="close_button">
+          <button className="close_btn">x</button>
+        </div>
       </Header_Bar>
       <Content>
-        <h1>여긴 내용</h1>
+        <div className="profile">
+          <h1>{`안녕하세요 ${user.name}님`}</h1>
+          <div className="avartar">
+            <img src="../../" alt="v" />
+          </div>
+        </div>
       </Content>
     </Container>
   );
 }
 
 const Container = styled.div`
-  border: 1px solid black;
-  margin: 1rem;
-  padding: 1rem;
-  width: 1404;
+  margin: 3rem auto;
+  width: 1280px;
+  height: 720px;
+  border-radius: 3px;
+  background-color: var(--background--gray);
 `;
 
 const Header_Bar = styled.div`
-  margin: 0;
-  width: 100%;
-  border: 1px solid black;
+  display: flex;
+  padding: 0.7rem;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  background-color: var(--color--header);
+  color: white;
 `;
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 22px auto;
   width: 90%;
-  border: 1px solid black;
+  height: 85%;
+  border-radius: 5px;
+  background-color: white;
 `;
 
 export default MyPage;

@@ -1,0 +1,26 @@
+.title {
+  flex-basis: 90%;
+  font-weight: 700;
+  margin-left: 1rem;
+  text-justify: center;
+  font-size: 1.1rem;
+}
+
+Header_Bar > button {
+  display: block;
+  margin-left: 3rem;
+}
+
+.close_button {
+  margin-bottom: 2rem;
+  position: relative;
+  flex-basis: 10%;
+  border-radius: 5px;
+}
+
+.close_btn {
+  position: absolute;
+  right: 1.5rem;
+  padding: 0.5rem;
+  width: 2rem;
+}

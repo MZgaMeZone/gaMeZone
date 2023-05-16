@@ -20,6 +20,7 @@ function App() {
         <Route path="/game1" element={<TimeStopGame />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   );
