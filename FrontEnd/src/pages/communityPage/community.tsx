@@ -27,6 +27,7 @@ const Community = () => {
 export default Community;
 
 const CommunitySection = styled.div`
+  background-color: var(--background--gray);
   position: absolute;
   top: 50%;
   left: 50%;
