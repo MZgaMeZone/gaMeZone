@@ -9,6 +9,9 @@ import Admin from "./pages/adminPage/admin";
 import GameLoading from "./pages/gamePages/gameLoading";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
+import AdminInfomation from "./pages/adminPage/adminInformation";
+import AdminRecord from "./pages/adminPage/adminRecord";
+import AdminUser from "./pages/adminPage/adminUser";
 import Community from "./pages/communityPage/community";
 import Login from "./pages/userPages/login";
 import Signup from "./pages/userPages/signup";
@@ -23,18 +26,18 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Rootpage />} />
-        <Route path="/main" element={<Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="/game1" element={<TimeStopGame />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/password" element={<PasswordChange />} />
         <Route path="/mypage/nickname" element={<NicknameChange />} />
         <Route path="/mypage/mycomment" element={<MyComment />} />
         <Route path="/mypage/myarticle" element={<MyArticle />} />
         <Route path="/mypage/avartar" element={<AvartarChange />} />
+        <Route path="/admin/information" element={<AdminInfomation />} />
+        <Route path="/admin/record" element={<AdminRecord />} />
+        <Route path="/admin/user" element={<AdminUser />} />
         <Route path="/community/*" element={<Community />} />
         <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/login" element={<Login />} />
