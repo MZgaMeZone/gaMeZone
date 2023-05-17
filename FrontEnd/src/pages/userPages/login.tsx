@@ -20,8 +20,8 @@ function Login() {
       })
       .then((res) => {
         console.log(res);
-        if (res.data.success) {
-          localStorage.setItem("access_token : ", res.data.token);
+        if (res.status === 200) {
+          localStorage.setItem("access_token : ", res.data.userToken);
           navigate("/");
         }
       })
@@ -32,6 +32,7 @@ function Login() {
 
   return (
     <>
+      <h1>로그인 페이지입니다.</h1>
       <LoginForm onSubmit={handleSubmit}>
         이메일{" "}
         <input
