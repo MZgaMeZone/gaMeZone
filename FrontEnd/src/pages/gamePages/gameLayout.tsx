@@ -45,20 +45,20 @@ const GameLayout = () => {
             <img src={gameFavicon} alt="gameFavicon" />
             <p>{gameName}</p>
           </div>
+          <Link to="/" className="exit-button">
+            <img src={exitImg} alt="exitImg" />
+          </Link>
         </div>
-        <Link to="/" className="exit-button">
-          <img src={exitImg} alt="exitImg" />
-        </Link>
-      </div>
-      <nav>
-        <p>게임설명</p>
-        <p>랭킹</p>
-      </nav>
-      <div className="game-container-body">{gameComponent}</div>
-      <div className="game-container-footer">
-        <div className="footer-box"></div>
-        <div className="footer-box"></div>
-        <div className="footer-box"></div>
+        <nav>
+          <p>게임설명</p>
+          <p>랭킹</p>
+        </nav>
+        <div className="game-container-body">{gameComponent}</div>
+        <div className="game-container-footer">
+          <div className="footer-box"></div>
+          <div className="footer-box"></div>
+          <div className="footer-box"></div>
+        </div>
       </div>
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
       <MainFooter
