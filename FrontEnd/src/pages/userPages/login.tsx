@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import MainFooter from "../mainPage/main-footer";
+import MainBody from "../mainPage/main-body";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -31,7 +32,15 @@ function Login() {
   }
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "#008080",
+        height: "100vh",
+        width: "100vw",
+        minHeight: "880px",
+        minWidth: "900px",
+      }}
+    >
       <h1>로그인 페이지입니다.</h1>
       <LoginForm onSubmit={handleSubmit}>
         이메일{" "}
@@ -55,8 +64,12 @@ function Login() {
           회원가입
         </SignupButton>
       </LoginForm>
-      <MainFooter mainModal={mainModal} setMainModal={setMainModal} />
-    </>
+      <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
+      <MainFooter
+        mainModal={mainModal}
+        setMainModal={setMainModal}
+      ></MainFooter>
+    </div>
   );
 }
 export default Login;

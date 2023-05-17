@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import MainBody from "../mainPage/main-body";
+import MainFooter from "../mainPage/main-footer";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -10,6 +12,7 @@ function Signup() {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState(false);
+  const [mainModal, setMainModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -80,7 +83,15 @@ function Signup() {
   }
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "#008080",
+        height: "100vh",
+        width: "100vw",
+        minHeight: "880px",
+        minWidth: "900px",
+      }}
+    >
       <SignupHeader>회원가입 페이지 입니다.</SignupHeader>
       <SignupForm onSubmit={handleSubmit}>
         <FormContent>
@@ -130,7 +141,12 @@ function Signup() {
           }
         />
       </SignupForm>
-    </>
+      <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
+      <MainFooter
+        mainModal={mainModal}
+        setMainModal={setMainModal}
+      ></MainFooter>
+    </div>
   );
 }
 export default Signup;
