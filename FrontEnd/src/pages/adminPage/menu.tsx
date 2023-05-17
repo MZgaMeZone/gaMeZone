@@ -29,23 +29,43 @@ const Menu = ({ idx }: MenuIdx) => {
     <div className={styles.wrapper}>
       <div className={styles.menu}>
         <div className={styles.menu_dashboard} onClick={() => handleClick(0)}>
-          {menu === 0 ? <div className={styles.selected_menu}></div> : null}
+          {menu === 0 ? (
+            <div className={styles.selected_menu}></div>
+          ) : (
+            <div className={styles.menu_hover}></div>
+          )}
           <p>대시보드</p>
         </div>
         <div className={styles.menu_info} onClick={() => handleClick(1)}>
-          {menu === 1 ? <div className={styles.selected_menu}></div> : null}
+          {menu === 1 ? (
+            <div className={styles.selected_menu}></div>
+          ) : (
+            <div className={styles.menu_hover}></div>
+          )}
           <p>게임 정보</p>
         </div>
         <div className={styles.menu_record} onClick={() => handleClick(2)}>
-          {menu === 2 ? <div className={styles.selected_menu}></div> : null}
+          {menu === 2 ? (
+            <div className={styles.selected_menu}></div>
+          ) : (
+            <div className={styles.menu_hover}></div>
+          )}
           <p>게임 기록</p>
         </div>
         <div className={styles.menu_user} onClick={() => handleClick(3)}>
-          {menu === 3 ? <div className={styles.selected_menu}></div> : null}
+          {menu === 3 ? (
+            <div className={styles.selected_menu}></div>
+          ) : (
+            <div className={styles.menu_hover}></div>
+          )}
           <p>회원 정보</p>
         </div>
         <div className={styles.menu_home} onClick={() => handleClick(4)}>
-          {menu === 4 ? <div className={styles.selected_menu}></div> : null}
+          {menu === 4 ? (
+            <div className={styles.selected_menu}></div>
+          ) : (
+            <div className={styles.menu_hover}></div>
+          )}
           <p>홈페이지 바로가기</p>
         </div>
       </div>

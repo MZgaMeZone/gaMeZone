@@ -21,9 +21,6 @@
   cursor: pointer;
   background-size: cover;
 }
-/* .menu div:hover {
-  border: 2px dashed #000000;
-} */
 .menu div p {
   text-align: center;
   font-size: 2.4rem;
@@ -46,6 +43,11 @@
 }
 .menu_home {
   background: url(./icons/home.svg) no-repeat;
+}
+.menu_hover:hover {
+  position: absolute;
+  margin: 0;
+  border: 2px dashed #000000;
 }
 
 .menu .selected_menu {
