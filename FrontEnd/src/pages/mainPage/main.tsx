@@ -1,22 +1,28 @@
 import MainFooter from "./main-footer";
-import MainPage from "./main-page";
+import MainHeader from "./main-header";
+import MainBody from "./main-body";
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 
 const Main = () => {
+  const [mainModal, setMainModal] = React.useState<boolean>(false);
   return (
     <div
       style={{
         backgroundColor: "#008080",
-        height: "97vh",
+        height: "100vh",
         width: "100vw",
-        minHeight: "480px",
-        minWidth: "640px",
+        minHeight: "80rem",
+        minWidth: "900px",
       }}
     >
-      <MainPage></MainPage>
-      <MainFooter></MainFooter>
+      <MainHeader></MainHeader>
+      <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
+      <MainFooter
+        mainModal={mainModal}
+        setMainModal={setMainModal}
+      ></MainFooter>
     </div>
   );
 };
