@@ -3,13 +3,17 @@
   src: url("../components/font/neodgm.ttf");
 }
 
-.game-container {
-  font-family: "neodgm", cursive;
-
+.game-body {
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-family: "neodgm", cursive;
+  display: flex;
+  justify-content: center;
+}
+
+.game-container {
   margin: 10rem auto auto auto;
   background: #c0c0c0;
   border: 1px solid #000000;

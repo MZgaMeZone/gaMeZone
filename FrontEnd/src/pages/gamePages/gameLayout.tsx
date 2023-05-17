@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "../../style/gameLayout.css";
 import { Link, useParams } from "react-router-dom";
 import GameLoading from "./gameLoading";
+import GameRanking from "./gameRanking";
 import TimeStopGame from "../../components/Games/StopWatch/timeStop";
 
 import exitImg from "../../style/icons/x-solid.svg";
@@ -13,6 +14,7 @@ import { fontFamily } from "@mui/system";
 
 const GameLayout = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showranking, setShowranking] = useState<Boolean>(false);
   const [mainModal, setMainModal] = useState<boolean>(false);
   const [gameName, setGameName] = useState<string>("");
   const { id } = useParams();
@@ -25,6 +27,7 @@ const GameLayout = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
+      setShowranking(true);
     }, 6000);
   }, []);
 
@@ -51,26 +54,39 @@ const GameLayout = () => {
       {isLoading ? (
         <GameLoading />
       ) : (
-        <div className="game-container">
-          <div className="game-container-header">
-            <div className="game-container-header-title">
-              <img src={gameFavicon} alt="gameFavicon" />
-              <p>{gameName}</p>
+        <div className="game-body">
+          <div className="game-container">
+            <div className="game-container-header">
+              <div className="game-container-header-title">
+                <img src={gameFavicon} alt="gameFavicon" />
+                <p>{gameName}</p>
+              </div>
+              <Link to="/" className="exit-button">
+                <img src={exitImg} alt="exitImg" />
+              </Link>
             </div>
-            <Link to="/" className="exit-button">
-              <img src={exitImg} alt="exitImg" />
-            </Link>
+            <nav>
+              <p>게임설명</p>
+              <p
+                onClick={() => {
+                  setShowranking((current) => !current);
+                }}
+              >
+                랭킹
+              </p>
+            </nav>
+            <div className="game-container-body">{gameComponent}</div>
+            <div className="game-container-footer">
+              <div className="footer-box"></div>
+              <div className="footer-box"></div>
+              <div className="footer-box"></div>
+            </div>
           </div>
-          <nav>
-            <p>게임설명</p>
-            <p>랭킹</p>
-          </nav>
-          <div className="game-container-body">{gameComponent}</div>
-          <div className="game-container-footer">
-            <div className="footer-box"></div>
-            <div className="footer-box"></div>
-            <div className="footer-box"></div>
-          </div>
+          <>
+            {showranking ? (
+              <GameRanking setShowranking={setShowranking} />
+            ) : null}
+          </>
         </div>
       )}
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
