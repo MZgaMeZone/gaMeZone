@@ -1,0 +1,90 @@
+@import url(./reset.css);
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 128rem;
+  height: 72rem;
+  box-sizing: border-box;
+  background-color: #c0c0c0;
+  border: 0.1rem solid #000000;
+  box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 0.4rem;
+}
+header {
+  height: 4.2rem;
+  background: #000080;
+}
+header p {
+  position: relative;
+  left: 5.4rem;
+  padding: 0.2rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+nav {
+  height: 3.8rem;
+  border-bottom: 0.2rem #242424 solid;
+}
+nav button {
+  margin-top: 0.1rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 1.8rem;
+  text-align: center;
+  background: #c0c0c0;
+}
+nav p {
+  display: inline-block;
+
+  color: #242424;
+  font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: center;
+}
+nav button:active {
+  transition: 0.2s;
+  background: rgba(217, 217, 217, 0.4);
+  box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+nav p:active,
+nav p:hover {
+  transition: 0.2s;
+  border-bottom: 0.2rem solid #242424;
+}
+main {
+  box-sizing: border-box;
+  height: 59.4rem;
+
+  width: auto;
+}
+.content {
+  position: relative;
+  top: 2rem;
+  margin: 0rem 3.6rem;
+  width: 120rem;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.4rem;
+}
+
+footer {
+  background-color: #c0c0c0;
+  position: absolute;
+  border-top: #242424 solid 0.2rem;
+  height: 4.4rem;
+  width: auto;
+  bottom: 0px;
+}
+
+footer div {
+  margin: 0.8rem 1.3rem;
+  height: 2.6rem;
+  width: 125rem;
+  background: #d9d9d9;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
