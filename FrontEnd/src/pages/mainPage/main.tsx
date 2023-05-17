@@ -4,6 +4,7 @@ import MainBody from "./main-body";
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
+import TimeStopGame from "../../components/Games/StopWatch/timeStop";
 
 const Main = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
