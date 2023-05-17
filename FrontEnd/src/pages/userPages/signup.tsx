@@ -24,9 +24,13 @@ function Signup() {
       .then((res) => {
         if (res.data.success) {
           setEmailDuplicateCheck(true);
+          console.log("email success: ", res);
           alert("사용 가능한 email입니다.");
+        } else {
+          console.log("email fail: ", res.data);
+          setEmail("");
+          alert("중복된 email입니다. 다른 email을 입력해주세요.");
         }
-        alert("중복된 email입니다. 다른 email을 입력해주세요.");
       });
   }
 
@@ -42,10 +46,14 @@ function Signup() {
       })
       .then((res) => {
         if (res.data.success) {
+          console.log("nickname success: ", res.data);
           setNicknameDuplicateCheck(true);
           alert("사용 가능한 nickname입니다.");
+        } else {
+          console.log("nickname fail: ", res.data);
+          setNickname("");
+          alert("중복된 nickname입니다. 다른 nickname을 입력해주세요.");
         }
-        alert("중복된 nickname입니다. 다른 nickname을 입력해주세요.");
       });
   }
 
@@ -60,7 +68,8 @@ function Signup() {
         password: password,
       })
       .then((res) => {
-        if (res.data.success) {
+        console.log(res);
+        if (res.status === 201) {
           alert(`회원가입이 완료되었습니다. 환영합니다 ${nickname}님!`);
           navigate("/login");
         }
@@ -115,8 +124,8 @@ function Signup() {
           value="가입하기"
           type="submit"
           disabled={
-            !emailDuplicateCheck &&
-            !nicknameDuplicateCheck &&
+            !emailDuplicateCheck ||
+            !nicknameDuplicateCheck ||
             !(password === passwordCheck)
           }
         />
