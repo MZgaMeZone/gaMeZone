@@ -16,7 +16,6 @@
     "@types/react-dom": "^18.2.1",
     "axios": "^1.4.0",
     "moment": "^2.29.4",
-    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
@@ -49,6 +48,13 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26"
-  }
+    "@types/styled-components": "^5.1.26",
+    "postcss": "^8.4.23",
+    "postcss-loader": "^7.3.0"
+  },
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

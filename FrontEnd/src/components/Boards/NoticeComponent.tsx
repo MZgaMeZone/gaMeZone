@@ -91,7 +91,7 @@ const TopContainer = styled.div`
 
 const WriteButton = styled.button`
   margin: 0 3rem;
-  height: 2rem;
+  height: 3rem;
   background-color: var(--background--gray);
   border: none;
   border-radius: 4px;
@@ -131,6 +131,7 @@ const PostItemInfo = styled.div`
 
 const PostItemNumber = styled.p`
   margin: 0 10rem 0 0;
+  width: 20rem;
 `
 
 const PostDate = styled.p`

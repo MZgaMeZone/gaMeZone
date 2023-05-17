@@ -15,8 +15,9 @@
   padding: 2rem;
 
   border: solid #242424 0.2rem;
-  background-color: black;
+  /* background-color: black; */
   cursor: pointer;
+  background: url(./icons/mushroom.svg) no-repeat;
 }
 .menu div p {
   text-align: center;
