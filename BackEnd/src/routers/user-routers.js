@@ -7,7 +7,31 @@ import { userChecker } from "../middlewares/userValidation.js";
 //express의 Router를 통해 userRouter 생성
 const userRouter = Router();
 
-// 가입시 POST 요청에 대한 라우팅 , /register 이라는 경로로 요청 시
+// 회원가입 내 email 중복 검사 POST 요청에 대한 라우팅 , /signup/emailDuplicateCheck 이라는 경로로 요청 시
+userRouter.post("/signup/emailDuplicateCheck", async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const emailDuplicateCheck = await userService.emailDuplicateCheck(email);
+    res.status(200).json(emailDuplicateCheck);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 회원가입 내 nickname 중복 검사 POST 요청에 대한 라우팅 , /signup/nicknameDuplicateCheck 이라는 경로로 요청 시
+userRouter.post("/signup/nicknameDuplicateCheck", async (req, res, next) => {
+  try {
+    const { nickname } = req.body;
+    const nicknameDuplicateCheck = await userService.nicknameDuplicateCheck(
+      nickname
+    );
+    res.status(200).json(nicknameDuplicateCheck);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 회원가입시 POST 요청에 대한 라우팅 , /signup 이라는 경로로 요청 시
 userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
   try {
     //요청으로 전달된 body의 값들을 변수에 저장 !
