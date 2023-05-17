@@ -8,7 +8,6 @@
   display: flex;
   top: calc(50% - 5rem);
   transform: translateY(-50%);
-
   flex-direction: column;
   margin-left: 8rem;
 }
@@ -27,7 +26,7 @@
 .menu div p {
   text-align: center;
   font-size: 2.4rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #ffffff;
   padding-bottom: 0.2rem;
 }

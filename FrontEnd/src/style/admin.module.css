@@ -31,14 +31,14 @@ nav {
 }
 nav button {
   margin-top: 0.1rem;
-  padding: 0.4rem 1.2rem;
+  padding: 1rem 1.2rem 0 1.2rem;
   font-size: 1.8rem;
   text-align: center;
   background: #c0c0c0;
 }
 nav p {
   display: block;
-  margin-top: 0.2rem;
+  margin-top: 0.4rem;
   color: #242424;
   font-weight: 500;
   font-size: 1.8rem;

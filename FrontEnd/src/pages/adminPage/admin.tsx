@@ -32,7 +32,7 @@ const Admin = () => {
           <div></div>
         </footer>
       </div>
-      <Footer />
+      <Footer idx={0} />
     </>
   );
 };

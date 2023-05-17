@@ -29,7 +29,7 @@ const AdminRecord = () => {
           <div></div>
         </footer>
       </div>
-      <Footer />
+      <Footer idx={2} />
     </>
   );
 };
