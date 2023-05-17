@@ -2,16 +2,6 @@ import { Schema } from "mongoose";
 
 const UserSchema = new Schema(
   {
-    //사용자 이름
-    name: {
-      type: String,
-      required: true,
-    },
-    //사용자 비밀번호
-    password: {
-      type: String,
-      required: true,
-    },
     //이메일
     email: {
       type: String,
@@ -22,23 +12,13 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    //사용자 비밀번호
+    password: {
+      type: String,
+      required: true,
+    },
     //프로필 아이콘 : user-icon은 url주소로 저장한다.
     userIcon: {
-      type: String,
-      required: true,
-    },
-    //도로명 주소
-    address1: {
-      type: String,
-      required: true,
-    },
-    //상세 주소
-    address2: {
-      type: String,
-      required: true,
-    },
-    //전화번호
-    phoneNumber: {
       type: String,
       required: true,
     },

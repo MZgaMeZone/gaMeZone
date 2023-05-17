@@ -6,7 +6,6 @@ import "./App.css";
 import TimeStopGame from "./components/Games/StopWatch/timeStop";
 import GameStarter from "./components/gameStart";
 import Admin from "./pages/adminPage/admin";
-import Community from "./pages/communityPage/community";
 import GameLoading from "./pages/gamePages/gameLoading";
 import MyPage from "./pages/myPage/mypage";
 import Main from "./pages/mainPage/main";
@@ -16,6 +15,9 @@ import NicknameChange from "./pages/myPage/nickname-change";
 import MyArticle from "./pages/myPage/myArticle";
 import MyComment from "./pages/myPage/myComment";
 import AvartarChange from "./pages/myPage/avartar-change";
+import Community from "./pages/communityPage/community";
+import Login from "./pages/userPages/login";
+import Signup from "./pages/userPages/signup";
 
 function App() {
   return (
@@ -33,6 +35,10 @@ function App() {
         <Route path="/mypage/mycomment" element={<MyComment />} />
         <Route path="/mypage/myarticle" element={<MyArticle />} />
         <Route path="/mypage/avartar" element={<AvartarChange />} />
+        <Route path="/community/*" element={<Community />} />
+        <Route path="/gameLoading" element={<GameLoading />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );
