@@ -15,12 +15,12 @@
 }
 header {
   height: 4.2rem;
+  display: flex;
   background: #000080;
 }
 header p {
-  position: relative;
-  left: 5.4rem;
-  padding: 0.2rem;
+  position: absolute;
+  margin: 1rem 0 0 6rem;
   font-size: 2.4rem;
   font-weight: 500;
   color: #ffffff;
@@ -37,8 +37,8 @@ nav button {
   background: #c0c0c0;
 }
 nav p {
-  display: inline-block;
-
+  display: block;
+  margin-top: 0.2rem;
   color: #242424;
   font-weight: 500;
   font-size: 1.8rem;

@@ -26,6 +26,7 @@
   font-size: 2.4rem;
   font-weight: 600;
   color: #ffffff;
+  padding-bottom: 0.2rem;
 }
 
 .menu_dashboard {
@@ -47,7 +48,7 @@
 .menu_hover:hover {
   position: absolute;
   margin: 0;
-  border: 2px dashed #000000;
+  background: rgba(217, 217, 217, 0.1);
 }
 
 .menu .selected_menu {
