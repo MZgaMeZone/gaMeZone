@@ -22,23 +22,25 @@ const MainBody = (props: MainBodyProps) => {
   const mainModal = props.mainModal;
 
   return (
-    <MainContainer>
-      {mainModal && (
-        <>
-          <CategoryBox>
-            <CategoryLeftLine>MZ 오락실</CategoryLeftLine>
-            <div>
-              <ul>
-                {dummyCategory &&
-                  dummyCategory.map((item, index) => (
-                    <CategoryName key={index}>{item}</CategoryName>
-                  ))}
-              </ul>
-            </div>
-          </CategoryBox>
-        </>
-      )}
-    </MainContainer>
+    <>
+      <MainContainer>
+        {mainModal && (
+          <>
+            <CategoryBox>
+              <CategoryLeftLine>MZ 오락실</CategoryLeftLine>
+              <div>
+                <ul>
+                  {dummyCategory &&
+                    dummyCategory.map((item, index) => (
+                      <CategoryName key={index}>{item}</CategoryName>
+                    ))}
+                </ul>
+              </div>
+            </CategoryBox>
+          </>
+        )}
+      </MainContainer>
+    </>
   );
 };
 export default MainBody;

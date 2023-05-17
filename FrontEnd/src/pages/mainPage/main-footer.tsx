@@ -27,19 +27,21 @@ const MainFooter = (props: any) => {
 
   //   출력 컴포넌트
   return (
-    <FooterBar>
-      <StartButton
-        onClick={() => {
-          setMainModal(!mainModal);
-        }}
-      >
-        카테고리
-      </StartButton>
-      <SubButton>로그인</SubButton>
-      <SubButton>랭킹</SubButton>
-      <SubButton>커뮤니티</SubButton>
-      <Clock>{timer}</Clock>
-    </FooterBar>
+    <>
+      <FooterBar>
+        <StartButton
+          onClick={() => {
+            setMainModal(!mainModal);
+          }}
+        >
+          카테고리
+        </StartButton>
+        <SubButton>로그인</SubButton>
+        <SubButton>랭킹</SubButton>
+        <SubButton>커뮤니티</SubButton>
+        <Clock>{timer}</Clock>
+      </FooterBar>
+    </>
   );
 };
 export default MainFooter;
