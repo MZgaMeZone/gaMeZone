@@ -37,6 +37,10 @@ const GameLayout = () => {
           <img src={exitImg} alt="exitImg" />
         </Link>
       </div>
+      <nav>
+        <p>게임설명</p>
+        <p>랭킹</p>
+      </nav>
       <div className="game-container-body">{gameComponent}</div>
       <div className="game-container-footer">
         <div className="footer-box"></div>
