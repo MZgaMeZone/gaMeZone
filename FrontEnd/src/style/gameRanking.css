@@ -54,3 +54,40 @@
   display: flex;
   margin: 0.6rem auto;
 }
+
+.ranking-container-body {
+  width: 93%;
+  height: 85%;
+  margin: 1.5rem auto;
+  padding: 4rem;
+  color: white;
+  box-shadow: inset 0.2rem 0.2rem 0.3rem 0rem #161616cc;
+}
+
+.ranking-container-body-title {
+  text-align: center;
+  font-size: 3.7rem;
+  text-shadow: 1px 1px 4px #ff00fe, -1px -1px 3px rgb(0, 236, 236);
+  margin: 1.3rem auto;
+}
+.ranking-list > ol {
+  margin: 4rem auto;
+}
+.ranking-list > ol li {
+  display: flex;
+}
+.ranking-list-idx {
+  flex: 1;
+  padding-top: 0.3rem;
+  font-size: 3rem;
+}
+.ranking-list-userID {
+  flex: 4;
+  font-size: 3.1rem;
+}
+
+.ranking-list-score {
+  flex: 2;
+  text-align: end;
+  margin-bottom: 2rem;
+}
