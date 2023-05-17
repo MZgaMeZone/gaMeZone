@@ -7,17 +7,17 @@ import TimeStopGame from "./components/Games/StopWatch/timeStop";
 import GameStarter from "./components/gameStart";
 import Admin from "./pages/adminPage/admin";
 import GameLoading from "./pages/gamePages/gameLoading";
-import MyPage from "./pages/myPage/mypage";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
-import PasswordChange from "./pages/myPage/password-change";
-import NicknameChange from "./pages/myPage/nickname-change";
-import MyArticle from "./pages/myPage/myArticle";
-import MyComment from "./pages/myPage/myComment";
-import AvartarChange from "./pages/myPage/avartar-change";
 import Community from "./pages/communityPage/community";
 import Login from "./pages/userPages/login";
 import Signup from "./pages/userPages/signup";
+import MyPage from "./pages/myPage/Mypage";
+import PasswordChange from "./pages/myPage/Password-Change";
+import NicknameChange from "./pages/myPage/Nickname-Change";
+import MyComment from "./pages/myPage/MyComment";
+import MyArticle from "./pages/myPage/MyArticle";
+import AvartarChange from "./pages/myPage/Avartar-change";
 
 function App() {
   return (
