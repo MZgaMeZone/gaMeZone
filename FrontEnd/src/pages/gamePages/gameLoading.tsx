@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import "./gameLoading.css";
-import cdImg1 from "./src/cdImg1.svg";
-import cdImg2 from "./src/cdImg2.svg";
-import exitImg from "./src/x-solid.svg";
-import paperImg from "./src/paper.svg";
-import speedImg from "./src/speedImg.svg";
+import "../../style/gameLoading.css";
+import cdImg1 from "../../style/icons/cdImg1.svg";
+import cdImg2 from "../../style/icons/cdImg2.svg";
+import exitImg from "../../style/icons/x-solid.svg";
+import paperImg from "../../style/icons/paper.svg";
+import speedImg from "../../style/icons/speedImg.svg";
 import { Link } from "react-router-dom";
 
 const GameLoading = () => {
