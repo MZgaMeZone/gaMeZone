@@ -2,27 +2,29 @@ import { Schema } from "mongoose";
 
 const CommentSchema = new Schema(
   {
-    //
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User", // 작성자
-      required: true,
-    },
-    commentIndex: {
-      //댓글 번호
-      type: Number,
-      required: true,
-    },
-    commentText: {
-      //댓글 내용
+    content: {
       type: String,
       required: true,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: 'Post',
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
     // 타임스탬프와 DB에서 사용할 컬렉션 이름 설정
     timestamps: true,
-    collection: "scores",
+    collection: "comments",
   }
 );
 
