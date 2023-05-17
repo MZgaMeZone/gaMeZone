@@ -3,11 +3,9 @@
   src: url("../components/font/neodgm.ttf");
 }
 
-* {
-  font-family: "neodgm", cursive;
-}
-
 .game-container {
+  font-family: "neodgm", cursive;
+
   position: absolute;
   top: 40%;
   left: 50%;

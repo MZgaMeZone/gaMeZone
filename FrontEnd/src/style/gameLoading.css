@@ -2,7 +2,7 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
-.container {
+.loading-container {
   box-sizing: border-box;
   width: 80rem;
   height: 47.6rem;
@@ -13,7 +13,7 @@
   font-size: 2.5rem;
 }
 
-.container-header {
+.loading-container-header {
   width: 99%;
   height: 4.8rem;
   margin: 0.7rem auto auto auto;
@@ -23,11 +23,11 @@
   align-items: center;
 }
 
-.container-header > p {
+.loading-container-header > p {
   padding-left: 3.4rem;
   color: white;
 }
-.container-header > .exit-button {
+.loading-container-header > .exit-button {
   width: 3.8rem;
   height: 3.8rem;
   margin-right: 0.7rem;
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 
-.container-header > .exit-button > img {
+.loading-container-header > .exit-button > img {
   width: 65%;
   height: 65%;
   display: flex;
@@ -135,13 +135,13 @@
   justify-content: center;
   align-items: center;
 }
-.container-footer {
+.loading-container-footer {
   display: flex;
   justify-content: space-between;
   padding: 4rem;
 }
 
-.container-footer > .cancel-btn {
+.loading-container-footer > .cancel-btn {
   padding: 0.6rem;
   background: #d9d9d9;
   border: 0.1rem solid #000000;
@@ -150,7 +150,7 @@
   cursor: pointer;
 }
 
-.container-footer > .cancel-btn > div {
+.loading-container-footer > .cancel-btn > div {
   box-sizing: border-box;
   width: 13rem;
   height: 3.4rem;
