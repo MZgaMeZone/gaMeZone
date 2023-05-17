@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
 
-const MainFooter = (props: any) => {
+function MainFooter(props: any) {
   const mainModal = props.mainModal;
   const setMainModal = props.setMainModal;
   const [timer, setTimer] = React.useState("");
@@ -36,20 +37,21 @@ const MainFooter = (props: any) => {
         >
           카테고리
         </StartButton>
-        <SubButton>로그인</SubButton>
-        <SubButton>랭킹</SubButton>
-        <SubButton>커뮤니티</SubButton>
+        <SubButton to="/">Home</SubButton>
+        <SubButton to="/login">로그인</SubButton>
+        <SubButton to="/ranking">랭킹</SubButton>
+        <SubButton to="/community">커뮤니티</SubButton>
         <Clock>{timer}</Clock>
       </FooterBar>
     </>
   );
-};
+}
 export default MainFooter;
 
 const FooterBar = styled.div`
   background-color: #c0c0c0;
   display: flex;
-  margin-bottom: auto;
+  position: absolute;
   align-items: center;
   height: 5rem;
   position: sticky;
@@ -67,13 +69,17 @@ const StartButton = styled.button`
   box-shadow: 1px 1px 1px rgb(55, 55, 55);
 `;
 
-const SubButton = styled.button`
+const SubButton = styled(Link)`
   margin: 1rem;
   border-radius: 0;
   font-size: 2rem;
   border: 1px none;
   width: 25rem;
   height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e9e9e9;
   box-shadow: 1px 1px 1px rgb(55, 55, 55);
 `;
 

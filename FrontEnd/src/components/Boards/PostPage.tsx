@@ -5,6 +5,8 @@ import PostData from './PostData';
 import { NavLink  } from 'react-router-dom';
 import styled from 'styled-components';
 
+import CommentComponent from './CommentComponent';
+
 const PostPage = () => {
   const { postId } = useParams(); 
   const post = PostData.find((item) => item._id === postId); 
@@ -26,17 +28,19 @@ const PostPage = () => {
             <CommunityLink to="/">인증게시판</CommunityLink>
             <CommunityLink to="/">건의</CommunityLink>
           </Header>
-          <Post>
-            <TitleContainer>
-              <Title>{post.title}</Title>
-              <AuthorContainer>
-                <Date>{post.author}</Date>
-                <Author>{moment(post.createdAt).format('YYYY-MM-DD')}</Author>
-              </AuthorContainer>
-            </TitleContainer>
-            <MainText>{post.comment}</MainText>
-            <BackLink to="/community">뒤로 가기</BackLink>
-        </Post>
+          <Body>
+            <Post>
+              <TitleContainer>
+                <Title>{post.title}</Title>
+                <AuthorContainer>
+                  <Date>{post.author}</Date>
+                  <Author>{moment(post.createdAt).format('YYYY-MM-DD')}</Author>
+                </AuthorContainer>
+              </TitleContainer>
+              <MainText>{post.mainText}</MainText>
+            </Post>
+            <CommentComponent comments={post.comments || []} />
+          </Body>
         </CommunityBody>
       </CommunityContainer>
     </CommunitySection>
@@ -105,16 +109,21 @@ const CommunityLink = styled(NavLink)`
   color: black;
 `
 
+const Body = styled.div`
+  height: 53rem;
+  margin: 0 3rem;
+`
+
 const Post = styled.div`
   display: flex;
   flex-direction: column;
-  height: 53rem;
+  height: 37rem;
+  border-bottom: 1px solid var(--background--gray);
 `
 
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 3rem;
   border-bottom: 1px solid var(--background--gray);
 `
 const AuthorContainer = styled.div`
@@ -138,7 +147,7 @@ const Author = styled.p`
 `
 
 const MainText = styled.p`
-  margin: 2rem 3rem 1rem;
+  margin: 2rem 0 1rem;
   font-size: 2rem;
 `
 

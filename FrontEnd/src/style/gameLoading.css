@@ -1,5 +1,7 @@
 /* @import "./reset.css"; */
-
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 .container {
   box-sizing: border-box;
   width: 80rem;
