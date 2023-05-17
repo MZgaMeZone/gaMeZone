@@ -1,13 +1,16 @@
-.wrapper {
+/* .wrapper {
   position: fixed;
-  height: 100vh;
-}
+  height: calc(100% - 5rem);
+} */
 
 .menu {
+  position: fixed;
   display: flex;
+  top: calc(50% - 5rem);
+  transform: translateY(-50%);
+
   flex-direction: column;
-  padding-top: 6.1rem;
-  margin-left: 4rem;
+  margin-left: 8rem;
 }
 
 .menu div {
