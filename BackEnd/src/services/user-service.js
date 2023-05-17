@@ -10,16 +10,7 @@ class UserService {
 
   // 회원가입
   async createUser(info) {
-    const {
-      name,
-      email,
-      password,
-      address1,
-      address2,
-      // postalCode,
-      phoneNumber,
-      role,
-    } = info;
+    const { email, nickname, password, role } = info;
 
     const usingIdCheck = await this.userModel.findById(email);
 
@@ -34,13 +25,9 @@ class UserService {
     // 해시 함수를 10번 반복, 소금을 10번 뿌린 해쉬포테이토
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo = {
-      name,
       email,
+      nickname,
       password: hashedPassword,
-      address1,
-      address2,
-      // postalCode,
-      phoneNumber,
       role,
     };
 

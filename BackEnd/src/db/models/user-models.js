@@ -52,7 +52,7 @@ export class UserModel {
     try {
       const allUser = await User.find(
         {},
-        { name: 1, email: 1, phoneNumber: 1, role: 1 }
+        { email: 1, nickname: 1, role: 1 }
       ).lean();
       return allUser;
     } catch (err) {
