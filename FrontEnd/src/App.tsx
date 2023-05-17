@@ -20,7 +20,7 @@ import PasswordChange from "./pages/myPage/Password-Change";
 import NicknameChange from "./pages/myPage/Nickname-Change";
 import MyComment from "./pages/myPage/MyComment";
 import MyArticle from "./pages/myPage/MyArticle";
-import AvartarChange from "./pages/myPage/Avartar-change";
+import AvartarChange from "./pages/myPage/Avartar-Change";
 
 function App() {
   return (
