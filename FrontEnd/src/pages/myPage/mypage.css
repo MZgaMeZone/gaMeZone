@@ -1,9 +1,14 @@
+.body {
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 .title {
   flex-basis: 90%;
   font-weight: 700;
   margin-left: 1rem;
   text-justify: center;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
 }
 
 Header_Bar > button {
@@ -14,6 +19,7 @@ Header_Bar > button {
 .close_button {
   margin-bottom: 2rem;
   position: relative;
+  padding: 1rem;
   flex-basis: 10%;
   border-radius: 5px;
 }
@@ -22,5 +28,20 @@ Header_Bar > button {
   position: absolute;
   right: 1.5rem;
   padding: 0.5rem;
-  width: 2rem;
+  width: 3rem;
+}
+
+Profile > h1 {
+  margin-left: 2rem;
+}
+
+.greeting {
+  margin-left: 1rem;
+}
+
+.avartar > img {
+  margin: 0 0 1rem 1rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
 }

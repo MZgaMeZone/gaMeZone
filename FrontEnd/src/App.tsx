@@ -11,6 +11,11 @@ import GameLoading from "./pages/gamePages/gameLoading";
 import MyPage from "./pages/myPage/mypage";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
+import PasswordChange from "./pages/myPage/password-change";
+import NicknameChange from "./pages/myPage/nickname-change";
+import MyArticle from "./pages/myPage/myArticle";
+import MyComment from "./pages/myPage/myComment";
+import AvartarChange from "./pages/myPage/avartar-change";
 
 function App() {
   return (
@@ -23,6 +28,11 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/password" element={<PasswordChange />} />
+        <Route path="/mypage/nickname" element={<NicknameChange />} />
+        <Route path="/mypage/mycomment" element={<MyComment />} />
+        <Route path="/mypage/myarticle" element={<MyArticle />} />
+        <Route path="/mypage/avartar" element={<AvartarChange />} />
       </Routes>
     </BrowserRouter>
   );
