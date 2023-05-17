@@ -12,16 +12,45 @@
 
 .menu div {
   margin: 2rem;
-  padding: 2rem;
-
-  border: solid #242424 0.2rem;
-  /* background-color: black; */
+  width: 13rem;
+  height: 13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   cursor: pointer;
-  background: url(./icons/mushroom.svg) no-repeat;
+  background-size: cover;
 }
+/* .menu div:hover {
+  border: 2px dashed #000000;
+} */
 .menu div p {
   text-align: center;
   font-size: 2.4rem;
   font-weight: 600;
   color: #ffffff;
+}
+
+.menu_dashboard {
+  background: url(./icons/mushroom.svg) no-repeat;
+}
+
+.menu_info {
+  background: url(./icons/question.svg) no-repeat;
+}
+.menu_record {
+  background: url(./icons/mario.svg) no-repeat;
+}
+.menu_user {
+  background: url(./icons/star.svg) no-repeat;
+}
+.menu_home {
+  background: url(./icons/home.svg) no-repeat;
+}
+
+.menu .selected_menu {
+  position: absolute;
+  margin: 0;
+  border: 2px dashed #000000;
+  background: rgba(217, 217, 217, 0.2);
 }
