@@ -19,7 +19,7 @@ const GameLayout = () => {
   //게임 컴포넌트 렌더링
   let gameComponent;
   switch (id) {
-    case "timeStopGame":
+    case "game1":
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
       break;
     default:

@@ -18,7 +18,7 @@ const dummyCategory = [
   "인기작",
 ];
 
-const MainBody = (props: MainBodyProps) => {
+function MainBody(props: MainBodyProps) {
   const mainModal = props.mainModal;
 
   return (
@@ -42,7 +42,7 @@ const MainBody = (props: MainBodyProps) => {
       </MainContainer>
     </>
   );
-};
+}
 export default MainBody;
 
 const MainContainer = styled.div`
