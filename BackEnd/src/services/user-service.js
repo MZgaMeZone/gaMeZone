@@ -8,6 +8,28 @@ class UserService {
     this.userModel = userModel;
   }
 
+  // 회원가입 email 중복 확인
+  async emailDuplicateCheck(email) {
+    const { email } = email;
+    const emailCheck = await this.userModel.findById(email);
+
+    if (emailCheck) {
+      return { success: false };
+    }
+    return { success: true };
+  }
+
+  // 회원가입 nickname 중복 확인
+  async nicknameDuplicateCheck(nickname) {
+    const { nickname } = nickname;
+    const nicknameCheck = await this.userModel.findById(nickname);
+
+    if (nicknameCheck) {
+      return { success: false };
+    }
+    return { success: true };
+  }
+
   // 회원가입
   async createUser(info) {
     const { email, nickname, password, role } = info;
