@@ -14,7 +14,7 @@ const Main = () => {
         backgroundColor: "#008080",
         height: "100vh",
         width: "100vw",
-        minHeight: "88rem",
+        minHeight: "880px",
         minWidth: "900px",
       }}
     >
