@@ -1,3 +1,5 @@
+@import url(../src/style/style.css);
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +7,72 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background--green);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+/* 1rem 10px 단위 설정   */
+html {
+  font-size: 62.5%;
+  letter-spacing: -0.05px;
+}
+/* 반응형 */
+@media all and (max-width: 1400px) {
+  html {
+    font-size: 44%;
+  }
+}
+@media all and (min-width: 1400px) and (max-width: 1550px) {
+  html {
+    font-size: 46.5%;
+  }
+}
+@media all and (min-width: 1550px) and (max-width: 1700px) {
+  html {
+    font-size: 51.5%;
+  }
+}
+@media all and (min-width: 1700px) and (max-width: 1900px) {
+  html {
+    font-size: 56.5%;
+  }
+}
+
+@media all and (min-width: 2070px) and (max-width: 2350px) {
+  html {
+    font-size: 68.5%;
+  }
+}
+@media all and (min-width: 2350px) and (max-width: 2600px) {
+  html {
+    font-size: 78%;
+  }
+}
+@media all and (min-width: 2600px) and (max-width: 2900px) {
+  html {
+    font-size: 86%;
+  }
+}
+@media all and (min-width: 2900px) and (max-width: 3200px) {
+  html {
+    font-size: 96.5%;
+  }
+}
+@media all and (min-width: 3200px) and (max-width: 3500px) {
+  html {
+    font-size: 106%;
+  }
+}
+@media all and (min-width: 3500px) and (max-width: 3850px) {
+  html {
+    font-size: 117%;
+  }
+}
+@media all and (min-width: 3850px) {
+  html {
+    font-size: 128.5%;
+  }
 }
