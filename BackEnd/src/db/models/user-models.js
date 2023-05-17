@@ -67,5 +67,13 @@ export class UserModel {
     );
     return userData;
   }
+
+  async findUserByNickname(nickname) {
+    const userData = await User.findOne(
+      { nickname },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
 }
 export const userModel = new UserModel();

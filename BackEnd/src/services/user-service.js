@@ -10,7 +10,6 @@ class UserService {
 
   // 회원가입 email 중복 확인
   async emailDuplicateCheck(email) {
-    const { email } = email;
     const emailCheck = await this.userModel.findById(email);
 
     if (emailCheck) {
@@ -21,8 +20,7 @@ class UserService {
 
   // 회원가입 nickname 중복 확인
   async nicknameDuplicateCheck(nickname) {
-    const { nickname } = nickname;
-    const nicknameCheck = await this.userModel.findById(nickname);
+    const nicknameCheck = await this.userModel.findUserByNickname(nickname);
 
     if (nicknameCheck) {
       return { success: false };
@@ -60,48 +58,42 @@ class UserService {
   }
 
   // 로그인
-  async getUserToken(userId, userPw) {
+  async authenticateUser(userId, userPw) {
     const userData = await this.userModel.findById(userId);
-
-    if (!userData) {
-      console.log("[로그인 실패] 회원정보가 존재하지 않습니다.");
-      return;
-    }
-
-    if (userData.status === 0) {
-      console.log("[로그인 실패] 탈퇴한 회원입니다.");
-      return;
-    }
-
     const hashedUserPassword = userData.password;
     const comparePassword = await bcrypt.compare(userPw, hashedUserPassword);
 
+    if (userData && comparePassword) {
+      // 비밀번호 일치시 JWT 토큰 생성
+      const secretKey = process.env.JWT_SECRET_KEY;
+
+      // id와 권한을  jwt페이로드에 포함시키고 , 서명키에 secretKey전달 , 토큰의 유효시간은 1시간
+      const userToken = jwt.sign(
+        { userId: userData.email, role: userData.role },
+        secretKey,
+        { expiresIn: "1h" } //토큰 유효시간 1시간 설정
+      );
+
+      if (userData.role === "super-admin") {
+        console.log("✨ 총관리자 로그인 성공! ✨");
+        return { userToken };
+      }
+      if (userData.role === "admin") {
+        console.log("✨ 관리자 로그인 성공! ✨");
+        return { userToken };
+      }
+      return { userToken };
+    }
+
+    // if (userData.status === 0) {
+    //   console.log("[로그인 실패] 탈퇴한 회원입니다.");
+    //   return;
+    // }
+
     // 보안상 비밀번호만 틀렸다고 표시하지않는게 좋다고 알고있어요.
     // 비밀번호 일치하지 않을시
-    if (!comparePassword) {
-      console.log("[로그인 실패] 아이디 또는 비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    // 비밀번호 일치시 JWT 토큰 생성
-    const secretKey = process.env.JWT_SECRET_KEY;
-
-    // id와 권한을  jwt페이로드에 포함시키고 , 서명키에 secretKey전달 , 토큰의 유효시간은 1시간
-    const userToken = jwt.sign(
-      { userId: userData.email, role: userData.role },
-      secretKey,
-      { expiresIn: "1h" } //토큰 유효시간 1시간 설정
-    );
-
-    if (userData.role === "super-admin") {
-      console.log("✨ 총관리자 로그인 성공! ✨");
-      return { userToken };
-    }
-    if (userData.role === "admin") {
-      console.log("✨ 관리자 로그인 성공! ✨");
-      return { userToken };
-    }
-    return { userToken };
+    console.log("[로그인 실패] 아이디 또는 비밀번호가 일치하지 않습니다.");
+    return;
   }
 
   // 회원 탈퇴

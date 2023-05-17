@@ -20,7 +20,7 @@ const UserSchema = new Schema(
     //프로필 아이콘 : user-icon은 url주소로 저장한다.
     userIcon: {
       type: String,
-      required: true,
+      required: false,
     },
     //권한 설정, 기본값은 user , 관리자는 임의로 DB에 직접 ADD DATA 해야합니다.
     role: {
