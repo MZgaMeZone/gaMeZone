@@ -118,8 +118,9 @@ const BackLink = styled(Link)`
 const CommentButton = styled.button`
   margin-bottom: 0.7rem;
   height: 2.5rem; 
-  background-color: var(--background--gray);
-  border-radius: 5px;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
 
   &:hover{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);

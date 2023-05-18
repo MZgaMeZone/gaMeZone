@@ -57,8 +57,10 @@ const CreatePost = () => {
           <MainLabel>내용</MainLabel>
           <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
-        <PostButton type="submit">작성 완료</PostButton>
-        <GoBack to="/community">뒤로 가기</GoBack>
+        <PostFooter>
+          <GoBack to="/community">뒤로 가기</GoBack>
+          <PostButton type="submit">작성 완료</PostButton>
+        </PostFooter>
       </PostForm>
       
     </PostSection>
@@ -109,7 +111,7 @@ const TitleLabel = styled.p`
 `
 
 const TitleInput = styled.input`
-  width: 50rem;
+  width: 50.6rem;
   height: 4rem;
   font-size: 2rem;
   border: 1px solid black;
@@ -133,15 +135,21 @@ const MainInput = styled.textarea`
   border: 1px solid black;
 `
 
+const PostFooter = styled.div`
+  display: flex;
+  width: 120rem;
+  justify-content: space-between;
+  align-items: end;
+`
+
 const PostButton = styled.button`
-  align-self: end;
+  margin: 4rem 0 1rem;
   word-wrap: normal;
-  margin: 0 3rem 2rem;
-  height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
+  height: 2.5rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   font-size: 1.5rem;
-  border-radius: 4px;
   cursor: pointer;
 
   &:hover{
@@ -150,8 +158,7 @@ const PostButton = styled.button`
 `
 
 const GoBack = styled(Link)`
-  align-self: start;
-  margin-left: 1rem;
+  margin: 4rem 0 1rem;
   padding: 1rem;
   font-size: 1.6rem;
 

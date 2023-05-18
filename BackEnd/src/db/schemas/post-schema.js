@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const postSchema = new Schema({
+const PostSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -14,12 +14,6 @@ const postSchema = new Schema({
     ref: 'User',
     required: true,
   },
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Comment',
-    }
-  ],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -29,4 +23,4 @@ const postSchema = new Schema({
   collection: "posts",
 });
 
-export default postSchema;
+export default PostSchema;

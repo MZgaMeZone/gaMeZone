@@ -1,6 +1,8 @@
-/* @import url(./reset.css); */
+@import url(./reset.css);
 
 .container {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: calc(50% - 5rem);
   left: 50%;
@@ -13,9 +15,10 @@
   box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
   border-radius: 0.4rem;
 }
-header {
+header div {
   height: 4.2rem;
   display: flex;
+  position: relative;
   background: #000080;
 }
 header p {
@@ -25,16 +28,18 @@ header p {
   font-weight: 500;
   color: #ffffff;
 }
-nav div {
+
+.sub_menu {
+  display: flex;
   height: 4.2rem;
   border-bottom: 0.2rem #242424 solid;
 }
 
-nav button {
-  background: transparent;
+.sub_menu div {
+  padding: 1rem 1rem 0 1rem;
+  cursor: pointer;
 }
-
-nav div p {
+.sub_menu div p {
   display: block;
   color: #242424;
   font-weight: 600;
@@ -42,11 +47,11 @@ nav div p {
   font-weight: 500;
   text-align: center;
 }
-/* nav button:hover {
+.sub_menu div:hover {
   transition: 0.2s;
   background: rgba(217, 217, 217, 0.4);
   box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
-} */
+}
 
 main {
   box-sizing: border-box;
@@ -55,10 +60,9 @@ main {
 }
 .content {
   position: relative;
-  top: 2rem;
-  margin: 0rem 3.6rem;
+  margin: 2rem 3.6rem;
   width: 120rem;
-  height: 100%;
+  height: 55rem;
   background: #ffffff;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0.4rem;
@@ -66,11 +70,9 @@ main {
 
 footer .footer_box {
   background-color: #c0c0c0;
-  position: absolute;
   border-top: #242424 solid 0.2rem;
   height: 4.4rem;
   width: auto;
-  bottom: 0px;
 }
 
 footer .footer_content {
