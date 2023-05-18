@@ -49,7 +49,19 @@ const AdminUser = () => {
           </div>
         </div>
         <main>
-          <div className={styles.content}></div>
+          <div className={styles.content}>
+            <div className={styles.sub_title}>
+              {menuIdx === 0 ? (
+                <p>회원 정보 관리</p>
+              ) : menuIdx === 1 ? (
+                <p>회원 탈퇴</p>
+              ) : menuIdx === 2 ? (
+                <p>블랙리스트 명단</p>
+              ) : (
+                ''
+              )}
+            </div>
+          </div>
         </main>
         <footer>
           <div className={styles.footer_box}>

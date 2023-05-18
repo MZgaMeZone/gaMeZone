@@ -61,7 +61,18 @@ main {
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0.4rem;
 }
-
+.sub_title {
+  padding: 1.2rem 2rem;
+  border-bottom: #e0e0e0 3px solid;
+}
+.sub_title p {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #242424;
+}
+.main_text {
+  padding: 1.2rem 0 0 1.2rem;
+}
 footer .footer_box {
   background-color: #c0c0c0;
   border-top: #242424 solid 0.2rem;
@@ -78,8 +89,11 @@ footer .footer_content {
 }
 
 .selected_menu {
+  margin: 0.1rem;
+  box-sizing: border-box;
   background: rgba(217, 217, 217, 0.2);
   box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border: #e0e0e0 solid 2px;
 }
 .span {
   display: inline-block;
