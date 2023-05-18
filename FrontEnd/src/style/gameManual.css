@@ -60,7 +60,7 @@
 .middle-bar-box {
   position: relative;
   height: 100%;
-  font-size: 0.1rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
 }
