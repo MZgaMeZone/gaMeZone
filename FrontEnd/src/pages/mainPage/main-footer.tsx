@@ -14,8 +14,8 @@ function MainFooter(props: any) {
       const now = new Date();
       let hours = now.getHours();
       const minutes = now.getMinutes();
-      const dayOrNight = hours > 12 ? "PM" : "AM";
-      hours = dayOrNight === "PM" ? hours - 12 : hours;
+      const dayOrNight = hours >= 12 ? "PM" : "AM";
+      hours = dayOrNight === "PM" ? (hours === 12 ? 12 : hours % 12) : hours;
       setTimer(
         `${dayOrNight} ${hours}:${minutes < 10 ? `0${minutes}` : minutes}`
       );
