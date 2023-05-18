@@ -20,7 +20,7 @@ for(let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
             <PageNation>
                 {pageNumbers.map(number => (
                     <PageNationList key={number}>
-                        <PageLink onClick={() => paginate(number)}>
+                        <PageLink onClick={() => paginate(number)} style={{ fontWeight: currentPage === number ? "bold" : "normal"}}>
                             {number}
                         </PageLink>
                     </PageNationList>
@@ -37,11 +37,11 @@ export default Pagination;
 const PageNav = styled.div`
   display: flex;
   align-self: center;
-  font-size: 1.4rem;
+  font-size: 1.7rem;
 `
 
 const PageNation = styled.ul`
-  display: flex;
+  display: flex;  
 `
 
 const PageNationList = styled.li`

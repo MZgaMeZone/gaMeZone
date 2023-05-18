@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import axios from 'axios';
 
 const CreatePost = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
   const navigate = useNavigate();
 
   const handleTitleChange = (e:any) => {
@@ -30,7 +30,6 @@ const CreatePost = () => {
     }
 
     try {
-
       const postData = {
         title: title,
         content: content,
@@ -59,9 +58,7 @@ const CreatePost = () => {
           <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
         <PostButton type="submit">작성 완료</PostButton>
-        <GoBackForm>
-        <Link to="/community">뒤로 가기</Link>
-      </GoBackForm>
+        <GoBack to="/community">뒤로 가기</GoBack>
       </PostForm>
       
     </PostSection>
@@ -78,6 +75,8 @@ const PostSection = styled.div`
   transform: translate(-50%, -50%);
   width: 128rem;
   height: 72rem;
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
   padding: 0.5rem 0;
 `
 
@@ -144,10 +143,19 @@ const PostButton = styled.button`
   font-size: 1.5rem;
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover{
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
 `
 
-const GoBackForm = styled.div`
+const GoBack = styled(Link)`
   align-self: start;
+  margin-left: 1rem;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+
+  &:hover {
+    color: blue;
+  }
 `

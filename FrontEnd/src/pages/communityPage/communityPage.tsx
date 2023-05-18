@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate, NavLink  } from 'react-router-dom';
-import styled, {createGlobalStyle} from 'styled-components';
+import { useNavigate, NavLink } from "react-router-dom";
+import styled, { createGlobalStyle } from "styled-components";
 
 import NoticeComponent from "../../components/Boards/NoticeComponent";
 
@@ -21,7 +21,7 @@ const CommunityPage = () => {
         </CommunityBody>
       </CommunityContainer>
     </CommunitySection>
-  )
+  );
 };
 
 export default CommunityPage;
@@ -33,14 +33,16 @@ const CommunitySection = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--background--gray);
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
   width: 128rem;
   height: 72rem;
-`
+`;
 
 const CommunityContainer = styled.div`
   background-color: var(--background--gray);
   padding: 0.5rem 0;
-`
+`;
 
 const CommunityHeader = styled.div`
   margin: 1rem;
@@ -48,12 +50,12 @@ const CommunityHeader = styled.div`
   background-color: var(--color--header);
   color: white;
   font-size: 2rem;
-`
+`;
 
 const CommunityBody = styled.div`
   margin: 1rem;
   background-color: white;
-`
+`;
 
 const Header = styled.div`
   display: flex;
@@ -61,12 +63,12 @@ const Header = styled.div`
   align-items: center;
   margin: 0 2rem 2rem 2rem;
   border-bottom: 2px solid black;
-`
+`;
 
 const CommunityTitle = styled.h2`
   margin: 2rem;
   font-size: 2.5rem;
-`
+`;
 
 const CurrentLink = styled(NavLink)`
   margin: auto 4rem;
@@ -75,7 +77,7 @@ const CurrentLink = styled(NavLink)`
 
   text-decoration: none;
   color: blue;
-`
+`;
 
 const CommunityLink = styled(NavLink)`
   margin: auto 4rem;
@@ -84,4 +86,4 @@ const CommunityLink = styled(NavLink)`
 
   text-decoration: none;
   color: black;
-`
+`;
