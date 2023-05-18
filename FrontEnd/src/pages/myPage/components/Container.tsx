@@ -46,8 +46,8 @@ const Header_Bar = styled.div`
   padding: 2rem;
   align-items: center;
   justify-content: center;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
   background-color: var(--color--header);
   .title > a > p {
     font-size: 2rem;
