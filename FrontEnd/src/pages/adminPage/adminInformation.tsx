@@ -14,19 +14,17 @@ const AdminInfomation = () => {
             <Question style={{ width: '12rem', height: '5.5rem' }} />
           </div>
         </header>
-        <nav>
+        <div className={styles.sub_menu}>
           <div>
-            <button>
-              <p>게임 정보 관리</p>
-            </button>
-            <button>
-              <p>게임 목록</p>
-            </button>
-            <button>
-              <p>카테고리 관리</p>
-            </button>
+            <p>게임 정보 관리</p>
           </div>
-        </nav>
+          <div>
+            <p>게임 목록</p>
+          </div>
+          <div>
+            <p>카테고리 관리</p>
+          </div>
+        </div>
         <main>
           <div className={styles.content}></div>
         </main>

@@ -14,16 +14,14 @@ const AdminRecord = () => {
             <Mario style={{ width: '9rem', height: '5.4rem' }} />
           </div>
         </header>
-        <nav>
+        <div className={styles.sub_menu}>
           <div>
-            <button>
-              <p>게임 기록</p>
-            </button>
-            <button>
-              <p>기록 삭제</p>
-            </button>
+            <p>게임 기록</p>
           </div>
-        </nav>
+          <div>
+            <p>기록 삭제</p>
+          </div>
+        </div>
         <main>
           <div className={styles.content}></div>
         </main>
