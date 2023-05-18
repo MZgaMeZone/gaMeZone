@@ -92,55 +92,97 @@ function Signup() {
         minWidth: "900px",
       }}
     >
-      <SignupHeader>회원가입 페이지 입니다.</SignupHeader>
-      <SignupForm onSubmit={handleSubmit}>
-        <FormContent>
-          이메일
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={emailDuplicateCheck}
-          />{" "}
-          <button onClick={handleEmailDuplicateCheck}>중복확인</button>
-          닉네임
-          <input
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            disabled={nicknameDuplicateCheck}
-          />{" "}
-          <button onClick={handleNicknameDuplicateCheck}>중복확인</button>
-          {nickname
-            ? nickname.length < 2 && <p>닉네임을 2자리 이상 입력해주세요.</p>
-            : ""}
-          비밀번호
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />{" "}
-          {password
-            ? password.length < 8 && <p>비밀번호를 8자리 이상 입력해주세요.</p>
-            : ""}
-          비밀번호 확인
-          <input
-            type="password"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
-          />
-          {password !== passwordCheck && <p>비밀번호가 일치하지 않습니다.</p>}
-        </FormContent>
-        <FormSubmit
-          value="가입하기"
-          type="submit"
-          disabled={
-            !emailDuplicateCheck ||
-            !nicknameDuplicateCheck ||
-            !(password === passwordCheck)
-          }
-        />
-      </SignupForm>
+      <SingupSection>
+        <SingupContainer>
+          <SignupHeader>회원가입</SignupHeader>
+          <SignupForm onSubmit={handleSubmit}>
+            <EmailContainer>
+              이메일
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={emailDuplicateCheck}
+              />{" "}
+              {email === "" ? (
+                <button disabled>중복확인</button>
+              ) : (
+                <button onClick={handleEmailDuplicateCheck}>중복확인</button>
+              )}
+            </EmailContainer>
+            <ErrorMessageContainer>
+              <ErrorMessageContainer>
+                {email &&
+                !email.match(
+                  /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+                ) ? (
+                  <p>올바른 이메일 형식을 입력하세요.</p>
+                ) : (
+                  ""
+                )}
+              </ErrorMessageContainer>
+            </ErrorMessageContainer>
+            <NicknameContainer>
+              닉네임
+              <input
+                type="text"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+                disabled={nicknameDuplicateCheck}
+              />{" "}
+              {nickname === "" ? (
+                <button disabled>중복확인</button>
+              ) : (
+                <button onClick={handleNicknameDuplicateCheck}>중복확인</button>
+              )}
+            </NicknameContainer>
+            <ErrorMessageContainer>
+              {nickname
+                ? nickname.length < 2 && (
+                    <p>닉네임을 2자리 이상 입력해주세요.</p>
+                  )
+                : ""}
+            </ErrorMessageContainer>
+            <PasswordContainer>
+              비밀번호
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />{" "}
+            </PasswordContainer>
+            <ErrorMessageContainer>
+              {password
+                ? password.length < 8 && (
+                    <p>비밀번호를 8자리 이상 입력해주세요.</p>
+                  )
+                : ""}
+            </ErrorMessageContainer>
+            <PasswordCheckContainer>
+              비밀번호 확인
+              <input
+                type="password"
+                value={passwordCheck}
+                onChange={(e) => setPasswordCheck(e.target.value)}
+              />
+            </PasswordCheckContainer>
+            <ErrorMessageContainer>
+              {passwordCheck && password !== passwordCheck && (
+                <p>비밀번호가 일치하지 않습니다.</p>
+              )}
+            </ErrorMessageContainer>
+            <FormSubmit
+              value="가입하기"
+              type="submit"
+              disabled={
+                !emailDuplicateCheck ||
+                !nicknameDuplicateCheck ||
+                !(password === passwordCheck)
+              }
+            />
+          </SignupForm>
+        </SingupContainer>
+      </SingupSection>
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
       <MainFooter
         mainModal={mainModal}
@@ -151,18 +193,92 @@ function Signup() {
 }
 export default Signup;
 
-const SignupHeader = styled.h1`
-  display: flex;
+const SingupSection = styled.div`
+  background-color: var(--background--gray);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background--gray);
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
+  width: 128rem;
+  height: 72rem;
+  overflow: auto;
+`;
+
+const SingupContainer = styled.div`
+  background-color: var(--background--gray);
+  padding: 0.5rem 0;
+`;
+
+const SignupHeader = styled.div`
+  margin: 1rem;
+  padding: 1rem;
+  background-color: var(--color--header);
+  color: white;
+  font-size: 2rem;
 `;
 
 const SignupForm = styled.form`
-  border: 1px solid black;
-  width: 25rem;
-`;
-
-const FormContent = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 8rem;
+  padding: 5rem;
 `;
 
-const FormSubmit = styled.input``;
+const EmailContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.5fr;
+  font-size: 3.5rem;
+  input {
+    font-size: 3rem;
+    margin-right: 2rem;
+  }
+  margin: 1.5rem 0;
+`;
+
+const NicknameContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.5fr;
+  font-size: 3.5rem;
+  input {
+    font-size: 3rem;
+    margin-right: 2rem;
+  }
+  margin: 1.5rem 0;
+`;
+
+const PasswordContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  font-size: 3.5rem;
+  input {
+    font-size: 3rem;
+  }
+
+  margin: 1.5rem 0;
+`;
+
+const PasswordCheckContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  font-size: 3.5rem;
+  input {
+    font-size: 3rem;
+  }
+  margin: 1.5rem 0;
+`;
+
+const FormSubmit = styled.input`
+  font-size: 3.5rem;
+  border: 1px solid black;
+  margin: 2rem 0 0 0;
+`;
+
+const ErrorMessageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: red;
+`;
