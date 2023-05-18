@@ -96,9 +96,9 @@ const TopContainer = styled.div`
 const WriteButton = styled.button`
   margin: 0 3rem;
   height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
-  border-radius: 4px;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
 
   &:hover{

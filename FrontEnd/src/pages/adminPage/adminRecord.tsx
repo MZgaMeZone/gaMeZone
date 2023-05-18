@@ -10,23 +10,27 @@ const AdminRecord = () => {
       <div className={styles.container}>
         <header>
           <div>
+            <p>게임 기록 관리</p>
             <Mario style={{ width: '9rem', height: '5.4rem' }} />
           </div>
-          <p>게임 기록 관리</p>
         </header>
         <nav>
-          <button>
-            <p>게임 기록</p>
-          </button>
-          <button>
-            <p>기록 삭제</p>
-          </button>
+          <div>
+            <button>
+              <p>게임 기록</p>
+            </button>
+            <button>
+              <p>기록 삭제</p>
+            </button>
+          </div>
         </nav>
         <main>
           <div className={styles.content}></div>
         </main>
         <footer>
-          <div></div>
+          <div className={styles.footer_box}>
+            <div className={styles.footer_content}></div>
+          </div>
         </footer>
       </div>
       <Footer idx={2} />
