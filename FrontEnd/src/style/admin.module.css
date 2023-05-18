@@ -26,35 +26,28 @@ header p {
   color: #ffffff;
 }
 nav {
-  height: 3.8rem;
+  height: 4.2rem;
   border-bottom: 0.2rem #242424 solid;
 }
+
 nav button {
-  margin-top: 0.1rem;
-  padding: 1rem 1.2rem 0 1.2rem;
-  font-size: 1.8rem;
-  text-align: center;
-  background: #c0c0c0;
+  background: transparent;
 }
+
 nav p {
   display: block;
-  margin-top: 0.4rem;
   color: #242424;
-  font-weight: 500;
-  font-size: 1.8rem;
+  font-weight: 600;
+  font-size: 2rem;
   font-weight: 500;
   text-align: center;
 }
-nav button:active {
+nav button:hover {
   transition: 0.2s;
   background: rgba(217, 217, 217, 0.4);
   box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
-nav p:active,
-nav p:hover {
-  transition: 0.2s;
-  border-bottom: 0.2rem solid #242424;
-}
+
 main {
   box-sizing: border-box;
   height: 59.4rem;
