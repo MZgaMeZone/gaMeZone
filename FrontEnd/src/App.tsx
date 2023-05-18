@@ -22,6 +22,7 @@ import NicknameChange from "./pages/myPage/nickname-Change";
 import MyComment from "./pages/myPage/myComment";
 import MyArticle from "./pages/myPage/myArticle";
 import AvartarChange from "./pages/myPage/avartar-Change";
+import PostWithComment from "./pages/myPage/postWithComment";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
         <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/mypage/mycomment-post" element={<PostWithComment />} />
       </Routes>
     </BrowserRouter>
   );
