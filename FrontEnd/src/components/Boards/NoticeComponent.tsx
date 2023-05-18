@@ -100,6 +100,10 @@ const WriteButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover{
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
 `
 
 const PostContainer = styled.div`
