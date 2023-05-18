@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../style/admin.module.css';
 import Menu from './menu';
 import Footer from './footer';
 import { ReactComponent as Question } from '../../style/icons/question.svg';
 const AdminInfomation = () => {
+  const [menuIdx, setMenuIdx] = useState<number>(0);
+
+  const handleClick = (idx: number) => {
+    setMenuIdx(idx);
+  };
   return (
     <>
       <Menu idx={1} />
@@ -15,14 +20,23 @@ const AdminInfomation = () => {
           </div>
         </header>
         <div className={styles.sub_menu}>
-          <div>
+          <div
+            className={`${styles.menu_item} ${
+              menuIdx === 0 ? styles.selected_menu : styles.menu_hover
+            }`}
+            onClick={() => handleClick(0)}
+          >
             <p>게임 정보 관리</p>
+            {menuIdx === 0 ? <span className={styles.span} /> : ''}
           </div>
-          <div>
-            <p>게임 목록</p>
-          </div>
-          <div>
+          <div
+            className={`${styles.menu_item} ${
+              menuIdx === 1 ? styles.selected_menu : styles.menu_hover
+            }`}
+            onClick={() => handleClick(1)}
+          >
             <p>카테고리 관리</p>
+            {menuIdx === 1 ? <span className={styles.span} /> : ''}
           </div>
         </div>
         <main>

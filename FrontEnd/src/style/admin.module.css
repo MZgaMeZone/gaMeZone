@@ -30,27 +30,21 @@ header p {
 }
 
 .sub_menu {
+  height: 4.6rem;
   display: flex;
-  height: 4.2rem;
   border-bottom: 0.2rem #242424 solid;
 }
 
-.sub_menu div {
-  padding: 1rem 1rem 0 1rem;
+.menu_item {
+  padding: 1.2rem;
   cursor: pointer;
 }
 .sub_menu div p {
   display: block;
-  color: #242424;
-  font-weight: 600;
+  color: #000000;
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
-}
-.sub_menu div:hover {
-  transition: 0.2s;
-  background: rgba(217, 217, 217, 0.4);
-  box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 main {
@@ -81,4 +75,19 @@ footer .footer_content {
   width: 125rem;
   background: #d9d9d9;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.selected_menu {
+  background: rgba(217, 217, 217, 0.2);
+  box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.span {
+  display: inline-block;
+  width: 2.1rem;
+  border: #000000 1px solid;
+  border-radius: 10px;
+}
+.menu_hover:hover {
+  transition: 0.2s;
+  background: rgba(217, 217, 217, 0.4);
 }
