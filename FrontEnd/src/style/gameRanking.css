@@ -83,11 +83,12 @@
 }
 .ranking-list-userID {
   flex: 4;
-  font-size: 3.1rem;
+  font-size: 2.7rem;
 }
 
 .ranking-list-score {
   flex: 2;
   text-align: end;
+  font-size: 2.5rem;
   margin-bottom: 2rem;
 }
