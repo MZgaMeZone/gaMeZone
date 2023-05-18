@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import exitImg from "../../../style/icons/x-solid.svg";
 
 type ContainerProps = {
   children: ReactNode;
@@ -16,9 +17,9 @@ function Container({ children }: ContainerProps) {
               <p>마이페이지</p>
             </Link>
           </div>
-          <div className="close_button">
-            <button className="close_btn">x</button>
-          </div>
+          <Exit_Button>
+            <img src={exitImg} alt="exitImg" />
+          </Exit_Button>
         </Header_Bar>
         {children}
       </Container_Box>
@@ -42,14 +43,26 @@ const Container_Box = styled.div`
 
 const Header_Bar = styled.div`
   display: flex;
-  padding: 0.7rem;
+  padding: 2rem;
   align-items: center;
   justify-content: center;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   background-color: var(--color--header);
   .title > a > p {
+    font-size: 2rem;
     color: white;
+  }
+`;
+
+const Exit_Button = styled.button`
+  width: 3.8rem;
+  height: 3.8rem;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
+  cursor: pointer;
+  &:active {
+    box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem #000000;
   }
 `;
 export default Container;

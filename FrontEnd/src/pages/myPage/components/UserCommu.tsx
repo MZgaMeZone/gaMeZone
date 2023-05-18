@@ -30,6 +30,15 @@ const Community_Container = styled.div`
   border-radius: 5px;
   background-color: white;
   box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+  .community_box_content > div {
+    padding: 0.5rem;
+    &:hover {
+      background-color: lightblue;
+    }
+    &:active {
+      box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
+    }
+  }
 `;
 
 export default UserCommu;

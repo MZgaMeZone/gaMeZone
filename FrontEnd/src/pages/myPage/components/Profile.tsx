@@ -50,6 +50,14 @@ const Logout_Button = styled.button`
   font-size: 1.6rem;
   border-radius: 1rem;
   justify-self: end;
-  box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  &:active {
+    box-shadow: none;
+    box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
+  }
+  &:hover {
+    background-color: var(--color--header);
+    color: white;
+  }
 `;
 export default Profile;

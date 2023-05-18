@@ -107,7 +107,7 @@ const PasswordFrom = styled.div`
   input {
     height: 5rem;
     margin-bottom: 2rem;
-    box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
   }
 
   label {
@@ -119,10 +119,14 @@ const PasswordFrom = styled.div`
   button {
     height: 5rem;
     margin: 3rem 0 3rem 0;
-    box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
     background-color: var(--color--header);
     border-radius: 0.5rem;
     color: white;
+    &:active {
+      box-shadow: none;
+      box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
+    }
   }
 `;
 

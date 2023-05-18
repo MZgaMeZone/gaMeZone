@@ -34,6 +34,15 @@ const UserInfo_Box = styled.div`
   border-radius: 5px;
   box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
   background-color: #ffffff;
+  .info_box_content > div {
+    padding: 0.5rem;
+    &:hover {
+      background-color: lightblue;
+    }
+    &:active {
+      box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
+    }
+  }
 `;
 
 export default UserInfo;
