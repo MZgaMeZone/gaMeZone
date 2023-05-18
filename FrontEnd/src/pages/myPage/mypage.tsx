@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import "../../style/reset.css";
-import "../myPage/Mypage.css";
+import "../myPage/mypage.css";
 import img from "./img-1682667302883.png";
 import Footer from "../mainPage/main-footer";
 import Container from "./components/Container";

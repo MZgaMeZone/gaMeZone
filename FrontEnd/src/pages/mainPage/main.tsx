@@ -8,6 +8,7 @@ import TimeStopGame from "../../components/Games/StopWatch/timeStop";
 
 const Main = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
+
   //더미데이터------------------------------------------------------------
   const hitGameList: any[] = [
     {
