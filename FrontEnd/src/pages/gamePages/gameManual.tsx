@@ -5,9 +5,25 @@ import exitImg from "../../style/icons/x-solid.svg";
 import middleBarIcon from "../../style/icons/manual-icon1.svg";
 import memoFavicon from "../../style/icons/memo_favicon.svg";
 
+import ExampleManualData from "../../components/Games/sampleManualData";
+
+interface manualDataType {
+  gameTitle: string;
+  gameCategory: string[];
+  gameIconUrl: string;
+  gameImageUrl: string;
+  gameDescription: string;
+  gameManual: string;
+  gameServiceStatus: string;
+}
+
 const GameManual = (props: { setShowManual: (show: boolean) => void }) => {
   const { setShowManual } = props;
+  const [manualData, setManualData] = useState<manualDataType[]>([]);
 
+  useEffect(() => {
+    setManualData(ExampleManualData);
+  }, []);
   return (
     <div className="manual-container">
       <div className="manual-container-header">
@@ -42,30 +58,16 @@ const GameManual = (props: { setShowManual: (show: boolean) => void }) => {
         </pre>
       </div>
       <div className="manual-container-body">
-        <div>
-          <p className="manual-content title1">게임 소개</p>
-          <p className="manual-content-descript">
-            10초 게임입니다 <br />
-            10초를 잘 맞춰보면 됩니다. <br />
-            10초를 정확히 맞추면 되는 게임입니다. <br />
-            10초를 정확히 맞추면 되는 게임입니다. <br />
-            10초를 정확히 맞추면 되는 게임입니다. <br />
-            잘하셨습니다.
-          </p>
-          <p className="manual-content title2">게임 진행 방법</p>
+        {manualData &&
+          manualData.map((data: manualDataType) => (
+            <div key={data.gameTitle}>
+              <p className="manual-content title1">게임 소개</p>
+              <p className="manual-content-descript">{data.gameDescription}</p>
+              <p className="manual-content title2">게임 진행 방법</p>
 
-          <p className="manual-content-descript">
-            [lolo] 어쩌구 저쩌구 하는 버튼입니다. <br />
-            [lulu] 어쩌구 저쩌구 하는 버튼입니다. <br />
-            게임을 진행할 모드를 선택합니다. <br /> 10초가 되면 뭐를 클릭합니다.{" "}
-            <br />
-            얼만큼 맞추면 잘하는 겁니다
-            <br />
-            굿잡
-            <br />
-            잘하셨습니다.
-          </p>
-        </div>
+              <p className="manual-content-descript">{data.gameManual}</p>
+            </div>
+          ))}
       </div>
     </div>
   );
