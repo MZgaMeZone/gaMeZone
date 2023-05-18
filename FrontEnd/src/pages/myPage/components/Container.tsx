@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 type ContainerProps = {
   children: ReactNode;
@@ -11,7 +12,9 @@ function Container({ children }: ContainerProps) {
       <Container_Box>
         <Header_Bar>
           <div className="title">
-            <p>마이페이지</p>
+            <Link to="/mypage">
+              <p>마이페이지</p>
+            </Link>
           </div>
           <div className="close_button">
             <button className="close_btn">x</button>
@@ -45,6 +48,8 @@ const Header_Bar = styled.div`
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   background-color: var(--color--header);
-  color: white;
+  .title > a > p {
+    color: white;
+  }
 `;
 export default Container;

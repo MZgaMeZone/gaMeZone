@@ -7,6 +7,7 @@ import TimeStopGame from "./components/Games/StopWatch/timeStop";
 import GameStarter from "./components/gameStart";
 import Admin from "./pages/adminPage/admin";
 import GameLoading from "./pages/gamePages/gameLoading";
+import GameLayout from "./pages/gamePages/gameLayout";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
 import AdminInfomation from "./pages/adminPage/adminInformation";
@@ -27,7 +28,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/game1" element={<TimeStopGame />} />
+        {/* <Route path="/game1" element={<TimeStopGame />} /> */}
+        <Route path="/game/:id" element={<GameLayout />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/password" element={<PasswordChange />} />

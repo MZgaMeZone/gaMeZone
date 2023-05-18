@@ -1,6 +1,6 @@
 import Container from "./components/Container";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function PasswordChange() {
@@ -10,19 +10,24 @@ function PasswordChange() {
   const [isPwdSame, setIsPwdSame] = useState(false);
   const [isVisible, isSetVisible] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleClick = () => {
     if (!newPwd || !newPwdCheck || !currPwd) {
       alert("모든 항목은 필수조건 입니다!");
-    }
-    if (!isPwdSame) {
+    } else if (!isPwdSame) {
       alert("비밀번호가 일치하지 않습니다!");
+    } else {
+      navigate("/");
     }
   };
 
   useEffect(() => {
+    if (newPwd !== "" || newPwdCheck !== "") {
+      isSetVisible(true);
+    }
     if (newPwd !== "" && newPwd === newPwdCheck) {
       setIsPwdSame(true);
-      isSetVisible(true);
     } else {
       setIsPwdSame(false);
     }
