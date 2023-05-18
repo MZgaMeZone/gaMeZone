@@ -4,6 +4,7 @@ import "../../style/gameLayout.css";
 import { Link, useParams } from "react-router-dom";
 import GameLoading from "./gameLoading";
 import GameRanking from "./gameRanking";
+import GameManual from "./gameManual";
 import TimeStopGame from "../../components/Games/StopWatch/timeStop";
 
 import exitImg from "../../style/icons/x-solid.svg";
@@ -14,7 +15,8 @@ import { fontFamily } from "@mui/system";
 
 const GameLayout = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [showranking, setShowranking] = useState<Boolean>(false);
+  const [showRanking, setShowRanking] = useState<Boolean>(false);
+  const [showManual, setShowManual] = useState<Boolean>(false);
   const [mainModal, setMainModal] = useState<boolean>(false);
   const [gameName, setGameName] = useState<string>("");
   const { id } = useParams();
@@ -27,9 +29,16 @@ const GameLayout = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-      setShowranking(true);
+      setShowRanking(true);
     }, 6000);
   }, []);
+
+  useEffect(() => {
+    if (showManual) setShowRanking(false);
+  }, [showManual]);
+  useEffect(() => {
+    if (showRanking) setShowManual(false);
+  }, [showRanking]);
 
   //게임 컴포넌트 렌더링
   let gameComponent;
@@ -65,11 +74,17 @@ const GameLayout = () => {
                 <img src={exitImg} alt="exitImg" />
               </Link>
             </div>
-            <nav>
-              <p>게임설명</p>
+            <nav id="game-container-nav">
               <p
                 onClick={() => {
-                  setShowranking((current) => !current);
+                  setShowManual(!showManual);
+                }}
+              >
+                게임설명
+              </p>
+              <p
+                onClick={() => {
+                  setShowRanking(!showRanking);
                 }}
               >
                 랭킹
@@ -83,8 +98,10 @@ const GameLayout = () => {
             </div>
           </div>
           <>
-            {showranking ? (
-              <GameRanking setShowranking={setShowranking} />
+            {showRanking ? (
+              <GameRanking setShowRanking={setShowRanking} />
+            ) : showManual ? (
+              <GameManual setShowManual={setShowManual} />
             ) : null}
           </>
         </div>

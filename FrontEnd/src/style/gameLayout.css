@@ -62,14 +62,14 @@
   margin: 0.6rem auto;
 }
 
-nav {
+#game-container-nav {
   display: flex;
   padding: 0 2rem;
   height: 4.5rem;
   border-bottom: #7e7e7e 0.2rem solid;
 }
 
-nav p {
+#game-container-nav p {
   cursor: pointer;
   font-size: 2.3rem;
   padding: 1rem;

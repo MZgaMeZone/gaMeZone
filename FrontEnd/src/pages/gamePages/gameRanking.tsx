@@ -16,12 +16,12 @@ interface rankingDataType {
   highScore: number;
 }
 
-const GameRanking = (props: { setShowranking: (show: boolean) => void }) => {
-  const { setShowranking } = props;
-  const [rankingData, setLankingData] = useState<rankingDataType[]>([]);
+const GameRanking = (props: { setShowRanking: (show: boolean) => void }) => {
+  const { setShowRanking } = props;
+  const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
 
   useEffect(() => {
-    setLankingData(ExampleRankingData);
+    setRankingData(ExampleRankingData);
   }, []);
 
   return (
@@ -34,7 +34,7 @@ const GameRanking = (props: { setShowranking: (show: boolean) => void }) => {
         <div
           className="exit-button"
           onClick={() => {
-            setShowranking(false);
+            setShowRanking(false);
           }}
         >
           <img src={exitImg} alt="exitImg" />
