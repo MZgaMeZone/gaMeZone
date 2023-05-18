@@ -14,19 +14,17 @@ const AdminUser = () => {
             <Star style={{ width: '6rem', height: '5.2rem' }} />
           </div>
         </header>
-        <nav>
+        <div className={styles.sub_menu}>
           <div>
-            <button>
-              <p>회원 정보 관리</p>
-            </button>
-            <button>
-              <p>회원 탈퇴</p>
-            </button>
-            <button>
-              <p>블랙리스트</p>
-            </button>
+            <p>회원 정보 관리</p>
           </div>
-        </nav>
+          <div>
+            <p>회원 탈퇴</p>
+          </div>
+          <div>
+            <p>블랙리스트</p>
+          </div>
+        </div>
         <main>
           <div className={styles.content}></div>
         </main>
