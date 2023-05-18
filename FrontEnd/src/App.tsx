@@ -8,6 +8,7 @@ import GameStarter from './components/gameStart';
 import Admin from './pages/adminPage/admin';
 import GameLoading from './pages/gamePages/gameLoading';
 import GameLayout from './pages/gamePages/gameLayout';
+import GameOver from './pages/gamePages/gameOver';
 import Main from './pages/mainPage/main';
 import Rootpage from './pages/rootPage';
 import AdminInfomation from './pages/adminPage/info/adminInformation';
@@ -30,13 +31,14 @@ function App() {
         <Route path="/" element={<Main />} />
         {/* <Route path="/game1" element={<TimeStopGame />} /> */}
         <Route path="/game/:id" element={<GameLayout />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/game/gameover" element={<GameOver />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/password" element={<PasswordChange />} />
         <Route path="/mypage/nickname" element={<NicknameChange />} />
         <Route path="/mypage/mycomment" element={<MyComment />} />
         <Route path="/mypage/myarticle" element={<MyArticle />} />
         <Route path="/mypage/avartar" element={<AvartarChange />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/admin/information" element={<AdminInfomation />} />
         <Route path="/admin/record" element={<AdminRecord />} />
         <Route path="/admin/user" element={<AdminUser />} />

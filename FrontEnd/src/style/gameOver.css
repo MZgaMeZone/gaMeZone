@@ -1,0 +1,122 @@
+.game-over {
+  width: 113rem;
+  height: 78rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "neodgm", cursive;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  border: 0.1rem solid white;
+  box-shadow: 3px 3px 4px #1c1c1c;
+}
+
+.game-over-header {
+  width: 50rem;
+  height: 4.8rem;
+  background-color: white;
+  font-size: 4.3rem;
+  text-align: center;
+  padding: 0.5rem 4rem;
+  margin: 5rem auto 3rem auto;
+}
+
+.game-over-body {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.game-over-body-top {
+  width: 75rem;
+  margin: 0 auto;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-score {
+  color: yellow;
+}
+
+.game-over-nav {
+  width: 97rem;
+  height: 5rem;
+  border: 0.4rem solid white;
+  padding-right: 7rem;
+  padding-left: 7rem;
+  margin: 1rem auto 2rem auto;
+  display: flex;
+  align-items: center;
+}
+
+.game-over-nav span {
+  text-align: center;
+  font-size: 3rem;
+}
+.game-over-nav > .ranking {
+  flex: 1.5;
+}
+.game-over-nav > .id {
+  flex: 2;
+  text-align: start;
+  padding-left: 2rem;
+}
+.game-over-nav > .avgscore {
+  flex: 1.7;
+}
+.game-over-nav > .highscore {
+  flex: 1.7;
+}
+
+.ranking-content {
+  width: 80rem;
+  /* border: 3px solid red; */
+  margin: auto;
+}
+
+.ranking-item {
+  display: flex;
+  font-size: 3.2rem;
+}
+.ranking-item li {
+  /* border: 2px solid blue; */
+  margin-bottom: 1rem;
+}
+.ranking-item > .ranking-idx {
+  flex: 1;
+  padding-left: 6rem;
+}
+
+.ranking-item > .id-li {
+  flex: 2;
+}
+
+.ranking-item .score-li {
+  flex: 1.5;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-over-footer {
+  display: flex;
+  margin: 2.5rem auto;
+}
+
+.game-over-footer > :not(:last-child) {
+  margin-right: 3.4rem;
+}
+
+.game-over-footer .btn {
+  width: 20rem;
+  height: 6.3rem;
+  background: transparent;
+  border: 0.5rem solid white;
+  color: white;
+  font-size: 4.3rem;
+}
