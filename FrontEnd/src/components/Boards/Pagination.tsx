@@ -35,7 +35,6 @@ for(let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
 export default Pagination;
 
 const PageNav = styled.div`
-  margin-top: 6rem;
   display: flex;
   align-self: center;
   font-size: 1.7rem;

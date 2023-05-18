@@ -39,7 +39,7 @@ const PostPage = () => {
               </TitleContainer>
               <MainText>{post.mainText}</MainText>
             </Post>
-            <CommentComponent comments={post.comments || []} />
+            <CommentComponent comments={post.comments || []} postId={postId}/>
           </Body>
         </CommunityBody>
       </CommunityContainer>
@@ -56,6 +56,8 @@ const CommunitySection = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--background--gray);
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
   width: 128rem;
   height: 72rem;
 `

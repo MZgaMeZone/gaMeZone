@@ -26,11 +26,6 @@ const CommunityPage = () => {
 
 export default CommunityPage;
 
-// const GomaoDiv = styled.div`
-//   display: flex;
-//   flex-direction: column-reverse;
-// `;
-
 const CommunitySection = styled.div`
   background-color: var(--background--gray);
   position: absolute;
@@ -38,6 +33,8 @@ const CommunitySection = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--background--gray);
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
   width: 128rem;
   height: 72rem;
 `;
