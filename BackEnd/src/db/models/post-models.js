@@ -19,6 +19,15 @@ export class PostModel {
     return findPosts;
   };
 
+  async findUserPosts(id) {
+    // 특정 유저의 게시물 조회
+    const findPosts = await Post.find({author: id});
+    if (findPosts.length < 1) {
+      console.log("등록된 게시물이 없습니다.");
+    }
+    return findPosts;
+  }
+
   async deletePost(id) {
     // 게시물 삭제
     try {
