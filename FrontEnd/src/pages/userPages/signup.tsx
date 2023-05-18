@@ -103,6 +103,7 @@ function Signup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={emailDuplicateCheck}
+                placeholder="email@email.com"
               />{" "}
               {email === "" ? (
                 <button disabled>중복확인</button>
@@ -129,6 +130,7 @@ function Signup() {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 disabled={nicknameDuplicateCheck}
+                placeholder="nickname"
               />{" "}
               {nickname === "" ? (
                 <button disabled>중복확인</button>
@@ -149,6 +151,7 @@ function Signup() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder="password"
               />{" "}
             </PasswordContainer>
             <ErrorMessageContainer>
@@ -164,6 +167,7 @@ function Signup() {
                 type="password"
                 value={passwordCheck}
                 onChange={(e) => setPasswordCheck(e.target.value)}
+                placeholder="password"
               />
             </PasswordCheckContainer>
             <ErrorMessageContainer>
