@@ -103,11 +103,11 @@ const ButtonContainer = styled.div`
 const GoBackButton = styled.button`
   word-wrap: normal;
   margin: 0 3rem 2rem;
-  height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
+  height: 3.5rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   font-size: 1.5rem;
-  border-radius: 4px;
   cursor: pointer;
 
   &:hover{
@@ -117,11 +117,11 @@ const GoBackButton = styled.button`
 const CompleteButton = styled.button`
   word-wrap: normal;
   margin: 0 3rem 2rem;
-  height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
+  height: 3.5rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   font-size: 1.5rem;
-  border-radius: 4px;
   cursor: pointer;
 
   &:hover{
