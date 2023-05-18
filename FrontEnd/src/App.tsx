@@ -16,12 +16,12 @@ import AdminUser from "./pages/adminPage/adminUser";
 import Community from "./pages/communityPage/community";
 import Login from "./pages/userPages/login";
 import Signup from "./pages/userPages/signup";
-import MyPage from "./pages/myPage/Mypage";
-import PasswordChange from "./pages/myPage/Password-Change";
-import NicknameChange from "./pages/myPage/Nickname-Change";
-import MyComment from "./pages/myPage/MyComment";
-import MyArticle from "./pages/myPage/MyArticle";
-import AvartarChange from "./pages/myPage/Avartar-Change";
+import MyPage from "./pages/myPage/mypage";
+import PasswordChange from "./pages/myPage/password-change";
+import NicknameChange from "./pages/myPage/nickname-change";
+import MyComment from "./pages/myPage/myComment";
+import MyArticle from "./pages/myPage/myArticle";
+import AvartarChange from "./pages/myPage/avartar-change";
 
 function App() {
   return (
