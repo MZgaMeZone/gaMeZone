@@ -153,7 +153,7 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
 // );
 
 // 전체 유저 조회(관리자) - 추가기능으로 활용 예정
-userRouter.get("/allUser", async (req, res, next) => {
+userRouter.get("/allUsers", async (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
   console.log("🔎 토큰 검증 중...");
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -164,9 +164,9 @@ userRouter.get("/allUser", async (req, res, next) => {
   }
   try {
     console.log("🔎 검증 완료! 모든 유저 리스트를 조회합니다...");
-    const allUser = await userService.getAllUser();
+    const allUsers = await userService.getAllUsers();
     console.log("🖥️ 유저 정보 출력 중..");
-    return res.status(200).json(allUser);
+    return res.status(200).json(allUsers);
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);
