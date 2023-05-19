@@ -14,7 +14,11 @@ const GameSchema = new Schema(
         message: "카테고리는 1개 이상 존재해야 합니다.",
       },
     },
-
+    gameUrl: {
+      // 게임 접속 주소
+      type: String,
+      required: true,
+    },
     gameIconUrl: {
       // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다.
       type: String,

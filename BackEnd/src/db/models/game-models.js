@@ -35,7 +35,6 @@ class GameModel {
       throw new Error(e);
     }
   }
-
   async updateGame(id, data) {
     // id로 검색하고, data로 전달한 게임정보를 수정하기 [Joi에서 사전 검증할 예정임]
     const updateGame = await Game.findOneAndUpdate(
@@ -44,6 +43,15 @@ class GameModel {
       { new: true } // 이 옵션은 업데이트 이후에 업데이트된 문서를 반환합니다.
     );
     return updateGame;
+  }
+  async findGamesByCategory(data) {
+    try {
+      const games = await Game.find({ gameCategory: data }).exec();
+      return games;
+    } catch (error) {
+      console.error("게임 데이터 검색 실패:", error);
+      throw new Error("게임 데이터 검색 실패");
+    }
   }
 }
 
