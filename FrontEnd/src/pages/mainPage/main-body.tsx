@@ -4,7 +4,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 import styles from '../../../src/style/admin.module.css';
 import exitImg from '../../style/icons/x-solid.svg';
 import axios from 'axios';
-
 type MainBodyProps = {
   mainModal: boolean;
   setMainModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +18,8 @@ function MainBody(props: MainBodyProps) {
   async function fetchGameList(item: string) {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/games/${item}`
+        `${process.env.REACT_APP_API_URL}/api/games/${item}` // 됨!
+        // `http://localhost:8080/api/games/${item}` // 수동입력할 경우 사용
       );
       const gameData = response.data;
       setGameList(gameData);
@@ -30,7 +30,10 @@ function MainBody(props: MainBodyProps) {
 
   React.useEffect(() => {
     axios
-      .get('http://localhost:8080/api/categories')
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/categories` // 됨!
+        // `http://localhost:8080/api/categories` // 수동입력할 경우 사용
+      )
       .then((res) => {
         const categoryData = res.data;
         const categoryList = categoryData.map(
@@ -106,7 +109,9 @@ function MainBody(props: MainBodyProps) {
                         <GameButton
                           key={index}
                           onClick={() => handleGameClick(item.gameUrl)}
-                          imageUrl={item.gameImageUrl}
+                          imageUrl={
+                            process.env.REACT_APP_API_URL + item.gameImageUrl
+                          }
                           gameTitle={item.gameTitle}
                         />
                       </>
