@@ -29,6 +29,12 @@ const UserSchema = new Schema(
       default: "user",
     },
     // 게임랭킹 관련 데이터를
+    // Scores: [
+
+    // ],
+    // exp: {
+
+    // }
 
     // // 0 : 탈퇴한 상태 , 1: 이용중인 상태 // 탈퇴 회원정보 별도 관리??
     // status: {
