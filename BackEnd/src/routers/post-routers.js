@@ -16,6 +16,20 @@ postRouter.get("/", async(req, res, next) => {
   }
 });
 
+//특정 게시물을 가져오는 GET요청
+postRouter.get("/post/:postId", async(req, res, next) => {
+  try {
+    const id = req.params.postId
+    console.log("게시물을 출력합니다.");
+    const post = await postService.findPost(id);
+    console.log("해당 게시물의 출력이 완료되었습니다.");
+    res.status(201).json(post);
+  } catch(err) {
+    console.log(`${err}`);
+    next(err);
+  }
+})
+
 //특정 유저의 게시물 가져오는 GET요청
 postRouter.get("/:id", async(req, res, next) => {
   try {
