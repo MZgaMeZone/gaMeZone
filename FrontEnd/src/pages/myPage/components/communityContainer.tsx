@@ -1,13 +1,13 @@
-import styled from "styled-components";
 import { ReactNode } from "react";
+import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import exitImg from "../../../style/icons/x-solid.svg";
 
-type ContainerProps = {
+type CommunityContainer = {
   children: ReactNode;
 };
 
-function Container({ children }: ContainerProps) {
+function CommunityContainer({ children }: CommunityContainer) {
   return (
     <>
       <Container_Box>
@@ -35,7 +35,8 @@ const Container_Box = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 76.8rem;
+  width: 128rem;
+  height: 72rem;
   border-radius: 3px;
   background-color: var(--background--gray);
   box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
@@ -65,4 +66,5 @@ const Exit_Button = styled.button`
     box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem #000000;
   }
 `;
-export default Container;
+
+export default CommunityContainer;
