@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import axios from 'axios';
@@ -31,12 +31,13 @@ const CreatePost = () => {
 
     try {
       const postData = {
+        author: "64653ea8c587b21f36aef42e",
         title: title,
         content: content,
       };
 
-      localStorage.setItem('postData', JSON.stringify(postData));
-
+      axios.post('http://localhost:8080/api/posts', postData);
+      
       alert('게시물이 작성되었습니다.');
       navigate('/community');
     } catch (error) {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
-import PostData from './PostData';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -54,11 +53,13 @@ const PostPage = () => {
               <TitleContainer>
                 <Title>{post.title}</Title>
                 <AuthorContainer>
-                  <Date>{post.author.nickname}</Date>
-                  <Author>{moment(post.createdAt).format('YYYY-MM-DD')}</Author>
+                  <Author>{post.author.nickname}</Author>
+                  <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Date>
                 </AuthorContainer>
               </TitleContainer>
-              <MainText>{post.content}</MainText>
+              <MainText>{post.content.split("\n").map((item) => {
+                return <Text>{item}</Text>
+              })}</MainText>
             </Post>
             <CommentComponent postId={postId} />
           </Body>
@@ -152,7 +153,7 @@ const TitleContainer = styled.div`
 const AuthorContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: end;
 `;
 
 const Title = styled.h2`
@@ -162,11 +163,12 @@ const Title = styled.h2`
 
 const Date = styled.p`
   margin-bottom: 0.5rem;
-  font-size: 1.7rem;
+  font-size: 1.4em;
 `;
 
 const Author = styled.p`
-  font-size: 1.3rem;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
 `;
 
 const MainText = styled.p`
@@ -174,12 +176,6 @@ const MainText = styled.p`
   font-size: 2rem;
 `;
 
-const BackLink = styled(Link)`
-  margin: 30rem 3rem auto auto;
-  align-self: end;
-  font-size: 2rem;
-
-  &:hover {
-    color: red;
-  }
-`;
+const Text = styled.p`
+  margin-bottom: 0.4rem;
+`
