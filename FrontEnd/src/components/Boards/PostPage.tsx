@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import CommentComponent from './CommentComponent';
+import DeletePost from './DeletePostConponent';
 
 interface postsType {
   _id: string;
@@ -59,6 +60,7 @@ const PostPage = () => {
                 </AuthorContainer>
               </TitleContainer>
               <MainText>{post.content}</MainText>
+              <DeletePost postId={postId}/>
             </Post>
             <CommentComponent postId={postId} />
           </Body>
