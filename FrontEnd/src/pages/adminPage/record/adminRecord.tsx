@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import styles from '../../../src/style/admin.module.css';
-import Menu from './menu';
-import Footer from './footer';
-import { ReactComponent as Star } from '../../style/icons/star.svg';
-const AdminUser = () => {
+import styles from '../../../../src/style/admin.module.css';
+import Menu from '../menu';
+import Footer from '../footer';
+import { ReactComponent as Mario } from '../../../style/icons/mario.svg';
+import AdminRecordEdit from './adminRecordEdit';
+import AdminRecordDelete from './adminRecordDelete';
+const AdminRecord = () => {
   const [menuIdx, setMenuIdx] = useState<number>(0);
 
   const handleClick = (idx: number) => {
@@ -11,12 +13,12 @@ const AdminUser = () => {
   };
   return (
     <>
-      <Menu idx={3} />
+      <Menu idx={2} />
       <div className={styles.container}>
         <header>
           <div>
-            <p>회원 정보 관리</p>
-            <Star style={{ width: '6rem', height: '5.2rem' }} />
+            <p>게임 기록 관리</p>
+            <Mario style={{ width: '9rem', height: '5.4rem' }} />
           </div>
         </header>
         <div className={styles.sub_menu}>
@@ -26,7 +28,7 @@ const AdminUser = () => {
             }`}
             onClick={() => handleClick(0)}
           >
-            <p>회원 정보 관리</p>
+            <p>게임 기록</p>
             {menuIdx === 0 ? <span className={styles.span} /> : ''}
           </div>
           <div
@@ -35,28 +37,26 @@ const AdminUser = () => {
             }`}
             onClick={() => handleClick(1)}
           >
-            <p>회원 탈퇴</p>
+            <p>기록 삭제</p>
             {menuIdx === 1 ? <span className={styles.span} /> : ''}
-          </div>
-          <div
-            className={`${styles.menu_item} ${
-              menuIdx === 2 ? styles.selected_menu : styles.menu_hover
-            }`}
-            onClick={() => handleClick(2)}
-          >
-            <p>블랙리스트</p>
-            {menuIdx === 2 ? <span className={styles.span} /> : ''}
           </div>
         </div>
         <main>
           <div className={styles.content}>
             <div className={styles.sub_title}>
               {menuIdx === 0 ? (
-                <p>회원 정보 관리</p>
+                <p>게임 기록 관리</p>
               ) : menuIdx === 1 ? (
-                <p>회원 탈퇴</p>
-              ) : menuIdx === 2 ? (
-                <p>블랙리스트 명단</p>
+                <p>게임 기록 삭제</p>
+              ) : (
+                ''
+              )}
+            </div>
+            <div className={styles.main_text}>
+              {menuIdx === 0 ? (
+                <AdminRecordEdit />
+              ) : menuIdx === 1 ? (
+                <AdminRecordDelete />
               ) : (
                 ''
               )}
@@ -69,8 +69,8 @@ const AdminUser = () => {
           </div>
         </footer>
       </div>
-      <Footer idx={3} />
+      <Footer idx={2} />
     </>
   );
 };
-export default AdminUser;
+export default AdminRecord;

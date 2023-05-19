@@ -38,16 +38,15 @@ function Comment() {
     },
   ];
 
-  const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고 닫기
+  const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고(긴글) 닫기(짧은글)
   const textLimit = 170; //글자수 제한 선언
 
   return (
     <>
       <Wrapper>
-        {/* <CommentInfo> */}
         {comment.map((comment) => {
-          const shortComment = comment.content.slice(0, textLimit);
-          const isLongComment = comment.content.length > textLimit;
+          const shortComment = comment.content.slice(0, textLimit); //보여줄 짧은 글
+          const isLongComment = comment.content.length > textLimit; //긴글인지 확인
           return (
             <>
               <CommentInfo key={comment.id}>
@@ -66,31 +65,27 @@ function Comment() {
                 </CommentContent>
                 <div
                   onClick={() => setIsShowMore(!isShowMore)}
-                  style={{ fontSize: "1.7rem" }}
+                  style={{
+                    fontSize: "1.7rem",
+                    marginLeft: "2.1rem",
+                    cursor: "pointer",
+                  }}
                 >
                   {comment.content.length > textLimit &&
                     (isShowMore ? "[닫기]" : "...[더보기]")}
                 </div>
+                <h2>{comment.category}</h2>
               </CommentInfo>
             </>
           );
         })}
-        {/* <ProfileBox>
-            <img src={cuteImg} alt="프로필" />
-            <h1>닉네임</h1>
-            <Date>
-              <h1>2023-05-19</h1>
-            </Date>
-          </ProfileBox>
-          <CommentContent>댓글내용어쩌고저쩌고호호호재밌네요</CommentContent>
-        </CommentInfo> */}
       </Wrapper>
     </>
   );
 }
 
 const Wrapper = styled.div`
-  margin: 2rem auto;
+  margin: 2.5rem auto;
   width: 90%;
   height: 55rem;
 
@@ -129,6 +124,11 @@ const CommentInfo = styled.div`
   h1 {
     margin-top: 1rem;
     margin-right: 3rem;
+  }
+
+  h2 {
+    margin-top: 1rem;
+    margin-left: 2.7rem;
   }
 `;
 

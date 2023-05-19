@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import CommunityContainer from "./components/communityContainer";
 import Comment from "./components/comment";
 
@@ -9,13 +10,7 @@ function MyComment() {
     <>
       <CommunityContainer>
         <Title>내가 쓴 댓글</Title>
-        <div
-          style={{
-            borderBottom: "1px solid rgba(0,0,0,0.2)",
-            width: "90%",
-            margin: "0 auto",
-          }}
-        ></div>
+        <Line></Line>
         <CommentMenu>
           <Link to="/mypage/mycomment">
             <Title>내가 쓴 댓글</Title>
@@ -31,6 +26,11 @@ function MyComment() {
   );
 }
 
+const Line = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto;
+`;
 const CommentMenu = styled.div`
   display: flex;
   flex-direction: row;
@@ -42,6 +42,5 @@ const CommentMenu = styled.div`
 const Title = styled.h1`
   margin-left: 6.3rem;
   margin-top: 3rem;
-  /* font-size: 2.5rem; */
 `;
 export default MyComment;
