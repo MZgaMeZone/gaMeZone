@@ -14,7 +14,7 @@ import MainFooter from '../mainPage/main-footer';
 import { fontFamily } from '@mui/system';
 
 const GameLayout = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showRanking, setShowRanking] = useState<Boolean>(false);
   const [showManual, setShowManual] = useState<Boolean>(false);
   const [mainModal, setMainModal] = useState<boolean>(false);
@@ -27,10 +27,18 @@ const GameLayout = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
+    console.log(sessionStorage[`${id}`]);
+    if (!sessionStorage[`${id}`]) {
+      sessionStorage.setItem(`${id}`, `${id} is in session`);
+      console.log(sessionStorage[`${id}`]);
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setShowRanking(true);
+      }, 6000);
+    } else {
       setShowRanking(true);
-    }, 6000);
+    }
   }, []);
 
   useEffect(() => {
