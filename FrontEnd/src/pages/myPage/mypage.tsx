@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import "../../style/reset.css";
-import "./mypage.css";
-import img from "./img-1682667302883.png";
-import Footer from "../mainPage/main-footer";
-import Container from "./components/container";
-import Profile from "./components/profile";
-import UserInfo from "./components/userInfo";
-import UserCommu from "./components/userCommu";
+import styled from 'styled-components';
+import '../../style/reset.css';
+import './mypage.css';
+import img from './img-1682667302883.png';
+import Footer from '../mainPage/main-footer';
+import Container from './components/container';
+import Profile from './components/profile';
+import UserInfo from './components/userInfo';
+import UserCommu from './components/userCommu';
 
-const user = { id: "flsgp123", nick: "내닉네임은너무나도길어" };
+const user = { id: 'flsgp123', nick: '내닉네임은너무나도길어' };
 
 function MyPage() {
   return (
