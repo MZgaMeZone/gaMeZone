@@ -28,6 +28,17 @@
 | PUT    | /api/categories/:name    | 특정 카테고리 수정   |
 | DELETE | /api/categories/:name    | 특정 카테고리 삭제   |
 
+### <b>게임 기록 명세</b>
+
+| Method | URI                         | Description                |
+| ------ | --------------------------- | -------------------------- |
+| GET    | /api/scores                 | 전체 게임 기록 조회        |
+| GET    | /api/scores/games/:gameId   | 특정 게임 기록 조회        |
+| GET    | /api/scores/users/:userId   | 특정 유저 게임 기록 조회   |
+| GET    | /api/scores/:gameId/:option | 특정 게임 랭킹 순으로 조회 |
+| POST   | /api/scores                 | 새 게임 기록 생성          |
+| DELETE | /api/scores/:id             | 특정 게임 기록 삭제        |
+
 ### <b>게시물 명세</b>
 
 | Method | URI                | Description             |
