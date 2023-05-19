@@ -10,6 +10,11 @@ class PostService {
     return await postModel.findAllPost();
   };
 
+  //GET one post
+  async findPost(id) {
+    return await postModel.findPost(id);
+  }
+
   //GET user's posts
   async findUserPosts(id) {
     return await postModel.findUserPosts(id);

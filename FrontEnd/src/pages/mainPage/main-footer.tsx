@@ -1,12 +1,12 @@
-import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function MainFooter(props: any) {
   const mainModal = props.mainModal;
   const setMainModal = props.setMainModal;
-  const [timer, setTimer] = React.useState("");
+  const [timer, setTimer] = React.useState('');
 
   //   현재 시간을 출력하는 함수
   React.useEffect(() => {
@@ -14,8 +14,8 @@ function MainFooter(props: any) {
       const now = new Date();
       let hours = now.getHours();
       const minutes = now.getMinutes();
-      const dayOrNight = hours >= 12 ? "PM" : "AM";
-      hours = dayOrNight === "PM" ? (hours === 12 ? 12 : hours % 12) : hours;
+      const dayOrNight = hours >= 12 ? 'PM' : 'AM';
+      hours = dayOrNight === 'PM' ? (hours === 12 ? 12 : hours % 12) : hours;
       setTimer(
         `${dayOrNight} ${hours}:${minutes < 10 ? `0${minutes}` : minutes}`
       );
@@ -57,22 +57,40 @@ const FooterBar = styled.div`
   position: sticky;
   bottom: 0;
   z-index: 2;
+  background: #c0c0c0;
+  border-top: #e0e0e0 solid 2px;
+  box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const StartButton = styled.button`
-  margin-left: 1rem;
-  margin-right: 1.5rem;
-  font-size: 2rem;
-  border-radius: 0;
-  border: 1px none;
-  padding: 0.3rem 0.3rem;
-  box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  // margin-left: 1rem;
+  // margin-right: 1.5rem;
+  // font-size: 2rem;
+  // border-radius: 0;
+  // border: 1px none;
+  // padding: 0.3rem 0.3rem;
+  // box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  margin: 0.3rem 0 0 0.6rem;
+  width: 14.6rem;
+  height: 3.8rem;
+  background: #c0c0c0;
+  border: #e0e0e0 solid 2px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  color: #242424;
+  font-size: 2.8rem;
+  padding-top: 0.6rem;
+  &:active {
+    background-color: #d9d9d9;
+    border: #e0e0e0 solid 2px;
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
 `;
 
 const SubButton = styled(Link)`
   margin: 1rem;
   border-radius: 0;
-  font-size: 2rem;
+  font-size: 3rem;
   border: 1px none;
   width: 25rem;
   height: 3.5rem;
@@ -81,6 +99,11 @@ const SubButton = styled(Link)`
   align-items: center;
   background-color: #e9e9e9;
   box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  &:active {
+    background-color: #d9d9d9;
+    border: #e0e0e0 solid 2px;
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
 `;
 
 const Clock = styled.div`

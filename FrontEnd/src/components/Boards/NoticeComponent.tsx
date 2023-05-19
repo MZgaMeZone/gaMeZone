@@ -11,7 +11,7 @@ import PostData from "./PostData";
 interface postType {
   _id: string,
   title: string,
-  author: string,
+  author: {nickname: string},
   createdAt: string
 }
 
@@ -21,28 +21,15 @@ const NoticeComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     let res = await axios('/api/post/noticeList');
-  //     setPosts(res.data);
-  //   };
-
-  //   fetchPosts();
-  // }, []);
-
-  // 일단 local 환경에서 test
-  //데이터 가져오기
   useEffect(() => {
-    const storedCurrentPage = localStorage.getItem('currentPage');
-
-    // 저장된 데이터가 있을 경우에만 가져와서 설정
-    if (storedCurrentPage) {
-      setCurrentPage(JSON.parse(storedCurrentPage));
-    }
-
-    setPosts(PostData); // 더미 데이터를 설정
-  }, []);
-  
+    axios
+      .get("http://localhost:8080/api/posts")
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        setPosts(data);
+      });
+  }, []);  
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -65,7 +52,7 @@ const NoticeComponent = () => {
                   </PostItemTitle>
                   <PostItemInfo>
                     <PostDate>{moment(post.createdAt).format('YYYY-MM-DD')}</PostDate>
-                    <PostUser>{post.author}</PostUser>
+                    <PostUser>{post.author.nickname}</PostUser>
                   </PostItemInfo>
                 </PostItemHeader>
               </PostItem>
@@ -130,6 +117,7 @@ const PostItemHeader = styled.div`
 
 const PostItemTitle = styled.div`
   margin: 0 20rem 0 21rem;
+  width: 20rem;
 `
 
 const PostItemInfo = styled.div`
