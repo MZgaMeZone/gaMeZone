@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import '../components/Profile.css';
+import '../components/profile.css';
 type ProfileProps = {
   user: string;
   img: string;
