@@ -110,7 +110,7 @@ const GoBackButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:hover{
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `
@@ -124,7 +124,7 @@ const CompleteButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:hover{
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `

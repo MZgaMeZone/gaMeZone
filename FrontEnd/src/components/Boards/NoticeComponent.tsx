@@ -99,7 +99,7 @@ const WriteButton = styled.button`
     inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
 
-  &:hover {
+  &:active {
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `;
