@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import "../components/Profile.css";
+import "../components/profile.css";
 type ProfileProps = {
   user: string;
   img: string;
@@ -17,7 +17,7 @@ function Profile({ user, img, nick }: ProfileProps) {
           margin: "0 auto",
         }}
       ></div>
-      <Profile_Box>
+      <ProfileBox>
         <div className="avartar">
           <img src={img} alt="유저 프로필" />
           <div className="nick_box">
@@ -25,13 +25,13 @@ function Profile({ user, img, nick }: ProfileProps) {
             <p>{nick}</p>
           </div>
         </div>
-        <Logout_Button>로그아웃</Logout_Button>
-      </Profile_Box>
+        <LogoutButton>로그아웃</LogoutButton>
+      </ProfileBox>
     </>
   );
 }
 
-const Profile_Box = styled.div`
+const ProfileBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,7 +43,7 @@ const Profile_Box = styled.div`
   box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
 `;
 
-const Logout_Button = styled.button`
+const LogoutButton = styled.button`
   margin: 3rem;
   padding: 2rem;
   width: 12rem;
