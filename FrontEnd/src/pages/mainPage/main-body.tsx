@@ -50,14 +50,6 @@ function MainBody(props: MainBodyProps) {
   }
   return (
     <>
-      <button
-        style={{ margin: 80 }}
-        onClick={() => {
-          setCategoryModal(false);
-        }}
-      >
-        종료버튼 임시
-      </button>
       <MainContainer>
         {mainModal && (
           <>
@@ -83,10 +75,16 @@ function MainBody(props: MainBodyProps) {
       {categoryModal && (
         <CategoryContainer>
           <div className={styles.container}>
-            <header>
-              <div>ㅇㅇ</div>
-              <p>카테고리명</p>
-            </header>
+            <CategoryHeader>
+              <CategoryTitle>카테고리명</CategoryTitle>
+              <CategoryHeaderButton
+                onClick={() => {
+                  setCategoryModal(false);
+                }}
+              >
+                X
+              </CategoryHeaderButton>
+            </CategoryHeader>
             <main>
               <div className={styles.content}>
                 <ul>
@@ -178,4 +176,28 @@ const CategoryContainer = styled.div`
 const GameImage = styled.img`
   width: 100%;
   height: auto;
+`;
+
+const CategoryHeader = styled.div`
+  height: 4.2rem;
+  display: flex;
+  padding-left: 1.5rem;
+  position: relative;
+  background: #000080;
+`;
+
+const CategoryTitle = styled.div`
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  justify-content: flex-start;
+`;
+
+const CategoryHeaderButton = styled.button`
+  margin-left: auto;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+  width: 3rem;
+  height: 3rem;
 `;
