@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import "../../style/gameOver.css";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import '../../style/gameOver.css';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
-import gameoverBgImg from "../../style/icons/gameover-bg-img.svg";
-import MainBody from "../mainPage/main-body";
-import MainFooter from "../mainPage/main-footer";
-import { fontFamily } from "@mui/system";
+import gameoverBgImg from '../../style/icons/gameover-bg-img.svg';
+import MainBody from '../mainPage/main-body';
+import MainFooter from '../mainPage/main-footer';
+import { fontFamily } from '@mui/system';
 
 const GameOver = () => {
   const [mainModal, setMainModal] = useState<boolean>(false);
-  const [gameName, setGameName] = useState<string>("");
+  const [gameName, setGameName] = useState<string>('');
   const { id } = useParams();
+  const navigate = useNavigate();
 
   return (
     <div
       style={{
-        backgroundColor: "#008080",
-        height: "100vh",
-        width: "100vw",
-        minHeight: "880px",
-        minWidth: "900px",
+        backgroundColor: '#008080',
+        height: '100vh',
+        width: '100vw',
+        minHeight: '880px',
+        minWidth: '900px',
       }}
     >
       <div
         className="game-over"
         style={{
           backgroundImage: `url(${gameoverBgImg})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
         <div className="game-over-header">
@@ -121,7 +122,14 @@ const GameOver = () => {
         </div>
         <div className="game-over-footer">
           <button className="btn to-main">MAIN</button>
-          <button className="btn to-retry">RETRY</button>
+          <button
+            className="btn to-retry"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            RETRY
+          </button>
         </div>
       </div>
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
