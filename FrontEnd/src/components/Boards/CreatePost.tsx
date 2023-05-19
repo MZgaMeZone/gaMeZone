@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import axios from 'axios';
 
 const CreatePost = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
   const navigate = useNavigate();
 
   const handleTitleChange = (e:any) => {
@@ -30,7 +30,6 @@ const CreatePost = () => {
     }
 
     try {
-
       const postData = {
         title: title,
         content: content,
@@ -58,10 +57,10 @@ const CreatePost = () => {
           <MainLabel>내용</MainLabel>
           <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
-        <PostButton type="submit">작성 완료</PostButton>
-        <GoBackForm>
-        <Link to="/community">뒤로 가기</Link>
-      </GoBackForm>
+        <PostFooter>
+          <GoBack to="/community">뒤로 가기</GoBack>
+          <PostButton type="submit">작성 완료</PostButton>
+        </PostFooter>
       </PostForm>
       
     </PostSection>
@@ -78,6 +77,8 @@ const PostSection = styled.div`
   transform: translate(-50%, -50%);
   width: 128rem;
   height: 72rem;
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
   padding: 0.5rem 0;
 `
 
@@ -110,7 +111,7 @@ const TitleLabel = styled.p`
 `
 
 const TitleInput = styled.input`
-  width: 50rem;
+  width: 50.6rem;
   height: 4rem;
   font-size: 2rem;
   border: 1px solid black;
@@ -134,20 +135,34 @@ const MainInput = styled.textarea`
   border: 1px solid black;
 `
 
-const PostButton = styled.button`
-  align-self: end;
-  word-wrap: normal;
-  margin: 0 3rem 2rem;
-  height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
-  font-size: 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
+const PostFooter = styled.div`
+  display: flex;
+  width: 120rem;
+  justify-content: space-between;
+  align-items: end;
 `
 
-const GoBackForm = styled.div`
-  align-self: start;
-  padding: 1rem;
+const PostButton = styled.button`
+  margin: 4rem 0 1rem;
+  word-wrap: normal;
+  height: 2.5rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   font-size: 1.5rem;
+  cursor: pointer;
+
+  &:hover{
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
+`
+
+const GoBack = styled(Link)`
+  margin: 4rem 0 1rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+
+  &:hover {
+    color: blue;
+  }
 `

@@ -51,25 +51,27 @@ const NoticeComponent = () => {
 
   return (
     <NoticeSection>
-        <TopContainer>
-          <WriteButton onClick={() => {nav("/community/write")}}>글쓰기</WriteButton>
-        </TopContainer>
-        <PostContainer>
-          {currentPosts.map((post:postType, index:number) => (
-            <PostItem key={post._id} onClick={() => nav(`/community/${post._id}`)}>
-              <PostItemHeader>
-                <PostItemNumber>{posts.length - index}</PostItemNumber>
-                <PostItemTitle>
-                    {post.title}
-                </PostItemTitle>
-                <PostItemInfo>
-                  <PostDate>{moment(post.createdAt).format('YYYY-MM-DD')}</PostDate>
-                  <PostUser>{post.author}</PostUser>
-                </PostItemInfo>
-              </PostItemHeader>
-            </PostItem>
-          ))}
-        </PostContainer>
+        <div>
+          <TopContainer>
+            <WriteButton onClick={() => {nav("/community/write")}}>글쓰기</WriteButton>
+          </TopContainer>
+          <PostContainer>
+            {currentPosts.map((post:postType, index:number) => (
+              <PostItem key={post._id} onClick={() => nav(`/community/${post._id}`)}>
+                <PostItemHeader>
+                  <PostItemNumber>{posts.length - index}</PostItemNumber>
+                  <PostItemTitle>
+                      {post.title}
+                  </PostItemTitle>
+                  <PostItemInfo>
+                    <PostDate>{moment(post.createdAt).format('YYYY-MM-DD')}</PostDate>
+                    <PostUser>{post.author}</PostUser>
+                  </PostItemInfo>
+                </PostItemHeader>
+              </PostItem>
+            ))}
+          </PostContainer>
+        </div>
         <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} currentPage={currentPage} paginate={paginate}></Pagination>
     </NoticeSection>
   );
@@ -81,7 +83,9 @@ const NoticeSection = styled.div`
   font-family: 'Noto Sans Korean,Malgun Gothic,sans-serif';
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box; 
+  height: 53rem;
 `
 
 const TopContainer = styled.div`
@@ -92,17 +96,21 @@ const TopContainer = styled.div`
 const WriteButton = styled.button`
   margin: 0 3rem;
   height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
-  border-radius: 4px;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
+
+  &:hover{
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
 `
 
 const PostContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  margin: 1rem; 
+  margin: 2.2rem 1rem 1rem; 
 `
 
 const PostItem = styled.div`
@@ -110,7 +118,7 @@ const PostItem = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   border-bottom: 1px solid var(--background--gray);
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   cursor: pointer;
 `
 

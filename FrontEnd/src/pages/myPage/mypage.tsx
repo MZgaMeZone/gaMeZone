@@ -1,34 +1,36 @@
 import styled from "styled-components";
+import "../../style/reset.css";
+import "./mypage.css";
+import img from "./img-1682667302883.png";
+import Footer from "../mainPage/main-footer";
+import Container from "./components/container";
+import Profile from "./components/profile";
+import UserInfo from "./components/userInfo";
+import UserCommu from "./components/userCommu";
+
+const user = { id: "flsgp123", nick: "내닉네임은너무나도길어" };
 
 function MyPage() {
   return (
-    <Container>
-      <Header_Bar>
-        <p>마이페이지</p>
-      </Header_Bar>
-      <Content>
-        <h1>여긴 내용</h1>
-      </Content>
-    </Container>
+    <>
+      <Container>
+        <Profile img={img} user={user.id} nick={user.nick} />
+        <Content>
+          <UserInfo />
+          <UserCommu />
+        </Content>
+      </Container>
+    </>
   );
 }
 
-const Container = styled.div`
-  border: 1px solid black;
-  margin: 1rem;
-  padding: 1rem;
-  width: 1404;
-`;
-
-const Header_Bar = styled.div`
-  margin: 0;
-  width: 100%;
-  border: 1px solid black;
-`;
-
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
   width: 90%;
-  border: 1px solid black;
+  height: 85%;
+  border-radius: 5px;
 `;
 
 export default MyPage;

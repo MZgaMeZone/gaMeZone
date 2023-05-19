@@ -3,10 +3,18 @@ import "./timeStop.css";
 import Recorder from "./recorder/recorder";
 import Controller from "./controller/controller";
 
-function TimeStopGame() {
+function TimeStopGame(props: { setGameName: (name: string) => void }) {
   const [scores, setScores] = React.useState<any[]>([]);
   const [printScore, setPrintScore] = React.useState<any[]>([]);
   const [gameModeChecker, setGameModeChecker] = React.useState("blind");
+
+  //props로 게임 이름 전달
+  const { setGameName } = props;
+
+  React.useEffect(() => {
+    setGameName("10초 맞추기");
+  });
+
   return (
     <>
       <div className="game">
