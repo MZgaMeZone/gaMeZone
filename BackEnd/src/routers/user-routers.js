@@ -173,7 +173,7 @@ userRouter.get("/allUsers", async (req, res, next) => {
   }
 });
 
-// 토큰 검증 후 로그인 유저 정보 조회
+// 로그인 유저 정보 조회
 userRouter.get("/auth/verifyToken", async (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {

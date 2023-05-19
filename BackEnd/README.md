@@ -4,15 +4,16 @@
 
 ### <b>유저 명세</b>
 
-| Method | URI                                      | Description                 |
-| ------ | ---------------------------------------- | --------------------------- |
-| POST   | /api/users/signup                        | 회원가입                    |
-| POST   | /api/users/signup/emailDuplicateCheck    | 회원가입 시 이메일 중복검사 |
-| POST   | /api/users/signup/nicknameDuplicateCheck | 회원가입 시 닉네임 중복검사 |
-| POST   | /api/users/login                         | 로그인                      |
-| GET    | /api/users                               | 사용자 정보 조회            |
-| PUT    | /api/users                               | 사용자 정보 수정            |
-| DELETE | /api/users                               | 사용자 정보 삭제            |
+| Method | URI                                      | Description                   |
+| ------ | ---------------------------------------- | ----------------------------- |
+| POST   | /api/users/signup                        | 회원가입                      |
+| POST   | /api/users/signup/emailDuplicateCheck    | 회원가입 시 이메일 중복검사   |
+| POST   | /api/users/signup/nicknameDuplicateCheck | 회원가입 시 닉네임 중복검사   |
+| POST   | /api/users/login                         | 로그인                        |
+| GET    | /api/users                               | 사용자 정보 조회              |
+| PUT    | /api/users                               | 사용자 정보 수정              |
+| DELETE | /api/users                               | 사용자 정보 삭제              |
+| GET    | /api/users/allUsers                      | 사용자 전체 정보 조회(관리자) |
 
 ### <b>게임 명세</b>
 
