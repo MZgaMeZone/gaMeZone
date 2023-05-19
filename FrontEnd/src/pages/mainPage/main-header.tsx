@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
 
 interface HitGame {
   name: string;
@@ -15,7 +15,7 @@ interface MainHeaderProps {
 const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
   const navigate = useNavigate();
   function handleGameClick(itemId: string) {
-    navigate(`/game/${itemId}`);
+    navigate(`/${itemId}`);
   }
 
   return (

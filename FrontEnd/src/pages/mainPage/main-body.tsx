@@ -4,6 +4,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import styles from '../../../src/style/admin.module.css';
 import exitImg from '../../style/icons/x-solid.svg';
 import axios from 'axios';
+import { stringify } from 'querystring';
 type MainBodyProps = {
   mainModal: boolean;
   setMainModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,9 +13,10 @@ type MainBodyProps = {
 function MainBody(props: MainBodyProps) {
   const mainModal = props.mainModal;
   const [categoryModal, setCategoryModal] = React.useState<boolean>(false);
-  const [categoryList, setCategoryList] = React.useState<string[]>([]);
+  const [categoryList, setCategoryList] = React.useState<any[]>([]);
   const [gameList, setGameList] = React.useState<any[]>([]);
 
+  // 카테고리 버튼을 눌러 게임 목록을 불러오는 함수
   async function fetchGameList(item: string) {
     try {
       const response = await axios.get(
@@ -28,6 +30,7 @@ function MainBody(props: MainBodyProps) {
     }
   }
 
+  // 시작버튼을 누를 때 리스트를 뽑아오는 함수
   React.useEffect(() => {
     axios
       .get(
@@ -36,10 +39,7 @@ function MainBody(props: MainBodyProps) {
       )
       .then((res) => {
         const categoryData = res.data;
-        const categoryList = categoryData.map(
-          (item: { categoryName: string }) => item.categoryName
-        );
-        setCategoryList(categoryList);
+        setCategoryList(categoryData);
       })
       .catch((error) => {
         console.error('카테고리 데이터 요청 실패:', error);
@@ -61,15 +61,15 @@ function MainBody(props: MainBodyProps) {
               <div>
                 <ul>
                   {categoryList &&
-                    categoryList.map((item, index) => (
+                    categoryList.map((item) => (
                       <CategoryButton
-                        key={index}
+                        key={item._id}
                         onClick={() => {
                           setCategoryModal(true);
-                          fetchGameList(item);
+                          fetchGameList(item.categoryName);
                         }}
                       >
-                        {item}
+                        {item.categoryName}
                       </CategoryButton>
                     ))}
                 </ul>
@@ -163,7 +163,7 @@ const CategoryButton = styled.button`
   height: 5rem;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 2.8rem;
   border: 1px solid grey;
   background-color: #d9d9d9;
   &:hover {
