@@ -1,7 +1,8 @@
-import Container from "./components/Container";
+import Container from "./components/container";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { MouseEvent } from "react";
 
 function PasswordChange() {
   const [currPwd, setCurrPwd] = useState("");
@@ -12,11 +13,16 @@ function PasswordChange() {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (!newPwd || !newPwdCheck || !currPwd) {
       alert("모든 항목은 필수조건 입니다!");
+      e.preventDefault();
     } else if (!isPwdSame) {
       alert("비밀번호가 일치하지 않습니다!");
+      e.preventDefault();
+    } else if (newPwd.length < 8 && newPwdCheck.length < 8) {
+      alert("비밀번호는 8글자 이상 입니다.");
+      e.preventDefault();
     } else {
       navigate("/");
     }

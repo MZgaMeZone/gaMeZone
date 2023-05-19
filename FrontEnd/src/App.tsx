@@ -8,10 +8,11 @@ import GameStarter from "./components/gameStart";
 import Admin from "./pages/adminPage/admin";
 import GameLoading from "./pages/gamePages/gameLoading";
 import GameLayout from "./pages/gamePages/gameLayout";
+import GameOver from "./pages/gamePages/gameOver";
 import Main from "./pages/mainPage/main";
 import Rootpage from "./pages/rootPage";
-import AdminInfomation from "./pages/adminPage/adminInformation";
-import AdminRecord from "./pages/adminPage/adminRecord";
+import AdminInfomation from "./pages/adminPage/info/adminInformation";
+import AdminRecord from "./pages/adminPage/record/adminRecord";
 import AdminUser from "./pages/adminPage/adminUser";
 import Community from "./pages/communityPage/community";
 import Login from "./pages/userPages/login";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Main />} />
         {/* <Route path="/game1" element={<TimeStopGame />} /> */}
         <Route path="/game/:id" element={<GameLayout />} />
+        <Route path="/game/gameover" element={<GameOver />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/password" element={<PasswordChange />} />
         <Route path="/mypage/nickname" element={<NicknameChange />} />
@@ -44,6 +46,7 @@ function App() {
         <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/mypage/mycomment-post" element={<PostWithComment />} />
       </Routes>
     </BrowserRouter>
   );
