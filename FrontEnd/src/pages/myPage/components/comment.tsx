@@ -1,40 +1,38 @@
-import React, { useState, useRef, useMemo, useEffect } from "react";
-import styled from "styled-components";
-import cuteImg from "../../../images/cute.png";
-import gomaImg from "../../../images/gomao.png";
-import CommentComponent from "../../../components/Boards/CommentComponent";
-import { text } from "node:stream/consumers";
+import React, { useState, useRef, useMemo, useEffect } from 'react';
+import styled from 'styled-components';
+import cuteImg from '../../../images/cute.png';
+import gomaImg from '../../../images/gomao.png';
 
 function Comment() {
   const comment = [
     {
       id: 1,
-      nickname: "gomao",
-      date: "2023-05-19",
+      nickname: 'gomao',
+      date: '2023-05-19',
       content:
-        "오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?",
-      category: "자유게시판",
+        '오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?',
+      category: '자유게시판',
     },
     {
       id: 2,
-      nickname: "cute",
-      date: "2023-05-20",
-      content: "재밌어여",
-      category: "인증게시판",
+      nickname: 'cute',
+      date: '2023-05-20',
+      content: '재밌어여',
+      category: '인증게시판',
     },
     {
       id: 3,
-      nickname: "cute",
-      date: "2023-05-21",
-      content: "엥 나보다 못함 ㅋ",
-      category: "인증게시판",
+      nickname: 'cute',
+      date: '2023-05-21',
+      content: '엥 나보다 못함 ㅋ',
+      category: '인증게시판',
     },
     {
       id: 4,
-      nickname: "cute",
-      date: "2023-05-22",
-      content: "ㅎ ㅏ 벌써 한시사십분이여",
-      category: "인증게시판",
+      nickname: 'cute',
+      date: '2023-05-22',
+      content: 'ㅎ ㅏ 벌써 한시사십분이여',
+      category: '인증게시판',
     },
   ];
 
@@ -58,7 +56,7 @@ function Comment() {
                   </Date>
                 </ProfileBox>
                 <CommentContent>
-                  {" "}
+                  {' '}
                   {isLongComment && !isShowMore
                     ? shortComment
                     : comment.content}
@@ -66,13 +64,13 @@ function Comment() {
                 <div
                   onClick={() => setIsShowMore(!isShowMore)}
                   style={{
-                    fontSize: "1.7rem",
-                    marginLeft: "2.1rem",
-                    cursor: "pointer",
+                    fontSize: '1.7rem',
+                    marginLeft: '2.1rem',
+                    cursor: 'pointer',
                   }}
                 >
                   {comment.content.length > textLimit &&
-                    (isShowMore ? "[닫기]" : "...[더보기]")}
+                    (isShowMore ? '[닫기]' : '...[더보기]')}
                 </div>
                 <h2>{comment.category}</h2>
               </CommentInfo>
