@@ -6,6 +6,8 @@ import axios from 'axios';
 import MainFooter from '../mainPage/main-footer';
 import MainBody from '../mainPage/main-body';
 
+const url = process.env.REACT_APP_API_URL;
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +21,7 @@ function Login() {
       return alert('이메일과 비밀번호 모두 입력해주세요.');
     }
     axios
-      .post('http://localhost:8080/api/users/login', {
+      .post(url + '/api/users/login', {
         email,
         password,
       })

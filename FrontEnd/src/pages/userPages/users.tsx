@@ -9,16 +9,16 @@ const config = {
   },
 };
 
+const url = process.env.REACT_APP_API_URL;
+
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const [searchUser, setSearchUser] = useState<string>('');
 
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/api/users/allUsers', config)
-      .then((res) => {
-        setUsers(res.data);
-      });
+    axios.get(url + '/api/users/allUsers', config).then((res) => {
+      setUsers(res.data);
+    });
   }, []);
 
   const filteredUsers = (searchUser: string) => {
