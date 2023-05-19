@@ -13,7 +13,7 @@ import Main from './pages/mainPage/main';
 import Rootpage from './pages/rootPage';
 import AdminInfomation from './pages/adminPage/info/adminInformation';
 import AdminRecord from './pages/adminPage/record/adminRecord';
-import AdminUser from './pages/adminPage/adminUser';
+import AdminUser from './pages/adminPage/user/adminUser';
 import Community from './pages/communityPage/community';
 import Login from './pages/userPages/login';
 import Signup from './pages/userPages/signup';
