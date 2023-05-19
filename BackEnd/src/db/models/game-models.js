@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import GameSchema from "../schemas/game-schema.js";
+import CategorySchema from "../schemas/category-schema.js";
 import ScoreSchema from "../schemas/score-schema.js";
 import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
 import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
 
 const Game = mongoose.model("games", GameSchema);
-const Score = mongoose.model("scores", ScoreSchema);
+const Category = mongoose.model("categories", CategorySchema);
 
 class GameModel {
   async createNewGame(data) {

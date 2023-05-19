@@ -22,4 +22,5 @@ export * from "./models/user-models.js";
 export * from "./models/game-models.js";
 export * from "./models/score-models.js";
 export * from "./models/post-models.js";
-export * from  "./models/comment-models.js";
+export * from "./models/comment-models.js";
+export * from "./models/category-models.js";
