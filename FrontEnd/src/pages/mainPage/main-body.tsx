@@ -1,49 +1,52 @@
-import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
-import styles from "../../../src/style/admin.module.css";
-
+import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
+import styles from '../../../src/style/admin.module.css';
+import exitImg from '../../style/icons/x-solid.svg';
+import axios from 'axios';
 type MainBodyProps = {
   mainModal: boolean;
   setMainModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// get요청으로 모든 category를 불러온 결과값
-const dummyCategory = [
-  "어드벤쳐",
-  "아케이드",
-  "전략",
-  "대전",
-  "RPG",
-  "신작",
-  "인기작",
-];
-
-// 각각의 category를 누르면 다시 get요청을 보내어 해당 category로 게임목록을 검색한 결과값
-const dummyFindByCategory = [
-  {
-    name: "10초게임",
-    url: "game1",
-    img: require("../../images/gomao.png"),
-    _id: "asdfasdf",
-  },
-  {
-    name: "업다운게임",
-    url: "game2",
-    img: require("../../images/cute.png"),
-    _id: "asdfasdf",
-  },
-  {
-    name: "베스킨라빈스31",
-    url: "game1",
-    img: require("../../images/gomao.png"),
-    _id: "asdfasdf",
-  },
-];
-
 function MainBody(props: MainBodyProps) {
   const mainModal = props.mainModal;
   const [categoryModal, setCategoryModal] = React.useState<boolean>(false);
+  const [categoryList, setCategoryList] = React.useState<string[]>([]);
+  const [gameList, setGameList] = React.useState<any[]>([]);
+
+  async function fetchGameList(item: string) {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/games/${item}` // 됨!
+        // `http://localhost:8080/api/games/${item}` // 수동입력할 경우 사용
+      );
+      const gameData = response.data;
+      setGameList(gameData);
+    } catch (error) {
+      console.error('게임 목록 요청 실패:', error);
+    }
+  }
+
+  React.useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/categories` // 됨!
+        // `http://localhost:8080/api/categories` // 수동입력할 경우 사용
+      )
+      .then((res) => {
+        const categoryData = res.data;
+        const categoryList = categoryData.map(
+          (item: { categoryName: string }) => item.categoryName
+        );
+        setCategoryList(categoryList);
+      })
+      .catch((error) => {
+        console.error('카테고리 데이터 요청 실패:', error);
+      });
+  }, []);
+
+  // 각 게임 페이지로 이동하는 기능
   const navigate = useNavigate();
   function handleGameClick(itemId: string) {
     navigate(`/game/${itemId}`);
@@ -57,11 +60,14 @@ function MainBody(props: MainBodyProps) {
               <CategoryLeftLine>MZ 오락실</CategoryLeftLine>
               <div>
                 <ul>
-                  {dummyCategory &&
-                    dummyCategory.map((item, index) => (
+                  {categoryList &&
+                    categoryList.map((item, index) => (
                       <CategoryButton
                         key={index}
-                        onClick={() => setCategoryModal(true)}
+                        onClick={() => {
+                          setCategoryModal(true);
+                          fetchGameList(item);
+                        }}
                       >
                         {item}
                       </CategoryButton>
@@ -82,27 +88,33 @@ function MainBody(props: MainBodyProps) {
                   setCategoryModal(false);
                 }}
               >
-                X
+                <img
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignContent: 'center',
+                  }}
+                  src={exitImg}
+                  alt="exitImg"
+                />
               </CategoryHeaderButton>
             </CategoryHeader>
             <main>
               <div className={styles.content}>
                 <ul>
-                  {dummyFindByCategory &&
-                    dummyFindByCategory.map((item, index) => (
-                      <button
-                        key={index}
-                        style={{
-                          margin: "3rem",
-                          width: "20rem",
-                          height: "20rem",
-                          fontSize: "2.5rem",
-                        }}
-                        onClick={() => handleGameClick(item.url)}
-                      >
-                        <GameImage src={item.img} alt={item.name} />
-                        {item.name}
-                      </button>
+                  {gameList &&
+                    gameList.map((item, index) => (
+                      <>
+                        <GameButton
+                          key={index}
+                          onClick={() => handleGameClick(item.gameUrl)}
+                          imageUrl={
+                            process.env.REACT_APP_API_URL + item.gameImageUrl
+                          }
+                          gameTitle={item.gameTitle}
+                        />
+                      </>
                     ))}
                 </ul>
               </div>
@@ -173,10 +185,27 @@ const CategoryContainer = styled.div`
   z-index: 2;
 `;
 
-const GameImage = styled.img`
-  width: 100%;
-  height: auto;
-`;
+// const GameImage = styled.img`
+//   width: 100%;
+//   height: auto;
+// `;
+
+const GameButton = ({ onClick, imageUrl, gameTitle }: any) => {
+  return (
+    <button
+      style={{
+        margin: '3rem',
+        width: '20rem',
+        height: '20rem',
+        fontSize: '2.5rem',
+      }}
+      onClick={onClick}
+    >
+      <img src={imageUrl} />
+      {gameTitle}
+    </button>
+  );
+};
 
 const CategoryHeader = styled.div`
   height: 4.2rem;
