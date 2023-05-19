@@ -1,39 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+interface Game {
+  _id: string;
+  gameTitle: string;
+  gameIconUrl: String;
+  gameImageUrl: String;
+  gameCategory: string;
+  gameDescription: string;
+  gameManual: string;
+  gameServiceStatus: string;
+}
 
 const AdminInfoEdit = () => {
+  const [data, setData] = useState<Game[]>([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/api/games')
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
-      <Container>
-        <ImageContent>
-          <GameImage
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
-            alt="게임 아이콘"
-          />
-        </ImageContent>
-        <div>
-          <Title>[게임명명명명]</Title>
-          <Content>
-            <FlexContnet>
-              <SubTitle>카테고리:</SubTitle>
-              <ContentText>아케이드, 전략</ContentText>
-            </FlexContnet>
-            <FlexContnet>
-              <SubTitle>게임 설명:</SubTitle>
-              <ContentText>10초를 정확하게 맞춰라!</ContentText>
-            </FlexContnet>
-            <FlexContnet>
-              <SubTitle>게임 조작:</SubTitle>
-              <ContentText>10초를 정확하게 맞추면 됨</ContentText>
-            </FlexContnet>
-            <FlexContnet>
-              <SubTitle>게임 상태:</SubTitle>
-              <ContentText>온라인</ContentText>
-            </FlexContnet>
-          </Content>
-        </div>
-        <Button>수정하기</Button>
-      </Container>
+      {data.map((item: Game) => (
+        <Container key={item._id}>
+          <ImageContent>
+            <GameImage
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
+              alt="게임 아이콘"
+            />
+          </ImageContent>
+          <div>
+            <Title>[{item.gameTitle}]</Title>
+            <Content>
+              <FlexContnet>
+                <SubTitle>카테고리:</SubTitle>
+                <ContentText>{item.gameCategory}</ContentText>
+              </FlexContnet>
+              <FlexContnet>
+                <SubTitle>게임 설명:</SubTitle>
+                <ContentText>{item.gameDescription}</ContentText>
+              </FlexContnet>
+              <FlexContnet>
+                <SubTitle>게임 조작:</SubTitle>
+                <ContentText>{item.gameManual}</ContentText>
+              </FlexContnet>
+              <FlexContnet>
+                <SubTitle>게임 상태:</SubTitle>
+                <ContentText>{item.gameServiceStatus}</ContentText>
+              </FlexContnet>
+            </Content>
+          </div>
+          <Button>수정하기</Button>
+        </Container>
+      ))}
     </>
   );
 };
