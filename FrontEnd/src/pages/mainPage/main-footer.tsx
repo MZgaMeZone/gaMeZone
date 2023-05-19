@@ -38,9 +38,11 @@ function MainFooter(props: any) {
           카테고리
         </StartButton>
         <SubButton to="/">Home</SubButton>
-        <SubButton to="/login">로그인</SubButton>
-        <SubButton to="/ranking">랭킹</SubButton>
-        <SubButton to="/community">커뮤니티</SubButton>
+        <SubButton to="/login">Login</SubButton>
+        <SubButton to="/ranking">Ranking</SubButton>
+        <SubButton to="/community">Community</SubButton>
+        <SubButton to="/mypage">MyPage</SubButton>
+        <SubButton to="/admin">AdminPage</SubButton>
         <Clock>{timer}</Clock>
       </FooterBar>
     </>
@@ -70,7 +72,7 @@ const StartButton = styled.button`
   // border: 1px none;
   // padding: 0.3rem 0.3rem;
   // box-shadow: 1px 1px 1px rgb(55, 55, 55);
-  margin: 0.3rem 0 0 0.6rem;
+  margin: 0.3rem 1rem 0 0.6rem;
   width: 14.6rem;
   height: 3.8rem;
   background: #c0c0c0;
@@ -88,11 +90,11 @@ const StartButton = styled.button`
 `;
 
 const SubButton = styled(Link)`
-  margin: 1rem;
+  margin: 0.4rem;
   border-radius: 0;
   font-size: 3rem;
   border: 1px none;
-  width: 25rem;
+  width: 22rem;
   height: 3.5rem;
   display: flex;
   justify-content: center;
