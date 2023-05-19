@@ -20,9 +20,11 @@ const PostPage = () => {
   const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/posts/post/${postId}`).then((res) => {
-      const commentData = res.data;
-      setPost(commentData);
+    axios
+    .get(`http://localhost:8080/api/posts/post/${postId}`)
+    .then((res) => {
+      const data = res.data;
+      setPost(data);
     });
   }, []);
 
@@ -58,7 +60,7 @@ const PostPage = () => {
               </TitleContainer>
               <MainText>{post.content}</MainText>
             </Post>
-            <CommentComponent comments={[]} postId={postId} />
+            <CommentComponent postId={postId} />
           </Body>
         </CommunityBody>
       </CommunityContainer>
