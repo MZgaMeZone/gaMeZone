@@ -25,10 +25,10 @@ const PostPage = () => {
     .get(`http://localhost:8080/api/posts/post/${postId}`)
     .then((res) => {
       const commentData = res.data;
-      console.log("hello");
+      console.log(commentData);
       setPost([commentData]);
     })
-  }, [postId]);
+  }, []);
 
   console.log(post);
 
