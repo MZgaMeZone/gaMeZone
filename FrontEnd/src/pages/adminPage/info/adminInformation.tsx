@@ -52,15 +52,13 @@ const AdminInfomation = () => {
                 ''
               )}
             </div>
-            <div className={styles.main_text}>
-              {menuIdx === 0 ? (
-                <AdminInfoEdit />
-              ) : menuIdx === 1 ? (
-                <AdminInfoCategory />
-              ) : (
-                ''
-              )}
-            </div>
+            {menuIdx === 0 ? (
+              <AdminInfoEdit />
+            ) : menuIdx === 1 ? (
+              <AdminInfoCategory />
+            ) : (
+              ''
+            )}
           </div>
         </main>
         <footer>
