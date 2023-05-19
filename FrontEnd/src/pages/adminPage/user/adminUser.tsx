@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import styles from '../../../src/style/admin.module.css';
-import Menu from './menu';
-import Footer from './footer';
-import { ReactComponent as Star } from '../../style/icons/star.svg';
+import styles from '../../../../src/style/admin.module.css';
+import Menu from '../menu';
+import Footer from '../footer';
+import { ReactComponent as Star } from '../../../style/icons/star.svg';
+import AdminUserInfo from './adminUserInfo';
+import AdminUserOut from './adminUserOut';
 const AdminUser = () => {
   const [menuIdx, setMenuIdx] = useState<number>(0);
 
@@ -57,6 +59,15 @@ const AdminUser = () => {
                 <p>회원 탈퇴</p>
               ) : menuIdx === 2 ? (
                 <p>블랙리스트 명단</p>
+              ) : (
+                ''
+              )}
+            </div>
+            <div className={styles.main_text}>
+              {menuIdx === 0 ? (
+                <AdminUserInfo />
+              ) : menuIdx === 1 ? (
+                <AdminUserOut />
               ) : (
                 ''
               )}
