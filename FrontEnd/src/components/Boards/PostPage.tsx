@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import PostData from './PostData';
-import { NavLink  } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+
+import CommentComponent from './CommentComponent';
+
+interface postsType {
+  _id: string;
+  title: string;
+  content: string;
+  author: { nickname: string };
+  createdAt: string;
+}
 
 const PostPage = () => {
-  const { postId } = useParams(); 
-  const post = PostData.find((item) => item._id === postId); 
+  const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
+  const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/posts/post/${postId}`).then((res) => {
+      const commentData = res.data;
+      setPost(commentData);
+    });
+  }, []);
+
+  // console.log(post);
+
+  // const post: any = PostData.find((item) => item._id === postId);
 
   if (!post) {
     // postId에 해당하는 데이터가 없을 경우에 대한 처리
@@ -26,21 +47,23 @@ const PostPage = () => {
             <CommunityLink to="/">인증게시판</CommunityLink>
             <CommunityLink to="/">건의</CommunityLink>
           </Header>
-          <Post>
-            <TitleContainer>
-              <Title>{post.title}</Title>
-              <AuthorContainer>
-                <Date>{post.author}</Date>
-                <Author>{moment(post.createdAt).format('YYYY-MM-DD')}</Author>
-              </AuthorContainer>
-            </TitleContainer>
-            <MainText>{post.comment}</MainText>
-            <BackLink to="/community">뒤로 가기</BackLink>
-        </Post>
+          <Body>
+            <Post>
+              <TitleContainer>
+                <Title>{post.title}</Title>
+                <AuthorContainer>
+                  <Date>{post.author.nickname}</Date>
+                  <Author>{moment(post.createdAt).format('YYYY-MM-DD')}</Author>
+                </AuthorContainer>
+              </TitleContainer>
+              <MainText>{post.content}</MainText>
+            </Post>
+            <CommentComponent comments={[]} postId={postId} />
+          </Body>
         </CommunityBody>
       </CommunityContainer>
     </CommunitySection>
-  )
+  );
 };
 
 export default PostPage;
@@ -52,14 +75,16 @@ const CommunitySection = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--background--gray);
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
   width: 128rem;
   height: 72rem;
-`
+`;
 
 const CommunityContainer = styled.div`
   background-color: var(--background--gray);
   padding: 0.5rem 0;
-`
+`;
 
 const CommunityHeader = styled.div`
   margin: 1rem;
@@ -67,12 +92,12 @@ const CommunityHeader = styled.div`
   background-color: var(--color--header);
   color: white;
   font-size: 2rem;
-`
+`;
 
 const CommunityBody = styled.div`
   margin: 1rem;
   background-color: white;
-`
+`;
 
 const Header = styled.div`
   display: flex;
@@ -80,12 +105,12 @@ const Header = styled.div`
   align-items: center;
   margin: 0 2rem 2rem 2rem;
   border-bottom: 2px solid black;
-`
+`;
 
 const CommunityTitle = styled.h2`
   margin: 2rem;
   font-size: 2.5rem;
-`
+`;
 
 const CurrentLink = styled(NavLink)`
   margin: auto 4rem;
@@ -94,7 +119,7 @@ const CurrentLink = styled(NavLink)`
 
   text-decoration: none;
   color: blue;
-`
+`;
 
 const CommunityLink = styled(NavLink)`
   margin: auto 4rem;
@@ -103,44 +128,49 @@ const CommunityLink = styled(NavLink)`
 
   text-decoration: none;
   color: black;
-`
+`;
+
+const Body = styled.div`
+  height: 53rem;
+  margin: 0 3rem;
+`;
 
 const Post = styled.div`
   display: flex;
   flex-direction: column;
-  height: 53rem;
-`
+  height: 37rem;
+  border-bottom: 1px solid var(--background--gray);
+`;
 
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 3rem;
   border-bottom: 1px solid var(--background--gray);
-`
+`;
 const AuthorContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const Title = styled.h2`
   margin-top: 0;
   font-size: 3rem;
-`
+`;
 
 const Date = styled.p`
   margin-bottom: 0.5rem;
   font-size: 1.7rem;
-`
+`;
 
 const Author = styled.p`
-  font-size: 1.3rem ;
-`
+  font-size: 1.3rem;
+`;
 
 const MainText = styled.p`
-  margin: 2rem 3rem 1rem;
+  margin: 2rem 0 1rem;
   font-size: 2rem;
-`
+`;
 
 const BackLink = styled(Link)`
   margin: 30rem 3rem auto auto;
@@ -150,4 +180,4 @@ const BackLink = styled(Link)`
   &:hover {
     color: red;
   }
-`
+`;

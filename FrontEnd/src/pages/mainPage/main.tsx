@@ -8,6 +8,33 @@ import TimeStopGame from "../../components/Games/StopWatch/timeStop";
 
 const Main = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
+
+  //더미데이터------------------------------------------------------------
+  const hitGameList: any[] = [
+    {
+      name: "고마오",
+      url: "/main",
+      img: require("../../images/gomao.png"),
+    },
+    {
+      name: "귀엽네",
+      url: "/main",
+      img: require("../../images/cute.png"),
+    },
+    {
+      name: "10초게임",
+      url: "game1",
+      img: require("../../images/gomao.png"),
+    },
+    { name: "고고마오", url: "/main", img: require("../../images/gomao.png") },
+    {
+      name: "아주고맙ㅎ",
+      url: "/main",
+      img: require("../../images/gomao.png"),
+    },
+  ];
+  //-----------------------------------------------------------------------
+
   return (
     <div
       style={{
@@ -18,7 +45,7 @@ const Main = () => {
         minWidth: "900px",
       }}
     >
-      <MainHeader></MainHeader>
+      <MainHeader hitGameList={hitGameList}></MainHeader>
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
       <MainFooter
         mainModal={mainModal}
@@ -27,4 +54,5 @@ const Main = () => {
     </div>
   );
 };
+
 export default Main;

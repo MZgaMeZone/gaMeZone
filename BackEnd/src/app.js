@@ -4,6 +4,8 @@ import { userRouter } from "./routers/user-routers.js";
 import { viewsRouter } from "./routers/view-routers.js";
 import { gameRouter } from "./routers/game-routers.js";
 import { scoreRouter } from "./routers/score-routers.js";
+import { postRouter } from "./routers/post-routers.js";
+import { commentRouter } from "./routers/comment-routers.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import path from "path";
 import bodyParser from "body-parser";
@@ -24,6 +26,8 @@ app.use(
 app.use("/api/users", userRouter);
 app.use("/api/games", gameRouter);
 app.use("/api/scores", scoreRouter);
+app.use("/api/posts", postRouter);
+app.use("/api/comments", commentRouter);
 app.use("/", viewsRouter);
 app.use(errorHandler);
 

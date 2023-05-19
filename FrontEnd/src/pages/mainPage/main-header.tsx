@@ -2,34 +2,29 @@ import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 
-const hitGameList = [
-  {
-    name: "고마오",
-    url: "/main",
-    img: require("../../images/gomao.png"),
-  },
-  {
-    name: "귀엽네",
-    url: "/main",
-    img: require("../../images/cute.png"),
-  },
-  {
-    name: "10초게임",
-    url: "/game1",
-    img: require("../../images/gomao.png"),
-  },
-  { name: "고고마오", url: "/main", img: require("../../images/gomao.png") },
-  { name: "아주고맙ㅎ", url: "/main", img: require("../../images/gomao.png") },
-];
+interface HitGame {
+  name: string;
+  url: string;
+  img: string;
+}
 
-const MainHeader = () => {
+interface MainHeaderProps {
+  hitGameList: HitGame[];
+}
+
+const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
+  const navigate = useNavigate();
+  function handleGameClick(itemId: string) {
+    navigate(`/game/${itemId}`);
+  }
+
   return (
     <>
       <HitGameBox>
         <ul>
           {hitGameList &&
-            hitGameList.map((item, index) => (
-              <HitGame key={index}>
+            hitGameList.map((item: HitGame, index: number) => (
+              <HitGame key={index} onClick={() => handleGameClick(item.url)}>
                 <GameImage src={item.img} alt={item.name} />
                 <span>{item.name}</span>
               </HitGame>
@@ -39,6 +34,7 @@ const MainHeader = () => {
     </>
   );
 };
+
 export default MainHeader;
 
 const HitGameBox = styled.div`

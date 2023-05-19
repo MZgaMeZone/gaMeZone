@@ -1,18 +1,17 @@
-import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import moment from "moment";
-import axios from "axios";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import axios from 'axios';
+import styled from 'styled-components';
 
-import Pagination from "./Pagination";
-import PostData from "./PostData";
-
+import Pagination from './Pagination';
+import PostData from './PostData';
 
 interface postType {
-  _id: string,
-  title: string,
-  author: string,
-  createdAt: string
+  _id: string;
+  title: string;
+  author: { nickname: string };
+  createdAt: string;
 }
 
 const NoticeComponent = () => {
@@ -21,28 +20,13 @@ const NoticeComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     let res = await axios('/api/post/noticeList');
-  //     setPosts(res.data);
-  //   };
-
-  //   fetchPosts();
-  // }, []);
-
-  // 일단 local 환경에서 test
-  //데이터 가져오기
   useEffect(() => {
-    const storedCurrentPage = localStorage.getItem('currentPage');
-
-    // 저장된 데이터가 있을 경우에만 가져와서 설정
-    if (storedCurrentPage) {
-      setCurrentPage(JSON.parse(storedCurrentPage));
-    }
-
-    setPosts(PostData); // 더미 데이터를 설정
+    axios.get('http://localhost:8080/api/posts').then((res) => {
+      const data = res.data;
+      // console.log(data);
+      setPosts(data);
+    });
   }, []);
-  
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -51,26 +35,42 @@ const NoticeComponent = () => {
 
   return (
     <NoticeSection>
+      <div>
         <TopContainer>
-          <WriteButton onClick={() => {nav("/community/write")}}>글쓰기</WriteButton>
+          <WriteButton
+            onClick={() => {
+              nav('/community/write');
+            }}
+          >
+            글쓰기
+          </WriteButton>
         </TopContainer>
         <PostContainer>
-          {currentPosts.map((post:postType, index:number) => (
-            <PostItem key={post._id} onClick={() => nav(`/community/${post._id}`)}>
+          {currentPosts.map((post: postType, index: number) => (
+            <PostItem
+              key={post._id}
+              onClick={() => nav(`/community/${post._id}`)}
+            >
               <PostItemHeader>
                 <PostItemNumber>{posts.length - index}</PostItemNumber>
-                <PostItemTitle>
-                    {post.title}
-                </PostItemTitle>
+                <PostItemTitle>{post.title}</PostItemTitle>
                 <PostItemInfo>
-                  <PostDate>{moment(post.createdAt).format('YYYY-MM-DD')}</PostDate>
-                  <PostUser>{post.author}</PostUser>
+                  <PostDate>
+                    {moment(post.createdAt).format('YYYY-MM-DD')}
+                  </PostDate>
+                  <PostUser>{post.author.nickname}</PostUser>
                 </PostItemInfo>
               </PostItemHeader>
             </PostItem>
           ))}
         </PostContainer>
-        <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} currentPage={currentPage} paginate={paginate}></Pagination>
+      </div>
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={posts.length}
+        currentPage={currentPage}
+        paginate={paginate}
+      ></Pagination>
     </NoticeSection>
   );
 };
@@ -81,63 +81,70 @@ const NoticeSection = styled.div`
   font-family: 'Noto Sans Korean,Malgun Gothic,sans-serif';
   display: flex;
   flex-direction: column;
-  box-sizing: border-box; 
-`
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 53rem;
+`;
 
 const TopContainer = styled.div`
   display: flex;
   justify-content: end;
-`
+`;
 
 const WriteButton = styled.button`
   margin: 0 3rem;
   height: 3rem;
-  background-color: var(--background--gray);
-  border: none;
-  border-radius: 4px;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
-`
+
+  &:hover {
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
+`;
 
 const PostContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  margin: 1rem; 
-`
+  margin: 2.2rem 1rem 1rem;
+`;
 
 const PostItem = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   border-bottom: 1px solid var(--background--gray);
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   cursor: pointer;
-`
+`;
 
 const PostItemHeader = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 1rem auto;
-`
+`;
 
 const PostItemTitle = styled.div`
   margin: 0 20rem 0 21rem;
-`
+  width: 20rem;
+`;
 
 const PostItemInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
 const PostItemNumber = styled.p`
   margin: 0 10rem 0 0;
   width: 20rem;
-`
+`;
 
 const PostDate = styled.p`
   margin: 0 3rem;
-`
+`;
 
 const PostUser = styled.p`
   margin: 0 6rem 0 1rem;
-`
+`;

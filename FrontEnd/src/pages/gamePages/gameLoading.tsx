@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import "./gameLoading.css";
-import cdImg1 from "./src/cdImg1.svg";
-import cdImg2 from "./src/cdImg2.svg";
-import exitImg from "./src/x-solid.svg";
-import paperImg from "./src/paper.svg";
-import speedImg from "./src/speedImg.svg";
+import "../../style/gameLoading.css";
+import cdImg1 from "../../style/icons/cdImg1.svg";
+import cdImg2 from "../../style/icons/cdImg2.svg";
+import exitImg from "../../style/icons/x-solid.svg";
+import paperImg from "../../style/icons/paper.svg";
+import speedImg from "../../style/icons/speedImg.svg";
 import { Link } from "react-router-dom";
 
 const GameLoading = () => {
@@ -32,14 +32,14 @@ const GameLoading = () => {
   }, []);
 
   return (
-    <div className="container">
-      <div className="container-header">
-        <p className="container-header-title">로딩 중</p>
+    <div className="loading-container">
+      <div className="loading-container-header">
+        <p className="loading-container-header-title">로딩 중</p>
         <Link to="/" className="exit-button">
           <img src={exitImg} alt="exitImg" />
         </Link>
       </div>
-      <div className="container-body">
+      <div className="loading-container-body">
         <div>
           <div className="icon-container">
             <div className="cd-icon-container">
@@ -66,7 +66,7 @@ const GameLoading = () => {
           </div>
         </div>
       </div>
-      <div className="container-footer">
+      <div className="loading-container-footer">
         <p>게임을 로딩 중입니다.</p>
         <Link to="/" className="cancel-btn">
           <div className="btn-border">Cancel</div>

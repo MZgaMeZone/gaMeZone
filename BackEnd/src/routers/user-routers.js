@@ -7,30 +7,41 @@ import { userChecker } from "../middlewares/userValidation.js";
 //express의 Router를 통해 userRouter 생성
 const userRouter = Router();
 
-// 가입시 POST 요청에 대한 라우팅 , /register 이라는 경로로 요청 시
-userRouter.post("/signup", userChecker.signUpJoi, async (req, res, next) => {
+// 회원가입 내 email 중복 검사 POST 요청에 대한 라우팅 , /signup/emailDuplicateCheck 이라는 경로로 요청 시
+userRouter.post("/signup/emailDuplicateCheck", async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const emailDuplicateCheck = await userService.emailDuplicateCheck(email);
+    res.status(200).json(emailDuplicateCheck);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 회원가입 내 nickname 중복 검사 POST 요청에 대한 라우팅 , /signup/nicknameDuplicateCheck 이라는 경로로 요청 시
+userRouter.post("/signup/nicknameDuplicateCheck", async (req, res, next) => {
+  try {
+    const { nickname } = req.body;
+    const nicknameDuplicateCheck = await userService.nicknameDuplicateCheck(
+      nickname
+    );
+    res.status(200).json(nicknameDuplicateCheck);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// 회원가입시 POST 요청에 대한 라우팅 , /signup 이라는 경로로 요청 시
+userRouter.post("/signup", async (req, res, next) => {
   try {
     //요청으로 전달된 body의 값들을 변수에 저장 !
     console.log("🖐️ Welcome!! 회원가입을 진행합니다.");
-    const {
-      name,
-      email,
-      password,
-      address1,
-      address2,
-      // postalCode,
-      phoneNumber,
-      role,
-    } = req.body;
+    const { email, nickname, password, role } = req.body;
     // userSerivce의 createUser 메소드를 통해 사용자를 생성
     const newUser = await userService.createUser({
-      name,
       email,
+      nickname,
       password,
-      address1,
-      address2,
-      // postalCode,
-      phoneNumber,
       role,
     });
     console.log("✔️ 가입정보 확인이 완료되었습니다.");
@@ -48,9 +59,16 @@ userRouter.post("/login", userChecker.loginJoi, async (req, res, next) => {
   console.log("로그인 시도 🌸");
   const { email, password } = req.body;
   try {
-    const userToken = await userService.getUserToken(email, password);
-    res.status(200).json(userToken);
-    console.log("✔️ 로그인 성공!");
+    const userToken = await userService.authenticateUser(email, password);
+    if (userToken) {
+      res.status(200).json(userToken);
+      console.log("✔️ 로그인 성공!");
+    } else {
+      res
+        .status(401)
+        .json({ error: "아이디 또는 비밀번호가 일치하지 않습니다." });
+      console.log("❌ 로그인 실패!");
+    }
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);
@@ -85,16 +103,13 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
     return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
   }
   console.log("🔄 유저 정보를 업데이트합니다...");
-  const { password, address1, address2, phoneNumber } = req.body;
+  const { nickname, password } = req.body;
 
   const toUpdateInfo = {
     //password값이 있을 경우(true), password 속성: req.body에서 받은 password 변수 값 --> ex) {password : "myPassword1234"}
     //false인 경우 toUpdateInfo Object에 추가되지 않음.
+    ...(nickname && { nickname }),
     ...(password && { password }),
-    ...(address1 && { address1 }),
-    ...(address2 && { address2 }),
-    // ...(postalCode && { postalCode }),
-    ...(phoneNumber && { phoneNumber }),
   };
 
   console.log("🔎 토큰 확인 중...");
