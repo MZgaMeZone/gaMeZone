@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../style/admin.module.css';
 import styled from 'styled-components';
 import Menu from './menu';
 import Footer from './footer';
 import { ReactComponent as Mushiroom } from '../../style/icons/mushroom.svg';
 const Admin = () => {
+  const [menuIdx, setMenuIdx] = useState<number>(0);
+
+  const handleClick = (idx: number) => {
+    setMenuIdx(idx);
+  };
+  // useEffect(() => {
+  //   if (menuIdx === 0) {
+  //   } else if (menuIdx === 1) {
+  //   } else if (menuIdx === 2) {
+  //   }
+  // }, [menuIdx]);
   return (
     <>
       <Menu idx={0} />
@@ -16,86 +27,107 @@ const Admin = () => {
           </div>
         </header>
         <div className={styles.sub_menu}>
-          <div>
+          <div
+            className={`${styles.menu_item} ${
+              menuIdx === 0 ? styles.selected_menu : styles.menu_hover
+            }`}
+            onClick={() => handleClick(0)}
+          >
             <p>방문자 현황</p>
+            {menuIdx === 0 ? <span className={styles.span} /> : ''}
           </div>
-          <div>
+          <div
+            className={`${styles.menu_item} ${
+              menuIdx === 1 ? styles.selected_menu : styles.menu_hover
+            }`}
+            onClick={() => handleClick(1)}
+          >
             <p>일자별 요약</p>
+            {menuIdx === 1 ? <span className={styles.span} /> : ''}
           </div>
-          <div>
+          <div
+            className={`${styles.menu_item} ${
+              menuIdx === 2 ? styles.selected_menu : styles.menu_hover
+            }`}
+            onClick={() => handleClick(2)}
+          >
             <p>통계</p>
+            {menuIdx === 2 ? <span className={styles.span} /> : ''}
           </div>
         </div>
-
         <Main>
           <MainContent>
             <div>
-              국가는 모성의 보호를 위하여 노력하여야 한다. 헌법재판소는 법관의
-              자격을 가진 9인의 재판관으로 구성하며, 재판관은 대통령이 임명한다.
-              국채를 모집하거나 예산외에 국가의 부담이 될 계약을 체결하려 할
-              때에는 정부는 미리 국회의 의결을 얻어야 한다. 한 회계연도를 넘어
-              계속하여 지출할 필요가 있을 때에는 정부는 연한을 정하여 계속비로서
-              국회의 의결을 얻어야 한다. 정부는 예산에 변경을 가할 필요가 있을
-              때에는 추가경정예산안을 편성하여 국회에 제출할 수 있다.
-              대통령후보자가 1인일 때에는 그 득표수가 선거권자 총수의 3분의 1
-              이상이 아니면 대통령으로 당선될 수 없다. 헌법에 의하여 체결·공포된
-              조약과 일반적으로 승인된 국제법규는 국내법과 같은 효력을 가진다.
-              대통령은 국가의 원수이며, 외국에 대하여 국가를 대표한다. 국가는
-              농지에 관하여 경자유전의 원칙이 달성될 수 있도록 노력하여야 하며,
-              농지의 소작제도는 금지된다. 모든 국민은 직업선택의 자유를 가진다.
-              국무총리는 대통령을 보좌하며, 행정에 관하여 대통령의 명을 받아
-              행정각부를 통할한다. 언론·출판은 타인의 명예나 권리 또는
-              공중도덕이나 사회윤리를 침해하여서는 아니된다. 언론·출판이 타인의
-              명예나 권리를 침해한 때에는 피해자는 이에 대한 피해의 배상을
-              청구할 수 있다. 이 헌법은 1988년 2월 25일부터 시행한다. 다만, 이
-              헌법을 시행하기 위하여 필요한 법률의 제정·개정과 이 헌법에 의한
-              대통령 및 국회의원의 선거 기타 이 헌법시행에 관한 준비는 이
-              헌법시행 전에 할 수 있다. 국회의 정기회는 법률이 정하는 바에
-              의하여 매년 1회 집회되며, 국회의 임시회는 대통령 또는 국회재적의원
-              4분의 1 이상의 요구에 의하여 집회된다. 모든 국민은 사생활의 비밀과
-              자유를 침해받지 아니한다. 대통령은 제3항과 제4항의 사유를 지체없이
-              공포하여야 한다. 대통령은 내란 또는 외환의 죄를 범한 경우를
-              제외하고는 재직중 형사상의 소추를 받지 아니한다. 명령·규칙 또는
-              처분이 헌법이나 법률에 위반되는 여부가 재판의 전제가 된 경우에는
-              대법원은 이를 최종적으로 심사할 권한을 가진다. 대통령은
-              국무총리·국무위원·행정각부의 장 기타 법률이 정하는 공사의 직을
-              겸할 수 없다. 제2항의 재판관중 3인은 국회에서 선출하는 자를, 3인은
-              대법원장이 지명하는 자를 임명한다. 정부는 회계연도마다 예산안을
-              편성하여 회계연도 개시 90일전까지 국회에 제출하고, 국회는 회계연도
-              개시 30일전까지 이를 의결하여야 한다. 대통령의 임기가 만료되는
-              때에는 임기만료 70일 내지 40일전에 후임자를 선거한다. 대한민국은
-              통일을 지향하며, 자유민주적 기본질서에 입각한 평화적 통일 정책을
-              수립하고 이를 추진한다. 법률이 정하는 주요방위산업체에 종사하는
-              근로자의 단체행동권은 법률이 정하는 바에 의하여 이를 제한하거나
-              인정하지 아니할 수 있다. 형사피의자 또는 형사피고인으로서
-              구금되었던 자가 법률이 정하는 불기소처분을 받거나 무죄판결을 받은
-              때에는 법률이 정하는 바에 의하여 국가에 정당한 보상을 청구할 수
-              있다. 타인의 범죄행위로 인하여 생명·신체에 대한 피해를 받은 국민은
-              법률이 정하는 바에 의하여 국가로부터 구조를 받을 수 있다. 대통령의
-              임기는 5년으로 하며, 중임할 수 없다. 사법권은 법관으로 구성된
-              법원에 속한다. 모든 국민은 신체의 자유를 가진다. 누구든지 법률에
-              의하지 아니하고는 체포·구속·압수·수색 또는 심문을 받지 아니하며,
-              법률과 적법한 절차에 의하지 아니하고는 처벌·보안처분 또는
-              강제노역을 받지 아니한다. 국가는 주택개발정책등을 통하여 모든
-              국민이 쾌적한 주거생활을 할 수 있도록 노력하여야 한다. 군인은
-              현역을 면한 후가 아니면 국무총리로 임명될 수 없다. 국회는 국민의
-              보통·평등·직접·비밀선거에 의하여 선출된 국회의원으로 구성한다.
-              위원은 정당에 가입하거나 정치에 관여할 수 없다. 평화통일정책의
-              수립에 관한 대통령의 자문에 응하기 위하여 민주평화통일자문회의를
-              둘 수 있다. 이 헌법시행 당시의 대법원장과 대법원판사가 아닌 법관은
-              제1항 단서의 규정에 불구하고 이 헌법에 의하여 임명된 것으로 본다.
-              일반사면을 명하려면 국회의 동의를 얻어야 한다. 지방자치단체는
-              주민의 복리에 관한 사무를 처리하고 재산을 관리하며, 법령의
-              범위안에서 자치에 관한 규정을 제정할 수 있다. 모든 국민은 법 앞에
-              평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여
-              정치적·경제적·사회적·문화적 생활의 모든 영역에 있어서 차별을 받지
-              아니한다. 대통령은 법률에서 구체적으로 범위를 정하여 위임받은
-              사항과 법률을 집행하기 위하여 필요한 사항에 관하여 대통령령을 발할
-              수 있다. 대통령이 임시회의 집회를 요구할 때에는 기간과 집회요구의
-              이유를 명시하여야 한다. 모든 국민은 학문과 예술의 자유를 가진다.
-              대통령은 국가의 독립·영토의 보전·국가의 계속성과 헌법을 수호할
-              책무를 진다. 이 헌법공포 당시의 국회의원의 임기는 제1항에 의한
-              국회의 최초의 집회일 전일까지로 한다.
+              The standard Lorem Ipsum passage, used since the 1500s "Lorem
+              ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum."
+              Section 1.10.32 of "de Finibus Bonorum et Malorum", written by
+              Cicero in 45 BC "Sed ut perspiciatis unde omnis iste natus error
+              sit voluptatem accusantium doloremque laudantium, totam rem
+              aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+              architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+              voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
+              quia consequuntur magni dolores eos qui ratione voluptatem sequi
+              nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+              sit amet, consectetur, adipisci velit, sed quia non numquam eius
+              modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+              voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem
+              ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+              consequatur? Quis autem vel eum iure reprehenderit qui in ea
+              voluptate velit esse quam nihil molestiae consequatur, vel illum
+              qui dolorem eum fugiat quo voluptas nulla pariatur?" 1914
+              translation by H. Rackham "But I must explain to you how all this
+              mistaken idea of denouncing pleasure and praising pain was born
+              and I will give you a complete account of the system, and expound
+              the actual teachings of the great explorer of the truth, the
+              master-builder of human happiness. No one rejects, dislikes, or
+              avoids pleasure itself, because it is pleasure, but because those
+              who do not know how to pursue pleasure rationally encounter
+              consequences that are extremely painful. Nor again is there anyone
+              who loves or pursues or desires to obtain pain of itself, because
+              it is pain, but because occasionally circumstances occur in which
+              toil and pain can procure him some great pleasure. To take a
+              trivial example, which of us ever undertakes laborious physical
+              exercise, except to obtain some advantage from it? But who has any
+              right to find fault with a man who chooses to enjoy a pleasure
+              that has no annoying consequences, or one who avoids a pain that
+              produces no resultant pleasure?" Section 1.10.33 of "de Finibus
+              Bonorum et Malorum", written by Cicero in 45 BC "At vero eos et
+              accusamus et iusto odio dignissimos ducimus qui blanditiis
+              praesentium voluptatum deleniti atque corrupti quos dolores et
+              quas molestias excepturi sint occaecati cupiditate non provident,
+              similique sunt in culpa qui officia deserunt mollitia animi, id
+              est laborum et dolorum fuga. Et harum quidem rerum facilis est et
+              expedita distinctio. Nam libero tempore, cum soluta nobis est
+              eligendi optio cumque nihil impedit quo minus id quod maxime
+              placeat facere possimus, omnis voluptas assumenda est, omnis dolor
+              repellendus. Temporibus autem quibusdam et aut officiis debitis
+              aut rerum necessitatibus saepe eveniet ut et voluptates
+              repudiandae sint et molestiae non recusandae. Itaque earum rerum
+              hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus
+              maiores alias consequatur aut perferendis doloribus asperiores
+              repellat." 1914 translation by H. Rackham "On the other hand, we
+              denounce with righteous indignation and dislike men who are so
+              beguiled and demoralized by the charms of pleasure of the moment,
+              so blinded by desire, that they cannot foresee the pain and
+              trouble that are bound to ensue; and equal blame belongs to those
+              who fail in their duty through weakness of will, which is the same
+              as saying through shrinking from toil and pain. These cases are
+              perfectly simple and easy to distinguish. In a free hour, when our
+              power of choice is untrammelled and when nothing prevents our
+              being able to do what we like best, every pleasure is to be
+              welcomed and every pain avoided. But in certain circumstances and
+              owing to the claims of duty or the obligations of business it will
+              frequently occur that pleasures have to be repudiated and
+              annoyances accepted. The wise man therefore always holds in these
+              matters to this principle of selection: he rejects pleasures to
+              secure other greater pleasures, or else he endures pains to avoid
+              worse pains."
             </div>
           </MainContent>
         </Main>
@@ -116,13 +148,14 @@ const Main = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {
-    width: 20px;
+    width: 16px;
   }
   &::-webkit-scrollbar-thumb {
-    height: 30%;
-    width: 16px;
+    height: 10%;
+    background-clip: padding-box;
+    border: 4px solid #ebeded;
     background: #b3b5b5;
-    border-radius: 10px;
+    border-radius: 50px;
   }
   &::-webkit-scrollbar-track {
     background: #ebeded;
@@ -131,7 +164,7 @@ const Main = styled.div`
 
 const MainContent = styled.div`
   position: relative;
-  padding: 5rem;
+  padding: 4rem;
   margin: 2rem 3.6rem 2rem 3.6rem;
   width: 120rem;
   height: auto;
