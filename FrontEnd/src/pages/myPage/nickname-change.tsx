@@ -1,27 +1,27 @@
-import Container from "./components/container";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { MouseEvent, FormEvent } from "react";
+import Container from './components/container';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { MouseEvent, FormEvent } from 'react';
 
 function NicknameChange() {
   //현재 닉네임이 placeholder로 이미 보이고 있어야하고
   //새로운 닉네임은 중복검사해야 함.
 
-  const [currenNickname, setCurrentNickname] = useState("");
-  const [newNickname, setNewNickname] = useState("");
+  const [currenNickname, setCurrentNickname] = useState('');
+  const [newNickname, setNewNickname] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
   const navigate = useNavigate();
 
   const duplicateCheck = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const existingNicknames = ["John", "Jane", "Mike"];
+    const existingNicknames = ['John', 'Jane', 'Mike'];
     if (existingNicknames.includes(newNickname)) {
       setIsDuplicate(true);
-      alert("이미 존재하는 닉네임 입니다.");
+      alert('이미 존재하는 닉네임 입니다.');
     } else {
       setIsDuplicate(false);
-      alert("사용가능한 닉네임 입니다.");
+      alert('사용가능한 닉네임 입니다.');
     }
   };
 
@@ -29,11 +29,11 @@ function NicknameChange() {
     const { name } = e.currentTarget;
 
     switch (name) {
-      case "current-nickname":
+      case 'current-nickname':
         setCurrentNickname(e.currentTarget.value);
         break;
 
-      case "new-nickname":
+      case 'new-nickname':
         setNewNickname(e.currentTarget.value);
         console.log(e.currentTarget.value);
         break;

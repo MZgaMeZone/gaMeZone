@@ -1,13 +1,13 @@
-import Container from "./components/container";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { MouseEvent } from "react";
+import Container from './components/container';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { MouseEvent } from 'react';
 
 function PasswordChange() {
-  const [currPwd, setCurrPwd] = useState("");
-  const [newPwd, setNewPwd] = useState("");
-  const [newPwdCheck, setNewPwdCheck] = useState("");
+  const [currPwd, setCurrPwd] = useState('');
+  const [newPwd, setNewPwd] = useState('');
+  const [newPwdCheck, setNewPwdCheck] = useState('');
   const [isPwdSame, setIsPwdSame] = useState(false);
   const [isVisible, isSetVisible] = useState(false);
 
@@ -15,24 +15,24 @@ function PasswordChange() {
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (!newPwd || !newPwdCheck || !currPwd) {
-      alert("모든 항목은 필수조건 입니다!");
+      alert('모든 항목은 필수조건 입니다!');
       e.preventDefault();
     } else if (!isPwdSame) {
-      alert("비밀번호가 일치하지 않습니다!");
+      alert('비밀번호가 일치하지 않습니다!');
       e.preventDefault();
     } else if (newPwd.length < 8 && newPwdCheck.length < 8) {
-      alert("비밀번호는 8글자 이상 입니다.");
+      alert('비밀번호는 8글자 이상 입니다.');
       e.preventDefault();
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
   useEffect(() => {
-    if (newPwd !== "" || newPwdCheck !== "") {
+    if (newPwd !== '' || newPwdCheck !== '') {
       isSetVisible(true);
     }
-    if (newPwd !== "" && newPwd === newPwdCheck) {
+    if (newPwd !== '' && newPwd === newPwdCheck) {
       setIsPwdSame(true);
     } else {
       setIsPwdSame(false);
@@ -47,9 +47,9 @@ function PasswordChange() {
         </Link>
         <div
           style={{
-            borderBottom: "1px solid rgba(0,0,0,0.2)",
-            width: "90%",
-            margin: "0 auto",
+            borderBottom: '1px solid rgba(0,0,0,0.2)',
+            width: '90%',
+            margin: '0 auto',
           }}
         ></div>
         <PasswordFrom>
@@ -84,11 +84,11 @@ function PasswordChange() {
                 setNewPwdCheck(e.target.value);
               }}
             />
-            <Check style={{ display: isVisible ? "block" : "none" }}>
+            <Check style={{ display: isVisible ? 'block' : 'none' }}>
               {isPwdSame ? (
-                <p style={{ color: "green" }}>비밀번호가 일치합니다 :)</p>
+                <p style={{ color: 'green' }}>비밀번호가 일치합니다 :)</p>
               ) : (
-                <p style={{ color: "tomato" }}>
+                <p style={{ color: 'tomato' }}>
                   비밀번호가 일치하지 않습니다:(
                 </p>
               )}

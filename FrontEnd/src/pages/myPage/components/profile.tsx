@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import "../components/profile.css";
+import styled from 'styled-components';
+import '../components/Profile.css';
 type ProfileProps = {
   user: string;
   img: string;
@@ -12,9 +12,9 @@ function Profile({ user, img, nick }: ProfileProps) {
       <h1 className="greeting">{`안녕하세요 ${user}님!`}</h1>
       <div
         style={{
-          borderBottom: "1px solid rgba(0,0,0,0.2)",
-          width: "90%",
-          margin: "0 auto",
+          borderBottom: '1px solid rgba(0,0,0,0.2)',
+          width: '90%',
+          margin: '0 auto',
         }}
       ></div>
       <ProfileBox>
