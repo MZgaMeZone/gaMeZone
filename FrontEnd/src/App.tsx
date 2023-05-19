@@ -17,6 +17,7 @@ import AdminUser from './pages/adminPage/adminUser';
 import Community from './pages/communityPage/community';
 import Login from './pages/userPages/login';
 import Signup from './pages/userPages/signup';
+import Users from './pages/userPages/users';
 import MyPage from './pages/myPage/mypage';
 import PasswordChange from './pages/myPage/password-change';
 import NicknameChange from './pages/myPage/nickname-change';
@@ -36,6 +37,7 @@ function App() {
         <Route path="/mypage/mycomment" element={<MyComment />} />
         <Route path="/mypage/myarticle" element={<MyArticle />} />
         <Route path="/mypage/avartar" element={<AvartarChange />} />
+        <Route path="/mypage/mycomment-post" element={<PostWithComment />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/information" element={<AdminInfomation />} />
         <Route path="/admin/record" element={<AdminRecord />} />
@@ -47,7 +49,7 @@ function App() {
         <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/mypage/mycomment-post" element={<PostWithComment />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </BrowserRouter>
   );

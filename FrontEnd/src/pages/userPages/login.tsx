@@ -1,49 +1,49 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
 
-import MainFooter from "../mainPage/main-footer";
-import MainBody from "../mainPage/main-body";
+import MainFooter from '../mainPage/main-footer';
+import MainBody from '../mainPage/main-body';
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [mainModal, setMainModal] = useState(false);
   const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (email === "" || password === "") {
-      console.log("이메일 비밀번호 빈칸");
-      return alert("이메일과 비밀번호 모두 입력해주세요.");
+    if (email === '' || password === '') {
+      console.log('이메일 비밀번호 빈칸');
+      return alert('이메일과 비밀번호 모두 입력해주세요.');
     }
     axios
-      .post("http://localhost:8080/api/users/login", {
+      .post('http://localhost:8080/api/users/login', {
         email,
         password,
       })
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          localStorage.setItem("access_token : ", res.data.userToken);
-          navigate("/");
+          localStorage.setItem('userToken', res.data.userToken);
+          navigate('/');
         }
       })
       .catch((e) => {
         console.log(e);
-        alert("올바른 이메일과 비밀번호를 입력하세요.");
+        alert('올바른 이메일과 비밀번호를 입력하세요.');
       });
   }
 
   return (
     <div
       style={{
-        backgroundColor: "#008080",
-        height: "100vh",
-        width: "100vw",
-        minHeight: "880px",
-        minWidth: "900px",
+        backgroundColor: '#008080',
+        height: '100vh',
+        width: '100vw',
+        minHeight: '880px',
+        minWidth: '900px',
       }}
     >
       <LoginSection>
@@ -72,7 +72,7 @@ function Login() {
               />
             </PasswordForm>
             <LoginButton type="submit">로그인</LoginButton>
-            <SignupButton onClick={() => navigate("/signup")}>
+            <SignupButton onClick={() => navigate('/signup')}>
               회원가입
             </SignupButton>
           </LoginForm>
