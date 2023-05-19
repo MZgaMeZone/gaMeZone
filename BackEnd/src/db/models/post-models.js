@@ -12,16 +12,25 @@ export class PostModel {
 
   async findAllPost() {
     // 모든 게시물 조회
-    const findPosts = await Post.find({});
+    const findPosts = await Post.find({}).populate("author", "nickname").lean();
     if (findPosts.length < 1) {
       console.log(`등록된 게시물이 없습니다.`);
     }
     return findPosts;
   };
 
+  async findPost(id) {
+    //특정 게시물 조회
+    const findPost = await Post.findOne({_id: id}).populate("author", "nickname").lean();
+    if (findPost.length !== 1) {
+      console.log("등록된 게시물이 없습니다.");
+    }
+    return findPost;
+  }
+
   async findUserPosts(id) {
     // 특정 유저의 게시물 조회
-    const findPosts = await Post.find({author: id});
+    const findPosts = await Post.find({author: id}).populate("author", "-password").lean();
     if (findPosts.length < 1) {
       console.log("등록된 게시물이 없습니다.");
     }
