@@ -1,15 +1,39 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import PostData from './PostData';
 import { NavLink  } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from "axios";
 
 import CommentComponent from './CommentComponent';
 
+interface postsType {
+  _id: string,
+  title: string,
+  content: string,
+  author: {nickname: string},
+  createdAt: string
+}
+
 const PostPage = () => {
-  const { postId } = useParams(); 
-  const post = PostData.find((item) => item._id === postId); 
+  const [post, setPost] = useState<postsType[]>([]);
+  const { postId } = useParams();
+
+  useEffect(() => {
+    axios
+    .get(`http://localhost:8080/api/posts/post/${postId}`)
+    .then((res) => {
+      const commentData = res.data;
+      console.log("hello");
+      setPost([commentData]);
+    })
+  }, [postId]);
+
+  console.log(post);
+
+  // const post: any = PostData.find((item) => item._id === postId);
+  
 
   if (!post) {
     // postId에 해당하는 데이터가 없을 경우에 대한 처리
@@ -31,15 +55,15 @@ const PostPage = () => {
           <Body>
             <Post>
               <TitleContainer>
-                <Title>{post.title}</Title>
+                <Title>{post[0].title}</Title>
                 <AuthorContainer>
-                  <Date>{post.author}</Date>
-                  <Author>{moment(post.createdAt).format('YYYY-MM-DD')}</Author>
+                  <Date>{post[0].author.nickname}</Date>
+                  <Author>{moment(post[0].createdAt).format('YYYY-MM-DD')}</Author>
                 </AuthorContainer>
               </TitleContainer>
-              <MainText>{post.mainText}</MainText>
+              <MainText>{post[0].content}</MainText>
             </Post>
-            <CommentComponent comments={post.comments || []} postId={postId}/>
+            <CommentComponent comments={[]} postId={postId}/>
           </Body>
         </CommunityBody>
       </CommunityContainer>
