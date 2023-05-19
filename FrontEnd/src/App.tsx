@@ -29,9 +29,6 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />
-        {/* <Route path="/game1" element={<TimeStopGame />} /> */}
-        <Route path="/game/:id" element={<GameLayout />} />
-        <Route path="/game/gameover" element={<GameOver />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/password" element={<PasswordChange />} />
         <Route path="/mypage/nickname" element={<NicknameChange />} />
@@ -43,6 +40,9 @@ function App() {
         <Route path="/admin/record" element={<AdminRecord />} />
         <Route path="/admin/user" element={<AdminUser />} />
         <Route path="/community/*" element={<Community />} />
+        <Route path="/game/:id" element={<GameLayout />} />
+        {/* <Route path="/game1" element={<TimeStopGame />} /> */}
+        <Route path="/game/gameover" element={<GameOver />} />
         <Route path="/gameLoading" element={<GameLoading />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
