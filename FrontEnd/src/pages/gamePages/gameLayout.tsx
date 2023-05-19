@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import '../../style/gameLayout.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import GameLoading from './gameLoading';
 import GameRanking from './gameRanking';
 import GameManual from './gameManual';
@@ -19,6 +19,7 @@ const GameLayout = () => {
   const [showManual, setShowManual] = useState<Boolean>(false);
   const [mainModal, setMainModal] = useState<boolean>(false);
   const [gameName, setGameName] = useState<string>('');
+  const navigate = useNavigate();
   const { id } = useParams();
 
   //게임 props로 전달받은 게임 이름 설정(헤더 타이틀에 렌더링)
@@ -78,9 +79,14 @@ const GameLayout = () => {
                 <img src={gameFavicon} alt="gameFavicon" />
                 <p>{gameName}</p>
               </div>
-              <Link to="/" className="exit-button">
+              <div
+                className="exit-button"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
                 <img src={exitImg} alt="exitImg" />
-              </Link>
+              </div>
             </div>
             <nav id="game-container-nav">
               <p
