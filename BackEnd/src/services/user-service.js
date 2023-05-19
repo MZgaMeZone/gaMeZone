@@ -121,8 +121,8 @@ class UserService {
   }
 
   // 전체 유저 정보 조회
-  async getAllUser() {
-    const result = await this.userModel.getAllUser();
+  async getAllUsers() {
+    const result = await this.userModel.getAllUsers();
     return result;
   }
 
