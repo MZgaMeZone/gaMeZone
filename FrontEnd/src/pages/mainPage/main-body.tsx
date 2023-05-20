@@ -202,7 +202,7 @@ const GameButton = ({ onClick, imageUrl, gameTitle }: any) => {
       onClick={onClick}
     >
       <img src={imageUrl} />
-      {gameTitle}
+      <div>{gameTitle}</div>
     </button>
   );
 };
