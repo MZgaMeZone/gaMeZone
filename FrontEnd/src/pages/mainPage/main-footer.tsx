@@ -114,12 +114,12 @@ const Clock = styled.div`
   justify-content: center;
   align-items: center;
   height: 3.5rem;
-  font-size: 2rem;
+  font-size: 2.7rem;
   margin-left: auto;
   margin-right: 2rem;
   padding: 0.5rem;
-  width: 12rem;
+  width: 16rem;
   height: 3.8rem;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.5);
   background-color: #e9e9e9;
 `;
