@@ -1,6 +1,19 @@
 ## gaMeZone API 명세서
 
-### `<b>`게임 명세 `</b>`
+### **유저 명세**
+
+| Method | URI                                      | Description                   |
+| ------ | ---------------------------------------- | ----------------------------- |
+| POST   | /api/users/signup                        | 회원가입                      |
+| POST   | /api/users/signup/emailDuplicateCheck    | 회원가입 시 이메일 중복검사   |
+| POST   | /api/users/signup/nicknameDuplicateCheck | 회원가입 시 닉네임 중복검사   |
+| POST   | /api/users/login                         | 로그인                        |
+| GET    | /api/users                               | 사용자 정보 조회              |
+| PUT    | /api/users                               | 사용자 정보 수정              |
+| DELETE | /api/users                               | 사용자 정보 삭제              |
+| GET    | /api/users/allUsers                      | 사용자 전체 정보 조회(관리자) |
+
+### 게임 명세
 
 | Method | URI              | Description         |
 | ------ | ---------------- | ------------------- |
@@ -10,7 +23,7 @@
 | PATCH  | /api/games/:id   | 게임정보 수정       |
 | DELETE | /api/games       | 등록된 게임 삭제    |
 
-### `<b>`게임기록 명세 `</b>`
+### 게임기록 명세
 
 | Method | URI                     | Description         |
 | ------ | ----------------------- | ------------------- |
@@ -29,7 +42,7 @@
 | PATCH  | /api/categories/:id | 카테고리 수정     |
 | DELETE | /api/categories/:id | 카테고리 삭제     |
 
-### `<b>`게시물 명세 `</b>`
+### 게시물 명세
 
 | Method | URI                | Description             |
 | ------ | ------------------ | ----------------------- |
@@ -39,7 +52,7 @@
 | PATCH  | /api/posts/:postId | 특정 게시물 수정        |
 | DELETE | /api/posts/:postId | 특정 게시물 삭제        |
 
-### `<b>`댓글 명세 `</b>`
+### 댓글 명세
 
 | Method | URI                        | Description                  |
 | ------ | -------------------------- | ---------------------------- |
