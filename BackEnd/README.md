@@ -1,8 +1,6 @@
 ## gaMeZone API 명세서
 
----
-
-### <b>유저 명세</b>
+### **유저 명세**
 
 | Method | URI                                      | Description                   |
 | ------ | ---------------------------------------- | ----------------------------- |
@@ -15,22 +13,36 @@
 | DELETE | /api/users                               | 사용자 정보 삭제              |
 | GET    | /api/users/allUsers                      | 사용자 전체 정보 조회(관리자) |
 
-### <b>게임 명세</b>
+### 게임 명세
 
-| Method | URI                      | Description          |
-| ------ | ------------------------ | -------------------- |
-| GET    | /api/products            | 모든 상품 정보 조회  |
-| GET    | /api/products/:name      | 특정 상품 조회       |
-| POST   | /api/products/add        | 새로운 상품 등록     |
-| PATCH  | /api/products/:productId | 특정 상품 정보 수정  |
-| DELETE | /api/products/:name      | 특정 상품 정보 삭제  |
-| GET    | /api/categories          | 전체 카테고리 조회   |
-| GET    | /api/categories/:name    | 특정 카테고리 조회   |
-| POST   | /api/categories/add      | 새로운 카테고리 등록 |
-| PUT    | /api/categories/:name    | 특정 카테고리 수정   |
-| DELETE | /api/categories/:name    | 특정 카테고리 삭제   |
+| Method | URI              | Description         |
+| ------ | ---------------- | ------------------- |
+| GET    | /api/games       | 게임목록 전체조회   |
+| GET    | /api/games/:name | 카테고리로 게임조회 |
+| POST   | /api/games       | 새 게임정보 등록    |
+| PATCH  | /api/games/:id   | 게임정보 수정       |
+| DELETE | /api/games       | 등록된 게임 삭제    |
 
-### <b>게시물 명세</b>
+### 게임기록 명세
+
+| Method | URI                     | Description         |
+| ------ | ----------------------- | ------------------- |
+| GET    | /api/scores/games/:id   | 게임목록 전체조회   |
+| GET    | /api/scores/users/:id   | 카테고리로 게임검색 |
+| POST   | /api/scores             | 새 게임정보 등록    |
+| PATCH  | /api/scores/:id         | 게임정보 수정       |
+| DELETE | /api/scores/:id/:option | 게임정보 삭제       |
+
+### `<b>`게임 카테고리 명세 `</b>`
+
+| Method | URI                 | Description       |
+| ------ | ------------------- | ----------------- |
+| GET    | /api/categories     | 카테고리 전체조회 |
+| POST   | /api/categories     | 새 카테고리 등록  |
+| PATCH  | /api/categories/:id | 카테고리 수정     |
+| DELETE | /api/categories/:id | 카테고리 삭제     |
+
+### 게시물 명세
 
 | Method | URI                | Description             |
 | ------ | ------------------ | ----------------------- |
@@ -40,7 +52,7 @@
 | PATCH  | /api/posts/:postId | 특정 게시물 수정        |
 | DELETE | /api/posts/:postId | 특정 게시물 삭제        |
 
-### <b>댓글 명세</b>
+### 댓글 명세
 
 | Method | URI                        | Description                  |
 | ------ | -------------------------- | ---------------------------- |
