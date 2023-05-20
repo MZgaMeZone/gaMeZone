@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import "../../style/gameRanking.css";
-import exitImg from "../../style/icons/x-solid.svg";
-import backgroundImg from "../../style/icons/ranking-background.png";
-import rankingFavicon from "../../style/icons/ranking_favicon.svg";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
+import '../../style/gameRanking.css';
+import exitImg from '../../style/icons/x-solid.svg';
+import backgroundImg from '../../style/icons/ranking-background.png';
+import rankingFavicon from '../../style/icons/ranking_favicon.svg';
 
-import ExampleRankingData from "../../components/Games/sampleRankingData";
+import ExampleRankingData from '../../components/Games/sampleRankingData';
 
 interface rankingDataType {
   gameId: string;
@@ -16,11 +17,18 @@ interface rankingDataType {
   highScore: number;
 }
 
-const GameRanking = (props: { setShowRanking: (show: boolean) => void }) => {
-  const { setShowRanking } = props;
+const GameRanking = (props: {
+  setShowRanking: (show: boolean) => void;
+  gameId: string | undefined;
+}) => {
+  const { setShowRanking, gameId } = props;
   const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
 
   useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/scores/games/${gameId}`)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
     setRankingData(ExampleRankingData);
   }, []);
 
