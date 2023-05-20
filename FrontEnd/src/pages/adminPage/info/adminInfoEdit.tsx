@@ -125,3 +125,7 @@ const Button = styled.button`
   font-size: 1.8rem;
   cursor: pointer;
 `;
+
+const FooterLine = styled.div`
+posi
+`;
