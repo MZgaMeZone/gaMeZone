@@ -31,10 +31,9 @@ const AdminInfoCategory = () => {
       console.error(err);
     }
   };
-
   return (
     <div>
-      <AddContainer>
+      <Container>
         <Title>카테고리 추가</Title>
         <Input
           type="text"
@@ -42,34 +41,37 @@ const AdminInfoCategory = () => {
           onChange={handleChange}
         />
         <Button onClick={() => handleClick()}>추가</Button>
-      </AddContainer>
+      </Container>
 
-      <EditContainer>
+      <Container>
         <Title>카테고리 내역</Title>
         {data.map((item: Category) => (
           <EditContent key={item._id}>
             <p>{item.categoryName}</p>
-            <Button>수정</Button>
-            <Button>삭제</Button>
+            <div>
+              <Button>수정</Button>
+              <Button>삭제</Button>
+            </div>
           </EditContent>
         ))}
-      </EditContainer>
+      </Container>
     </div>
   );
 };
 
 export default AdminInfoCategory;
 
-const AddContainer = styled.div`
-  padding: 4rem 6rem;
+const Container = styled.div`
+  padding: 5rem 6rem;
+  border-bottom: 2px solid #e0e0e0;
 `;
 const Title = styled.p`
   font-size: 2.4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   font-weight: 600;
 `;
 const Input = styled.input`
-  margin 0 3rem;
+  margin 0 4rem;
   padding: 1.2rem;
   width: 60rem;
   font-size: 2rem;
@@ -78,13 +80,28 @@ const Input = styled.input`
   border-radius: 15px;
   outline: none;
 `;
-const EditContainer = styled.div`
-  padding: 2rem 4rem;
-`;
 
 const EditContent = styled.div`
+  margin-left: 5rem;
   display: flex;
-  margin-bottom: 0.5rem;
+  flex-direction: row;
+  margin-bottom: 1.4rem;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  width: 82rem;
+  p {
+    margin-left: 4rem;
+    font-size: 2.2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+  div {
+    margin-right: 4rem;
+  }
+  button {
+    margin: 1rem;
+  }
 `;
 const Button = styled.button`
   width: 9rem;
