@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import CommunityContainer from "./components/communityContainer";
+import CommunityContainer from './components/communityContainer';
 
 function PostWithComment() {
   return (
