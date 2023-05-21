@@ -109,13 +109,20 @@ const AdminInfoCategory = () => {
   };
 
   //삭제
-  const deleteHandleClick = async (id: string) => {
-    try {
-      const res = await axios.delete(`${URL}/${id}`);
-      console.log(res.data);
-      setData(data.filter((item) => item._id !== id));
-    } catch (err) {
-      console.error(err);
+  const deleteHandleClick = async (id: string, categoryName: string) => {
+    const deleteConfirm = window.confirm(
+      `[${categoryName}] 카테고리를 삭제하시겠습니까?`
+    );
+    if (deleteConfirm) {
+      try {
+        const res = await axios.delete(`${URL}/${id}`);
+        console.log(res.data);
+        setData(data.filter((item) => item._id !== id));
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      alert('삭제가 취소되었습니다.');
     }
   };
 
@@ -158,7 +165,9 @@ const AdminInfoCategory = () => {
                     수정
                   </Button>
                 )}
-                <Button onClick={() => deleteHandleClick(item._id)}>
+                <Button
+                  onClick={() => deleteHandleClick(item._id, item.categoryName)}
+                >
                   삭제
                 </Button>
               </div>
