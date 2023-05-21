@@ -17,7 +17,7 @@ const AdminInfoCategory = () => {
         setData(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [data]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -25,7 +25,7 @@ const AdminInfoCategory = () => {
 
   const handleClick = async () => {
     try {
-      const res = await axios.post(URL, inputValue);
+      const res = await axios.post(URL, { categoryName: inputValue });
       console.log(res.data);
     } catch (err) {
       console.error(err);
@@ -42,7 +42,6 @@ const AdminInfoCategory = () => {
         />
         <Button onClick={() => handleClick()}>추가</Button>
       </Container>
-
       <Container>
         <Title>카테고리 내역</Title>
         {data.map((item: Category) => (
@@ -107,10 +106,16 @@ const Button = styled.button`
   width: 9rem;
   height: 4.4rem;
   background: #000080;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   color: #ffffff;
   font-weight: 500;
   font-size: 1.8rem;
   cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 128, 0.8);
+  }
+  &:active {
+    background: rgba(0, 0, 128, 0.6);
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.4);
+  }
 `;
