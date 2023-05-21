@@ -1,18 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import styled from 'styled-components';
 import '../../style/gameOver.css';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import gameoverBgImg from '../../style/icons/gameover-bg-img.svg';
 import MainBody from '../mainPage/main-body';
 import MainFooter from '../mainPage/main-footer';
 import { fontFamily } from '@mui/system';
 
+interface rankingDataType {
+  gameId: string;
+  userNickname: string;
+  averageScore: number;
+  highScore: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const GameOver = () => {
   const [mainModal, setMainModal] = useState<boolean>(false);
   const [gameName, setGameName] = useState<string>('');
+  const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+
+  //recorder에서 유저의 이번 회차 점수 데이터도 같이 받아옴.
+  const { gameId, userNickName, userAverageScore, userHighScore } =
+    location.state || {};
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/scores/${gameId}/averageScore`)
+      .then((res) => {
+        setRankingData(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div
@@ -41,13 +69,13 @@ const GameOver = () => {
             <div className="user-score">
               <span>
                 <span>USERID: </span>
-                <span>GOGUMA, &nbsp;</span>
+                <span>{userNickName}, &nbsp;</span>
               </span>
               <span>
                 <span>AVG:</span>
-                <span>1000, &nbsp;</span>
+                <span>{userAverageScore}, &nbsp;</span>
                 <span>HIGH:</span>
-                <span>1000</span>
+                <span>{userHighScore}</span>
               </span>
             </div>
           </div>
@@ -58,66 +86,15 @@ const GameOver = () => {
             <span className="highscore">HIGH SCORE</span>
           </div>
           <div className="ranking-content">
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
-            <ul className="ranking-item">
-              <li className="ranking-idx">1.</li>
-              <li className="id-li">gomao</li>
-              <li className="score-li avg">1000</li>
-              <li className="score-li high">1000</li>
-            </ul>
+            {rankingData &&
+              rankingData.map((data: rankingDataType, idx: number) => (
+                <ul className="ranking-item" key={data.createdAt}>
+                  <li className="ranking-idx">{`${idx + 1}.`}</li>
+                  <li className="id-li">{data.userNickname}</li>
+                  <li className="score-li avg">{data.averageScore}</li>
+                  <li className="score-li high">{data.highScore}</li>
+                </ul>
+              ))}
           </div>
         </div>
         <div className="game-over-footer">

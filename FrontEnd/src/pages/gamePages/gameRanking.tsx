@@ -12,9 +12,10 @@ import ExampleRankingData from '../../components/Games/sampleRankingData';
 interface rankingDataType {
   gameId: string;
   userNickname: string;
-  totalScores: number;
   averageScore: number;
   highScore: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const GameRanking = (props: {
@@ -26,10 +27,13 @@ const GameRanking = (props: {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/scores/games/${gameId}`)
-      .then((res) => console.log(res.data))
+      .get(`${process.env.REACT_APP_API_URL}/api/scores/${gameId}/averageScore`)
+      .then((res) => {
+        setRankingData(res.data);
+        console.log(res.data);
+      })
       .catch((err) => console.log(err));
-    setRankingData(ExampleRankingData);
+    // setRankingData(ExampleRankingData);
   }, []);
 
   return (
@@ -57,7 +61,7 @@ const GameRanking = (props: {
           <ol>
             {rankingData &&
               rankingData.map((data: rankingDataType, idx: number) => (
-                <li key={data.userNickname}>
+                <li key={data.createdAt}>
                   <span className="ranking-list-idx">{`${idx + 1}.`}</span>
                   <p className="ranking-list-userID">{data.userNickname}</p>
                   <p className="ranking-list-score">{data.averageScore}</p>
