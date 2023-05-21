@@ -5,7 +5,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import Pagination from './Pagination';
-import PostData from './PostData';
 
 interface postType {
   _id: string;
@@ -21,10 +20,12 @@ const NoticeComponent = () => {
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/posts').then((res) => {
-      const data = res.data;
+      // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
+    axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
+      const data = res.data.reverse();
       // console.log(data);
       setPosts(data);
+      console.log(data);
     });
   }, []);
 
@@ -99,7 +100,7 @@ const WriteButton = styled.button`
     inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
 
-  &:hover {
+  &:active {
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `;
@@ -108,7 +109,7 @@ const PostContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  margin: 2.2rem 1rem 1rem;
+  margin: 3.5rem 1rem 1rem;
 `;
 
 const PostItem = styled.div`
@@ -126,11 +127,6 @@ const PostItemHeader = styled.div`
   margin: 1rem auto;
 `;
 
-const PostItemTitle = styled.div`
-  margin: 0 20rem 0 21rem;
-  width: 20rem;
-`;
-
 const PostItemInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -138,7 +134,12 @@ const PostItemInfo = styled.div`
 
 const PostItemNumber = styled.p`
   margin: 0 10rem 0 0;
-  width: 20rem;
+  width: 7rem;
+`;
+
+const PostItemTitle = styled.div`
+  margin: 0 20rem 0 21rem;
+  width: 35rem;
 `;
 
 const PostDate = styled.p`
@@ -146,5 +147,6 @@ const PostDate = styled.p`
 `;
 
 const PostUser = styled.p`
-  margin: 0 6rem 0 1rem;
+  margin: 0 0 0 1rem;
+  width: 6rem;
 `;
