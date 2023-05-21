@@ -48,7 +48,7 @@ class ScoreModel {
     const ranking = [...findScores].sort((b, a) =>
       a[option] === b[option]
         ? a[nonOption] === b[nonOption]
-          ? a[Date.parse(createAt)] - b[Date.parse(createAt)]
+          ? Date.parse(a.createdAt) - Date.parse(b.createdAt)
           : a[nonOption] - b[nonOption]
         : a[option] - b[option]
     );
