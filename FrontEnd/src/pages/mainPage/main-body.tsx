@@ -105,16 +105,15 @@ function MainBody(props: MainBodyProps) {
                 <ul>
                   {gameList &&
                     gameList.map((item) => (
-                      <>
+                      <div key={item._id}>
                         <GameButton
-                          key={item._id}
                           onClick={() => handleGameClick(item.gameUrl)}
                           imageUrl={
                             process.env.REACT_APP_API_URL + item.gameImageUrl
                           }
                           gameTitle={item.gameTitle}
                         ></GameButton>
-                      </>
+                      </div>
                     ))}
                 </ul>
               </div>
