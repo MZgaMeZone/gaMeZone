@@ -9,6 +9,7 @@ import Admin from './pages/adminPage/admin';
 import GameLoading from './pages/gamePages/gameLoading';
 import GameLayout from './pages/gamePages/gameLayout';
 import GameOver from './pages/gamePages/gameOver';
+import Ranking from './pages/RankingPage/ranking';
 import Main from './pages/mainPage/main';
 import Rootpage from './pages/rootPage';
 import AdminInfomation from './pages/adminPage/info/adminInformation';
@@ -47,6 +48,7 @@ function App() {
         {/* <Route path="/game1" element={<TimeStopGame />} /> */}
         <Route path="/game/gameover" element={<GameOver />} />
         <Route path="/gameLoading" element={<GameLoading />} />
+        <Route path="/ranking" element={<Ranking />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/users" element={<Users />} />
