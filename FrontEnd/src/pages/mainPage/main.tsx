@@ -23,7 +23,7 @@ const Main = () => {
     },
     {
       name: '10초게임',
-      url: 'game/game1',
+      url: 'game/64673c9e003fef9471f58799',
       img: require('../../images/gomao.png'),
     },
     { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
