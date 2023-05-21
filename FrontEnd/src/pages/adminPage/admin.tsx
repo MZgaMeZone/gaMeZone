@@ -55,7 +55,7 @@ const Admin = () => {
             {menuIdx === 2 ? <span className={styles.span} /> : ''}
           </div>
         </div>
-        <Main>
+        <ScrollContent>
           <MainContent>
             <div>
               The standard Lorem Ipsum passage, used since the 1500s "Lorem
@@ -130,7 +130,7 @@ const Admin = () => {
               worse pains."
             </div>
           </MainContent>
-        </Main>
+        </ScrollContent>
 
         <footer>
           <div className={styles.footer_box}>
@@ -144,7 +144,7 @@ const Admin = () => {
 };
 export default Admin;
 
-const Main = styled.div`
+const ScrollContent = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {

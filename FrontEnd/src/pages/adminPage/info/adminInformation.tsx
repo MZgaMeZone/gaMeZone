@@ -3,6 +3,7 @@ import styles from '../../../style/admin.module.css';
 import Menu from '../menu';
 import Footer from '../footer';
 import { ReactComponent as Question } from '../../../style/icons/question.svg';
+import styled from 'styled-components';
 import AdminInfoEdit from './adminInfoEdit';
 import AdminInfoCategory from './adminInfoCategory';
 const AdminInfomation = () => {
@@ -41,7 +42,7 @@ const AdminInfomation = () => {
             {menuIdx === 1 ? <span className={styles.span} /> : ''}
           </div>
         </div>
-        <main>
+        <Scroll>
           <div className={styles.content}>
             <div className={styles.sub_title}>
               {menuIdx === 0 ? (
@@ -59,8 +60,9 @@ const AdminInfomation = () => {
             ) : (
               ''
             )}
+            <FooterLine></FooterLine>
           </div>
-        </main>
+        </Scroll>
         <footer>
           <div className={styles.footer_box}>
             <div className={styles.footer_content}></div>
@@ -72,3 +74,24 @@ const AdminInfomation = () => {
   );
 };
 export default AdminInfomation;
+
+const Scroll = styled.div`
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 10%;
+    background-clip: padding-box;
+    border: 4px solid #ebeded;
+    background: #b3b5b5;
+    border-radius: 50px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #ebeded;
+  }
+`;
+const FooterLine = styled.div`
+  padding: 2rem;
+`;
