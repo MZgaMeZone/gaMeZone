@@ -152,7 +152,7 @@ function Controller(props: ControllerProps) {
       const finalMessage = [
         bestScore[0],
         worstScore[0],
-        averageScore.toFixed(3),
+        ((100 * (10 - averageScore)) / 10).toFixed(2),
       ];
       setPrintScore(finalMessage);
     } else {
