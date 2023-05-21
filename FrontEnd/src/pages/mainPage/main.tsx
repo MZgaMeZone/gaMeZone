@@ -13,23 +13,23 @@ const Main = () => {
   const hitGameList: any[] = [
     {
       name: '고마오',
-      url: 'game/game1',
+      url: 'game1',
       img: require('../../images/gomao.png'),
     },
     {
       name: '귀엽네',
-      url: 'game/game1',
+      url: 'game1',
       img: require('../../images/cute.png'),
     },
     {
       name: '10초게임',
-      url: 'game/64673c9e003fef9471f58799',
+      url: '64673c9e003fef9471f58799',
       img: require('../../images/gomao.png'),
     },
     { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
     {
       name: '아주고맙ㅎ',
-      url: 'game/game1',
+      url: 'game1',
       img: require('../../images/gomao.png'),
     },
   ];
