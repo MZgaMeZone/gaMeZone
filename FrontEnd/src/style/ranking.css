@@ -1,0 +1,198 @@
+.rank-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100rem;
+  height: 90rem;
+  transform: translate(-50%, -50%);
+  font-family: 'neodgm', cursive;
+  justify-content: center;
+  background: #c0c0c0;
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
+  font-size: 2.5rem;
+  display: block;
+}
+
+.rank-container-header {
+  width: 97.5%;
+  height: 4.8rem;
+  margin: 0.7rem auto auto auto;
+
+  background: #000080;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rank-container-header-title {
+  display: flex;
+}
+.rank-container-header-title > img {
+  width: 5.5rem;
+  margin-left: 1.5rem;
+  margin-top: 1rem;
+}
+.rank-container-header-title > p {
+  padding-left: 1.5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.rank-container-header > .exit-button {
+  width: 3.8rem;
+  height: 3.8rem;
+  margin-right: 0.7rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
+  cursor: pointer;
+}
+
+.rank-container-header > .exit-button > img {
+  width: 65%;
+  height: 65%;
+  display: flex;
+  margin: 0.6rem auto;
+}
+
+.rank-container-body {
+  height: 82rem;
+  padding: 0 10rem;
+  overflow-y: auto;
+}
+
+.rank-nav {
+  height: 10rem;
+  padding: 2rem;
+}
+.select-game-header {
+  width: 40rem;
+  height: 4.6rem;
+  position: relative;
+  padding-left: 2.5rem;
+  display: flex;
+  align-items: center;
+  background-color: #e6e6e6;
+  box-shadow: inset 0.4rem 0.4rem 0.2rem 0rem #0000003f,
+    inset -0.4rem -0.4rem 0.4rem 0rem #ffffff3f;
+  cursor: pointer;
+}
+
+.select-game-header:hover {
+  background-color: white;
+}
+.select-game-list {
+  position: absolute;
+  background-color: #e6e6e6;
+  width: 40rem;
+  margin-top: 0.7rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.select-game-list li {
+  padding: 1rem 2.5rem;
+  overflow: hidden;
+}
+
+.select-game-list li:not(:last-child) {
+  border-bottom: #c0c0c0 1px solid;
+}
+.select-game-list li:hover {
+  background-color: white;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+}
+.section-header > img {
+  width: 5.5rem;
+  margin-bottom: 1rem;
+  margin-right: 0.6rem;
+}
+
+.section-header > h2 {
+  font-size: 2.7rem;
+  font-weight: 500;
+  flex: content;
+}
+
+.section-header > div {
+  flex: 18;
+}
+
+.section-header > div > hr {
+  position: relative;
+  border: #909090 0.1rem solid;
+}
+
+.top3-section {
+  margin-bottom: 3rem;
+}
+
+.top3-section-body > ul {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.top3-section-body > ul > li {
+  width: 28%;
+  height: 22rem;
+  box-shadow: inset 0.4rem 0.4rem 0.4rem 0rem #0000007f,
+    inset -0.4rem -0.4rem 0.4rem 0rem #ffffff7f;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top3-section-body > ul > li > .ranking-idx {
+  width: 4rem;
+  position: absolute;
+  font-size: 3rem;
+  text-align: center;
+  top: -1.5rem;
+  background-color: #c0c0c0;
+}
+
+.img-circle {
+  width: 7rem;
+  height: 7rem;
+  background-color: white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.top3-section-body > ul > li > .userId {
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.all-ranking-section-body > ul li {
+  width: 93%;
+  height: 10rem;
+  margin: 0 auto 1.1rem auto;
+  box-shadow: inset 0.4rem 0.4rem 0.4rem 0rem #0000007f,
+    inset -0.4rem -0.4rem 0.4rem 0rem #ffffff7f;
+  display: flex;
+  align-items: center;
+}
+.all-ranking-section-body > ul li > .ranking-idx {
+  flex: 1.2;
+  text-align: center;
+}
+
+.all-ranking-section-body > ul li > .userId {
+  flex: 3;
+  padding-left: 5rem;
+}
+.all-ranking-section-body > ul li > .avg-score {
+  flex: 1.5;
+  text-align: start;
+}
+.all-ranking-section-body > ul li > .high-score {
+  flex: 1.5;
+  text-align: start;
+}
