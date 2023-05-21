@@ -20,7 +20,7 @@ const AdminInfoCategory = () => {
     editInput: '',
   });
 
-  const { addInput, editInput } = inputs;
+  const { addInput } = inputs;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const { value, name } = e.target;
@@ -44,26 +44,31 @@ const AdminInfoCategory = () => {
   }, []);
 
   //추가
-
   const addHandleClick = async () => {
     if (addInput === '') {
       alert('카테고리를 입력해주세요.');
-    }
-    try {
-      const res = await axios.post(URL, {
-        categoryName: addInput,
-      });
-      console.log(res.data);
-      setData([...data, res.data]);
+    } else if (addInput.length >= 10) {
+      alert('카테고리 이름은 10자 이내로 입력 가능합니다.');
       setInputs((prev) => ({
         ...prev,
         addInput: '',
       }));
-    } catch (err) {
-      console.error(err);
+    } else {
+      try {
+        const res = await axios.post(URL, {
+          categoryName: addInput,
+        });
+        console.log(res.data);
+        setData([...data, res.data]);
+        setInputs((prev) => ({
+          ...prev,
+          addInput: '',
+        }));
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
-
   // 수정
 
   const [editCategoryName, setEditCategoryName] = useState('');
@@ -78,21 +83,28 @@ const AdminInfoCategory = () => {
   };
 
   const handleSaveClick = async (id: string) => {
-    try {
-      const res = await axios.patch(`${URL}/${id}`, {
-        categoryName: editCategoryName,
-      });
-      const updatedCategory = res.data;
-      setData((prevData) =>
-        prevData.map((item) =>
-          item._id === id
-            ? { ...item, categoryName: updatedCategory.categoryName }
-            : item
-        )
-      );
-      setIsEditing(null);
-    } catch (err) {
-      console.error(err);
+    if (editCategoryName === '') {
+      alert('수정할 카테고리를 입력해주세요.');
+    } else if (editCategoryName.length >= 10) {
+      alert('카테고리 이름은 10자 이내로 입력 가능합니다.');
+      setEditCategoryName('');
+    } else {
+      try {
+        const res = await axios.patch(`${URL}/${id}`, {
+          categoryName: editCategoryName,
+        });
+        const updatedCategory = res.data;
+        setData((prevData) =>
+          prevData.map((item) =>
+            item._id === id
+              ? { ...item, categoryName: updatedCategory.categoryName }
+              : item
+          )
+        );
+        setIsEditing(null);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -123,26 +135,36 @@ const AdminInfoCategory = () => {
       <Container>
         <Title>카테고리 내역</Title>
         {data.map((item: Category) => (
-          <EditContent key={item._id}>
-            {isEditing === item._id ? (
-              <input
-                value={editCategoryName}
-                name="editInput"
-                onChange={(e) => handleChange(e, item._id)}
-                autoFocus
-              />
-            ) : (
-              <p>{item.categoryName}</p>
-            )}
-            <div>
+          <>
+            <EditContent key={item._id}>
               {isEditing === item._id ? (
-                <Button onClick={() => handleSaveClick(item._id)}>저장</Button>
+                <input
+                  value={editCategoryName}
+                  name="editInput"
+                  onChange={(e) => handleChange(e, item._id)}
+                  placeholder="수정할 카테고리를 입력해주세요."
+                  autoFocus
+                />
               ) : (
-                <Button onClick={() => handleEditClick(item._id)}>수정</Button>
+                <p>{item.categoryName}</p>
               )}
-              <Button onClick={() => deleteHandleClick(item._id)}>삭제</Button>
-            </div>
-          </EditContent>
+              <div>
+                {isEditing === item._id ? (
+                  <Button onClick={() => handleSaveClick(item._id)}>
+                    저장
+                  </Button>
+                ) : (
+                  <Button onClick={() => handleEditClick(item._id)}>
+                    수정
+                  </Button>
+                )}
+                <Button onClick={() => deleteHandleClick(item._id)}>
+                  삭제
+                </Button>
+              </div>
+            </EditContent>
+            <span />
+          </>
         ))}
       </Container>
     </div>
@@ -172,29 +194,32 @@ const Input = styled.input`
 `;
 
 const EditContent = styled.div`
-  margin-left: 5rem;
+  margin: 0 0 1.4rem 5rem;
   display: flex;
   flex-direction: row;
-  margin-bottom: 1.4rem;
-  justify-content: space-between;
   border-bottom: 1px solid #e0e0e0;
-  width: 82rem;
+  justify-content: space-between;
+  width: 80rem;
   input {
-    margin-left: 3.8rem;
+    height: 4.2rem;
+    width: 45rem;
+    margin: 1.2rem 0 0 2rem;
+    padding-left: 1.2rem;
+    background-color: rgb(233, 233, 233);
     border: 0;
-    outline: none;
+    border-radius: 15px;
     font-weight: 500;
     font-size: 2.2rem;
   }
   p {
-    margin-left: 4rem;
+    margin-left: 3rem;
     font-size: 2.2rem;
     font-weight: 500;
     display: flex;
     align-items: center;
   }
   div {
-    margin-right: 4rem;
+    margin-right: 3rem;
   }
   button {
     margin: 1rem;
