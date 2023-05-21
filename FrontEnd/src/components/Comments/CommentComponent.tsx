@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import styled from 'styled-components'
 
-import Pagination from './Pagination';
+import Pagination from '../Boards/Pagination';
 import CreateComment from './CreateComment';
 import axios from 'axios';
 
@@ -27,7 +27,7 @@ const CommentComponent =({ postId }:CommentProps) => {
 
   useEffect(() => {
     axios
-    .get(`http://localhost:8080/api/comments/post/${postId}`)
+    .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
     .then((res) => {
       const data = res.data;
       const formattedData = data.map((item:any) => ({
