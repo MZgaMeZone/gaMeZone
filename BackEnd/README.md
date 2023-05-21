@@ -25,13 +25,13 @@
 
 ### 게임기록 명세
 
-| Method | URI                            | Description         |
-| ------ | ------------------------------ | ------------------- |
-| GET    | /api/scores/games/:id          | 게임목록 전체조회   |
-| GET    | /api/scores/users/:id          | 카테고리로 게임검색 |
-| POST   | /api/scores                    | 새 게임정보 등록    |
-| PATCH  | /api/scores/:id                | 게임정보 수정       |
-| DELETE | /api/scores/:id/:option?num=10 | 게임정보 삭제       |
+| Method | URI                            | Description                                              |
+| ------ | ------------------------------ | -------------------------------------------------------- |
+| GET    | /api/scores/games/:id          | 게임 ID로 기록 조회                                      |
+| GET    | /api/scores/users/:id          | 유저 ID로 기록 조회                                      |
+| POST   | /api/scores                    | 새 기록 등록                                             |
+| DELETE | /api/scores/:id                | 기록 삭제 (부정한 방법으로 달성한 기록 말소용)           |
+| GET    | /api/scores/:id/:option?num=10 | 랭킹데이터 검색(gameId, 정렬우선조건, 가져올 데이터갯수) |
 
 ### `<b>`게임 카테고리 명세 `</b>`
 
