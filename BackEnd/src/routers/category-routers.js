@@ -20,12 +20,10 @@ categoryRouter.post("/", async (req, res, next) => {
   }
 });
 
-// 모든 카테고리를 가져오는 GET 요청
+// 모든 카테고리를 가져오는 GET 요청 => 메인 페이지 접속시마다 렌더링되므로, 콘솔 삭제함.
 categoryRouter.get("/", async (req, res, next) => {
   try {
-    console.log("🖐️ 모든 카테고리 정보를 출력합니다.");
     const categoryList = await categoryService.findAllCategory();
-    console.log("✔️ 카테고리정보 출력 완료!");
     res.status(201).json(categoryList);
   } catch (err) {
     console.log(`❌ ${err}`);
