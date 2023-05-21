@@ -3,7 +3,7 @@
   top: 50%;
   left: 50%;
   width: 100rem;
-  height: 90rem;
+  height: 86rem;
   transform: translate(-50%, -50%);
   font-family: 'neodgm', cursive;
   justify-content: center;
@@ -56,13 +56,13 @@
 }
 
 .rank-container-body {
-  height: 82rem;
+  height: 80rem;
   padding: 0 10rem;
   overflow-y: auto;
 }
 
 .rank-nav {
-  height: 10rem;
+  height: 8rem;
   padding: 2rem;
 }
 .select-game-header {
@@ -76,6 +76,13 @@
   box-shadow: inset 0.4rem 0.4rem 0.2rem 0rem #0000003f,
     inset -0.4rem -0.4rem 0.4rem 0rem #ffffff3f;
   cursor: pointer;
+  font-size: 2rem;
+}
+
+.dropdownIcon {
+  position: absolute;
+  width: 2rem;
+  right: 2rem;
 }
 
 .select-game-header:hover {
@@ -88,9 +95,11 @@
   margin-top: 0.7rem;
   cursor: pointer;
   z-index: 2;
+  font-size: 2.2rem;
 }
 
 .select-game-list li {
+  height: 5rem;
   padding: 1rem 2.5rem;
   overflow: hidden;
 }
@@ -170,6 +179,30 @@
   padding: 1rem;
 }
 
+.all-ranking-section-subtitle {
+  width: 93%;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto 1.5rem auto;
+}
+
+.all-ranking-section-subtitle div {
+  font-size: 2.3rem;
+  box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem #00000051,
+    inset -0.3rem -0.3rem 0.3rem 0rem #ffffffcc;
+  padding-left: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.all-ranking-section-subtitle .subtitle1 {
+  width: 28%;
+}
+.all-ranking-section-subtitle .subtitle2 {
+  width: 21%;
+}
+
 .all-ranking-section-body > ul li {
   width: 93%;
   height: 10rem;
@@ -185,14 +218,14 @@
 }
 
 .all-ranking-section-body > ul li > .userId {
-  flex: 3;
+  flex: 2.8;
   padding-left: 5rem;
 }
 .all-ranking-section-body > ul li > .avg-score {
-  flex: 1.5;
+  flex: 1.6;
   text-align: start;
 }
 .all-ranking-section-body > ul li > .high-score {
-  flex: 1.5;
+  flex: 1.3;
   text-align: start;
 }

@@ -7,6 +7,7 @@ import exitImg from '../../style/icons/x-solid.svg';
 import starIcon from '../../style/icons/star.svg';
 import crownIcon from '../../style/icons/crown.svg';
 import heartIcon from '../../style/icons/heart.svg';
+import dropdownIcon from '../../style/icons/dropdown.svg';
 import MainBody from '../mainPage/main-body';
 import MainFooter from '../mainPage/main-footer';
 
@@ -49,7 +50,13 @@ const Lanking = () => {
               }}
             >
               -- 게임을 선택해주세용 --
+              <img
+                className="dropdownIcon"
+                src={dropdownIcon}
+                alt="dropdownIcon"
+              />
             </div>
+
             {showGameList && (
               <ul className="select-game-list">
                 <li>10초 맞추기</li>
@@ -112,6 +119,12 @@ const Lanking = () => {
               <div>
                 <hr />
               </div>
+            </div>
+            <div className="all-ranking-section-subtitle">
+              <div className="subtitle1">Ranking</div>
+              <div className="subtitle1">Id</div>
+              <div className="subtitle2">Avg Score</div>
+              <div className="subtitle2">High Score</div>
             </div>
             <div className="all-ranking-section-body">
               <ul>
