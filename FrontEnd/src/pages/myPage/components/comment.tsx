@@ -46,7 +46,7 @@ function Comment() {
           const shortComment = comment.content.slice(0, textLimit); //보여줄 짧은 글
           const isLongComment = comment.content.length > textLimit; //긴글인지 확인
           return (
-            <>
+            <div key={comment.id}>
               <CommentInfo key={comment.id}>
                 <ProfileBox>
                   <img src={gomaImg} alt="프로필" />
@@ -74,7 +74,7 @@ function Comment() {
                 </div>
                 <h2>{comment.category}</h2>
               </CommentInfo>
-            </>
+            </div>
           );
         })}
       </Wrapper>
