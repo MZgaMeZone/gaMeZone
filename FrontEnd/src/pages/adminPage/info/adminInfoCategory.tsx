@@ -17,20 +17,37 @@ const AdminInfoCategory = () => {
         setData(res.data);
       })
       .catch((err) => console.log(err));
-  }, [data]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleClick = async () => {
+  const addHandleClick = async () => {
     try {
-      const res = await axios.post(URL, { categoryName: inputValue });
+      const res = await axios.post(URL, {
+        categoryName: inputValue,
+      });
       console.log(res.data);
+      setData([...data, res.data]);
+      setInputValue('');
     } catch (err) {
       console.error(err);
     }
   };
+
+  const deleteHandleClick = async (id: string) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8080/api/categories/${id}`
+      );
+      console.log(res.data);
+      setData(data.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -38,9 +55,10 @@ const AdminInfoCategory = () => {
         <Input
           type="text"
           placeholder="카테고리를 입력해주세요."
+          value={inputValue}
           onChange={handleChange}
         />
-        <Button onClick={() => handleClick()}>추가</Button>
+        <Button onClick={() => addHandleClick()}>추가</Button>
       </Container>
       <Container>
         <Title>카테고리 내역</Title>
@@ -49,7 +67,7 @@ const AdminInfoCategory = () => {
             <p>{item.categoryName}</p>
             <div>
               <Button>수정</Button>
-              <Button>삭제</Button>
+              <Button onClick={() => deleteHandleClick(item._id)}>삭제</Button>
             </div>
           </EditContent>
         ))}
