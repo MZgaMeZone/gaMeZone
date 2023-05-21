@@ -68,6 +68,7 @@ const AdminInfoCategory = () => {
 
   const [editCategoryName, setEditCategoryName] = useState('');
   const [isEditing, setIsEditing] = useState<string | null>(null);
+
   const handleEditClick = (id: string) => {
     const category = data.find((item) => item._id === id);
     if (category) {
@@ -76,14 +77,29 @@ const AdminInfoCategory = () => {
     }
   };
 
-  const handleSaveClick = (id: string) => {
-    setIsEditing(null);
+  const handleSaveClick = async (id: string) => {
+    try {
+      const res = await axios.patch(`${URL}/${id}`, {
+        categoryName: editCategoryName,
+      });
+      const updatedCategory = res.data;
+      setData((prevData) =>
+        prevData.map((item) =>
+          item._id === id
+            ? { ...item, categoryName: updatedCategory.categoryName }
+            : item
+        )
+      );
+      setIsEditing(null);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   //삭제
   const deleteHandleClick = async (id: string) => {
     try {
-      const res = await axios.delete(URL + `/${id}`);
+      const res = await axios.delete(`${URL}/${id}`);
       console.log(res.data);
       setData(data.filter((item) => item._id !== id));
     } catch (err) {
