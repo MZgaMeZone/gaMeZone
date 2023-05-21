@@ -33,15 +33,18 @@ class ScoreModel {
     return newScore;
   }
 
-  async calculateRanking(id, option) {
+  async calculateRanking(id, param) {
     // 해당 게임의 랭킹정보를 불러오기 : 랭킹정보의 기준 데이터 - 5판 평균점수
     // 기록 데이터는 프론트단에서 걸러서 와야함.(기준이 게임마다 다르기 때문)
     // option은 Average Score, High Score 중 어느 것을 랭킹 기준으로 할 지
     const findScores = await Score.find({ gameId: id });
     let nonOption = "default";
-    if (option === "averageScore") {
+    let option = "default";
+    if (param === "avr") {
+      option = "averageScore";
       nonOption = "highScore";
     } else {
+      option = "highScore";
       nonOption = "averageScore";
     }
     // 랭킹등록 우선순위 : 1순위(option) 2순위(non-option) 3순위(달성시점)
