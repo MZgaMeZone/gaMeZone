@@ -57,7 +57,7 @@ const ModifiedPost = () => {
         author: "64653ea8c587b21f36aef42e" //현재는 더미 데이터
       };
 
-      await axios.patch(`http://localhost:8080/api/posts/${postId}`, postData);
+      await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, postData);
 
       alert('게시물 수정이 완료되었습니다.');
       navigate(`/community/${postId}`);

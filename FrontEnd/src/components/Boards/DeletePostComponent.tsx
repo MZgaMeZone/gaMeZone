@@ -8,7 +8,7 @@ const DeletePost = ({postId}:any) => {
 
     const clickHandler = async () => {
         try {
-            axios.delete(`http://localhost:8080/api/posts/${postId}`);
+            axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`);
             alert("게시물이 삭제되었습니다.");
             navigate('/community');
         } catch(err) {
@@ -20,9 +20,22 @@ const DeletePost = ({postId}:any) => {
 
     return (
         <div>
-            <button onClick={clickHandler}>삭제하기</button>
+            <DeleteButton onClick={clickHandler}>삭제하기</DeleteButton>
         </div>
     )
 };
 
 export default DeletePost;
+
+const DeleteButton = styled.button`
+  margin: 0 3rem;
+  height: 3rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
+  }
+`;

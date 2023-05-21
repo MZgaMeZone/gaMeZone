@@ -21,7 +21,7 @@ const NoticeComponent = () => {
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/posts').then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
       const data = res.data;
       // console.log(data);
       setPosts(data);

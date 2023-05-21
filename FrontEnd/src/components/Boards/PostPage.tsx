@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import CommentComponent from './CommentComponent';
-import DeletePost from './DeletePostConponent';
+import CommentComponent from '../Comments/CommentComponent';
+import DeletePost from './DeletePostComponent';
 
 interface postsType {
   _id: string;
@@ -22,7 +22,7 @@ const PostPage = () => {
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   useEffect(() => {
     axios
-    .get(`http://localhost:8080/api/posts/post/${postId}`)
+    .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
     .then((res) => {
       const data = res.data;
       setPost(data);
