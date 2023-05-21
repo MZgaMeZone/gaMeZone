@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
 
 interface HitGame {
   name: string;

@@ -52,7 +52,7 @@ const GameLayout = () => {
   //게임 컴포넌트 렌더링
   let gameComponent;
   switch (id) {
-    case 'game1':
+    case '64673c9e003fef9471f58799':
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
       break;
     default:
@@ -115,7 +115,7 @@ const GameLayout = () => {
           </div>
           <>
             {showRanking ? (
-              <GameRanking setShowRanking={setShowRanking} />
+              <GameRanking setShowRanking={setShowRanking} gameId={id} />
             ) : showManual ? (
               <GameManual setShowManual={setShowManual} />
             ) : null}

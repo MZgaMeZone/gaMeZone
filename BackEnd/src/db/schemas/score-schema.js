@@ -8,13 +8,18 @@ const ScoreSchema = new Schema(
       ref: "Game", // 참조할 모델 이름
       required: true,
     },
+    // userId: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User", // 참조할 모델 이름
+    //   required: true,
+    // },
     userNickname: {
-      //닉네임은 중복 검증작업을 할 예정이므로, 고유한 값임.
+      //사용자가 자율 입력
       type: String,
       required: true,
     },
     totalScores: {
-      type: [Number],
+      type: [[]],
       required: true,
       validate: {
         validator: function (v) {

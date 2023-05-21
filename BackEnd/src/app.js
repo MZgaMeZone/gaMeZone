@@ -31,6 +31,6 @@ app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/", viewsRouter);
-app.use(errorHandler);
+// app.use(errorHandler);
 
 export { app };
