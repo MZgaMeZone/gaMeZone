@@ -100,7 +100,14 @@ const GameOver = () => {
           </div>
         </div>
         <div className="game-over-footer">
-          <button className="btn to-main">MAIN</button>
+          <button
+            className="btn to-main"
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            MAIN
+          </button>
           <button
             className="btn to-retry"
             onClick={() => {
