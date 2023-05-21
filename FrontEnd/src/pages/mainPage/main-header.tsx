@@ -15,7 +15,7 @@ interface MainHeaderProps {
 const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
   const navigate = useNavigate();
   function handleGameClick(itemId: string) {
-    navigate(`/${itemId}`);
+    navigate(`/game/${itemId}`);
   }
 
   return (
