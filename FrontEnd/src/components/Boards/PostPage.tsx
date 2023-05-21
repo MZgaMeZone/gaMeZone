@@ -58,10 +58,7 @@ const PostPage = () => {
                   <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Date>
                 </AuthorContainer>
               </TitleContainer>
-              <MainText>{post.content.split("\n").map((item) => {
-                return <Text>{item}</Text>
-              })}</MainText>
-              <DeletePost postId={postId}/>
+              <MainText>{post.content}</MainText>
             </Post>
             <CommentComponent postId={postId} />
           </Body>

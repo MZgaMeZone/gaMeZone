@@ -20,8 +20,8 @@ const NoticeComponent = () => {
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/posts').then((res) => {
       // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
+    axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
       const data = res.data.reverse();
       // console.log(data);
       setPosts(data);
