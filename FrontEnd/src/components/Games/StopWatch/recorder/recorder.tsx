@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 type RecorderProps = {
   scores: any[];
@@ -20,6 +21,7 @@ function Recorder(props: RecorderProps) {
   const gameModeChecker = props.gameModeChecker;
   const gameMode = props.gameMode;
   const setGameMode = props.setGameMode;
+  const navigate = useNavigate();
 
   // 현재 저장된 기록을 제출하려고함.
   function scoreSubmit(
@@ -119,6 +121,15 @@ function Recorder(props: RecorderProps) {
                 scoreSubmit(scores, printScore[0], printScore[2]);
                 alert('기록 제출이 완료되었습니다!');
                 setScores([]);
+                //게임 오버로 데이터 넘깁시다
+                navigate('/game/gameOver', {
+                  state: {
+                    gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
+                    userNickName: 'gomao', //나중에 token으로 관리
+                    userAverageScore: printScore[2],
+                    userHighScore: printScore[0],
+                  },
+                });
               } else {
                 alert('5회 이상 진행해야 기록 제출 가능합니다.');
               }
