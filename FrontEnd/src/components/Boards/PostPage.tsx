@@ -45,6 +45,10 @@ const PostPage = () => {
     navigate(`/community/${postId}/modified`);
   }
 
+  const exitHandler = () => {
+    navigate("/");
+  }
+
   return (
     <CommunitySection>
       <CommunityContainer>
