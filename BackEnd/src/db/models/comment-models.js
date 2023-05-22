@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import CommentSchema from "../schemas/comment-schema.js";
+import UserSchema from "../schemas/user-schema.js";
 
 const Comment = mongoose.model("Comment", CommentSchema);
+const User = mongoose.model("User", UserSchema);
 
 export class CommentModel {
   async createNewComment(data) {
@@ -19,9 +21,12 @@ export class CommentModel {
     return findComments;
   };
 
-  async findUserComments(id) {
+  async findUserComments(email) {
+    const findUserId = await User.find({email});
+    console.log(findUserId[0]._id);
+
     // 특정 유저의 댓글 조회
-    const findComments = await Comment.find({author: id}).populate("author", "-password");
+    const findComments = await Comment.find({author: findUserId[0]._id}).populate("author", "-password");
     if (findComments.length < 1) {
       console.log("등록된 댓글이 없습니다.");
     }
