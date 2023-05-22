@@ -202,6 +202,7 @@ const GameButton = ({ onClick, imageUrl, gameTitle }: any) => {
         width: '20rem',
         height: '20rem',
         fontSize: '2.5rem',
+        backgroundColor: 'rgb(250, 250, 250)',
       }}
       onClick={onClick}
     >
