@@ -12,7 +12,7 @@ export interface GameInfo {
 export type GameData = {
   id: string;
   name: string;
-  iconUrl: string;
+  imageUrl: string;
   category: string;
   description: string;
   menual: string;
