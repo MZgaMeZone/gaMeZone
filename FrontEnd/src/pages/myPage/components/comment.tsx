@@ -43,21 +43,26 @@ function Comment() {
       category: '인증게시판',
     },
   ];
-  const [userInfo, setIsUserInfo] = useState('');
-  //시크릿키
-  // const getComment  = async()=>{
-  //   await axios.get(url+' /api/posts/:userId') //이메일
-  // }
+  // const [email, setEmail] = useState('');
+  const email = 'wlwhsxz@gmail.com';
 
-  const getUserInfo = async () => {
-    await axios.get(url + '/api/users/auth/verifyToken', config).then((res) => {
+  const getComment = async () => {
+    await axios.get(url + `/api/comments/${email}`).then((res) => {
+      console.log(email);
       console.log(res.data);
     });
   };
 
+  // const getUserInfo = async () => {
+  //   await axios.get(url + '/api/users', config).then((res) => {
+  //     setEmail(res.data.email);
+  //   });
+  // };
+
   useEffect(() => {
     console.log('이펙트확인');
-    getUserInfo();
+    // getUserInfo();
+    getComment();
   }, []);
 
   const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고(긴글) 닫기(짧은글)

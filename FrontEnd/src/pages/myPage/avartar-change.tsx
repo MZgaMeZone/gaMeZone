@@ -29,17 +29,60 @@ function AvartarChange() {
   return (
     <div>
       <Container>
-        <h1>프로필 사진 변경</h1>
-        <main className="container">
+        <Title>프로필 사진 변경</Title>
+        <Line />
+        <Avartar>
+          <Preview>
+            {imageSrc && <img src={imageSrc} alt="preview-img" />}
+          </Preview>
           <h2>이미지 미리보기</h2>
           <input type="file" onChange={handleFileChange} />
-          <div className="preview">
-            {imageSrc && <img src={imageSrc} alt="preview-img" />}
-          </div>
-        </main>
+          <Button>프로필 수정</Button>
+        </Avartar>
       </Container>
     </div>
   );
 }
+
+const Avartar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const Button = styled.button`
+  height: 5rem;
+  width: 90%;
+  margin: 3rem 0 3rem 0;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
+  background-color: var(--color--header);
+  border-radius: 0.5rem;
+  color: white;
+  &:active {
+    box-shadow: none;
+    box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
+  }
+`;
+const Line = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto;
+`;
+
+const Title = styled.h1`
+  margin-left: 5.8rem;
+  margin-top: 3rem;
+`;
+
+const Preview = styled.div`
+  margin: 3rem 0 3rem 0;
+  width: 20rem;
+  height: 20rem;
+  img {
+    border-radius: 50%;
+  }
+`;
 
 export default AvartarChange;

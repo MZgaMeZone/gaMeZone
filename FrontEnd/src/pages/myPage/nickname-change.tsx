@@ -75,6 +75,7 @@ function NicknameChange() {
     <>
       <Container>
         <Title> 닉네임 변경</Title>
+        <Line></Line>
         <NicknameChangeForm>
           <form action="">
             <label htmlFor="current-nickname">현재 닉네임</label>
@@ -171,6 +172,12 @@ const NicknameCheck = styled.div`
     margin-top: 4rem;
     width: 20%;
   }
+`;
+
+const Line = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto;
 `;
 
 export default NicknameChange;
