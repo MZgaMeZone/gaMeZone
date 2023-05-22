@@ -3,25 +3,41 @@ import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import styled from 'styled-components'
 
-import Pagination from './Pagination';
+import Pagination from '../Boards/Pagination';
 import CreateComment from './CreateComment';
+import axios from 'axios';
 
 interface Comment {
   _id: string,
-  comment: string,
-  author: string,
+  content: string,
+  author: {nickname: string},
+  post: string,
   createdAt: string,
 }
 
 interface CommentProps {
-  comments: Comment[];
   postId: string | undefined,
 }
 
-const CommentComponent =({ comments, postId }:CommentProps) => {
+const CommentComponent =({ postId }:CommentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
   const [modal, setModal] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  useEffect(() => {
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
+    .then((res) => {
+      const data = res.data;
+      const formattedData = data.map((item:any) => ({
+        ...item,
+        createdAt: moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      }));
+      console.log(formattedData);
+      setComments(formattedData);
+    })
+  }, [])
 
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
@@ -35,14 +51,16 @@ const CommentComponent =({ comments, postId }:CommentProps) => {
     setModal(!modal);
   };
 
+  console.log(comments);
+
   return (
     <CommentSection>
       <CommentContainer>
       {currentComments.map(comment => (
         <Comments key={comment._id}>
-          <Comment>{comment.comment}</Comment>
+          <Comment>{comment.content}</Comment>
           <div style={{display:"flex"}}>
-            <Author>{comment.author}</Author>
+            <Author>{comment.author.nickname}</Author>
             <Date>{comment.createdAt}</Date>
           </div>
         </Comments>
@@ -122,7 +140,7 @@ const CommentButton = styled.button`
   box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
     inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
 
-  &:hover{
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `

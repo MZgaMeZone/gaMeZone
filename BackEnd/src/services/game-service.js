@@ -22,6 +22,10 @@ class GameService {
   async updateGame(id, data) {
     return await gameModel.updateGame(id, data);
   }
+  //GET
+  async findGamesByCategory(data) {
+    return await gameModel.findGamesByCategory(data);
+  }
 }
 
 const gameService = new GameService(gameModel);

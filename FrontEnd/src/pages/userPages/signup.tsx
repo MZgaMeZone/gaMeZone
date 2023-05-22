@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
-import MainBody from "../mainPage/main-body";
-import MainFooter from "../mainPage/main-footer";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
+import MainBody from '../mainPage/main-body';
+import MainFooter from '../mainPage/main-footer';
+
+const url = process.env.REACT_APP_API_URL;
 
 function Signup() {
-  const [email, setEmail] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState(false);
   const [nicknameDuplicateCheck, setNicknameDuplicateCheck] = useState(false);
   const [mainModal, setMainModal] = useState(false);
@@ -21,18 +23,18 @@ function Signup() {
     console.log(email);
 
     await axios
-      .post("http://localhost:8080/api/users/signup/emailDuplicateCheck", {
+      .post(url + '/api/users/signup/emailDuplicateCheck', {
         email: email,
       })
       .then((res) => {
         if (res.data.success) {
           setEmailDuplicateCheck(true);
-          console.log("email success: ", res);
-          alert("사용 가능한 email입니다.");
+          console.log('email success: ', res);
+          alert('사용 가능한 email입니다.');
         } else {
-          console.log("email fail: ", res.data);
-          setEmail("");
-          alert("중복된 email입니다. 다른 email을 입력해주세요.");
+          console.log('email fail: ', res.data);
+          setEmail('');
+          alert('중복된 email입니다. 다른 email을 입력해주세요.');
         }
       });
   }
@@ -44,18 +46,18 @@ function Signup() {
     console.log(nickname);
 
     await axios
-      .post("http://localhost:8080/api/users/signup/nicknameDuplicateCheck", {
+      .post('http://localhost:8080/api/users/signup/nicknameDuplicateCheck', {
         nickname: nickname,
       })
       .then((res) => {
         if (res.data.success) {
-          console.log("nickname success: ", res.data);
+          console.log('nickname success: ', res.data);
           setNicknameDuplicateCheck(true);
-          alert("사용 가능한 nickname입니다.");
+          alert('사용 가능한 nickname입니다.');
         } else {
-          console.log("nickname fail: ", res.data);
-          setNickname("");
-          alert("중복된 nickname입니다. 다른 nickname을 입력해주세요.");
+          console.log('nickname fail: ', res.data);
+          setNickname('');
+          alert('중복된 nickname입니다. 다른 nickname을 입력해주세요.');
         }
       });
   }
@@ -65,7 +67,7 @@ function Signup() {
     console.log(email, nickname, password, passwordCheck);
 
     await axios
-      .post("http://localhost:8080/api/users/signup", {
+      .post('http://localhost:8080/api/users/signup', {
         email: email,
         nickname: nickname,
         password: password,
@@ -74,7 +76,7 @@ function Signup() {
         console.log(res);
         if (res.status === 201) {
           alert(`회원가입이 완료되었습니다. 환영합니다 ${nickname}님!`);
-          navigate("/login");
+          navigate('/login');
         }
       })
       .catch((e) => {
@@ -85,11 +87,12 @@ function Signup() {
   return (
     <div
       style={{
-        backgroundColor: "#008080",
-        height: "100vh",
-        width: "100vw",
-        minHeight: "880px",
-        minWidth: "900px",
+        backgroundColor: '#008080',
+        height: '100vh',
+        width: '100vw',
+        // minHeight: '880px',
+        // minWidth: '900px',
+        overflow: 'hidden',
       }}
     >
       <SingupSection>
@@ -104,8 +107,8 @@ function Signup() {
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={emailDuplicateCheck}
                 placeholder="email@email.com"
-              />{" "}
-              {email === "" ? (
+              />{' '}
+              {email === '' ? (
                 <button disabled>중복확인</button>
               ) : (
                 <button onClick={handleEmailDuplicateCheck}>중복확인</button>
@@ -119,7 +122,7 @@ function Signup() {
                 ) ? (
                   <p>올바른 이메일 형식을 입력하세요.</p>
                 ) : (
-                  ""
+                  ''
                 )}
               </ErrorMessageContainer>
             </ErrorMessageContainer>
@@ -131,8 +134,8 @@ function Signup() {
                 onChange={(e) => setNickname(e.target.value)}
                 disabled={nicknameDuplicateCheck}
                 placeholder="nickname"
-              />{" "}
-              {nickname === "" ? (
+              />{' '}
+              {nickname === '' ? (
                 <button disabled>중복확인</button>
               ) : (
                 <button onClick={handleNicknameDuplicateCheck}>중복확인</button>
@@ -143,7 +146,7 @@ function Signup() {
                 ? nickname.length < 2 && (
                     <p>닉네임을 2자리 이상 입력해주세요.</p>
                   )
-                : ""}
+                : ''}
             </ErrorMessageContainer>
             <PasswordContainer>
               비밀번호
@@ -152,14 +155,14 @@ function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="password"
-              />{" "}
+              />{' '}
             </PasswordContainer>
             <ErrorMessageContainer>
               {password
                 ? password.length < 8 && (
                     <p>비밀번호를 8자리 이상 입력해주세요.</p>
                   )
-                : ""}
+                : ''}
             </ErrorMessageContainer>
             <PasswordCheckContainer>
               비밀번호 확인

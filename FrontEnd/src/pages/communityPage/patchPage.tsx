@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from "styled-components";
 import axios from 'axios';
 
-const CreatePost = () => {
+interface postsType {
+    _id: string;
+    title: string;
+    content: string;
+    author: { nickname: string};
+    createdAt: string;
+  }
+
+const ModifiedPost = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
   const navigate = useNavigate();
+  const {postId} = useParams<{ postId: string }>();
+
+  useEffect(() => {
+    axios
+    .get(`http://localhost:8080/api/posts/post/${postId}`)
+    .then((res) => {
+      const data = res.data;
+      setPost(data);
+    });
+  }, []);
+
+  console.log(post);    
 
   const handleTitleChange = (e:any) => {
     setTitle(e.target.value);
@@ -31,15 +52,15 @@ const CreatePost = () => {
 
     try {
       const postData = {
-        author: "64653ea8c587b21f36aef42e",
         title: title,
         content: content,
+        author: "64653ea8c587b21f36aef42e" //현재는 더미 데이터
       };
 
-      axios.post('http://localhost:8080/api/posts', postData);
-      
-      alert('게시물이 작성되었습니다.');
-      navigate('/community');
+      await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, postData);
+
+      alert('게시물 수정이 완료되었습니다.');
+      navigate(`/community/${postId}`);
     } catch (error) {
       console.error(error);
       alert('게시물 작성 중 오류가 발생했습니다.');
@@ -68,7 +89,7 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default ModifiedPost;
 
 const PostSection = styled.div`
   background-color: var(--background--gray);

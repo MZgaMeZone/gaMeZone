@@ -1,7 +1,7 @@
-import Container from "./components/container";
-import styled from "styled-components";
-import { useState, useRef } from "react";
-import { MouseEvent, FormEvent } from "react";
+import Container from './components/container';
+import styled from 'styled-components';
+import { useState, useRef } from 'react';
+import { MouseEvent, FormEvent } from 'react';
 
 function AvartarChange() {
   //FileList 유형은 input tupe="file"에서 선택한 파일 목록을 나타냄

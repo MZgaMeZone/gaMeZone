@@ -12,7 +12,7 @@ export class CommentModel {
 
   async findAllComments(id) {
     // 특정 게시물의 댓글 조회
-    const findComments = await Comment.find({post: id});
+    const findComments = await Comment.find({post: id}).populate("author", "nickname");
     if (findComments.length < 1) {
       console.log(`등록된 댓글이 없습니다.`);
     }
@@ -21,7 +21,7 @@ export class CommentModel {
 
   async findUserComments(id) {
     // 특정 유저의 댓글 조회
-    const findComments = await Comment.find({author: id});
+    const findComments = await Comment.find({author: id}).populate("author", "-password");
     if (findComments.length < 1) {
       console.log("등록된 댓글이 없습니다.");
     }

@@ -48,13 +48,13 @@ export class UserModel {
   }
 
   //전체 유저 정보 불러오기
-  async getAllUser() {
+  async getAllUsers() {
     try {
-      const allUser = await User.find(
+      const allUsers = await User.find(
         {},
         { email: 1, nickname: 1, role: 1 }
       ).lean();
-      return allUser;
+      return allUsers;
     } catch (err) {
       throw new Error(err);
     }
