@@ -9,9 +9,8 @@ interface Input {
   editInput: string;
   addInput: string;
 }
-const AdminInfoCategory = () => {
+const GameCategory = () => {
   const URL: string = 'http://localhost:8080/api/categories';
-
   const [data, setData] = useState<Category[]>([]);
 
   // input 처리
@@ -44,7 +43,7 @@ const AdminInfoCategory = () => {
   }, []);
 
   //추가
-  const addHandleClick = async () => {
+  const hadleAddClick = async () => {
     if (addInput === '') {
       alert('카테고리를 입력해주세요.');
     } else if (addInput.length >= 10) {
@@ -109,7 +108,7 @@ const AdminInfoCategory = () => {
   };
 
   //삭제
-  const deleteHandleClick = async (id: string, categoryName: string) => {
+  const handleDeleteClick = async (id: string, categoryName: string) => {
     const deleteConfirm = window.confirm(
       `[${categoryName}] 카테고리를 삭제하시겠습니까?`
     );
@@ -137,7 +136,7 @@ const AdminInfoCategory = () => {
           name="addInput"
           onChange={(e) => handleChange(e, '')}
         />
-        <Button onClick={() => addHandleClick()}>추가</Button>
+        <Button onClick={() => hadleAddClick()}>추가</Button>
       </Container>
       <Container>
         <Title>카테고리 내역</Title>
@@ -166,7 +165,7 @@ const AdminInfoCategory = () => {
                   </Button>
                 )}
                 <Button
-                  onClick={() => deleteHandleClick(item._id, item.categoryName)}
+                  onClick={() => handleDeleteClick(item._id, item.categoryName)}
                 >
                   삭제
                 </Button>
@@ -180,7 +179,7 @@ const AdminInfoCategory = () => {
   );
 };
 
-export default AdminInfoCategory;
+export default GameCategory;
 
 const Container = styled.div`
   padding: 5rem 6rem;
@@ -192,7 +191,7 @@ const Title = styled.p`
   font-weight: 600;
 `;
 const Input = styled.input`
-  margin 0 4rem;
+  margin: 0 4rem;
   padding: 1.2rem;
   width: 60rem;
   font-size: 2rem;

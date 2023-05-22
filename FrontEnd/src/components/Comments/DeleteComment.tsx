@@ -28,7 +28,7 @@ const DeleteComment = ({commentId, postId}:any) => {
 export default DeleteComment;
 
 const DeleteButton = styled.button`
-  margin: 0.7rem 0.3rem 0;
+  margin: 0.7rem 0.3rem;
   font-size: 1.7rem;
   height: 2.5rem;
   background: #d9d9d9;
