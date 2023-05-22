@@ -11,8 +11,8 @@ class CommentService {
   };
 
   //GET user's posts
-  async findUserComments(id) {
-    return await commentModel.findUserComments(id);
+  async findUserComments(email) {
+    return await commentModel.findUserComments(email);
   }
 
   //POST
