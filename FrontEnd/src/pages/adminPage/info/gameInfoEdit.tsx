@@ -22,14 +22,22 @@ const GameInfoEdit = () => {
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
+
   console.log(process.env.REACT_APP_API_URL);
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
   const handleEditClick = (id: string) => {
     setIsEditing(true);
     const gameInfo = data.find((item) => item._id === id);
     if (gameInfo) {
     }
   };
+
+  const handleValue = (value: boolean) => {
+    setIsEditing(false);
+  };
+
   return (
     <>
       {!isEditing ? (
@@ -70,7 +78,7 @@ const GameInfoEdit = () => {
           ))}
         </>
       ) : (
-        <GameInfoEditing />
+        <GameInfoEditing onValue={handleValue} />
       )}
     </>
   );

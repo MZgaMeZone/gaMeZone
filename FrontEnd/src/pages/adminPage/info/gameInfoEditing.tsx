@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const GameInfoEditing = () => {
-  const handleSaveClick = () => {};
+type ChildProps = {
+  onValue: (value: boolean) => void;
+};
+
+const GameInfoEditing = ({ onValue }: ChildProps) => {
+  const handleCancelClick = () => {};
+
+  const handleSaveClick = () => {
+    onValue(false);
+  };
 
   return (
     <Container>
@@ -12,8 +20,19 @@ const GameInfoEditing = () => {
         <input type="text" />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 아이콘</p> <input type="text" />
-        {/* <Button>이미지 등록</Button> */}
+        <p>게임 아이콘</p>{' '}
+        <div>
+          <input type="text" style={{ width: '48rem' }} />
+          <Button
+            style={{
+              width: '12rem',
+              fontSize: '1.6rem',
+              margin: '0.4rem 0 0 0',
+            }}
+          >
+            이미지 등록
+          </Button>
+        </div>
       </ContentDiv>
       <ContentDiv>
         <p>카테고리</p> <input type="text" />
@@ -28,7 +47,7 @@ const GameInfoEditing = () => {
         <p>게임 상태</p> <input type="text" />
       </ContentDiv>
       <ButtonDiv>
-        <Button>취소</Button>
+        <Button onClick={() => handleSaveClick()}>취소</Button>
         <Button>저장</Button>
       </ButtonDiv>
     </Container>
@@ -91,10 +110,11 @@ const ContentDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 3rem 0;
+  border-bottom: 1px solid #e0e0e0;
 `;
 
 const ButtonDiv = styled.div`
-  margin: 8rem 20rem 2rem 0;
+  margin: 8rem 40rem 2rem 0;
   width: 100%;
   display: flex;
   justify-content: flex-end;
