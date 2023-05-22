@@ -119,7 +119,11 @@ class ScoreModel {
     }
     const honorsRanking = Object.entries(final);
     honorsRanking.sort((b, a) => a[1] - b[1]);
-    return honorsRanking;
+    const transformedRanking = honorsRanking.map((data) => ({
+      userNickname: data[0],
+      score: data[1],
+    }));
+    return transformedRanking;
   }
 
   async deleteScore(id) {

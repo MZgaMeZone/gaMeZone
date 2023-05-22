@@ -13,23 +13,24 @@ import MainBody from '../mainPage/main-body';
 import MainFooter from '../mainPage/main-footer';
 
 interface gameListType {
-  _id: string;
+  _id?: string;
   gameTitle: string;
+  gameOption?: string;
 }
 
 interface rankingDataType {
-  gameId: string;
-  userNickname: string;
-  averageScore: number;
-  highScore: number;
+  gameId?: string;
+  userNickname?: string;
+  averageScore?: number;
+  highScore?: number;
+  score?: number;
 }
 
 const Lanking = () => {
   const [showGameList, setShowGameList] = useState(false);
   const [gameList, setGameList] = useState<gameListType[]>([]);
   const [selectedGame, setSelectedGame] = useState<gameListType>({
-    _id: '64673c9e003fef9471f58799',
-    gameTitle: '-- 게임을 선택해주세요 --', //전체랭킹으로 수정해야함
+    gameTitle: '--- 게임을 선택해주세요 ---',
   });
   const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
   const [mainModal, setMainModal] = useState<boolean>(false);
@@ -41,8 +42,7 @@ const Lanking = () => {
       .then((res) => {
         setGameList((current) => [
           {
-            _id: '64673c9e003fef9471f58799',
-            gameTitle: '전체 랭킹', //전체랭킹으로 수정해야함
+            gameTitle: '전체 랭킹',
           },
           ...res.data,
         ]);
@@ -53,15 +53,30 @@ const Lanking = () => {
 
   //선택한 게임의 랭킹데이터 저장
   useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame._id}/avr?num=20`
-      )
-      .then((res) => {
-        setRankingData(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    //전체 랭킹 요청
+    if (
+      selectedGame.gameTitle === '--- 게임을 선택해주세요 ---' ||
+      selectedGame.gameTitle === '전체 랭킹'
+    ) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/api/scores/honors`)
+        .then((res) => {
+          setRankingData(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      //선택된 게임 요청
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame._id}/${selectedGame.gameOption}?num=20`
+        )
+        .then((res) => {
+          setRankingData(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
   }, [selectedGame]);
 
   return (
@@ -135,19 +150,35 @@ const Lanking = () => {
             <div className="top3-section-body">
               <ul>
                 {rankingData &&
-                  rankingData.slice(0, 3).map((data, idx) => (
-                    <li>
-                      <div className="ranking-idx">
-                        <p>{idx + 1}</p>
-                      </div>
-                      <div className="img-circle">
-                        <img src={starIcon} alt="userImg" />
-                      </div>
-                      <p className="userId">{data.userNickname}</p>
-                      <p className="avg-score">{`AVG: ${data.averageScore}`}</p>
-                      <p className="high-score">{`HIGH: ${data.highScore}`}</p>
-                    </li>
-                  ))}
+                  (selectedGame.gameTitle === '전체 랭킹' ||
+                  selectedGame.gameTitle === '--- 게임을 선택해주세요 ---'
+                    ? rankingData.slice(0, 3).map((data, idx) => (
+                        <li>
+                          <div className="ranking-idx">
+                            <p>{idx + 1}</p>
+                          </div>
+                          <div className="img-circle">
+                            <img src={starIcon} alt="userImg" />
+                          </div>
+                          <p className="userId">{data.userNickname}</p>
+                          {data.score && (
+                            <p className="avg-score">{`SCORE: ${data.score}`}</p>
+                          )}
+                        </li>
+                      ))
+                    : rankingData.slice(0, 3).map((data, idx) => (
+                        <li>
+                          <div className="ranking-idx">
+                            <p>{idx + 1}</p>
+                          </div>
+                          <div className="img-circle">
+                            <img src={starIcon} alt="userImg" />
+                          </div>
+                          <p className="userId">{data.userNickname}</p>
+                          <p className="avg-score">{`AVG: ${data.averageScore}`}</p>
+                          <p className="high-score">{`HIGH: ${data.highScore}`}</p>
+                        </li>
+                      )))}
               </ul>
             </div>
           </div>
@@ -159,30 +190,59 @@ const Lanking = () => {
                 <hr />
               </div>
             </div>
-            <div className="all-ranking-section-subtitle">
-              <div className="subtitle1">Ranking</div>
-              <div className="subtitle1">Id</div>
-              <div className="subtitle2">Avg Score</div>
-              <div className="subtitle2">High Score</div>
-            </div>
-            <div className="all-ranking-section-body">
-              <ul>
-                {rankingData &&
-                  rankingData.slice(3).map((data, idx) => (
-                    <li>
-                      <div className="ranking-idx">
-                        <p>{idx + 3}</p>
-                      </div>
-                      <div className="img-circle">
-                        <img src={starIcon} alt="userImg" />
-                      </div>
-                      <p className="userId">{data.userNickname}</p>
-                      <p className="avg-score">{data.averageScore}</p>
-                      <p className="high-score">{data.highScore}</p>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {rankingData &&
+              (selectedGame.gameTitle === '전체 랭킹' ||
+              selectedGame.gameTitle === '--- 게임을 선택해주세요 ---' ? (
+                <>
+                  <div className="all-ranking-section-subtitle">
+                    <div className="subtitle1">Ranking</div>
+                    <div className="subtitle1">Id</div>
+                    <div className="subtitle3">Score</div>
+                  </div>
+                  <div className="all-ranking-section-body">
+                    <ul>
+                      {rankingData.slice(3).map((data, idx) => (
+                        <li>
+                          <div className="ranking-idx">
+                            <p>{idx + 3}</p>
+                          </div>
+                          <div className="img-circle">
+                            <img src={starIcon} alt="userImg" />
+                          </div>
+                          <p className="userId">{data.userNickname}</p>
+                          {data.score && <p className="score">{data.score}</p>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="all-ranking-section-subtitle">
+                    <div className="subtitle1">Ranking</div>
+                    <div className="subtitle1">Id</div>
+                    <div className="subtitle2">Avg Score</div>
+                    <div className="subtitle2">High Score</div>
+                  </div>
+                  <div className="all-ranking-section-body">
+                    <ul>
+                      {rankingData.slice(3).map((data, idx) => (
+                        <li>
+                          <div className="ranking-idx">
+                            <p>{idx + 3}</p>
+                          </div>
+                          <div className="img-circle">
+                            <img src={starIcon} alt="userImg" />
+                          </div>
+                          <p className="userId">{data.userNickname}</p>
+                          <p className="avg-score">{data.averageScore}</p>
+                          <p className="high-score">{data.highScore}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ))}
           </div>
         </div>
       </div>
