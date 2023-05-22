@@ -14,7 +14,7 @@ type ChildPropsData = {
   receivedData: GameData | null;
 };
 
-const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
+const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   onValue,
   receivedData,
 }) => {
@@ -164,7 +164,7 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
   );
 };
 
-export default GameInfoEditing;
+export default GameAddOrEdit;
 
 const Container = styled.div`
   display: flex;

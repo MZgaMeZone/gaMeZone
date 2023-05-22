@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import GameInfoEditing from './gameInfoEditing';
+import GameAddOrEdit from './gameAddOrEdit';
 import { GameInfo, GameData } from './interface';
 
 const GameInfoEdit = () => {
@@ -28,7 +28,7 @@ const GameInfoEdit = () => {
   const handleEditClick = (id: string) => {
     setIsEditing(true);
 
-    //수정 컴포넌트시 전달할 데이터
+    //수정시 전달할 데이터
     const gameInfo = data.find((item) => item._id === id);
     if (gameInfo) {
       setSendingData({
@@ -42,6 +42,8 @@ const GameInfoEdit = () => {
       });
     }
   };
+  // handleValue에서 받아오는 값이 newData 일 경우 setData에 추가된 값 넣어 data 업데이트,
+  //받아오는 값이 updateData일 경우 받아온 게임아이디랑 등록되어있는 게임 아이디랑 일치시 일치된 아이디에 대한 정보를 수정된 데이터로 업데이트
 
   const handleValue = (
     newData: GameInfo | null,
@@ -89,6 +91,9 @@ const GameInfoEdit = () => {
       alert('삭제가 취소되었습니다.');
     }
   };
+  // 추가 수정 GameAddOrEdit 컴포넌트에서 한 번에 진행,
+  //receivedData={null}이면 GameAddOrEdit에 input 값이 빈값으로 시작
+  //receivedData={sendingData} 보내는 데이터가 있으면 받은 값으로 input값이 들어감
   return (
     <>
       {!isEditing && !isAdding ? (
@@ -137,9 +142,9 @@ const GameInfoEdit = () => {
           ))}
         </>
       ) : sendingData ? (
-        <GameInfoEditing onValue={handleValue} receivedData={sendingData} />
+        <GameAddOrEdit onValue={handleValue} receivedData={sendingData} />
       ) : isAdding ? (
-        <GameInfoEditing onValue={handleValue} receivedData={null} />
+        <GameAddOrEdit onValue={handleValue} receivedData={null} />
       ) : (
         ''
       )}
