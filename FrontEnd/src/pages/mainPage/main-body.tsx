@@ -189,6 +189,22 @@ const CategoryContainer = styled.div`
   z-index: 2;
 `;
 
+const CategoryModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: calc(50% - 5rem);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 128rem;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #c0c0c0;
+  border: 0.1rem solid #000000;
+  box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 0.4rem;
+`;
+
 // const GameImage = styled.img`
 //   width: 100%;
 //   height: auto;
