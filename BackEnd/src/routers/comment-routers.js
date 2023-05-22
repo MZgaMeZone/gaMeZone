@@ -18,11 +18,11 @@ commentRouter.get("/post/:id", async(req, res, next) => {
 });
 
 //특정 유저의 댓글 가져오는 GET요청
-commentRouter.get("/:id", async(req, res, next) => {
+commentRouter.get("/:email", async(req, res, next) => {
   try {
-    const userId = req.params.id;
+    const userEmail = req.params.email;
     console.log("해당 유저의 댓글을 출력합니다.");
-    const commentList = await commentService.findUserComments(userId);
+    const commentList = await commentService.findUserComments(userEmail);
     console.log("해당 유저의 댓글 출력이 완료되었습니다.");
     res.status(201).json(commentList);
   } catch(err) {
@@ -31,7 +31,7 @@ commentRouter.get("/:id", async(req, res, next) => {
   }
 })
 
-//새 게시물을 생성하는 POST 요청
+//새 댓글을 생성하는 POST 요청
 commentRouter.post("/", async(req, res, next) => {
   try{
     const data = req.body;
@@ -46,10 +46,10 @@ commentRouter.post("/", async(req, res, next) => {
 });
 
 //게시물을 수정하는 PATCH 요청
-commentRouter.patch("/:id", async(req, res, next) => {
+commentRouter.patch("/:postId", async(req, res, next) => {
   try {
-    const commentId = req.params.id;
     const data = req.body;
+    const commentId = data._id
     console.log("댓글을 수정합니다.");
     const updateComment = await commentService.updateComment(commentId, data);
     console.log("댓글 수정이 완료되었습니다.");

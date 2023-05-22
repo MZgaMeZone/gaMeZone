@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import GameSchema from "../schemas/game-schema.js";
+import CategorySchema from "../schemas/category-schema.js";
 import ScoreSchema from "../schemas/score-schema.js";
 import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
 import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
 
 const Game = mongoose.model("games", GameSchema);
-const Score = mongoose.model("scores", ScoreSchema);
+const Category = mongoose.model("categories", CategorySchema);
 
 class GameModel {
   async createNewGame(data) {
@@ -22,6 +23,17 @@ class GameModel {
     }
     return findGames;
   }
+  async findGame(id) {
+    // 게임 아이디로 게임 정보 불러오기
+    try {
+      const findGame = await Game.findOne({ _id: id });
+      return findGame;
+    } catch (e) {
+      console.log(`해당 id에 일치하는 게임정보가 없습니다.`);
+      throw new Error(e);
+    }
+  }
+
   async deleteGame(id) {
     // id로 검색하여 게임정보를 삭제하기
     // 이 부분은 고민이 필요하다. 사실상 작동 코드는 클라이언트에 있을거기 때문에,
@@ -34,7 +46,6 @@ class GameModel {
       throw new Error(e);
     }
   }
-
   async updateGame(id, data) {
     // id로 검색하고, data로 전달한 게임정보를 수정하기 [Joi에서 사전 검증할 예정임]
     const updateGame = await Game.findOneAndUpdate(
@@ -44,30 +55,16 @@ class GameModel {
     );
     return updateGame;
   }
+  async findGamesByCategory(data) {
+    try {
+      const games = await Game.find({ gameCategory: data }).exec();
+      return games;
+    } catch (error) {
+      console.error("게임 데이터 검색 실패:", error);
+      throw new Error("게임 데이터 검색 실패");
+    }
+  }
 }
 
 const gameModel = new GameModel();
-// // **Custom Database**
-// // ----- New Game Data -----
-// const data = {
-//   gameTitle: "귀엽네게임",
-//   gameCategory: ["adventure"],
-//   gameIconUrl: "./gomao/cute1.jpg",
-//   gameImageUrl: "./gomao/cute2.jpg",
-//   gameDescription: "가보자고",
-//   gameManual: "귀엽네 ㅋㅋ",
-// };
-// gameModel.createNewGame(data);
-
-// // ----- Update Game Data -----
-// const id = "645d06e53dcefd63e6ce72a9";
-// const data = {
-//   gameDescription: "이 게임은 망할거다 ㅋㅋㅋ",
-//   gameManual: "이 게임을 플레이하기 위해서는 ㄱㅁㅇ임티를 사야한다.",
-// };
-// gameModel.updateGame(id, data);
-
-// // ----- find all games -----
-// gameModel.findAllGames();
-
 export { gameModel };

@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import "../../style/gameManual.css";
-import exitImg from "../../style/icons/x-solid.svg";
-import middleBarIcon from "../../style/icons/manual-icon1.svg";
-import memoFavicon from "../../style/icons/memo_favicon.svg";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import '../../style/gameManual.css';
+import exitImg from '../../style/icons/x-solid.svg';
+import middleBarIcon from '../../style/icons/manual-icon1.svg';
+import memoFavicon from '../../style/icons/memo_favicon.svg';
 
-import ExampleManualData from "../../components/Games/sampleManualData";
+import ExampleManualData from '../../components/Games/sampleManualData';
 
 interface manualDataType {
+  _id: string;
   gameTitle: string;
   gameCategory: string[];
   gameIconUrl: string;
@@ -17,13 +19,23 @@ interface manualDataType {
   gameServiceStatus: string;
 }
 
-const GameManual = (props: { setShowManual: (show: boolean) => void }) => {
-  const { setShowManual } = props;
-  const [manualData, setManualData] = useState<manualDataType[]>([]);
+const GameManual = (props: {
+  setShowManual: (show: boolean) => void;
+  gameId: string | undefined;
+}) => {
+  const { setShowManual, gameId } = props;
+  const [manualData, setManualData] = useState<manualDataType>();
 
   useEffect(() => {
-    setManualData(ExampleManualData);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/games/${gameId}`)
+      .then((res) => {
+        setManualData(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
+
   return (
     <div className="manual-container">
       <div className="manual-container-header">
@@ -58,16 +70,17 @@ const GameManual = (props: { setShowManual: (show: boolean) => void }) => {
         </pre>
       </div>
       <div className="manual-container-body">
-        {manualData &&
-          manualData.map((data: manualDataType) => (
-            <div key={data.gameTitle}>
-              <p className="manual-content title1">게임 소개</p>
-              <p className="manual-content-descript">{data.gameDescription}</p>
-              <p className="manual-content title2">게임 진행 방법</p>
+        {manualData && (
+          <div key={manualData._id}>
+            <p className="manual-content title1">게임 소개</p>
+            <p className="manual-content-descript">
+              {manualData.gameDescription}
+            </p>
+            <p className="manual-content title2">게임 진행 방법</p>
 
-              <p className="manual-content-descript">{data.gameManual}</p>
-            </div>
-          ))}
+            <p className="manual-content-descript">{manualData.gameManual}</p>
+          </div>
+        )}
       </div>
     </div>
   );
