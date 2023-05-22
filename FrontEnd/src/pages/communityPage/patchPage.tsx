@@ -7,7 +7,7 @@ interface postsType {
     _id: string;
     title: string;
     content: string;
-    author: { nickname: string};
+    author: { nickname: string, _id: string};
     createdAt: string;
   }
 
@@ -22,10 +22,13 @@ const ModifiedPost = () => {
     axios
     .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
     .then((res) => {
-      const data = res.data;
-      setPost(data);
+      setPost(res.data);
     });
   }, [post]); 
+
+  if (!post) {
+    return null;
+  };
 
   const handleTitleChange = (e:any) => {
     setTitle(e.target.value);
@@ -52,7 +55,7 @@ const ModifiedPost = () => {
       const postData = {
         title: title,
         content: content,
-        author: "64653ea8c587b21f36aef42e" //현재는 더미 데이터
+        author: post.author._id
       };
 
       await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, postData);

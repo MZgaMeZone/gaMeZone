@@ -10,18 +10,33 @@ import DeletePost from './DeletePostComponent';
 
 import exitImg from "../../style/icons/x-solid.svg";
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+  Authorization: `Bearer ${userToken}`,
+  },
+};
+
 interface postsType {
   _id: string;
   title: string;
   content: string;
-  author: { nickname: string };
+  author: { nickname: string, email: string };
   createdAt: string;
 }
 
 const PostPage = () => {
   const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
+  const [userEmail, setUserEmail] = useState<string>("");
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   const navigate = useNavigate();
+
+  if (userToken) {
+    axios.get(url + '/api/users', config).then((res) => {
+      setUserEmail(res.data.email);
+    });
+  }
 
   useEffect(() => {
     axios
@@ -31,10 +46,6 @@ const PostPage = () => {
       setPost(data);
     });
   }, []);
-
-  // console.log(post);
-
-  // const post: any = PostData.find((item) => item._id === postId);
 
   if (!post) {
     // postId에 해당하는 데이터가 없을 경우에 대한 처리
@@ -75,10 +86,12 @@ const PostPage = () => {
                   <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Date>
                 </AuthorContainer>
               </TitleContainer>
+              {userEmail === post.author.email && 
               <ButtonContainer>
                 <ModifiedButton onClick={clickHandler}>수정하기</ModifiedButton>
                 <DeletePost postId={postId}/>
               </ButtonContainer>
+              }
               <MainText>{post.content.split("\n").map((item) => {
                 return <Text>{item}</Text>
               })}</MainText>
