@@ -22,8 +22,9 @@ const Lanking = () => {
         backgroundColor: '#008080',
         height: '100vh',
         width: '100vw',
-        minHeight: '880px',
-        minWidth: '900px',
+        // minHeight: '880px',
+        // minWidth: '900px',
+        overflow: 'hidden',
       }}
     >
       <div className="rank-container">
