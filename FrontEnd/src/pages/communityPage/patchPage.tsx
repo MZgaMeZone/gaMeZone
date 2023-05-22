@@ -25,9 +25,7 @@ const ModifiedPost = () => {
       const data = res.data;
       setPost(data);
     });
-  }, []);
-
-  console.log(post);    
+  }, [post]); 
 
   const handleTitleChange = (e:any) => {
     setTitle(e.target.value);
