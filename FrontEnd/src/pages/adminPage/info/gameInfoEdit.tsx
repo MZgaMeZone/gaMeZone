@@ -6,6 +6,7 @@ import { GameInfo, GameData } from './interface';
 
 const GameInfoEdit = () => {
   const [data, setData] = useState<GameInfo[]>([]);
+  const [sendingData, setSendingData] = useState<GameData>();
 
   useEffect(() => {
     axios
@@ -13,18 +14,27 @@ const GameInfoEdit = () => {
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
-
+  //추가 컴포넌트 전환
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const handleAddClick = () => {
+    if (sendingData !== null) {
+      setSendingData(undefined);
+    }
+    setIsAdding(true);
+  };
+  // 수정 컴포넌트 전환
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [sendingData, setSendingData] = useState<GameData>();
 
   const handleEditClick = (id: string) => {
     setIsEditing(true);
+
+    //수정 컴포넌트시 전달할 데이터
     const gameInfo = data.find((item) => item._id === id);
     if (gameInfo) {
       setSendingData({
         id: gameInfo._id,
         name: gameInfo.gameTitle,
-        iconUrl: gameInfo.gameIconUrl.toString(),
+        imageUrl: gameInfo.gameImageUrl.toString(),
         category: gameInfo.gameCategory,
         description: gameInfo.gameDescription,
         menual: gameInfo.gameManual,
@@ -32,36 +42,41 @@ const GameInfoEdit = () => {
       });
     }
   };
-  const handleValue = (updateData: GameInfo | null, value: boolean) => {
-    if (updateData === null) {
-      setIsEditing(value);
-      return;
-    }
 
-    if (updateData) {
-      setData((prevData) =>
-        prevData.map((item) => {
-          if (item._id === updateData._id) {
-            return {
-              ...item,
-              categoryName: updateData.gameCategory,
-              gameDescription: updateData.gameDescription,
-              gameIconUrl: updateData.gameIconUrl,
-              gameManual: updateData.gameManual,
-              gameTitle: updateData.gameTitle,
-              gameServiceStatus: updateData.gameServiceStatus,
-            };
-          }
-          return item;
-        })
-      );
+  const handleValue = (
+    newData: GameInfo | null,
+    updateData: GameInfo | null,
+    value: boolean
+  ) => {
+    if (newData) {
+      setData([...data, newData]);
     }
+    if (updateData)
+      if (updateData) {
+        setData((prevData) =>
+          prevData.map((item) => {
+            if (item._id === updateData._id) {
+              return {
+                ...item,
+                categoryName: updateData.gameCategory,
+                gameDescription: updateData.gameDescription,
+                gameIconUrl: updateData.gameIconUrl,
+                gameManual: updateData.gameManual,
+                gameTitle: updateData.gameTitle,
+                gameServiceStatus: updateData.gameServiceStatus,
+              };
+            }
+            return item;
+          })
+        );
+      }
     setIsEditing(value);
+    setIsAdding(value);
   };
-
+  //삭제
   const handleDeleteClick = async (id: string, gameName: string) => {
     const deleteConfirm = window.confirm(
-      `[${gameName}] 카테고리를 삭제하시겠습니까?`
+      `[${gameName}] 게임을 삭제하시겠습니까?`
     );
     if (deleteConfirm) {
       try {
@@ -76,10 +91,10 @@ const GameInfoEdit = () => {
   };
   return (
     <>
-      {!isEditing ? (
+      {!isEditing && !isAdding ? (
         <>
           <AddButtonDiv>
-            <AddButton>게임 정보 등록</AddButton>
+            <AddButton onClick={handleAddClick}>게임 정보 등록</AddButton>
           </AddButtonDiv>
           {data.map((item: GameInfo) => (
             <Container key={item._id}>
@@ -123,6 +138,8 @@ const GameInfoEdit = () => {
         </>
       ) : sendingData ? (
         <GameInfoEditing onValue={handleValue} receivedData={sendingData} />
+      ) : isAdding ? (
+        <GameInfoEditing onValue={handleValue} receivedData={null} />
       ) : (
         ''
       )}
@@ -212,7 +229,7 @@ const AddButtonDiv = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
-  padding: 3rem 6rem 2rem 0;
+  padding: 3rem 6.8rem 2rem 0;
 `;
 
 const AddButton = styled.button`
