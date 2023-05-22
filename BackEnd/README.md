@@ -15,13 +15,14 @@
 
 ### 게임 명세
 
-| Method | URI              | Description         |
-| ------ | ---------------- | ------------------- |
-| GET    | /api/games       | 게임목록 전체조회   |
-| GET    | /api/games/:name | 카테고리로 게임조회 |
-| POST   | /api/games       | 새 게임정보 등록    |
-| PATCH  | /api/games/:id   | 게임정보 수정       |
-| DELETE | /api/games       | 등록된 게임 삭제    |
+| Method | URI                         | Description            |
+| ------ | --------------------------- | ---------------------- |
+| GET    | /api/games                  | 게임목록 전체조회      |
+| GET    | /api/games/:id              | 게임ID로 게임내용 조회 |
+| GET    | /api/games/categories/:name | 카테고리로 게임조회    |
+| POST   | /api/games                  | 새 게임정보 등록       |
+| PATCH  | /api/games/:id              | 게임정보 수정          |
+| DELETE | /api/games                  | 등록된 게임 삭제       |
 
 ### 게임기록 명세
 
