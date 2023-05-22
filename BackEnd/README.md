@@ -32,6 +32,7 @@
 | POST   | /api/scores                    | 새 기록 등록                                             |
 | DELETE | /api/scores/:id                | 기록 삭제 (부정한 방법으로 달성한 기록 말소용)           |
 | GET    | /api/scores/:id/:option?num=10 | 랭킹데이터 검색(gameId, 정렬우선조건, 가져올 데이터갯수) |
+| GET    | /api/scores/honors             | 명예의 전당 출력                                         |
 
 ### `<b>`게임 카테고리 명세 `</b>`
 

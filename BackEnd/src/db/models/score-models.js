@@ -58,6 +58,70 @@ class ScoreModel {
     return ranking;
   }
 
+  async userRanking() {
+    // 명예의전당을 출력하는 함수. 효율적이지 않음. 하루에 1번 실행됨.
+    // 일단 모든 게임기록을 가져와야함.
+    const scoreData = await Score.find(
+      {},
+      {
+        _id: 0,
+        gameId: 1,
+        userNickname: 1,
+        averageScore: 1,
+        highScore: 1,
+      }
+    );
+    // scoreData는 배열에 다음 객체들이 담길 예정임
+    // 일단 게임데이터가 있는 유저목록을 객체로 관리해야함
+    const userRanking = {};
+
+    for (let data of scoreData) {
+      const { userNickname, gameId, averageScore, highScore } = data;
+      const game = await Game.findOne(
+        { _id: gameId },
+        { gameTitle: 1, gameOption: 1 }
+      );
+      const title = game.gameTitle;
+      if (!userRanking[userNickname]) {
+        userRanking[userNickname] = {};
+      }
+      if (!userRanking[userNickname][title]) {
+        userRanking[userNickname][title] = {
+          sumOfAvr: 0,
+          count: 0,
+          // top: 0,
+          score: 0,
+        };
+      }
+      if (game.gameOption === "avr") {
+        userRanking[userNickname][title]["sumOfAvr"] += averageScore;
+        userRanking[userNickname][title]["count"] += 1;
+        userRanking[userNickname][title]["score"] =
+          userRanking[userNickname][title]["sumOfAvr"] /
+          userRanking[userNickname][title]["count"];
+      } else {
+        if (userRanking[userNickname][title]["score"] < highScore) {
+          userRanking[userNickname][title]["score"] = highScore;
+        }
+      }
+    }
+    // 아직 끝이 아니었어.. sorting을 이제부터 해야돼.
+    const users = Object.keys(userRanking);
+    const final = {};
+    for (let user of users) {
+      let gameList = Object.keys(userRanking[user]);
+      for (let game of gameList) {
+        if (!final[user]) {
+          final[user] = 0;
+        }
+        final[user] += userRanking[user][game]["score"];
+      }
+    }
+    const honorsRanking = Object.entries(final);
+    honorsRanking.sort((b, a) => a[1] - b[1]);
+    return honorsRanking;
+  }
+
   async deleteScore(id) {
     // 부정한 방법으로 달성한 기록을 말소하기 위한 운영자 기능
     try {
@@ -71,23 +135,5 @@ class ScoreModel {
 }
 
 const scoreModel = new ScoreModel();
-// // **Custom Database**
-// // ----- New Game Data -----
-// const score = {
-//   gameId: "645d06e53dcefd63e6ce72a9",
-//   userNickname: "고마오ㄱㅁㅇrad",
-//   totalScores: [100, 100],
-//   averageScore: 100,
-//   highScore: 100,
-// };
-// scoreModel.createScoreBoard(score);
-// // ----- Find GameData by Id -----
-// const id = "645d06e53dcefd63e6ce72a9"
-// scoreModel.findScoresByGame(id);
-
-// // ----- Ranking -----
-// const option = "average";
-// const id = "645d06e53dcefd63e6ce72a9";
-// scoreModel.calculateRanking(id, option);
-
+scoreModel.userRanking();
 export { scoreModel };
