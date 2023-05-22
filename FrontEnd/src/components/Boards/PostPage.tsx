@@ -8,6 +8,8 @@ import axios from 'axios';
 import CommentComponent from '../Comments/CommentComponent';
 import DeletePost from './DeletePostComponent';
 
+import exitImg from "../../style/icons/x-solid.svg";
+
 interface postsType {
   _id: string;
   title: string;
@@ -43,10 +45,19 @@ const PostPage = () => {
     navigate(`/community/${postId}/modified`);
   }
 
+  const exitHandler = () => {
+    navigate("/");
+  }
+
   return (
     <CommunitySection>
       <CommunityContainer>
-        <CommunityHeader>커뮤니티</CommunityHeader>
+        <CommunityHeader>
+          커뮤니티
+          <ExitButton onClick={exitHandler}>
+          <ExitImage src={exitImg} alt="exitImg" />
+          </ExitButton>
+        </CommunityHeader>
         <CommunityBody>
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>
@@ -101,13 +112,35 @@ const CommunityContainer = styled.div`
   padding: 0.5rem 0;
 `;
 
+
+
 const CommunityHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin: 1rem;
   padding: 1rem;
   background-color: var(--color--header);
   color: white;
-  font-size: 2rem;
+  font-size: 2.6rem;
 `;
+
+const ExitButton = styled.div`
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.7rem;
+  background: #d9d9d9;
+  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
+  cursor: pointer;
+`
+
+const ExitImage = styled.img`
+  width: 65%;
+  height: 65%;
+  display: flex;
+  margin: 0.6rem auto;
+  padding-bottom: 0.3rem;
+`
 
 const CommunityBody = styled.div`
   margin: 1rem;
