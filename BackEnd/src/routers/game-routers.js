@@ -76,7 +76,7 @@ gameRouter.delete("/:id", async (req, res, next) => {
 });
 
 // 카테고리명으로 검색해서 게임정보를 불러오는 GET요청
-gameRouter.get("/:name", async (req, res, next) => {
+gameRouter.get("/categories/:name", async (req, res, next) => {
   try {
     const category = req.params.name;
     console.log("🖐️ 해당 카테고리명을 가진 게임을 검색합니다.");

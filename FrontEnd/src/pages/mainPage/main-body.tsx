@@ -16,26 +16,11 @@ function MainBody(props: MainBodyProps) {
   const [categoryList, setCategoryList] = React.useState<any[]>([]);
   const [gameList, setGameList] = React.useState<any[]>([]);
 
-  // 카테고리 버튼을 눌러 게임 목록을 불러오는 함수
-  async function fetchGameList(item: string) {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/games/${item}` // 됨!
-        // `http://localhost:8080/api/games/${item}` // 수동입력할 경우 사용
-      );
-      const gameData = response.data;
-      setGameList(gameData);
-    } catch (error) {
-      console.error('게임 목록 요청 실패:', error);
-    }
-  }
-
   // 시작버튼을 누를 때 리스트를 뽑아오는 함수
   React.useEffect(() => {
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/api/categories` // 됨!
-        // `http://localhost:8080/api/categories` // 수동입력할 경우 사용
       )
       .then((res) => {
         const categoryData = res.data;
@@ -45,6 +30,20 @@ function MainBody(props: MainBodyProps) {
         console.error('카테고리 데이터 요청 실패:', error);
       });
   }, []);
+
+  // 카테고리 버튼을 눌러 게임 목록을 불러오는 함수
+  async function fetchGameList(item: string) {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/games/categories/${item}` // 됨!
+      );
+      const gameData = response.data;
+      console.log(gameData);
+      setGameList(gameData);
+    } catch (error) {
+      console.error('게임 목록 요청 실패:', error);
+    }
+  }
 
   // 각 게임 페이지로 이동하는 기능
   const navigate = useNavigate();
@@ -101,7 +100,14 @@ function MainBody(props: MainBodyProps) {
               </CategoryHeaderButton>
             </CategoryHeader>
             <main>
-              <div className={styles.content}>
+              <div
+                className={styles.content}
+                style={{
+                  // backgroundColor: 'beige',
+                  display: 'flex',
+                  height: '100%',
+                }}
+              >
                 <ul>
                   {gameList &&
                     gameList.map((item) => (
@@ -196,6 +202,7 @@ const GameButton = ({ onClick, imageUrl, gameTitle }: any) => {
         width: '20rem',
         height: '20rem',
         fontSize: '2.5rem',
+        backgroundColor: 'rgb(250, 250, 250)',
       }}
       onClick={onClick}
     >

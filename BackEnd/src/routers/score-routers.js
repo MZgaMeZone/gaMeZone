@@ -57,9 +57,9 @@ scoreRouter.get("/:id/:option", async (req, res, next) => {
     const option = req.params.option;
     const query = req.query.num;
 
-    console.log("🖐️ 랭킹을 불러옵니다.");
+    // console.log("🖐️ 랭킹을 불러옵니다.");
     const rankingData = await scoreService.calculateRanking(gameId, option);
-    console.log("✔️ 명예의 전당 로딩 완료!");
+    // console.log("✔️ 랭킹 로딩 완료!");
     if (!query) {
       res.status(201).json(rankingData);
     }
