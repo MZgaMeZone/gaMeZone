@@ -5,10 +5,44 @@ import axios from 'axios';
 type ChildProps = {
   onValue: (value: boolean) => void;
 };
-
+type GameInfo = {
+  name: string;
+  iconUrl: string;
+  category: string;
+  description: string;
+  menual: string;
+  status: string;
+};
 const GameInfoEditing = ({ onValue }: ChildProps) => {
-  const handleCancelClick = () => {};
+  //input 처리
+  const [inputs, setInputs] = useState<GameInfo>({
+    name: '',
+    iconUrl: '',
+    category: '',
+    description: '',
+    menual: '',
+    status: '',
+  });
 
+  const { name, iconUrl, category, description, menual, status } = inputs;
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
+  console.log(process.env.REACT_APP_API_URL);
+
+  //취소
+  const handleCancelClick = () => {
+    onValue(false);
+  };
+  //저장
   const handleSaveClick = () => {
     onValue(false);
   };
@@ -17,12 +51,18 @@ const GameInfoEditing = ({ onValue }: ChildProps) => {
     <Container>
       <ContentDiv>
         <p>게임명</p>
-        <input type="text" />
+        <input type="text" name="name" value={name} onChange={handleChange} />
       </ContentDiv>
       <ContentDiv>
         <p>게임 아이콘</p>{' '}
         <div>
-          <input type="text" style={{ width: '48rem' }} />
+          <input
+            type="text"
+            name="iconUrl"
+            value={iconUrl}
+            onChange={handleChange}
+            style={{ width: '48rem' }}
+          />
           <Button
             style={{
               width: '12rem',
@@ -35,20 +75,38 @@ const GameInfoEditing = ({ onValue }: ChildProps) => {
         </div>
       </ContentDiv>
       <ContentDiv>
-        <p>카테고리</p> <input type="text" />
+        <p>카테고리</p>{' '}
+        <input
+          type="text"
+          name="category"
+          value={category}
+          onChange={handleChange}
+        />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 설명</p> <textarea />
+        <p>게임 설명</p>{' '}
+        <textarea
+          name="description"
+          value={description}
+          onChange={handleChange}
+        />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 조작</p> <textarea />
+        <p>게임 조작</p>{' '}
+        <textarea name="menual" value={menual} onChange={handleChange} />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 상태</p> <input type="text" />
+        <p>게임 상태</p>{' '}
+        <input
+          type="text"
+          name="status"
+          value={status}
+          onChange={handleChange}
+        />
       </ContentDiv>
       <ButtonDiv>
-        <Button onClick={() => handleSaveClick()}>취소</Button>
-        <Button>저장</Button>
+        <Button onClick={() => handleCancelClick()}>취소</Button>
+        <Button onClick={() => handleSaveClick()}>저장</Button>
       </ButtonDiv>
     </Container>
   );
