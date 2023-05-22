@@ -31,7 +31,7 @@ commentRouter.get("/:id", async(req, res, next) => {
   }
 })
 
-//새 게시물을 생성하는 POST 요청
+//새 댓글을 생성하는 POST 요청
 commentRouter.post("/", async(req, res, next) => {
   try{
     const data = req.body;
@@ -46,10 +46,10 @@ commentRouter.post("/", async(req, res, next) => {
 });
 
 //게시물을 수정하는 PATCH 요청
-commentRouter.patch("/:id", async(req, res, next) => {
+commentRouter.patch("/:postId", async(req, res, next) => {
   try {
-    const commentId = req.params.id;
     const data = req.body;
+    const commentId = data._id
     console.log("댓글을 수정합니다.");
     const updateComment = await commentService.updateComment(commentId, data);
     console.log("댓글 수정이 완료되었습니다.");
