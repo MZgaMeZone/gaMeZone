@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import cuteImg from '../../../images/cute.png';
 import gomaImg from '../../../images/gomao.png';
 
-function Comment() {
+function PostICommented() {
   const comment = [
     {
       id: 1,
@@ -35,10 +35,8 @@ function Comment() {
       category: '인증게시판',
     },
   ];
-
   const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고(긴글) 닫기(짧은글)
   const textLimit = 170; //글자수 제한 선언
-
   return (
     <>
       <Wrapper>
@@ -147,4 +145,4 @@ const CommentContent = styled.div`
   font-weight: 500;
 `;
 
-export default Comment;
+export default PostICommented;

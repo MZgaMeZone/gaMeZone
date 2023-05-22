@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-import CommunityContainer from "./components/communityContainer";
-import Comment from "./components/comment";
+import CommunityContainer from './components/communityContainer';
+import Comment from './components/comment';
 
 function MyComment() {
   return (
@@ -13,10 +13,10 @@ function MyComment() {
         <Line></Line>
         <CommentMenu>
           <Link to="/mypage/mycomment">
-            <Title>내가 쓴 댓글</Title>
+            <Links>내가 쓴 댓글</Links>
           </Link>
           <Link to="/mypage/mycomment-post">
-            <Title>내가 댓글 단 게시글</Title>
+            <Links>내가 댓글 단 게시글</Links>
           </Link>
         </CommentMenu>
 
@@ -31,6 +31,7 @@ const Line = styled.div`
   width: 90%;
   margin: 0 auto;
 `;
+
 const CommentMenu = styled.div`
   display: flex;
   flex-direction: row;
@@ -43,4 +44,13 @@ const Title = styled.h1`
   margin-left: 6.3rem;
   margin-top: 3rem;
 `;
+
+const Links = styled.h1`
+  margin-left: 6.3rem;
+  margin-top: 3rem;
+  &:hover {
+    border-bottom: 2px solid black;
+  }
+`;
+
 export default MyComment;
