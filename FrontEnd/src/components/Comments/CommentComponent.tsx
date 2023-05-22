@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import styled from 'styled-components'
+import axios from 'axios';
 
 import Pagination from '../Boards/Pagination';
 import CreateComment from './CreateComment';
-import axios from 'axios';
+import CommentList from './CommentList';
 
 interface Comment {
   _id: string,
@@ -22,7 +23,7 @@ interface CommentProps {
 const CommentComponent =({ postId }:CommentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
-  const [modal, setModal] = useState(false);
+  const [postModal, setPostModal] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
@@ -47,25 +48,21 @@ const CommentComponent =({ postId }:CommentProps) => {
     setCurrentPage(pageNumber);
   };
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const togglePostModal = () => {
+    setPostModal(!postModal);
   };
 
-  console.log(comments);
-
   return (
-    <CommentSection>
-      <CommentContainer>
-      {currentComments.map(comment => (
-        <Comments key={comment._id}>
-          <Comment>{comment.content}</Comment>
-          <div style={{display:"flex"}}>
-            <Author>{comment.author.nickname}</Author>
-            <Date>{comment.createdAt}</Date>
-          </div>
-        </Comments>
-      ))}
-    </CommentContainer>
+      <CommentSection>
+        <CommentContainer>
+        {currentComments.map((comment: Comment) => (
+          <CommentList
+            key={comment._id}
+            comment={comment}
+            postId={postId}
+          />
+        ))}
+      </CommentContainer>
     <Footer>
       <BackLink to="/community">뒤로가기</BackLink>
       <Pagination 
@@ -73,12 +70,12 @@ const CommentComponent =({ postId }:CommentProps) => {
       totalPosts={comments.length}
       paginate={paginate}
       currentPage={currentPage}
-      />
+      /> 
       <div>
-      {modal ? (
-        <CreateComment postId={postId} closeModal={toggleModal} />
+      {postModal ? (
+        <CreateComment postId={postId} closeModal={togglePostModal} />
       ) : (
-        <CommentButton onClick={toggleModal}>댓글 쓰기</CommentButton>
+        <CommentButton onClick={togglePostModal}>댓글 쓰기</CommentButton>
       )}
     </div>
     </Footer>
@@ -97,23 +94,6 @@ const CommentSection = styled.div`
 
 const CommentContainer = styled.div`
   height: 7rem;
-`
-
-const Comments = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const Comment = styled.p`
-  margin: 1rem;
-`
-
-const Author = styled.p`
-  margin: 1rem 3rem;
-`
-
-const Date = styled.p`
-  margin: 1rem;
 `
 
 const Footer = styled.div`

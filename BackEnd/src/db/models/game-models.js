@@ -23,6 +23,17 @@ class GameModel {
     }
     return findGames;
   }
+  async findGame(id) {
+    // 게임 아이디로 게임 정보 불러오기
+    try {
+      const findGame = await Game.findOne({ _id: id });
+      return findGame;
+    } catch (e) {
+      console.log(`해당 id에 일치하는 게임정보가 없습니다.`);
+      throw new Error(e);
+    }
+  }
+
   async deleteGame(id) {
     // id로 검색하여 게임정보를 삭제하기
     // 이 부분은 고민이 필요하다. 사실상 작동 코드는 클라이언트에 있을거기 때문에,

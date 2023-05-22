@@ -39,10 +39,11 @@ export class CommentModel {
     }
   };
 
-  async updateComment(id, data) {
+  async updateComment(commentId, data) {
     //댓글 수정
-    const updateComment = await Comment.findOneAndUpdate(
-      {_id: id},
+    console.log(commentId);
+    const updateComment = await Comment.updateOne(
+      {_id: commentId},
       { $set: data },
       { new: true } // 이 옵션은 업데이트 이후에 업데이트된 문서를 반환합니다. 
     );
