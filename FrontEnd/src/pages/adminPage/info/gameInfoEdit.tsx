@@ -234,7 +234,7 @@ const AddButtonDiv = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
-  padding: 3rem 6.8rem 2rem 0;
+  padding: 3rem 6.8rem 0 0;
 `;
 
 const AddButton = styled.button`
@@ -242,7 +242,7 @@ const AddButton = styled.button`
   background: #000080;
   color: #ffffff;
   font-size: 1.8rem;
-  padding: 1.2rem;
+  padding: 2rem;
   &:hover {
     background: rgba(0, 0, 128, 0.8);
   }

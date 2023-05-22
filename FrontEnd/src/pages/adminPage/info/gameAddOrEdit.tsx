@@ -177,7 +177,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 2rem;
     line-height: 24px;
     color: #242424;
   }
