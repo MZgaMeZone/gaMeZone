@@ -26,6 +26,9 @@ class ScoreService {
   async deleteScore(id) {
     return await scoreModel.deleteScore(id);
   }
+  async userRanking() {
+    return await scoreModel.userRanking();
+  }
 }
 
 const scoreService = new ScoreService(scoreModel);

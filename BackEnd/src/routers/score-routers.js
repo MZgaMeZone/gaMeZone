@@ -71,6 +71,19 @@ scoreRouter.get("/:id/:option", async (req, res, next) => {
   }
 });
 
+// 해당 game의 모든 기록정보를 가져오는 GET 요청
+scoreRouter.get("/honors", async (req, res, next) => {
+  try {
+    console.log("🖐️ 명예의 전당을 출력합니다.");
+    const honor = await scoreService.userRanking();
+    console.log("✔️ 명예의 전당에 오신 것을 환영합니다.");
+    res.status(201).json(honor);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
 // 게임정보를 삭제하는 DELETE 요청
 scoreRouter.delete("/:id", async (req, res, next) => {
   try {

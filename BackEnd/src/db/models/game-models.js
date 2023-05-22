@@ -67,27 +67,4 @@ class GameModel {
 }
 
 const gameModel = new GameModel();
-// // **Custom Database**
-// // ----- New Game Data -----
-// const data = {
-//   gameTitle: "귀엽네게임",
-//   gameCategory: ["adventure"],
-//   gameIconUrl: "./gomao/cute1.jpg",
-//   gameImageUrl: "./gomao/cute2.jpg",
-//   gameDescription: "가보자고",
-//   gameManual: "귀엽네 ㅋㅋ",
-// };
-// gameModel.createNewGame(data);
-
-// // ----- Update Game Data -----
-// const id = "645d06e53dcefd63e6ce72a9";
-// const data = {
-//   gameDescription: "이 게임은 망할거다 ㅋㅋㅋ",
-//   gameManual: "이 게임을 플레이하기 위해서는 ㄱㅁㅇ임티를 사야한다.",
-// };
-// gameModel.updateGame(id, data);
-
-// // ----- find all games -----
-// gameModel.findAllGames();
-
 export { gameModel };
