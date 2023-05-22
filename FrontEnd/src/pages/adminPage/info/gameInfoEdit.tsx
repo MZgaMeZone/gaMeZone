@@ -13,6 +13,14 @@ interface Game {
   gameServiceStatus: string;
 }
 
+type SendingData = {
+  name: string;
+  iconUrl: string;
+  category: string;
+  description: string;
+  menual: string;
+  status: string;
+};
 const GameInfoEdit = () => {
   const [data, setData] = useState<Game[]>([]);
 
@@ -24,16 +32,26 @@ const GameInfoEdit = () => {
   }, []);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [sendingData, setSendingData] = useState<SendingData>();
 
   const handleEditClick = (id: string) => {
     setIsEditing(true);
     const gameInfo = data.find((item) => item._id === id);
     if (gameInfo) {
+      console.log(gameInfo);
+      setSendingData({
+        name: gameInfo.gameTitle,
+        iconUrl: 'example.png',
+        category: gameInfo.gameCategory,
+        description: gameInfo.gameDescription,
+        menual: gameInfo.gameManual,
+        status: gameInfo.gameServiceStatus,
+      });
     }
   };
 
   const handleValue = (value: boolean) => {
-    setIsEditing(false);
+    setIsEditing(value);
   };
 
   return (
@@ -75,8 +93,10 @@ const GameInfoEdit = () => {
             </Container>
           ))}
         </>
+      ) : sendingData ? (
+        <GameInfoEditing onValue={handleValue} receivedData={sendingData} />
       ) : (
-        <GameInfoEditing onValue={handleValue} />
+        ''
       )}
     </>
   );

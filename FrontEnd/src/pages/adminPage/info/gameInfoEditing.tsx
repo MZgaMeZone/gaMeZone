@@ -13,15 +13,23 @@ type GameInfo = {
   menual: string;
   status: string;
 };
-const GameInfoEditing = ({ onValue }: ChildProps) => {
+
+type ChildPropsData = {
+  receivedData: GameInfo;
+};
+
+const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
+  onValue,
+  receivedData,
+}) => {
   //input 처리
   const [inputs, setInputs] = useState<GameInfo>({
-    name: '',
-    iconUrl: '',
-    category: '',
-    description: '',
-    menual: '',
-    status: '',
+    name: receivedData.name,
+    iconUrl: receivedData.iconUrl,
+    category: receivedData.category,
+    description: receivedData.description,
+    menual: receivedData.menual,
+    status: receivedData.status,
   });
 
   const { name, iconUrl, category, description, menual, status } = inputs;
