@@ -2,27 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import GameInfoEditing from './gameInfoEditing';
-interface Game {
-  _id: string;
-  gameTitle: string;
-  gameIconUrl: String;
-  gameImageUrl: String;
-  gameCategory: string;
-  gameDescription: string;
-  gameManual: string;
-  gameServiceStatus: string;
-}
+import { GameInfo, GameData } from './interface';
 
-type SendingData = {
-  name: string;
-  iconUrl: string;
-  category: string;
-  description: string;
-  menual: string;
-  status: string;
-};
 const GameInfoEdit = () => {
-  const [data, setData] = useState<Game[]>([]);
+  const [data, setData] = useState<GameInfo[]>([]);
 
   useEffect(() => {
     axios
@@ -32,16 +15,16 @@ const GameInfoEdit = () => {
   }, []);
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [sendingData, setSendingData] = useState<SendingData>();
+  const [sendingData, setSendingData] = useState<GameData>();
 
   const handleEditClick = (id: string) => {
     setIsEditing(true);
     const gameInfo = data.find((item) => item._id === id);
     if (gameInfo) {
-      console.log(gameInfo);
       setSendingData({
+        id: gameInfo._id,
         name: gameInfo.gameTitle,
-        iconUrl: 'example.png',
+        iconUrl: gameInfo.gameIconUrl.toString(),
         category: gameInfo.gameCategory,
         description: gameInfo.gameDescription,
         menual: gameInfo.gameManual,
@@ -49,8 +32,31 @@ const GameInfoEdit = () => {
       });
     }
   };
+  const handleValue = (updateData: GameInfo | null, value: boolean) => {
+    console.log(updateData);
+    if (updateData === null) {
+      setIsEditing(value);
+      return;
+    }
 
-  const handleValue = (value: boolean) => {
+    if (updateData) {
+      setData((prevData) =>
+        prevData.map((item) => {
+          if (item._id === updateData._id) {
+            return {
+              ...item,
+              categoryName: updateData.gameCategory,
+              gameDescription: updateData.gameDescription,
+              gameIconUrl: updateData.gameIconUrl,
+              gameManual: updateData.gameManual,
+              gameTitle: updateData.gameTitle,
+              gameServiceStatus: updateData.gameServiceStatus,
+            };
+          }
+          return item;
+        })
+      );
+    }
     setIsEditing(value);
   };
 
@@ -58,7 +64,7 @@ const GameInfoEdit = () => {
     <>
       {!isEditing ? (
         <>
-          {data.map((item: Game) => (
+          {data.map((item: GameInfo) => (
             <Container key={item._id}>
               <ImageContent>
                 <GameImage

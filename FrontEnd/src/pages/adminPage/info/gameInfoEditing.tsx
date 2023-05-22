@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { GameInfo, GameData } from './interface';
 
 type ChildProps = {
-  onValue: (value: boolean) => void;
+  onValue: (updateData: GameInfo | null, value: boolean) => void;
 };
-type GameInfo = {
-  name: string;
-  iconUrl: string;
-  category: string;
-  description: string;
-  menual: string;
-  status: string;
-};
-
 type ChildPropsData = {
-  receivedData: GameInfo;
+  receivedData: GameData;
 };
 
 const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
@@ -23,7 +15,10 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
   receivedData,
 }) => {
   //input 처리
-  const [inputs, setInputs] = useState<GameInfo>({
+
+  const URL = process.env.REACT_APP_API_URL;
+  const [inputs, setInputs] = useState<GameData>({
+    id: '',
     name: receivedData.name,
     iconUrl: receivedData.iconUrl,
     category: receivedData.category,
@@ -44,22 +39,41 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
     });
   };
 
-  console.log(process.env.REACT_APP_API_URL);
-
   //취소
   const handleCancelClick = () => {
-    onValue(false);
+    onValue(null, false);
   };
   //저장
   const handleSaveClick = () => {
-    onValue(false);
+    axios
+      .patch(`http://localhost:8080/api/games/${receivedData.id}`, {
+        gameTitle: name,
+        gameCategory: category,
+        gameIconUrl: iconUrl,
+        gameDescription: description,
+        gameManual: menual,
+        gameServiceStatus: status,
+      })
+      .then((res) => {
+        console.log(res.data);
+        onValue(res.data, false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <Container>
       <ContentDiv>
         <p>게임명</p>
-        <input type="text" name="name" value={name} onChange={handleChange} />
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          autoFocus
+        />
       </ContentDiv>
       <ContentDiv>
         <p>게임 아이콘</p>{' '}
