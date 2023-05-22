@@ -1,23 +1,27 @@
-import { ReactNode } from "react";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
-import exitImg from "../../../style/icons/x-solid.svg";
+import { ReactNode, useState } from 'react';
+import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import exitImg from '../../../style/icons/x-solid.svg';
 
 type CommunityContainer = {
   children: ReactNode;
 };
 
 function CommunityContainer({ children }: CommunityContainer) {
+  const [exit, setIsExit] = useState(false);
+  const handleExit = () => {
+    setIsExit(true);
+  };
   return (
     <>
-      <Container_Box>
+      <Container_Box style={{ display: exit ? 'none' : 'block' }}>
         <Header_Bar>
           <div className="title">
             <Link to="/mypage">
               <p>마이페이지</p>
             </Link>
           </div>
-          <Exit_Button>
+          <Exit_Button onClick={handleExit}>
             <img src={exitImg} alt="exitImg" />
           </Exit_Button>
         </Header_Bar>

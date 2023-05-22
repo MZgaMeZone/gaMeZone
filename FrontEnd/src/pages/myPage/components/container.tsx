@@ -1,23 +1,27 @@
-import styled from "styled-components";
-import { ReactNode } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import exitImg from "../../../style/icons/x-solid.svg";
+import styled from 'styled-components';
+import { ReactNode, useState } from 'react';
+import { Link } from 'react-router-dom';
+import exitImg from '../../../style/icons/x-solid.svg';
 
 type ContainerProps = {
   children: ReactNode;
 };
 
 function Container({ children }: ContainerProps) {
+  const [exit, setIsExit] = useState(false);
+  const handleExit = () => {
+    setIsExit(true);
+  };
   return (
     <>
-      <Container_Box>
+      <Container_Box style={{ display: exit ? 'none' : 'block' }}>
         <Header_Bar>
           <div className="title">
             <Link to="/mypage">
               <p>마이페이지</p>
             </Link>
           </div>
-          <Exit_Button>
+          <Exit_Button onClick={handleExit}>
             <img src={exitImg} alt="exitImg" />
           </Exit_Button>
         </Header_Bar>

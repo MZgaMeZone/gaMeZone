@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import cuteImg from '../../../images/cute.png';
 import gomaImg from '../../../images/gomao.png';
-import axios from 'axios';
 
-const url = process.env.REACT_APP_API_URL;
-const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-};
-function Comment() {
+function PostICommented() {
   const comment = [
     {
       id: 1,
@@ -43,31 +35,8 @@ function Comment() {
       category: '인증게시판',
     },
   ];
-  // const [email, setEmail] = useState('');
-  const email = 'wlwhsxz@gmail.com';
-
-  const getComment = async () => {
-    await axios.get(url + `/api/comments/${email}`).then((res) => {
-      console.log(email);
-      console.log(res.data);
-    });
-  };
-
-  // const getUserInfo = async () => {
-  //   await axios.get(url + '/api/users', config).then((res) => {
-  //     setEmail(res.data.email);
-  //   });
-  // };
-
-  useEffect(() => {
-    console.log('이펙트확인');
-    // getUserInfo();
-    getComment();
-  }, []);
-
   const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고(긴글) 닫기(짧은글)
   const textLimit = 170; //글자수 제한 선언
-
   return (
     <>
       <Wrapper>
@@ -75,7 +44,7 @@ function Comment() {
           const shortComment = comment.content.slice(0, textLimit); //보여줄 짧은 글
           const isLongComment = comment.content.length > textLimit; //긴글인지 확인
           return (
-            <div key={comment.id}>
+            <>
               <CommentInfo key={comment.id}>
                 <ProfileBox>
                   <img src={gomaImg} alt="프로필" />
@@ -103,7 +72,7 @@ function Comment() {
                 </div>
                 <h2>{comment.category}</h2>
               </CommentInfo>
-            </div>
+            </>
           );
         })}
       </Wrapper>
@@ -176,4 +145,4 @@ const CommentContent = styled.div`
   font-weight: 500;
 `;
 
-export default Comment;
+export default PostICommented;

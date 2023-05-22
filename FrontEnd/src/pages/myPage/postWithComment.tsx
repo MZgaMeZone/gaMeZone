@@ -3,21 +3,23 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import CommunityContainer from './components/communityContainer';
+import PostICommented from './components/postICommented';
 
 function PostWithComment() {
   return (
     <>
       <CommunityContainer>
-        <Title>내가 쓴 댓글</Title>
+        <Title>내가 댓글 단 게시글</Title>
         <Line></Line>
         <CommentMenu>
           <Link to="/mypage/mycomment">
-            <Title>내가 쓴 댓글</Title>
+            <Links>내가 쓴 댓글</Links>
           </Link>
           <Link to="/mypage/mycomment-post">
-            <Title>내가 댓글 단 게시글</Title>
+            <Links>내가 댓글 단 게시글</Links>
           </Link>
         </CommentMenu>
+        <PostICommented />
       </CommunityContainer>
     </>
   );
@@ -26,6 +28,9 @@ function PostWithComment() {
 const Title = styled.h1`
   margin-left: 6.3rem;
   margin-top: 3rem;
+  &:not(:first-child):hover {
+    border-bottom: 2px solid #000;
+  }
 `;
 const Line = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -38,6 +43,18 @@ const CommentMenu = styled.div`
   flex-direction: row;
   & > h1:not(:first-of-type) {
     margin-left: 3rem;
+  }
+`;
+
+const Links = styled.h1`
+  margin-left: 6.3rem;
+  margin-top: 3rem;
+  padding: 1rem;
+  &:hover {
+    border-bottom: 2px solid black;
+  }
+  &:active {
+    box-shadow: inset 0.5rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
   }
 `;
 export default PostWithComment;

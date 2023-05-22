@@ -1,30 +1,62 @@
 import Container from './components/container';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { MouseEvent, FormEvent } from 'react';
+import axios from 'axios';
+import { get } from 'http';
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
 function NicknameChange() {
-  //현재 닉네임이 placeholder로 이미 보이고 있어야하고
-  //새로운 닉네임은 중복검사해야 함.
-
   const [currenNickname, setCurrentNickname] = useState('');
   const [newNickname, setNewNickname] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
-  const navigate = useNavigate();
 
-  const duplicateCheck = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const existingNicknames = ['John', 'Jane', 'Mike'];
-    if (existingNicknames.includes(newNickname)) {
-      setIsDuplicate(true);
-      alert('이미 존재하는 닉네임 입니다.');
-    } else {
-      setIsDuplicate(false);
-      alert('사용가능한 닉네임 입니다.');
-    }
+  const getCurrentNickname = async () => {
+    await axios.get(url + '/api/users', config).then((res) => {
+      console.log(res.data);
+      setCurrentNickname(res.data.nickname);
+    });
   };
 
+  useEffect(() => {
+    getCurrentNickname();
+  }, []);
+
+  const duplicateCheck = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('newNickname: ', newNickname);
+    await axios
+      .post(url + '/api/users/signup/nicknameDuplicateCheck', {
+        nickname: newNickname,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          console.log('nickname success: ', res.data);
+          alert('사용 가능한 nickname입니다.');
+        } else {
+          console.log('nickname fail: ', res.data);
+          setIsDuplicate(true);
+          setNewNickname('');
+          alert('중복된 nickname입니다. 다른 nickname을 입력해주세요.');
+        }
+      });
+  };
+
+  const updateNickname = async () => {
+    console.log('일단 이거 대기!'); //isDuplicate값이 true면 return
+    // await axios.put(url + '/api/users',config,{
+
+    // })
+    //   .then((res)=>{
+    //     console.log(res.data);
+    //   })
+  };
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 
@@ -35,7 +67,6 @@ function NicknameChange() {
 
       case 'new-nickname':
         setNewNickname(e.currentTarget.value);
-        console.log(e.currentTarget.value);
         break;
     }
   };
@@ -44,6 +75,7 @@ function NicknameChange() {
     <>
       <Container>
         <Title> 닉네임 변경</Title>
+        <Line></Line>
         <NicknameChangeForm>
           <form action="">
             <label htmlFor="current-nickname">현재 닉네임</label>
@@ -53,7 +85,6 @@ function NicknameChange() {
               name="current-nickname"
               onChange={handleChange}
               value={currenNickname}
-              placeholder="비밀번호는 8글자 이하입니다"
             />
             <NicknameCheck>
               <NewnicknameBox>
@@ -69,8 +100,7 @@ function NicknameChange() {
               </NewnicknameBox>
               <button onClick={duplicateCheck}>중복확인</button>
             </NicknameCheck>
-            <button>닉네임 변경</button>
-            {/* 여기다가 나중에 axios요청 달면 됨. */}
+            <button onClick={updateNickname}>닉네임 변경</button>
           </form>
         </NicknameChangeForm>
       </Container>
@@ -142,6 +172,12 @@ const NicknameCheck = styled.div`
     margin-top: 4rem;
     width: 20%;
   }
+`;
+
+const Line = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto;
 `;
 
 export default NicknameChange;

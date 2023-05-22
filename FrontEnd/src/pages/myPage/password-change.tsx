@@ -45,13 +45,7 @@ function PasswordChange() {
         <Link to="/mypage">
           <Title>비밀번호 변경</Title>
         </Link>
-        <div
-          style={{
-            borderBottom: '1px solid rgba(0,0,0,0.2)',
-            width: '90%',
-            margin: '0 auto',
-          }}
-        ></div>
+        <Line></Line>
         <PasswordFrom>
           <form action="">
             <label htmlFor="current-password">현재 비밀번호</label>
@@ -144,6 +138,12 @@ const Title = styled.h1`
 const Check = styled.div`
   font-size: 1.8rem;
   color: red;
+`;
+
+const Line = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin: 0 auto;
 `;
 
 export default PasswordChange;
