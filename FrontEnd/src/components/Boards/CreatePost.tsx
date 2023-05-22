@@ -5,10 +5,27 @@ import axios from 'axios';
 
 import exitImg from "../../style/icons/x-solid.svg";
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+  Authorization: `Bearer ${userToken}`,
+  },
+};
+
+
 const CreatePost = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(url + '/api/users', config).then((res) => {
+      console.log(res.data);
+      setUserEmail(res.data.email);
+      });
+  }, []);
 
   const handleTitleChange = (e:any) => {
     setTitle(e.target.value);
@@ -33,10 +50,12 @@ const CreatePost = () => {
 
     try {
       const postData = {
-        author: "64653ea8c587b21f36aef42e",
+        author: userEmail,
         title: title,
         content: content,
       };
+
+      console.log(postData);
 
       axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, postData);
       

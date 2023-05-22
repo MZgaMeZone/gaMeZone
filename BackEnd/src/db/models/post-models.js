@@ -1,18 +1,27 @@
 import mongoose from "mongoose";
 import PostSchema from "../schemas/post-schema.js";
+import UserSchema from "../schemas/user-schema.js";
 
 const Post = mongoose.model("Post", PostSchema);
+const User = mongoose.model("User", UserSchema);
 
 export class PostModel {
   async createNewPost(data) {
+    console.log(data);
+    const UserId = await User.findOne({email: data.author});
     //새 게시글 등록
-    const newPost = await Post.create(data);
-    return newPost;
+    const newPost = new Post ({
+      title: data.title,
+      content: data.content,
+      author: UserId._id,
+    });
+
+    await newPost.save();
   };
 
   async findAllPost() {
     // 모든 게시물 조회
-    const findPosts = await Post.find({}).populate("author", "nickname").lean();
+    const findPosts = await Post.find({}).populate("author", "nickname email").lean();
     if (findPosts.length < 1) {
       console.log(`등록된 게시물이 없습니다.`);
     }
@@ -21,7 +30,7 @@ export class PostModel {
 
   async findPost(id) {
     //특정 게시물 조회
-    const findPost = await Post.findOne({_id: id}).populate("author", "nickname").lean();
+    const findPost = await Post.findOne({_id: id}).populate("author", "nickname email").lean();
     if (findPost.length !== 1) {
       console.log("등록된 게시물이 없습니다.");
     }

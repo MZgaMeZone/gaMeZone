@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import Pagination from './Pagination';
 
+const userToken: string | null = localStorage.getItem('userToken');
+
 interface postType {
   _id: string;
   title: string;
@@ -38,13 +40,13 @@ const NoticeComponent = () => {
     <NoticeSection>
       <div>
         <TopContainer>
-          <WriteButton
+          {userToken && <WriteButton
             onClick={() => {
               nav('/community/write');
             }}
           >
             글쓰기
-          </WriteButton>
+          </WriteButton>}
         </TopContainer>
         <PostContainer>
           {currentPosts.map((post: postType, index: number) => (
