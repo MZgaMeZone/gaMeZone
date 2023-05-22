@@ -54,7 +54,7 @@ const Container = styled.div`
   }
   input {
     width: 60rem;
-    height: 3rem;
+    height: 3.4rem;
     margin: 1rem;
     padding-left: 2rem;
     background-color: rgb(233, 233, 233);
@@ -63,6 +63,10 @@ const Container = styled.div`
     font-weight: 500;
     font-size: 1.8rem;
     vertical-align: top;
+
+    &:focus {
+      border: 2px solid #008080;
+    }
   }
   textarea {
     box-sizing: border-box;
@@ -75,8 +79,9 @@ const Container = styled.div`
     font-weight: 500;
     font-size: 1.8rem;
     vertical-align: top;
+
     &:focus {
-      outline: none;
+      outline-color: #008080;
     }
   }
 `;
