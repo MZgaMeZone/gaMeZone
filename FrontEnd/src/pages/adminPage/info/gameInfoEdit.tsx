@@ -59,8 +59,20 @@ const GameInfoEdit = () => {
     setIsEditing(value);
   };
 
-  const handleDeleteClick = (id: string) => {
-    console.log(id);
+  const handleDeleteClick = async (id: string, gameName: string) => {
+    const deleteConfirm = window.confirm(
+      `[${gameName}] 카테고리를 삭제하시겠습니까?`
+    );
+    if (deleteConfirm) {
+      try {
+        await axios.delete(`http://localhost:8080/api/games/${id}`);
+        setData(data.filter((item) => item._id !== id));
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      alert('삭제가 취소되었습니다.');
+    }
   };
   return (
     <>
@@ -100,7 +112,9 @@ const GameInfoEdit = () => {
               </div>
               <ButtonDiv>
                 <Button onClick={() => handleEditClick(item._id)}>수정</Button>
-                <Button onClick={() => handleDeleteClick(item._id)}>
+                <Button
+                  onClick={() => handleDeleteClick(item._id, item.gameTitle)}
+                >
                   삭제
                 </Button>
               </ButtonDiv>
