@@ -36,7 +36,7 @@ const CreatePost = () => {
         content: content,
       };
 
-      axios.post('http://localhost:8080/api/posts', postData);
+      axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, postData);
       
       alert('게시물이 작성되었습니다.');
       navigate('/community');

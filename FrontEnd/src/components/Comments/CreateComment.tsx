@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import axios from "axios";
 
 const CreateComment = ({postId, closeModal}: any) => {
   const nav = useNavigate();
@@ -17,9 +18,13 @@ const CreateComment = ({postId, closeModal}: any) => {
     }
 
     try {
-      const commentData = {comment};
+      const commentData = {
+        author: "64653ea8c587b21f36aef42e",
+        content: comment,
+        post: postId
+      };
 
-      localStorage.setItem('commentData', JSON.stringify(commentData));
+      axios.post(`${process.env.REACT_APP_API_URL}/api/comments`, commentData);
       closeModal(true);
 
       alert("댓글 작성이 완료되었습니다.");

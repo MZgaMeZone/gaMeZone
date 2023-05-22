@@ -20,7 +20,7 @@ const ModifiedPost = () => {
 
   useEffect(() => {
     axios
-    .get(`http://localhost:8080/api/posts/post/${postId}`)
+    .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
     .then((res) => {
       const data = res.data;
       setPost(data);
