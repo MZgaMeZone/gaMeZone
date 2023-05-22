@@ -8,12 +8,12 @@ const User = mongoose.model("User", UserSchema);
 export class PostModel {
   async createNewPost(data) {
     console.log(data);
-    const UserId = await User.findOne({email: data.author});
+    const userId = await User.findOne({email: data.author});
     //새 게시글 등록
     const newPost = new Post ({
       title: data.title,
       content: data.content,
-      author: UserId._id,
+      author: userId._id,
     });
 
     await newPost.save();

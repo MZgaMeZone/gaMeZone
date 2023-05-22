@@ -19,7 +19,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
   
     useEffect(() => {
       axios
-        .get(`${process.env.REACT_APP_API_URL}/api/comments/${postId}`)
+        .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
         .then((res) => {
           const data = res.data;
           setContent(data);
@@ -46,7 +46,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
           _id: commentId,
           content: comment,
           post: postId,
-          author: "64653ea8c587b21f36aef42e",
+          author: "646630a5a15cbd3845528d92",
         };
   
         console.log(commentData);

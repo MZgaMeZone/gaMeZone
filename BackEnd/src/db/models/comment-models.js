@@ -7,9 +7,16 @@ const User = mongoose.model("User", UserSchema);
 
 export class CommentModel {
   async createNewComment(data) {
+    const userId = await User.findOne({email: data.author});
     //새 댓글 등록
-    const newComment = await Comment.create(data);
-    return newComment;
+    console.log(data);
+    const newComment = new Comment ({
+      author: userId._id,
+      content: data.content,
+      post: data.post,
+    });
+    console.log(newComment);
+    await newComment.save();
   };
 
   async findAllComments(id) {
