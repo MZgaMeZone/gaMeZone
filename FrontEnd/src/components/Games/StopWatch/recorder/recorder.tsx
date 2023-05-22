@@ -87,9 +87,9 @@ function Recorder(props: RecorderProps) {
       </div>
       {scores.length > 0 && (
         <>
-          <div id="best-record-text">최고 기록 : {printScore[0]}sec</div>
-          <div id="worst-record-text">최저 기록 : {printScore[1]}sec</div>
-          <div id="average-gap-text">평균 정확도 : {printScore[2]}%</div>
+          <div id="best-record-text">최고 기록 : {printScore[0]}%</div>
+          <div id="worst-record-text">최저 기록 : {printScore[1]}%</div>
+          <div id="average-gap-text">평균 기록 : {printScore[2]}%</div>
           <div id="average-gap-text">
             당신의 평균 등급은 {grade(printScore[2] / 10)} 입니다!
           </div>
