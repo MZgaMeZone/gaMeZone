@@ -1,51 +1,42 @@
 import Container from './components/container';
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
-import { MouseEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
 
 function AvartarChange() {
-  //FileList 유형은 input tupe="file"에서 선택한 파일 목록을 나타냄
-  // const [files, setFiles] = useState<FileList | null>(null);
-  // const imgRef = useRef<HTMLInputElement>(null);
+  const [imageSrc, setImageSrc] = useState('');
 
-  // const onLoadFile = () => {
-  //   const file = imgRef.current.files[0];
-  //   console.log(file);
-  //   setFiles(file);
-  // };
+  const encodeFileToBase64 = (fileBlob: File) => {
+    const reader = new FileReader(); //File, Blob 객체를 핸들링
+    reader.readAsDataURL(fileBlob); //File, Blob 객체를 읽고 base64로 인코딩한 문자열을 FileReader.result속성에 담아줌
+    return new Promise<void>((resolve) => {
+      reader.onload = () => {
+        //파일이 성공적으로 읽혀지면 트리거됨
+        setImageSrc(reader.result as string); //인코딩 된 문자열을 setImage에 넣어서 미리보기
+        resolve();
+      };
+    });
+  };
 
-  // const handleClick = (e: FormEvent<HTMLInputElement>) => {
-  //   const formData = new FormData();
-  //   formData.append("file", files![0]);
-
-  //   const config = {
-  //     Header: {
-  //       "content-type": "multipart/form-data",
-  //     },
-  //   };
-  //   //axios.post('api',formData,config);
-  // };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //input 이미지가 변경되면 이 함수에서 파일 체크
+    console.log(e.target.files);
+    const file = e.target.files?.[0]; //파일이 있다면 file 변수에 할당, null이거나 정의되지 않았다면 file이 정의되지 않은 것으로 간주 없다면  undefined
+    if (file) {
+      encodeFileToBase64(file);
+    }
+  };
 
   return (
     <div>
       <Container>
         <h1>프로필 사진 변경</h1>
-        {/* <div className="preview_img">
-          <img src={files} alt="미리보기" />
-        </div>
-        <form action="">
-          <label className="profileImg-label" htmlFor="profileImg">
-            프로필 이미지 추가
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            id="profileImg"
-            onChange={onLoadFile}
-            ref={imgRef}
-          />
-          <button onClick={handleClick}>프로필 사진 변경</button>
-        </form> */}
+        <main className="container">
+          <h2>이미지 미리보기</h2>
+          <input type="file" onChange={handleFileChange} />
+          <div className="preview">
+            {imageSrc && <img src={imageSrc} alt="preview-img" />}
+          </div>
+        </main>
       </Container>
     </div>
   );

@@ -81,7 +81,7 @@ function PostICommented() {
 }
 
 const Wrapper = styled.div`
-  margin: 2.5rem auto;
+  margin: 1rem auto;
   width: 90%;
   height: 45rem;
 

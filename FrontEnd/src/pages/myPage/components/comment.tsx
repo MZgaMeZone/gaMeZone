@@ -1,8 +1,16 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cuteImg from '../../../images/cute.png';
 import gomaImg from '../../../images/gomao.png';
+import axios from 'axios';
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
 function Comment() {
   const comment = [
     {
@@ -35,6 +43,22 @@ function Comment() {
       category: '인증게시판',
     },
   ];
+  const [userInfo, setIsUserInfo] = useState('');
+  //시크릿키
+  // const getComment  = async()=>{
+  //   await axios.get(url+' /api/posts/:userId') //이메일
+  // }
+
+  const getUserInfo = async () => {
+    await axios.get(url + '/api/users/auth/verifyToken', config).then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  useEffect(() => {
+    console.log('이펙트확인');
+    getUserInfo();
+  }, []);
 
   const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고(긴글) 닫기(짧은글)
   const textLimit = 170; //글자수 제한 선언
@@ -83,7 +107,7 @@ function Comment() {
 }
 
 const Wrapper = styled.div`
-  margin: 2.5rem auto;
+  margin: 1rem auto;
   width: 90%;
   height: 45rem;
 

@@ -9,7 +9,7 @@ function PostWithComment() {
   return (
     <>
       <CommunityContainer>
-        <Title>내가 쓴 댓글</Title>
+        <Title>내가 댓글 단 게시글</Title>
         <Line></Line>
         <CommentMenu>
           <Link to="/mypage/mycomment">
@@ -49,8 +49,12 @@ const CommentMenu = styled.div`
 const Links = styled.h1`
   margin-left: 6.3rem;
   margin-top: 3rem;
+  padding: 1rem;
   &:hover {
     border-bottom: 2px solid black;
+  }
+  &:active {
+    box-shadow: inset 0.5rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
   }
 `;
 export default PostWithComment;

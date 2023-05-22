@@ -48,8 +48,12 @@ const Title = styled.h1`
 const Links = styled.h1`
   margin-left: 6.3rem;
   margin-top: 3rem;
+  padding: 1rem;
   &:hover {
     border-bottom: 2px solid black;
+  }
+  &:active {
+    box-shadow: inset 0.5rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
   }
 `;
 
