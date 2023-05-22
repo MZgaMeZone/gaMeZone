@@ -19,6 +19,19 @@ gameRouter.get("/", async (req, res, next) => {
   }
 });
 
+gameRouter.get("/:id", async (req, res, next) => {
+  try {
+    const gameId = req.params.id;
+    console.group("😻 게임 Id에 해당하는 게임 정보를 출력합니다.");
+    const gameData = await gameService.findGame(gameId);
+    console.log("✔️ 게임 정보 출력 완료!");
+    res.status(201).json(gameData);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
 // 새 게임정보를 등록하는 POST 요청
 gameRouter.post("/", async (req, res, next) => {
   try {
