@@ -105,6 +105,7 @@ const GameInfoEdit = () => {
             <Container key={item._id}>
               <ImageContent>
                 <GameImage
+                  // src={item.gameImageUrl}
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
                   alt="게임 아이콘"
                 />
@@ -242,7 +243,7 @@ const AddButton = styled.button`
   background: #000080;
   color: #ffffff;
   font-size: 1.8rem;
-  padding: 2rem;
+  padding: 1.6rem 2rem;
   &:hover {
     background: rgba(0, 0, 128, 0.8);
   }
