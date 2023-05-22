@@ -8,6 +8,8 @@ import Pagination from '../Boards/Pagination';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 
+const userToken: string | null = localStorage.getItem('userToken');
+
 interface Comment {
   _id: string,
   content: string,
@@ -38,7 +40,7 @@ const CommentComponent =({ postId }:CommentProps) => {
       console.log(formattedData);
       setComments(formattedData);
     })
-  }, [])
+  }, []);
 
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
@@ -71,13 +73,16 @@ const CommentComponent =({ postId }:CommentProps) => {
       paginate={paginate}
       currentPage={currentPage}
       /> 
-      <div>
-      {postModal ? (
-        <CreateComment postId={postId} closeModal={togglePostModal} />
-      ) : (
-        <CommentButton onClick={togglePostModal}>댓글 쓰기</CommentButton>
-      )}
-    </div>
+      {
+        userToken && 
+        <div>
+        {postModal ? (
+          <CreateComment postId={postId} closeModal={togglePostModal} />
+        ) : (
+          <CommentButton onClick={togglePostModal}>댓글 쓰기</CommentButton>
+        )}
+        </div>
+      }
     </Footer>
     </CommentSection>
   );

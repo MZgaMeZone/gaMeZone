@@ -19,6 +19,19 @@ gameRouter.get("/", async (req, res, next) => {
   }
 });
 
+gameRouter.get("/:id", async (req, res, next) => {
+  try {
+    const gameId = req.params.id;
+    console.group("😻 게임 Id에 해당하는 게임 정보를 출력합니다.");
+    const gameData = await gameService.findGame(gameId);
+    console.log("✔️ 게임 정보 출력 완료!");
+    res.status(201).json(gameData);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
 // 새 게임정보를 등록하는 POST 요청
 gameRouter.post("/", async (req, res, next) => {
   try {
@@ -63,7 +76,7 @@ gameRouter.delete("/:id", async (req, res, next) => {
 });
 
 // 카테고리명으로 검색해서 게임정보를 불러오는 GET요청
-gameRouter.get("/:name", async (req, res, next) => {
+gameRouter.get("/categories/:name", async (req, res, next) => {
   try {
     const category = req.params.name;
     console.log("🖐️ 해당 카테고리명을 가진 게임을 검색합니다.");

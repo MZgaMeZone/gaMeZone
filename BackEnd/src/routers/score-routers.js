@@ -57,14 +57,27 @@ scoreRouter.get("/:id/:option", async (req, res, next) => {
     const option = req.params.option;
     const query = req.query.num;
 
-    console.log("🖐️ 랭킹을 불러옵니다.");
+    // console.log("🖐️ 랭킹을 불러옵니다.");
     const rankingData = await scoreService.calculateRanking(gameId, option);
-    console.log("✔️ 명예의 전당 로딩 완료!");
+    // console.log("✔️ 랭킹 로딩 완료!");
     if (!query) {
       res.status(201).json(rankingData);
     }
     const selectedRanking = rankingData.slice(0, query);
     res.status(201).json(selectedRanking);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
+// 해당 game의 모든 기록정보를 가져오는 GET 요청
+scoreRouter.get("/honors", async (req, res, next) => {
+  try {
+    console.log("🖐️ 명예의 전당을 출력합니다.");
+    const honor = await scoreService.userRanking();
+    console.log("✔️ 명예의 전당에 오신 것을 환영합니다.");
+    res.status(201).json(honor);
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);

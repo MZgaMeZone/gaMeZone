@@ -18,11 +18,11 @@ commentRouter.get("/post/:id", async(req, res, next) => {
 });
 
 //특정 유저의 댓글 가져오는 GET요청
-commentRouter.get("/:id", async(req, res, next) => {
+commentRouter.get("/:email", async(req, res, next) => {
   try {
-    const userId = req.params.id;
+    const userEmail = req.params.email;
     console.log("해당 유저의 댓글을 출력합니다.");
-    const commentList = await commentService.findUserComments(userId);
+    const commentList = await commentService.findUserComments(userEmail);
     console.log("해당 유저의 댓글 출력이 완료되었습니다.");
     res.status(201).json(commentList);
   } catch(err) {

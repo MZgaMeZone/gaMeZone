@@ -44,6 +44,11 @@ const GameSchema = new Schema(
       type: String,
       requried: true,
     },
+    gameOption: {
+      // 평균점수가 중요하면 avr, 최고점수가 중요하면 top
+      type: String,
+      required: true,
+    },
   },
   {
     // 타임스탬프와 DB에서 사용할 컬렉션 이름 설정

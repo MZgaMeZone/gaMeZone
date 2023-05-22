@@ -15,13 +15,14 @@
 
 ### 게임 명세
 
-| Method | URI              | Description         |
-| ------ | ---------------- | ------------------- |
-| GET    | /api/games       | 게임목록 전체조회   |
-| GET    | /api/games/:name | 카테고리로 게임조회 |
-| POST   | /api/games       | 새 게임정보 등록    |
-| PATCH  | /api/games/:id   | 게임정보 수정       |
-| DELETE | /api/games       | 등록된 게임 삭제    |
+| Method | URI                         | Description            |
+| ------ | --------------------------- | ---------------------- |
+| GET    | /api/games                  | 게임목록 전체조회      |
+| GET    | /api/games/:id              | 게임ID로 게임내용 조회 |
+| GET    | /api/games/categories/:name | 카테고리로 게임조회    |
+| POST   | /api/games                  | 새 게임정보 등록       |
+| PATCH  | /api/games/:id              | 게임정보 수정          |
+| DELETE | /api/games                  | 등록된 게임 삭제       |
 
 ### 게임기록 명세
 
@@ -32,6 +33,7 @@
 | POST   | /api/scores                    | 새 기록 등록                                             |
 | DELETE | /api/scores/:id                | 기록 삭제 (부정한 방법으로 달성한 기록 말소용)           |
 | GET    | /api/scores/:id/:option?num=10 | 랭킹데이터 검색(gameId, 정렬우선조건, 가져올 데이터갯수) |
+| GET    | /api/scores/honors             | 명예의 전당 출력                                         |
 
 ### `<b>`게임 카테고리 명세 `</b>`
 

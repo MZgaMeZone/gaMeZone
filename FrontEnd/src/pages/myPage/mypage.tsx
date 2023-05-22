@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import '../../style/reset.css';
-import './mypage.css';
+import '../../style/mypage.css';
 import img from './img-1682667302883.png';
 import Footer from '../mainPage/main-footer';
 import Container from './components/container';

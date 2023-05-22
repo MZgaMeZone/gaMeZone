@@ -118,7 +118,7 @@ const GameLayout = () => {
             {showRanking ? (
               <GameRanking setShowRanking={setShowRanking} gameId={id} />
             ) : showManual ? (
-              <GameManual setShowManual={setShowManual} />
+              <GameManual setShowManual={setShowManual} gameId={id} />
             ) : null}
           </>
         </div>

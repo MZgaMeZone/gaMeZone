@@ -27,11 +27,8 @@ const Main = () => {
       img: require('../../images/gomao.png'),
     },
     { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
-    {
-      name: '아주고맙ㅎ',
-      url: 'game1',
-      img: require('../../images/gomao.png'),
-    },
+    { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
+    { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
   ];
   //-----------------------------------------------------------------------
 

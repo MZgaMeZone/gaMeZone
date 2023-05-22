@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import axios from "axios";
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+  Authorization: `Bearer ${userToken}`,
+  },
+};
+
 const CreateComment = ({postId, closeModal}: any) => {
   const nav = useNavigate();
   const [comment, setComment] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  useEffect(() => {
+    axios.get(url + '/api/users', config).then((res) => {
+      setUserEmail(res.data.email);
+      });
+  }, []);
 
   const handleContentChange = (e:any) => {
     setComment(e.target.value);
@@ -19,7 +34,7 @@ const CreateComment = ({postId, closeModal}: any) => {
 
     try {
       const commentData = {
-        author: "64653ea8c587b21f36aef42e",
+        author: userEmail,
         content: comment,
         post: postId
       };
