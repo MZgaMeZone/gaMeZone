@@ -4,8 +4,8 @@ import Menu from '../menu';
 import Footer from '../footer';
 import { ReactComponent as Question } from '../../../style/icons/question.svg';
 import styled from 'styled-components';
-import AdminInfoEdit from './adminInfoEdit';
-import AdminInfoCategory from './adminInfoCategory';
+import GameInfoEdit from './gameInfoEdit';
+import GameCategory from './gameCategory';
 const AdminInfomation = () => {
   const [menuIdx, setMenuIdx] = useState<number>(0);
 
@@ -54,9 +54,9 @@ const AdminInfomation = () => {
               )}
             </div>
             {menuIdx === 0 ? (
-              <AdminInfoEdit />
+              <GameInfoEdit />
             ) : menuIdx === 1 ? (
-              <AdminInfoCategory />
+              <GameCategory />
             ) : (
               ''
             )}
