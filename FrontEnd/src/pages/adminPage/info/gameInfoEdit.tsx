@@ -33,7 +33,6 @@ const GameInfoEdit = () => {
     }
   };
   const handleValue = (updateData: GameInfo | null, value: boolean) => {
-    console.log(updateData);
     if (updateData === null) {
       setIsEditing(value);
       return;
@@ -60,10 +59,16 @@ const GameInfoEdit = () => {
     setIsEditing(value);
   };
 
+  const handleDeleteClick = (id: string) => {
+    console.log(id);
+  };
   return (
     <>
       {!isEditing ? (
         <>
+          <AddButtonDiv>
+            <AddButton>게임 정보 등록</AddButton>
+          </AddButtonDiv>
           {data.map((item: GameInfo) => (
             <Container key={item._id}>
               <ImageContent>
@@ -93,9 +98,12 @@ const GameInfoEdit = () => {
                   </FlexContnet>
                 </Content>
               </div>
-              <Button onClick={() => handleEditClick(item._id)}>
-                수정하기
-              </Button>
+              <ButtonDiv>
+                <Button onClick={() => handleEditClick(item._id)}>수정</Button>
+                <Button onClick={() => handleDeleteClick(item._id)}>
+                  삭제
+                </Button>
+              </ButtonDiv>
             </Container>
           ))}
         </>
@@ -112,9 +120,9 @@ export default GameInfoEdit;
 
 const Container = styled.div`
   display: flex;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 6rem;
   width: auto;
-  height: 20rem;
+  height: auto;
   border-bottom: 2px solid #e0e0e0;
   position: relative;
 `;
@@ -140,10 +148,10 @@ const Content = styled.div`
 `;
 const FlexContnet = styled.div`
   display: flex;
-  flex: 1
+  flex: 1;
   position: relative;
   padding: 0.5rem;
-
+  height: auto;
 `;
 const SubTitle = styled.div`
   font-size: 1.4rem;
@@ -152,25 +160,53 @@ const SubTitle = styled.div`
 `;
 
 const ContentText = styled.p`
-  position: absolute;
-  left: 36rem;
+  padding-left: 2rem;
   color: #242424;
   font-size: 1.6rem;
   font-weight: 500;
+  height: auto;
 `;
 
-const Button = styled.button`
+const ButtonDiv = styled.div`
   position: absolute;
-  bottom: 3rem;
-  right: 4rem;
-  width: 12rem;
-  height: 5rem;
+  bottom: 0;
+  right: 0;
+  margin: 0 4rem 2rem 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+`;
+const Button = styled.button`
+  margin-right: 2rem;
+  width: 9rem;
+  height: 4.4rem;
   background: #000080;
   border-radius: 10px;
   color: #ffffff;
   font-weight: 500;
   font-size: 1.8rem;
   cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 128, 0.8);
+  }
+  &:active {
+    background: rgba(0, 0, 128, 0.6);
+    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.4);
+  }
+`;
+const AddButtonDiv = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 3rem 6rem 2rem 0;
+`;
+
+const AddButton = styled.button`
+  border-radius: 10px;
+  background: #000080;
+  color: #ffffff;
+  font-size: 1.8rem;
+  padding: 1.2rem;
   &:hover {
     background: rgba(0, 0, 128, 0.8);
   }
