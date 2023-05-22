@@ -38,9 +38,11 @@ function MainFooter(props: any) {
           카테고리
         </StartButton>
         <SubButton to="/">Home</SubButton>
-        <SubButton to="/login">로그인</SubButton>
-        <SubButton to="/ranking">랭킹</SubButton>
-        <SubButton to="/community">커뮤니티</SubButton>
+        <SubButton to="/login">Login</SubButton>
+        <SubButton to="/ranking">Ranking</SubButton>
+        <SubButton to="/community">Community</SubButton>
+        <SubButton to="/mypage">MyPage</SubButton>
+        <SubButton to="/admin">AdminPage</SubButton>
         <Clock>{timer}</Clock>
       </FooterBar>
     </>
@@ -53,6 +55,7 @@ const FooterBar = styled.div`
   display: flex;
   position: absolute;
   align-items: center;
+  white-space: nowrap;
   height: 5rem;
   position: sticky;
   bottom: 0;
@@ -63,22 +66,15 @@ const FooterBar = styled.div`
 `;
 
 const StartButton = styled.button`
-  // margin-left: 1rem;
-  // margin-right: 1.5rem;
-  // font-size: 2rem;
-  // border-radius: 0;
-  // border: 1px none;
-  // padding: 0.3rem 0.3rem;
-  // box-shadow: 1px 1px 1px rgb(55, 55, 55);
-  margin: 0.3rem 0 0 0.6rem;
-  width: 14.6rem;
+  margin: 0.3rem 1rem 0.3rem 0.6rem;
+  width: 18rem;
   height: 3.8rem;
   background: #c0c0c0;
   border: #e0e0e0 solid 2px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
   text-align: center;
   color: #242424;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   padding-top: 0.6rem;
   &:active {
     background-color: #d9d9d9;
@@ -87,12 +83,29 @@ const StartButton = styled.button`
   }
 `;
 
+const Clock = styled.div`
+  height: 3.5rem;
+  font-size: 2.6rem;
+  margin-left: auto;
+  margin-right: 0.4rem;
+  text-align: center;
+  padding: 1rem 1rem 0 1rem;
+  white-space: nowrap;
+  width: 110px;
+  height: 3.8rem;
+  box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.6);
+  border: #e0e0e0 solid 2px;
+  background: #d9d9d9;
+  color: #242424;
+  background-color: #e9e9e9;
+`;
+
 const SubButton = styled(Link)`
-  margin: 1rem;
+  margin: 0.4rem;
   border-radius: 0;
   font-size: 3rem;
   border: 1px none;
-  width: 25rem;
+  width: 20rem;
   height: 3.5rem;
   display: flex;
   justify-content: center;
@@ -104,20 +117,4 @@ const SubButton = styled(Link)`
     border: #e0e0e0 solid 2px;
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`;
-
-const Clock = styled.div`
-  float: right;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 3.5rem;
-  font-size: 2rem;
-  margin-left: auto;
-  margin-right: 2rem;
-  padding: 0.5rem;
-  width: 12rem;
-  height: 3.8rem;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
-  background-color: #e9e9e9;
 `;

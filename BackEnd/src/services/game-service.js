@@ -14,6 +14,10 @@ class GameService {
   async findAllGames() {
     return await gameModel.findAllGames();
   }
+  //GET
+  async findGame(id) {
+    return await gameModel.findGame(id);
+  }
   //DELETE
   async deleteGame(id) {
     return await gameModel.deleteGame(id);
@@ -21,6 +25,10 @@ class GameService {
   //PATCH
   async updateGame(id, data) {
     return await gameModel.updateGame(id, data);
+  }
+  //GET
+  async findGamesByCategory(data) {
+    return await gameModel.findGamesByCategory(data);
   }
 }
 

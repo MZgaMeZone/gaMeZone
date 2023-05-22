@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "neodgm";
-  src: url("../../font/neodgm.ttf");
+  font-family: 'neodgm';
+  src: url('../../font/neodgm.ttf');
 }
 
 * {
-  font-family: "neodgm", cursive;
+  font-family: 'neodgm', cursive;
 }
 
 /* 가장 바깥 게임박스 배경 */
@@ -58,6 +58,20 @@
   border-radius: 5px;
   background-color: rgb(152, 206, 238);
 }
+/* 연습-도전 */
+#mode-button {
+  width: fit-content;
+  /* font-size: 25px; */
+  margin-left: 1rem;
+  background-color: #eee;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px rgb(55, 55, 55);
+  transition-duration: 0.3s;
+}
+#mode-button:active {
+  background-color: #ccc;
+  box-shadow: none;
+}
 /* 게임버튼 : Start - Finish - Restart */
 #game-button {
   margin: 5px;
@@ -89,12 +103,19 @@
   box-shadow: none;
 }
 #game-start-end-time {
-  margin: 5px 3px;
-  padding: 10px 0px;
+  margin: 0.3rem 0.3rem;
+  padding: 1rem 1rem;
+  /* background-color: lightblue; */
 }
+#game-start-end-time #gametimer {
+  /* background-color: aqua; */
+  font-size: 2.2rem;
+}
+
 /* 블라인드 모드 텍스트 */
 .blindmode-text {
   display: inline-flex;
+  margin-top: 0.8rem;
   align-items: center;
   font-size: 15px;
   width: 70%;
@@ -131,52 +152,66 @@
   display: flex;
   box-sizing: border-box;
   align-items: center;
+  padding: 1rem 1rem;
+  height: 3rem;
+  background-color: beige;
 
-  padding: 18px 18px;
-  height: 30px;
-  background-color: rgb(194, 200, 201);
-  border-radius: 5px;
   justify-content: center;
 }
-/* 리셋/제출 버튼 */
-#reset-button {
-  margin-right: auto;
-  box-shadow: 1px 1px 1px rgb(55, 55, 55);
-  background-color: #eee;
-  border-radius: 20px;
+/* 기록실 */
+#recordboard {
+  /* background-color: aqua; */
+  margin: 1rem 3rem;
+  padding: 0.5rem 0.5rem;
 }
-#reset-button:active {
-  background-color: #ccc;
-  border-radius: 20px;
-  box-shadow: none;
-}
-#submit-button {
-  margin-left: auto;
-  box-shadow: 1px 1px 1px rgb(55, 55, 55);
-  background-color: #eee;
-  border-radius: 20px;
-}
-#submit-button:active {
-  background-color: #ccc;
-  border-radius: 20px;
-  box-shadow: none;
-}
+
 /* 기록 분석실 */
 #best-record-text {
   display: flex;
   justify-content: center;
   padding: 4px 0px;
+  font-size: 2.2rem;
   background-color: rgb(182, 224, 154);
 }
 #worst-record-text {
   display: flex;
   justify-content: center;
   padding: 4px 0px;
+  font-size: 2.2rem;
   background-color: rgb(218, 180, 175);
 }
 #average-gap-text {
   display: flex;
   justify-content: center;
   padding: 1px 0px;
+  font-size: 2.2rem;
   background-color: rgb(232, 233, 179);
+}
+
+/* 리셋/제출 버튼 */
+#reset-button {
+  margin-right: auto;
+  box-shadow: 2px 2px 2px rgb(55, 55, 55);
+  background-color: #eee;
+  border-radius: 20px;
+  font-size: 2.3rem;
+}
+#reset-button:active {
+  background-color: #ccc;
+  box-shadow: inset 4px 4px 4px rgba(55, 55, 55, 0.6);
+  border-radius: 20px;
+  box-shadow: none;
+}
+#submit-button {
+  margin-left: auto;
+  box-shadow: 2px 2px 2px rgb(55, 55, 55);
+  background-color: #eee;
+  border-radius: 20px;
+  font-size: 2.3rem;
+}
+#submit-button:active {
+  background-color: #ccc;
+  box-shadow: inset 4px 4px 4px rgba(55, 55, 55, 50);
+  border-radius: 20px;
+  box-shadow: none;
 }

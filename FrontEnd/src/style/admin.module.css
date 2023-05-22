@@ -46,7 +46,6 @@ header p {
   font-weight: 600;
   text-align: center;
 }
-
 main {
   box-sizing: border-box;
   height: 59.4rem;
@@ -56,7 +55,7 @@ main {
   position: relative;
   margin: 2rem 3.6rem;
   width: 120rem;
-  height: 55rem;
+  height: auto;
   background: #ffffff;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0.4rem;
@@ -71,7 +70,7 @@ main {
   color: #242424;
 }
 .main_text {
-  padding: 1.2rem 0 0 1.2rem;
+  padding: 1.2rem 0 0;
 }
 footer .footer_box {
   background-color: #c0c0c0;

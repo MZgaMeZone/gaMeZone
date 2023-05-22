@@ -14,7 +14,11 @@ const GameSchema = new Schema(
         message: "카테고리는 1개 이상 존재해야 합니다.",
       },
     },
-
+    gameUrl: {
+      // 게임 접속 주소
+      type: String,
+      required: true,
+    },
     gameIconUrl: {
       // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다.
       type: String,
@@ -39,6 +43,11 @@ const GameSchema = new Schema(
       // 게임 서비스 상태 (온라인, 점검중, 숨김)
       type: String,
       requried: true,
+    },
+    gameOption: {
+      // 평균점수가 중요하면 avr, 최고점수가 중요하면 top
+      type: String,
+      required: true,
     },
   },
   {

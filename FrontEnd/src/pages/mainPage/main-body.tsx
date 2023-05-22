@@ -1,49 +1,51 @@
-import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
-import styles from "../../../src/style/admin.module.css";
-
+import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
+import styles from '../../../src/style/admin.module.css';
+import exitImg from '../../style/icons/x-solid.svg';
+import axios from 'axios';
+import { stringify } from 'querystring';
 type MainBodyProps = {
   mainModal: boolean;
   setMainModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// get요청으로 모든 category를 불러온 결과값
-const dummyCategory = [
-  "어드벤쳐",
-  "아케이드",
-  "전략",
-  "대전",
-  "RPG",
-  "신작",
-  "인기작",
-];
-
-// 각각의 category를 누르면 다시 get요청을 보내어 해당 category로 게임목록을 검색한 결과값
-const dummyFindByCategory = [
-  {
-    name: "10초게임",
-    url: "game1",
-    img: require("../../images/gomao.png"),
-    _id: "asdfasdf",
-  },
-  {
-    name: "업다운게임",
-    url: "game2",
-    img: require("../../images/cute.png"),
-    _id: "asdfasdf",
-  },
-  {
-    name: "베스킨라빈스31",
-    url: "game1",
-    img: require("../../images/gomao.png"),
-    _id: "asdfasdf",
-  },
-];
-
 function MainBody(props: MainBodyProps) {
   const mainModal = props.mainModal;
   const [categoryModal, setCategoryModal] = React.useState<boolean>(false);
+  const [categoryList, setCategoryList] = React.useState<any[]>([]);
+  const [gameList, setGameList] = React.useState<any[]>([]);
+
+  // 시작버튼을 누를 때 리스트를 뽑아오는 함수
+  React.useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/categories` // 됨!
+      )
+      .then((res) => {
+        const categoryData = res.data;
+        setCategoryList(categoryData);
+      })
+      .catch((error) => {
+        console.error('카테고리 데이터 요청 실패:', error);
+      });
+  }, []);
+
+  // 카테고리 버튼을 눌러 게임 목록을 불러오는 함수
+  async function fetchGameList(item: string) {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/games/categories/${item}` // 됨!
+      );
+      const gameData = response.data;
+      console.log(gameData);
+      setGameList(gameData);
+    } catch (error) {
+      console.error('게임 목록 요청 실패:', error);
+    }
+  }
+
+  // 각 게임 페이지로 이동하는 기능
   const navigate = useNavigate();
   function handleGameClick(itemId: string) {
     navigate(`/game/${itemId}`);
@@ -57,13 +59,16 @@ function MainBody(props: MainBodyProps) {
               <CategoryLeftLine>MZ 오락실</CategoryLeftLine>
               <div>
                 <ul>
-                  {dummyCategory &&
-                    dummyCategory.map((item, index) => (
+                  {categoryList &&
+                    categoryList.map((item) => (
                       <CategoryButton
-                        key={index}
-                        onClick={() => setCategoryModal(true)}
+                        key={item._id}
+                        onClick={() => {
+                          setCategoryModal(true);
+                          fetchGameList(item.categoryName);
+                        }}
                       >
-                        {item}
+                        {item.categoryName}
                       </CategoryButton>
                     ))}
                 </ul>
@@ -82,27 +87,38 @@ function MainBody(props: MainBodyProps) {
                   setCategoryModal(false);
                 }}
               >
-                X
+                <img
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignContent: 'center',
+                  }}
+                  src={exitImg}
+                  alt="exitImg"
+                />
               </CategoryHeaderButton>
             </CategoryHeader>
             <main>
-              <div className={styles.content}>
+              <div
+                className={styles.content}
+                style={{
+                  // backgroundColor: 'beige',
+                  display: 'flex',
+                  height: '100%',
+                }}
+              >
                 <ul>
-                  {dummyFindByCategory &&
-                    dummyFindByCategory.map((item, index) => (
-                      <button
-                        key={index}
-                        style={{
-                          margin: "3rem",
-                          width: "20rem",
-                          height: "20rem",
-                          fontSize: "2.5rem",
-                        }}
-                        onClick={() => handleGameClick(item.url)}
-                      >
-                        <GameImage src={item.img} alt={item.name} />
-                        {item.name}
-                      </button>
+                  {gameList &&
+                    gameList.map((item) => (
+                      <GameButton
+                        key={item._id}
+                        onClick={() => handleGameClick(item.gameUrl)}
+                        imageUrl={
+                          process.env.REACT_APP_API_URL + item.gameImageUrl
+                        }
+                        gameTitle={item.gameTitle}
+                      ></GameButton>
                     ))}
                 </ul>
               </div>
@@ -151,7 +167,7 @@ const CategoryButton = styled.button`
   height: 5rem;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 2.8rem;
   border: 1px solid grey;
   background-color: #d9d9d9;
   &:hover {
@@ -173,10 +189,44 @@ const CategoryContainer = styled.div`
   z-index: 2;
 `;
 
-const GameImage = styled.img`
-  width: 100%;
-  height: auto;
+const CategoryModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: calc(50% - 5rem);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 128rem;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #c0c0c0;
+  border: 0.1rem solid #000000;
+  box-shadow: 8px 8px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 0.4rem;
 `;
+
+// const GameImage = styled.img`
+//   width: 100%;
+//   height: auto;
+// `;
+
+const GameButton = ({ onClick, imageUrl, gameTitle }: any) => {
+  return (
+    <button
+      style={{
+        margin: '3rem',
+        width: '20rem',
+        height: '20rem',
+        fontSize: '2.5rem',
+        backgroundColor: 'rgb(250, 250, 250)',
+      }}
+      onClick={onClick}
+    >
+      <img src={imageUrl} />
+      <div>{gameTitle}</div>
+    </button>
+  );
+};
 
 const CategoryHeader = styled.div`
   height: 4.2rem;

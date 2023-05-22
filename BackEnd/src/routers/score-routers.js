@@ -50,14 +50,34 @@ scoreRouter.post("/", async (req, res, next) => {
 
 // 게임 랭킹순으로 정렬해서 가져오는 GET 요청
 // 상위 몇명을 불러올지 pagenation 세팅해야함 (model혹은 service에서)
+// 쿼리 파라미터로 &num={number} 을 전달함. 만약 없을경우, 전체 데이터를 불러옴.
 scoreRouter.get("/:id/:option", async (req, res, next) => {
   try {
     const gameId = req.params.id;
     const option = req.params.option;
-    console.log("🖐️ 랭킹을 불러옵니다.");
+    const query = req.query.num;
+
+    // console.log("🖐️ 랭킹을 불러옵니다.");
     const rankingData = await scoreService.calculateRanking(gameId, option);
-    console.log("✔️ 명예의 전당 로딩 완료!");
-    res.status(201).json(rankingData);
+    // console.log("✔️ 랭킹 로딩 완료!");
+    if (!query) {
+      res.status(201).json(rankingData);
+    }
+    const selectedRanking = rankingData.slice(0, query);
+    res.status(201).json(selectedRanking);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
+// 해당 game의 모든 기록정보를 가져오는 GET 요청
+scoreRouter.get("/honors", async (req, res, next) => {
+  try {
+    console.log("🖐️ 명예의 전당을 출력합니다.");
+    const honor = await scoreService.userRanking();
+    console.log("✔️ 명예의 전당에 오신 것을 환영합니다.");
+    res.status(201).json(honor);
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);

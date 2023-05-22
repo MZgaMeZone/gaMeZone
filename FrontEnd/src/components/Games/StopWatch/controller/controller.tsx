@@ -1,5 +1,5 @@
-import React from "react";
-import Now from "../../../Tools/Timer";
+import React from 'react';
+import Now from '../../../Tools/Timer';
 
 type ControllerProps = {
   scores: any[];
@@ -8,6 +8,8 @@ type ControllerProps = {
   setPrintScore: React.Dispatch<React.SetStateAction<any[]>>;
   gameModeChecker: string;
   setGameModeChecker: React.Dispatch<React.SetStateAction<string>>;
+  gameMode: string;
+  setGameMode: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function Controller(props: ControllerProps) {
@@ -26,6 +28,8 @@ function Controller(props: ControllerProps) {
   const setPrintScore = props.setPrintScore;
   const gameModeChecker = props.gameModeChecker;
   const setGameModeChecker = props.setGameModeChecker;
+  const gameMode = props.gameMode;
+  const setGameMode = props.setGameMode;
   // 게임 시작 버튼
   function gameStart() {
     const start = new Date();
@@ -34,12 +38,12 @@ function Controller(props: ControllerProps) {
     setEndButton(true);
     setShowScore(true);
     if (showTime) {
-      setGameModeChecker("visible");
+      setGameModeChecker('visible');
     } else {
-      setGameModeChecker("blind");
+      setGameModeChecker('blind');
     }
   }
-  // 게임 종료 버튼
+  // 게임 종료 버튼 - scores배열에 새 기록을 저장하는 로직.
   function gameFinish() {
     const end = new Date();
     setEndTime([Now(end), end]);
@@ -49,7 +53,13 @@ function Controller(props: ControllerProps) {
     if (initTime && end) {
       const elapsedTime = (end.getTime() - initTime[1].getTime()) / 1000;
       setElapsedTime(elapsedTime);
-      setScores([...scores, [elapsedTime, gameModeChecker]]);
+      if (elapsedTime >= 20) {
+        console.log(elapsedTime, '2차');
+        setScores([...scores, [0, gameModeChecker]]);
+      } else {
+        console.log(elapsedTime, '3차');
+        setScores([...scores, [elapsedTime, gameModeChecker]]);
+      }
       // localStorage.setItem("score", JSON.stringify([...scores, elapsedTime])); // 로컬스토리지 사용 보류
     }
     // ----------------로컬스토리지를 활용하는 방법 - 사용 보류 ----------------------
@@ -72,13 +82,13 @@ function Controller(props: ControllerProps) {
     setStartButton(true);
     setShowScore(false);
     setRestartButton(false);
-    setGameModeChecker("blind");
+    setGameModeChecker('blind');
   }
 
   // 경과시간을 볼지 말지 결정하는 기능
   function visibleTime() {
     setShowTime(!showTime);
-    setGameModeChecker("visible"); // 한번이라도 모드 변경했으면 무조건 visible 모드
+    setGameModeChecker('visible'); // 한번이라도 모드 변경했으면 무조건 visible 모드
   }
 
   // 경과시간을 출력하는 부분 - 기존 코드
@@ -146,10 +156,11 @@ function Controller(props: ControllerProps) {
         scores.reduce((acc, cur) => acc + Math.abs(cur[0] - 10), 0) /
         scores.length;
       const finalMessage = [
-        bestScore[0],
-        worstScore[0],
-        averageScore.toFixed(3),
+        ((10 - Math.abs(bestScore[0] - 10)) * 10).toFixed(2),
+        ((10 - Math.abs(worstScore[0] - 10)) * 10).toFixed(2),
+        ((100 * (10 - averageScore)) / 10).toFixed(2),
       ];
+      console.log(finalMessage);
       setPrintScore(finalMessage);
     } else {
       setPrintScore([]);
@@ -159,31 +170,47 @@ function Controller(props: ControllerProps) {
   return (
     <>
       <div className="gamebox">
-        <div>
-          <span>
-            게임 모드{" "}
+        <div style={{ padding: '0.5rem 0.5rem' }}>
+          <div
+            style={{
+              margin: '1rem 1rem',
+              display: 'flex',
+              fontSize: '2.5rem',
+            }}
+          >
+            게임 모드
             <button
+              id="mode-button"
               onClick={() => {
-                alert("아직 미구현 기능입니다. DB연결 후 제공됩니다.");
+                let newMode = gameMode;
+                if (scores.length > 0) {
+                  alert('게임 진행 중에는 모드 변경이 불가합니다.');
+                } else {
+                  if (newMode === '연습') {
+                    newMode = '도전';
+                  } else {
+                    newMode = '연습';
+                  }
+                  setGameMode(newMode);
+                }
               }}
             >
-              연습
+              {gameMode}
             </button>
-          </span>
-          <br />
+          </div>
           <span id="game-title">10초를 정확히 맞춰라!!</span>
         </div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "right",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'right',
+            alignItems: 'center',
           }}
         >
           Game Mode
           {true && (
             <button id="option-button" onClick={visibleTime}>
-              {showTime ? "시간 공개" : "시간 미공개"}
+              {showTime ? '시간 공개' : '시간 미공개'}
             </button>
           )}
         </div>
@@ -199,7 +226,17 @@ function Controller(props: ControllerProps) {
                 Finish
               </button>
               {showTime ? (
-                <span> 경과 시간... {elapsedTime?.toFixed(3)}</span>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    fontSize: '2.2rem',
+                    padding: '0.5rem 0.5rem',
+                    marginTop: '0.3rem',
+                    marginLeft: '0.7rem',
+                  }}
+                >
+                  경과 시간... {elapsedTime?.toFixed(3)}
+                </div>
               ) : (
                 <div className="blindmode-text">
                   <span> Blind Mode로 진행 중입니다.. </span>
@@ -214,10 +251,10 @@ function Controller(props: ControllerProps) {
           )}
         </div>
         <div id="game-start-end-time">
-          <div>게임 시작 시간 : {initTime && initTime[0]}</div>
-          <div>게임 종료 시간 : {endTime && endTime[0]}</div>
+          <div id="gametimer">게임 시작 시간 : {initTime && initTime[0]}</div>
+          <div id="gametimer">게임 종료 시간 : {endTime && endTime[0]}</div>
           {showScore && endTime && (
-            <div>
+            <div id="gametimer">
               당신의 기록 : {elapsedTime}초 ({gameModeChecker} mode)
             </div>
           )}

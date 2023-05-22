@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
+import React from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
 
 interface HitGame {
   name: string;
@@ -22,8 +22,19 @@ const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
     <>
       <HitGameBox>
         <ul>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: '2.5rem',
+              color: 'yellow',
+            }}
+          >
+            Top5 Games
+          </div>
           {hitGameList &&
-            hitGameList.map((item: HitGame, index: number) => (
+            //hitGame은 최대 5개까지 출력함.
+            hitGameList.slice(0, 5).map((item: HitGame, index: number) => (
               <HitGame key={index} onClick={() => handleGameClick(item.url)}>
                 <GameImage src={item.img} alt={item.name} />
                 <span>{item.name}</span>
@@ -39,7 +50,8 @@ export default MainHeader;
 
 const HitGameBox = styled.div`
   display: flex;
-  float: right;
+  justify-content: flex-end;
+  // background-color: beige;
   margin-top: 6rem;
   margin-right: 2rem;
   align-items: center;
@@ -53,10 +65,13 @@ const HitGame = styled.button`
   margin: 1rem 1rem;
   justify-content: center;
   padding: 1rem 1.5rem;
-  width: 130px;
-  height: 130px;
+  background-color: white;
+  border-radius: 20px;
+  width: 15rem;
+  height: 15rem;
 `;
 const GameImage = styled.img`
   width: 100%;
   height: auto;
+  // overflow: hidden;
 `;

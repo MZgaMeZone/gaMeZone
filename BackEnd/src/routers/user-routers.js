@@ -75,6 +75,23 @@ userRouter.post("/login", userChecker.loginJoi, async (req, res, next) => {
   }
 });
 
+// 로그인 유저 정보 조회
+userRouter.get("/", async (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+  }
+  try {
+    console.log("🔎 유저 정보를 조회합니다...");
+    const userData = await userService.verifyToken(token);
+    console.log("🖥️ 유저 정보 출력 중..");
+    return res.status(200).json(userData);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
 //탈퇴
 userRouter.delete("/", loginRequired, async (req, res, next) => {
   console.log("💧 회원 탈퇴를 진행합니다.");
@@ -152,38 +169,21 @@ userRouter.patch("/", loginRequired, async (req, res, next) => {
 //   }
 // );
 
-// // 전체 유저 조회 - 추가기능으로 활용 예정
-// userRouter.get("/allUser", async (req, res, next) => {
-//   const token = req.headers["authorization"]?.split(" ")[1];
-//   console.log("🔎 토큰 검증 중...");
-//   const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-//   const currentUserRole = decodedToken.role;
-
-//   if (currentUserRole !== "admin" || "super-admin") {
-//     throw new Error("관리자가 아닙니다.");
-//   }
-//   try {
-//     console.log("🔎 검증 완료! 모든 유저 리스트를 조회합니다...");
-//     const allUser = await userService.getAllUser();
-//     console.log("🖥️ 유저 정보 출력 중..");
-//     return res.status(200).json(allUser);
-//   } catch (err) {
-//     console.log(`❌ ${err}`);
-//     next(err);
-//   }
-// });
-
-// 토큰 검증 후 로그인 유저 정보 조회
-userRouter.get("/auth/verifyToken", async (req, res, next) => {
+// 전체 유저 조회(관리자) - 추가기능으로 활용 예정
+userRouter.get("/allUsers", async (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+  console.log("🔎 토큰 검증 중...");
+  const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const currentUserRole = decodedToken.role;
+
+  if (currentUserRole !== "admin" && currentUserRole !== "super-admin") {
+    throw new Error("관리자가 아닙니다.");
   }
   try {
-    console.log("🔎 유저 정보를 조회합니다...");
-    const userData = await userService.verifyToken(token);
+    console.log("🔎 검증 완료! 모든 유저 리스트를 조회합니다...");
+    const allUsers = await userService.getAllUsers();
     console.log("🖥️ 유저 정보 출력 중..");
-    return res.status(200).json(userData);
+    return res.status(200).json(allUsers);
   } catch (err) {
     console.log(`❌ ${err}`);
     next(err);

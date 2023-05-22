@@ -2,26 +2,45 @@ import React, {useState, useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import styled from 'styled-components'
+import axios from 'axios';
 
-import Pagination from './Pagination';
+import Pagination from '../Boards/Pagination';
 import CreateComment from './CreateComment';
+import CommentList from './CommentList';
+
+const userToken: string | null = localStorage.getItem('userToken');
 
 interface Comment {
   _id: string,
-  comment: string,
-  author: string,
+  content: string,
+  author: {nickname: string},
+  post: string,
   createdAt: string,
 }
 
 interface CommentProps {
-  comments: Comment[];
   postId: string | undefined,
 }
 
-const CommentComponent =({ comments, postId }:CommentProps) => {
+const CommentComponent =({ postId }:CommentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
-  const [modal, setModal] = useState(false);
+  const [postModal, setPostModal] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  useEffect(() => {
+    axios
+    .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
+    .then((res) => {
+      const data = res.data;
+      const formattedData = data.map((item:any) => ({
+        ...item,
+        createdAt: moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      }));
+      console.log(formattedData);
+      setComments(formattedData);
+    })
+  }, []);
 
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
@@ -31,23 +50,21 @@ const CommentComponent =({ comments, postId }:CommentProps) => {
     setCurrentPage(pageNumber);
   };
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const togglePostModal = () => {
+    setPostModal(!postModal);
   };
 
   return (
-    <CommentSection>
-      <CommentContainer>
-      {currentComments.map(comment => (
-        <Comments key={comment._id}>
-          <Comment>{comment.comment}</Comment>
-          <div style={{display:"flex"}}>
-            <Author>{comment.author}</Author>
-            <Date>{comment.createdAt}</Date>
-          </div>
-        </Comments>
-      ))}
-    </CommentContainer>
+      <CommentSection>
+        <CommentContainer>
+        {currentComments.map((comment: Comment) => (
+          <CommentList
+            key={comment._id}
+            comment={comment}
+            postId={postId}
+          />
+        ))}
+      </CommentContainer>
     <Footer>
       <BackLink to="/community">뒤로가기</BackLink>
       <Pagination 
@@ -55,14 +72,17 @@ const CommentComponent =({ comments, postId }:CommentProps) => {
       totalPosts={comments.length}
       paginate={paginate}
       currentPage={currentPage}
-      />
-      <div>
-      {modal ? (
-        <CreateComment postId={postId} closeModal={toggleModal} />
-      ) : (
-        <CommentButton onClick={toggleModal}>댓글 쓰기</CommentButton>
-      )}
-    </div>
+      /> 
+      {
+        userToken && 
+        <div>
+        {postModal ? (
+          <CreateComment postId={postId} closeModal={togglePostModal} />
+        ) : (
+          <CommentButton onClick={togglePostModal}>댓글 쓰기</CommentButton>
+        )}
+        </div>
+      }
     </Footer>
     </CommentSection>
   );
@@ -79,23 +99,6 @@ const CommentSection = styled.div`
 
 const CommentContainer = styled.div`
   height: 7rem;
-`
-
-const Comments = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const Comment = styled.p`
-  margin: 1rem;
-`
-
-const Author = styled.p`
-  margin: 1rem 3rem;
-`
-
-const Date = styled.p`
-  margin: 1rem;
 `
 
 const Footer = styled.div`
@@ -122,7 +125,7 @@ const CommentButton = styled.button`
   box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
     inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
 
-  &:hover{
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `

@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import axios from "axios";
+
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+  Authorization: `Bearer ${userToken}`,
+  },
+};
 
 const CreateComment = ({postId, closeModal}: any) => {
   const nav = useNavigate();
   const [comment, setComment] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+
+  useEffect(() => {
+    axios.get(url + '/api/users', config).then((res) => {
+      setUserEmail(res.data.email);
+      });
+  }, []);
 
   const handleContentChange = (e:any) => {
     setComment(e.target.value);
@@ -17,9 +33,13 @@ const CreateComment = ({postId, closeModal}: any) => {
     }
 
     try {
-      const commentData = {comment};
+      const commentData = {
+        author: userEmail,
+        content: comment,
+        post: postId
+      };
 
-      localStorage.setItem('commentData', JSON.stringify(commentData));
+      axios.post(`${process.env.REACT_APP_API_URL}/api/comments`, commentData);
       closeModal(true);
 
       alert("댓글 작성이 완료되었습니다.");
@@ -110,7 +130,7 @@ const GoBackButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:hover{
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `
@@ -124,7 +144,7 @@ const CompleteButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:hover{
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
 `
