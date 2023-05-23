@@ -15,6 +15,11 @@ class CommentService {
     return await commentModel.findUserComments(email);
   }
 
+  //GET comment
+  async findComment(id) {
+    return await commentModel.findComment(id);
+  }
+
   //POST
   async createNewComment(data) {
     return await commentModel.createNewComment(data);
