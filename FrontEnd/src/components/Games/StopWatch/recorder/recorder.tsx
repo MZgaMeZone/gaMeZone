@@ -34,20 +34,16 @@ function Recorder(props: RecorderProps) {
   const [userNickName, setUserNickName] = useState<string>('');
 
   useEffect(() => {
-    axios
-      .get(url + '/api/users', config)
-      .then((res) => {
-        // if (!res.data.nickname) {
-        //   setUserNickName('Anonymous');
-        // } else {
-        setUserNickName(res.data.nickname);
-        console.log('로그인ㅇㅇ');
-        // }
-      })
-      .catch((e) => {
-        setUserNickName('Anonymous');
-        console.log('실패 ㅇㅇ');
-      });
+    if (userToken) {
+      axios
+        .get(url + '/api/users', config)
+        .then((res) => {
+          setUserNickName(res.data.nickname);
+        })
+        .catch((e) => {
+          setUserNickName('Anonymous');
+        });
+    }
   }, []);
 
   // 현재 저장된 기록을 제출하려고함.

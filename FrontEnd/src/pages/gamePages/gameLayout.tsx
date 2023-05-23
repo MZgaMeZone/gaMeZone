@@ -30,7 +30,6 @@ const GameLayout = () => {
   };
 
   useEffect(() => {
-    console.log(sessionStorage[`${id}`]);
     if (!sessionStorage[`${id}`]) {
       sessionStorage.setItem(`${id}`, `${id} is in session`);
       console.log(sessionStorage[`${id}`]);
@@ -68,20 +67,22 @@ const GameLayout = () => {
   }, []);
   const fetchUserInfo = (token: string | null) => {
     // 서버로 토큰을 전송하여 유저 정보를 요청하는 API 호출
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setUserNickname(res.data.nickname);
-        setUserRole(res.data.role);
-      })
-      .catch((error) => {
-        // 에러 처리
-        console.error(error);
-      });
+    if (token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/api/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUserNickname(res.data.nickname);
+          setUserRole(res.data.role);
+        })
+        .catch((error) => {
+          // 에러 처리
+          console.error(error);
+        });
+    }
   };
 
   return (
