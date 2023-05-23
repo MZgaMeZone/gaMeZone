@@ -21,6 +21,24 @@ export class UserModel {
     }
   }
 
+  // 이메일 조회
+  async findByEmail(email) {
+    const userData = await User.findOne(
+      { email },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
+
+  // 닉네임 조회
+  async findByNickname(nickname) {
+    const userData = await User.findOne(
+      { nickname },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
+
   // 탈퇴
   async deleteUser(userId) {
     try {
@@ -58,22 +76,6 @@ export class UserModel {
     } catch (err) {
       throw new Error(err);
     }
-  }
-
-  async findUserById(email) {
-    const userData = await User.findOne(
-      { email },
-      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
-    );
-    return userData;
-  }
-
-  async findUserByNickname(nickname) {
-    const userData = await User.findOne(
-      { nickname },
-      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
-    );
-    return userData;
   }
 }
 export const userModel = new UserModel();
