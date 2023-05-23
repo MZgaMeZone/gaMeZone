@@ -122,7 +122,7 @@ class ScoreModel {
     honorsRanking.sort((b, a) => a[1] - b[1]);
     const transformedRanking = honorsRanking.map((data) => ({
       userNickname: data[0],
-      score: data[1],
+      score: parseInt(data[1]).toFixed(2),
     }));
     return transformedRanking;
   }
