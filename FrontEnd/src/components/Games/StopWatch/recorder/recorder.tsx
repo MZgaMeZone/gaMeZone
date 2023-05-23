@@ -41,10 +41,12 @@ function Recorder(props: RecorderProps) {
         //   setUserNickName('Anonymous');
         // } else {
         setUserNickName(res.data.nickname);
+        console.log('로그인ㅇㅇ');
         // }
       })
       .catch((e) => {
         setUserNickName('Anonymous');
+        console.log('실패 ㅇㅇ');
       });
   }, []);
 
