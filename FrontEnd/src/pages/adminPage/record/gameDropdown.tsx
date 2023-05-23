@@ -8,7 +8,8 @@ interface DropDownProps {
 }
 
 const GameDropDown: React.FC<DropDownProps> = ({ options, onValue }) => {
-  const [currentValue, setCurrentValue] = useState('게임을 선택해주세요.');
+  const [currentValue, setCurrentValue] =
+    useState('조회할 게임을 선택해주세요:)');
   const [showOptions, setShowOptions] = useState(false);
 
   const handleOptionClick = (selectedOption: string, id: string) => {
@@ -63,14 +64,16 @@ const DropDownContainer = styled.div`
 
 const CurrentOption = styled.div`
   display: flex;
+  align-items: center;
+  font-weight: 600;
   div {
     position: absolute;
     right: 3rem;
   }
-  align-items: center;
 `;
 
 const SelectOptions = styled.ul`
+  z-index: 1;
   position: absolute;
   list-style: none;
   top: 100%;
@@ -80,7 +83,7 @@ const SelectOptions = styled.ul`
   overflow-y: auto;
   padding: 1rem 0;
   margin-top: 0.4rem;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   background: #f5f5f5;
   box-shadow: 0px 0.676819px 2.03046px rgba(0, 0, 0, 0.1),
     0px 3.6097px 8.12183px rgba(0, 0, 0, 0.13);
@@ -94,10 +97,8 @@ const OptionItem = styled.li`
   padding: 1rem 1.2rem;
   width: 100%;
   cursor: pointer;
-
   &:hover {
     background: rgba(0, 0, 128, 0.2);
-
     font-weight: 600;
   }
 `;
