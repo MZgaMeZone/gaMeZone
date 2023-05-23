@@ -2,7 +2,17 @@ import React, { useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import cuteImg from '../../../images/cute.png';
 import gomaImg from '../../../images/gomao.png';
+import axios from 'axios';
+import moment from 'moment';
+import Pagination from './pagination';
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
 function PostICommented() {
   const comment = [
     {
@@ -35,6 +45,38 @@ function PostICommented() {
       category: '인증게시판',
     },
   ];
+  useEffect(() => {
+    console.log('Check effect');
+    const fetchData = async () => {
+      const {
+        data: { email },
+      } = await axios.get(url + '/api/users', config);
+      const { data: commentList } = await axios.get(
+        url + `/api/comments/${email}`
+      );
+      const formattedData = commentList.map((item: any) => ({
+        ...item,
+        createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+      }));
+      setCommentList(formattedData);
+    };
+    fetchData();
+  }, []);
+
+  const [commentList, setCommentList] = useState<Comment[]>([]);
+  //페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+  const [commentsPerPage] = useState(3);
+  const indexOfLastComment = currentPage * commentsPerPage;
+  const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+  const currentComments = commentList.slice(
+    indexOfFirstComment,
+    indexOfLastComment
+  );
+
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
   const [isShowMore, setIsShowMore] = useState<boolean>(false); //더보기 열고(긴글) 닫기(짧은글)
   const textLimit = 170; //글자수 제한 선언
   return (
