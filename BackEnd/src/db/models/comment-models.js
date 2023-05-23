@@ -21,7 +21,7 @@ export class CommentModel {
 
   async findAllComments(id) {
     // 특정 게시물의 댓글 조회
-    const findComments = await Comment.find({post: id}).populate("author", "nickname");
+    const findComments = await Comment.find({post: id}).populate("author", "nickname email");
     if (findComments.length < 1) {
       console.log(`등록된 댓글이 없습니다.`);
     }
