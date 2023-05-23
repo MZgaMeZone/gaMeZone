@@ -19,8 +19,19 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   onValue,
   receivedData,
 }) => {
+  //gameServiceStatus는 드롭다운 컴포넌트로 값을 받아온다, input x
+
   //드롭다운 컴포넌트에 전달할 배열
   const options = ['온라인', '점검중', '숨김'];
+
+  //receivedData(기존 데이터)가 있을 경우 그데이터의 status 값을 넣어주고 없을 경우 opions의 첫번째 값을 넣어줌 .
+  const [statusValue, setStatusValue] = useState<string>(
+    receivedData?.status ?? options[0]
+  );
+  //드롭다운 값 받을때 쓰는 함수
+  const handleDropDownValue = (value: string) => {
+    setStatusValue(value);
+  };
 
   //input 처리
   //null로 받아올 경우 (isAdding=== true일 경우)  input은 빈값으로 처리,
@@ -33,11 +44,11 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
     category: receivedData?.category ?? '',
     description: receivedData?.description ?? '',
     menual: receivedData?.menual ?? '',
-    status: receivedData?.status ?? '',
+    status: '',
   });
 
-  const { name, imageUrl, category, description, menual, status } = inputs;
-  console.log(name);
+  const { name, imageUrl, category, description, menual } = inputs;
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -52,7 +63,6 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   const handleCancelClick = () => {
     onValue(null, null, false);
   };
-
   //새로 등록시
   const handleAddClick = () => {
     axios
@@ -62,9 +72,10 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
         gameImageUrl: imageUrl,
         gameDescription: description,
         gameManual: menual,
-        gameServiceStatus: status,
+        gameServiceStatus: statusValue,
       })
       .then((res) => {
+        console.log(res.data);
         onValue(res.data, null, false);
       })
       .catch((err) => {
@@ -82,7 +93,7 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
           gameImageUrl: imageUrl,
           gameDescription: description,
           gameManual: menual,
-          gameServiceStatus: status,
+          gameServiceStatus: statusValue,
         })
         .then((res) => {
           onValue(null, res.data, false);
@@ -149,13 +160,11 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       </ContentDiv>
       <ContentDiv>
         <p>게임 상태</p>
-        <DropDown options={options} />
-        {/* <input
-          type="text"
-          name="status"
-          value={status}
-          onChange={handleChange}
-        /> */}
+        <DropDown
+          currentStatus={statusValue}
+          options={options}
+          onValue={handleDropDownValue}
+        />
       </ContentDiv>
       <ButtonDiv>
         <Button onClick={() => handleCancelClick()}>취소</Button>

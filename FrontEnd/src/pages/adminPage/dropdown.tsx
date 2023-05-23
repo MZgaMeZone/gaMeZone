@@ -3,16 +3,23 @@ import styled from 'styled-components';
 import { ReactComponent as DownIcon } from '../../../src/style/icons/String-icon-ChevronDown.svg';
 
 interface DropDownProps {
+  currentStatus: string;
   options: string[];
+  onValue: (value: string) => void;
 }
 
-const DropDown: React.FC<DropDownProps> = ({ options }) => {
-  const [currentValue, setCurrentValue] = useState(options[0]);
+const DropDown: React.FC<DropDownProps> = ({
+  currentStatus,
+  options,
+  onValue,
+}) => {
+  const [currentValue, setCurrentValue] = useState(currentStatus);
   const [showOptions, setShowOptions] = useState(false);
 
   const handleOptionClick = (value: string) => {
     setCurrentValue(value);
     setShowOptions(false);
+    onValue(value);
   };
 
   return (
