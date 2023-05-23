@@ -43,6 +43,8 @@ function Recorder(props: RecorderProps) {
         .catch((e) => {
           setUserNickName('Anonymous');
         });
+    } else {
+      setUserNickName('Anonymous');
     }
   }, []);
 
