@@ -2,6 +2,7 @@ import MainFooter from './main-footer';
 import MainHeader from './main-header';
 import MainBody from './main-body';
 import React from 'react';
+import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
@@ -23,12 +24,12 @@ const Main = () => {
     },
     {
       name: '10초게임',
-      url: '64673c9e003fef9471f58799',
+      url: '10seconds',
       img: require('../../images/gomao.png'),
     },
-    { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
-    { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
-    { name: '고고마오', url: '/main', img: require('../../images/gomao.png') },
+    { name: '고고마오', url: 'main', img: require('../../images/gomao.png') },
+    { name: '고고마오', url: 'main', img: require('../../images/gomao.png') },
+    { name: '고고마오', url: 'main', img: require('../../images/gomao.png') },
   ];
   //-----------------------------------------------------------------------
 

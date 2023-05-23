@@ -52,7 +52,7 @@ const GameLayout = () => {
   //게임 컴포넌트 렌더링
   let gameComponent;
   switch (id) {
-    case '64673c9e003fef9471f58799':
+    case '10seconds':
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
       break;
     default:
