@@ -16,6 +16,7 @@ interface gameListType {
   _id?: string;
   gameTitle: string;
   gameOption?: string;
+  gameUrl?: string;
 }
 
 interface rankingDataType {
@@ -46,7 +47,7 @@ const Lanking = () => {
           },
           ...res.data,
         ]);
-        console.log(res.data);
+        console.log('게임데이터', res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -69,7 +70,7 @@ const Lanking = () => {
       //선택된 게임 요청
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame._id}/${selectedGame.gameOption}?num=20`
+          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}?num=20`
         )
         .then((res) => {
           setRankingData(res.data);
