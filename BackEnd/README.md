@@ -15,23 +15,24 @@
 
 ### 게임 명세
 
-| Method | URI                         | Description            |
-| ------ | --------------------------- | ---------------------- |
-| GET    | /api/games                  | 게임목록 전체조회      |
-| GET    | /api/games/:id              | 게임ID로 게임내용 조회 |
-| GET    | /api/games/categories/:name | 카테고리로 게임조회    |
-| POST   | /api/games                  | 새 게임정보 등록       |
-| PATCH  | /api/games/:id              | 게임정보 수정          |
-| DELETE | /api/games                  | 등록된 게임 삭제       |
+| Method | URI                         | Description             |
+| ------ | --------------------------- | ----------------------- |
+| GET    | /api/games                  | 게임목록 전체조회       |
+| GET    | /api/games/:id              | 게임ID로 게임설명 조회 |
+| GET    | /api/games/categories/:name | 카테고리로 게임조회     |
+| POST   | /api/games                  | 새 게임정보 등록        |
+| PATCH  | /api/games/:id              | 게임정보 수정           |
+| DELETE | /api/games                  | 등록된 게임 삭제        |
 
 ### 게임기록 명세
 
 | Method | URI                            | Description                                              |
 | ------ | ------------------------------ | -------------------------------------------------------- |
-| GET    | /api/scores/games/:id          | 게임 ID로 기록 조회                                      |
-| GET    | /api/scores/users/:id          | 유저 ID로 기록 조회                                      |
+| GET    | /api/scores/games/:url         | 게임 기록 조회 (Url로 검색)                              |
+| GET    | /api/scores/users/:name        | 유저 기록 조회 (닉네임으로 검색)                         |
 | POST   | /api/scores                    | 새 기록 등록                                             |
 | DELETE | /api/scores/:id                | 기록 삭제 (부정한 방법으로 달성한 기록 말소용)           |
+| DELETE | /api/scores/users/:name        | 닉네임으로 검색하여 해당유저의 기록 말소                 |
 | GET    | /api/scores/:id/:option?num=10 | 랭킹데이터 검색(gameId, 정렬우선조건, 가져올 데이터갯수) |
 | GET    | /api/scores/honors             | 명예의 전당 출력                                         |
 

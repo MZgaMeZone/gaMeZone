@@ -37,7 +37,7 @@ const GameInfoEdit = () => {
         id: gameInfo._id,
         name: gameInfo.gameTitle,
         imageUrl: gameInfo.gameImageUrl.toString(),
-        category: gameInfo.gameCategory,
+        category: gameInfo.gameCategory[0].split(','), // 게임 카테고리 스키마에 맞게 데이터 양식 변경함 by dw
         description: gameInfo.gameDescription,
         menual: gameInfo.gameManual,
         status: gameInfo.gameServiceStatus,
@@ -115,7 +115,7 @@ const GameInfoEdit = () => {
                 <Content>
                   <FlexContnet>
                     <SubTitle>카테고리:</SubTitle>
-                    <ContentText>{item.gameCategory}</ContentText>
+                    <ContentText>{item.gameCategory.join(', ')}</ContentText>
                   </FlexContnet>
                   <FlexContnet>
                     <SubTitle>게임 설명:</SubTitle>
