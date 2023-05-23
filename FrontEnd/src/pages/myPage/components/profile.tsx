@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import '../../../style/profile.css';
+
 type ProfileProps = {
   user: string;
   img: string;

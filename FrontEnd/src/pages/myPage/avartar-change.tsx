@@ -1,5 +1,6 @@
 import Container from './components/container';
 import styled from 'styled-components';
+import profile from '../../style/icons/profile.svg';
 import React, { useState } from 'react';
 
 function AvartarChange() {
@@ -33,6 +34,7 @@ function AvartarChange() {
         <Line />
         <Avartar>
           <Preview>
+            <img src={profile} alt="profile" />
             {imageSrc && <img src={imageSrc} alt="preview-img" />}
           </Preview>
           <h2>이미지 미리보기</h2>
