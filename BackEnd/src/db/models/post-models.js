@@ -7,7 +7,6 @@ const User = mongoose.model("User", UserSchema);
 
 export class PostModel {
   async createNewPost(data) {
-    console.log(data);
     const userId = await User.findOne({email: data.author});
     //새 게시글 등록
     const newPost = new Post ({

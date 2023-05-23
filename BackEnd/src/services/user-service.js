@@ -10,7 +10,7 @@ class UserService {
 
   // 회원가입 email 중복 확인
   async emailDuplicateCheck(email) {
-    const emailCheck = await this.userModel.findById(email);
+    const emailCheck = await this.userModel.findByEmail(email);
 
     if (emailCheck) {
       return { success: false };
@@ -20,7 +20,7 @@ class UserService {
 
   // 회원가입 nickname 중복 확인
   async nicknameDuplicateCheck(nickname) {
-    const nicknameCheck = await this.userModel.findUserByNickname(nickname);
+    const nicknameCheck = await this.userModel.findByNickname(nickname);
 
     if (nicknameCheck) {
       return { success: false };
@@ -58,18 +58,18 @@ class UserService {
   }
 
   // 로그인
-  async authenticateUser(userId, userPw) {
-    const userData = await this.userModel.findById(userId);
+  async authenticateUser(email, password) {
+    const userData = await this.userModel.findById(email);
     const hashedUserPassword = userData.password;
-    const comparePassword = await bcrypt.compare(userPw, hashedUserPassword);
+    const comparePassword = await bcrypt.compare(password, hashedUserPassword);
 
     if (userData && comparePassword) {
       // 비밀번호 일치시 JWT 토큰 생성
       const secretKey = process.env.JWT_SECRET_KEY;
 
-      // id와 권한을  jwt페이로드에 포함시키고 , 서명키에 secretKey전달 , 토큰의 유효시간은 1시간
+      // email과 권한을  jwt페이로드에 포함시키고 , 서명키에 secretKey전달 , 토큰의 유효시간은 1시간
       const userToken = jwt.sign(
-        { userId: userData.email, role: userData.role },
+        { userEmail: userData.email, role: userData.role },
         secretKey,
         { expiresIn: "1h" } //토큰 유효시간 1시간 설정
       );
@@ -97,16 +97,16 @@ class UserService {
   }
 
   // 회원 탈퇴
-  async deleteUser(userId) {
+  async deleteUser(email) {
     try {
-      await this.userModel.deleteUser(userId);
+      await this.userModel.deleteUser(email);
     } catch (err) {
       throw new Error(err);
     }
   }
 
   // 회원 정보 업데이트
-  async updateUser(userId, toUpdateInfo) {
+  async updateUser(email, toUpdateInfo) {
     // 사용자가 입력한 바꾸고싶은 비밀번호
     const { password } = toUpdateInfo;
 
@@ -116,7 +116,7 @@ class UserService {
       toUpdateInfo.password = hashedPassword;
     }
 
-    const updatedUser = await this.userModel.updateUser(userId, toUpdateInfo);
+    const updatedUser = await this.userModel.updateUser(email, toUpdateInfo);
     return updatedUser;
   }
 
@@ -133,7 +133,7 @@ class UserService {
       console.log("토큰이 유효하지않거나 ID를 찾을 수 없습니다.");
       return;
     }
-    const userData = await this.userModel.findUserById(token.userId);
+    const userData = await this.userModel.findByEmail(token.userEmail);
     return userData;
   }
 }
