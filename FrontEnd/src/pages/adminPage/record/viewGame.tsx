@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { GameInfo } from '../info/interface';
 import GameDropDown from './gameDropdown';
+import { Score } from './scoreInterface';
 
 type Props = {
   URL: string;
@@ -35,16 +36,23 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
   const handleDropDownValue = (id: string) => {
     setGameId(id);
   };
-  console.log(gameId);
+
+  const [scoreData, setScoreData] = useState<Score[]>([]);
   useEffect(() => {
     axios
       .get(`${URL}/games/gameId/${gameId}`)
-      .then((res) => console.log(res.data))
+      .then((res) => setScoreData(res.data))
       .catch((err) => console.log(err));
   }, [gameId]);
+  console.log(scoreData);
   return (
     <Container>
-      {<GameDropDown options={gameData} onValue={handleDropDownValue} />}
+      <div>
+        <GameDropDown options={gameData} onValue={handleDropDownValue} />
+      </div>
+      {scoreData.map((item: Score) => (
+        <div key={item.gameId}></div>
+      ))}
     </Container>
   );
 };

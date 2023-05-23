@@ -50,10 +50,12 @@ const DropDownContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 60rem;
-  height: 4rem;
+  height: 5rem;
   font-size: 1.8rem;
-  background: #ebeded;
-  border-radius: 1.5rem;
+  background: #f5f5f5;
+  color: #242424;
+  border: #000080 2px solid;
+  border-radius: 1rem;
   cursor: pointer;
   box-shadow: 0px 0.676819px 2.03046px rgba(0, 0, 0, 0.1),
     0px 3.6097px 8.12183px rgba(0, 0, 0, 0.13);
@@ -79,7 +81,7 @@ const SelectOptions = styled.ul`
   padding: 1rem 0;
   margin-top: 0.4rem;
   border-radius: 1.5rem;
-  background-color: #ffffff;
+  background: #f5f5f5;
   box-shadow: 0px 0.676819px 2.03046px rgba(0, 0, 0, 0.1),
     0px 3.6097px 8.12183px rgba(0, 0, 0, 0.13);
 `;
@@ -94,6 +96,8 @@ const OptionItem = styled.li`
   cursor: pointer;
 
   &:hover {
-    background-color: #f5f5f5;
+    background: rgba(0, 0, 128, 0.2);
+
+    font-weight: 600;
   }
 `;
