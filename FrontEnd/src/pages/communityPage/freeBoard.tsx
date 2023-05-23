@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 
-import NoticeComponent from "../../components/Boards/NoticeComponent";
+import NoticeComponent from "../../components/FreeBoards/NoticeComponent";
 import exitImg from "../../style/icons/x-solid.svg";
 
 const CommunityPage = () => {
@@ -25,9 +25,7 @@ const CommunityPage = () => {
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>
             <CurrentLink to="/community">자유게시판</CurrentLink>
-            <CommunityLink to="/">노하우</CommunityLink>
-            <CommunityLink to="/">인증게시판</CommunityLink>
-            <CommunityLink to="/">건의</CommunityLink>
+            <CommunityLink to="/community/certified">인증게시판</CommunityLink>
           </Header>
           <NoticeComponent />
         </CommunityBody>

@@ -12,6 +12,7 @@ interface postType {
   _id: string;
   title: string;
   author: { nickname: string };
+  category: string;
   createdAt: string;
 }
 

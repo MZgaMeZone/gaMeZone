@@ -1,13 +1,15 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import CommunityPage from './communityPage';
-import CreatePost from '../../components/Boards/CreatePost';
-import PostPage from '../../components/Boards/PostPage';
+import FreeBoard from './freeBoard';
+import CertifyBoard from './certificationBoard';
+import CreateFreePost from '../../components/FreeBoards/CreateFreePost';
+import CreateCertPost from '../../components/CertBoards/CreateCertPost';
+import PostPage from '../../components/FreeBoards/PostPage';
+import CertPostPage from '../../components/CertBoards/CertPostPage';
 import ModifiedPost from './patchPage';
 import MainBody from '../mainPage/main-body';
 import MainFooter from '../mainPage/main-footer';
-import MainHeader from '../mainPage/main-header';
 
 const Community = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
@@ -23,9 +25,12 @@ const Community = () => {
       }}
     >
       <Routes>
-        <Route path="/" element={<CommunityPage />} />
+        <Route path="/" element={<FreeBoard />} />
+        <Route path="/write" element={<CreateFreePost />} />
+        <Route path="/certified" element={<CertifyBoard />} />
+        <Route path="/certified/write" element={<CreateCertPost />} />
         <Route path="/:postId" element={<PostPage />} />
-        <Route path="/write" element={<CreatePost />} />
+        <Route path="/certified/:postId" element={<CertPostPage />} />
         <Route path="/:postId/modified" element={<ModifiedPost />} />
       </Routes>
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>

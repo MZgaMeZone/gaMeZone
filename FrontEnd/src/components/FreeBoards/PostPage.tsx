@@ -22,6 +22,7 @@ interface postsType {
   _id: string;
   title: string;
   content: string;
+  category: string;
   author: { nickname: string, email: string };
   createdAt: string;
 }
@@ -29,6 +30,7 @@ interface postsType {
 const PostPage = () => {
   const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
   const [userEmail, setUserEmail] = useState<string>("");
+  const [category, setCategory] = useState<string>("")
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   const navigate = useNavigate();
 
@@ -46,6 +48,12 @@ const PostPage = () => {
       setPost(data);
     });
   }, []);
+
+  useEffect(() => {
+    if (post !== null && post !== undefined) {
+      setCategory(post.category);
+    }
+  }, [post])
 
   if (!post) {
     // postId에 해당하는 데이터가 없을 경우에 대한 처리
@@ -73,9 +81,7 @@ const PostPage = () => {
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>
             <CurrentLink to="/community">자유게시판</CurrentLink>
-            <CommunityLink to="/">노하우</CommunityLink>
-            <CommunityLink to="/">인증게시판</CommunityLink>
-            <CommunityLink to="/">건의</CommunityLink>
+            <CommunityLink to="/community/certified">인증게시판</CommunityLink>
           </Header>
           <Body>
             <Post>
@@ -92,12 +98,12 @@ const PostPage = () => {
                 <DeletePost postId={postId}/>
               </ButtonContainer>
               }
-              <MainText>{post.content.split("\n").map((item) => {
-                return <Text>{item}</Text>
+              <MainText>{post.content.split("\n").map((item, index) => {
+                return <Text key={index}>{item}</Text>
               })}</MainText>
               
             </Post>
-            <CommentComponent postId={postId} />
+            <CommentComponent postId={postId} category={category}/>
           </Body>
         </CommunityBody>
       </CommunityContainer>
@@ -229,7 +235,7 @@ const Author = styled.p`
   margin-bottom: 0.3rem;
 `;
 
-const MainText = styled.p`
+const MainText = styled.div`
   margin: 2rem 0 1rem;
   font-size: 2rem;
 `;

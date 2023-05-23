@@ -14,7 +14,7 @@ const config = {
 };
 
 
-const CreatePost = () => {
+const CreateFreePost = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>("");
@@ -53,6 +53,7 @@ const CreatePost = () => {
         author: userEmail,
         title: title,
         content: content,
+        category: "free",
       };
 
       console.log(postData);
@@ -98,7 +99,7 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreateFreePost;
 
 const PostSection = styled.div`
   background-color: var(--background--gray);
