@@ -143,8 +143,8 @@ function Signup() {
             </NicknameContainer>
             <ErrorMessageContainer>
               {nickname
-                ? nickname.length < 2 && (
-                    <p>닉네임을 2자리 이상 입력해주세요.</p>
+                ? (nickname.length < 2 || nickname.length > 10) && (
+                    <p>닉네임을 2자리 이상 10자리 이하로 입력해주세요.</p>
                   )
                 : ''}
             </ErrorMessageContainer>
