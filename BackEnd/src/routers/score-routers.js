@@ -98,4 +98,29 @@ scoreRouter.delete("/:id", async (req, res, next) => {
   }
 });
 
+//해당 유저의 기록에서 저장된 nickname을 모두 변경
+scoreRouter.patch("/", async (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+  }
+  console.log("😸 게임 기록 내 유저 이메일 업데이트합니다...");
+  const { userEmail, userNickname } = req.body;
+
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log("✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.");
+
+    const updatedScore = await scoreService.updateScore(
+      userEmail,
+      userNickname
+    );
+    console.log("✔️ 게임 기록 내 유저 이메일 업데이트 완료!");
+    return res.status(200).json(updatedScore);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
 export { scoreRouter };
