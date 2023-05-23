@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import '../../style/gameLayout.css';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import GameLoading from './gameLoading';
 import GameRanking from './gameRanking';
 import GameManual from './gameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
-
+import axios from 'axios';
 import exitImg from '../../style/icons/x-solid.svg';
 import gameFavicon from '../../style/icons/game_favicon.svg';
 import MainBody from '../mainPage/main-body';
@@ -19,6 +19,8 @@ const GameLayout = () => {
   const [showManual, setShowManual] = useState<Boolean>(false);
   const [mainModal, setMainModal] = useState<boolean>(false);
   const [gameName, setGameName] = useState<string>('');
+  const [userNickname, setUserNickname] = useState<string | null>('');
+  const [userRole, setUserRole] = useState<string | null>('');
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -28,7 +30,6 @@ const GameLayout = () => {
   };
 
   useEffect(() => {
-    console.log(sessionStorage[`${id}`]);
     if (!sessionStorage[`${id}`]) {
       sessionStorage.setItem(`${id}`, `${id} is in session`);
       console.log(sessionStorage[`${id}`]);
@@ -58,6 +59,31 @@ const GameLayout = () => {
     default:
       gameComponent = <div>Invalid Game ID</div>;
   }
+  // 닉네임과 게임명을 얻어오고 싶음.
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    // 토큰을 이용하여 유저 정보를 얻어오는 함수 호출
+    fetchUserInfo(token);
+  }, []);
+  const fetchUserInfo = (token: string | null) => {
+    // 서버로 토큰을 전송하여 유저 정보를 요청하는 API 호출
+    if (token) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/api/users`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUserNickname(res.data.nickname);
+          setUserRole(res.data.role);
+        })
+        .catch((error) => {
+          // 에러 처리
+          console.error(error);
+        });
+    }
+  };
 
   return (
     <div
@@ -107,9 +133,36 @@ const GameLayout = () => {
             </nav>
             <div className="game-container-body">{gameComponent}</div>
             <div className="game-container-footer">
-              <div className="footer-box"></div>
-              <div className="footer-box"></div>
-              <div className="footer-box"></div>
+              <div
+                className="footer-box"
+                style={{
+                  padding: '0.6rem 0.6rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                Nickname&Role
+              </div>
+              <div
+                className="footer-box"
+                style={{
+                  padding: '0.6rem 0.6rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                {userNickname ? userNickname : ''}
+              </div>
+              <div
+                className="footer-box"
+                style={{
+                  padding: '0.6rem 0.6rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                {userRole ? userRole : 'guest'}
+              </div>
             </div>
           </div>
           <>
