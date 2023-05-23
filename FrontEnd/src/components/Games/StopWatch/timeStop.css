@@ -109,7 +109,7 @@
 }
 #game-start-end-time #gametimer {
   /* background-color: aqua; */
-  font-size: 2.2rem;
+  font-size: 15px;
 }
 
 /* 블라인드 모드 텍스트 */
@@ -170,21 +170,21 @@
   display: flex;
   justify-content: center;
   padding: 4px 0px;
-  font-size: 2.2rem;
+  font-size: 16px;
   background-color: rgb(182, 224, 154);
 }
 #worst-record-text {
   display: flex;
   justify-content: center;
   padding: 4px 0px;
-  font-size: 2.2rem;
+  font-size: 16px;
   background-color: rgb(218, 180, 175);
 }
 #average-gap-text {
   display: flex;
   justify-content: center;
   padding: 1px 0px;
-  font-size: 2.2rem;
+  font-size: 16px;
   background-color: rgb(232, 233, 179);
 }
 

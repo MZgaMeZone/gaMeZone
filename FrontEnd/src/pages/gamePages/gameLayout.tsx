@@ -107,9 +107,7 @@ const GameLayout = () => {
             </nav>
             <div className="game-container-body">{gameComponent}</div>
             <div className="game-container-footer">
-              <Link to="/game/gameover" className="footer-box">
-                게임오버(임시)
-              </Link>
+              <div className="footer-box"></div>
               <div className="footer-box"></div>
               <div className="footer-box"></div>
             </div>

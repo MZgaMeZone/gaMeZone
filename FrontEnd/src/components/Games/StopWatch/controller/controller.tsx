@@ -175,7 +175,7 @@ function Controller(props: ControllerProps) {
             style={{
               margin: '1rem 1rem',
               display: 'flex',
-              fontSize: '2.5rem',
+              fontSize: '19px',
             }}
           >
             게임 모드
@@ -205,6 +205,7 @@ function Controller(props: ControllerProps) {
             display: 'flex',
             justifyContent: 'right',
             alignItems: 'center',
+            fontSize: '17px',
           }}
         >
           Game Mode
@@ -229,7 +230,7 @@ function Controller(props: ControllerProps) {
                 <div
                   style={{
                     display: 'inline-flex',
-                    fontSize: '2.2rem',
+                    fontSize: '16px',
                     padding: '0.5rem 0.5rem',
                     marginTop: '0.3rem',
                     marginLeft: '0.7rem',
