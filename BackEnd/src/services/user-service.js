@@ -133,7 +133,7 @@ class UserService {
       console.log("토큰이 유효하지않거나 ID를 찾을 수 없습니다.");
       return;
     }
-    const userData = await this.userModel.findByEmail(token.userId);
+    const userData = await this.userModel.findByEmail(token.userEmail);
     return userData;
   }
 }
