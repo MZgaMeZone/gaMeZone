@@ -52,7 +52,7 @@ const GameLayout = () => {
   //게임 컴포넌트 렌더링
   let gameComponent;
   switch (id) {
-    case '64673c9e003fef9471f58799':
+    case '10seconds':
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
       break;
     default:
@@ -107,9 +107,7 @@ const GameLayout = () => {
             </nav>
             <div className="game-container-body">{gameComponent}</div>
             <div className="game-container-footer">
-              <Link to="/game/gameover" className="footer-box">
-                게임오버(임시)
-              </Link>
+              <div className="footer-box"></div>
               <div className="footer-box"></div>
               <div className="footer-box"></div>
             </div>

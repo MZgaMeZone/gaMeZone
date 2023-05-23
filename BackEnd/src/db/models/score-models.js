@@ -11,7 +11,7 @@ class ScoreModel {
   async findScoresByGame(id) {
     // 게임명으로 검색하여 모든 기록정보를 불러오기
     // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
-    const findScores = await Score.find({ gameId: id });
+    const findScores = await Score.find({ gameUrl: id });
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
@@ -37,7 +37,7 @@ class ScoreModel {
     // 해당 게임의 랭킹정보를 불러오기 : 랭킹정보의 기준 데이터 - 5판 평균점수
     // 기록 데이터는 프론트단에서 걸러서 와야함.(기준이 게임마다 다르기 때문)
     // option은 Average Score, High Score 중 어느 것을 랭킹 기준으로 할 지
-    const findScores = await Score.find({ gameId: id });
+    const findScores = await Score.find({ gameUrl: id });
     let nonOption = "default";
     let option = "default";
     if (param === "avr") {
@@ -65,6 +65,7 @@ class ScoreModel {
       {},
       {
         _id: 0,
+        gameUrl: 1,
         gameId: 1,
         userNickname: 1,
         averageScore: 1,
@@ -76,9 +77,9 @@ class ScoreModel {
     const userRanking = {};
 
     for (let data of scoreData) {
-      const { userNickname, gameId, averageScore, highScore } = data;
+      const { userNickname, gameUrl, averageScore, highScore } = data;
       const game = await Game.findOne(
-        { _id: gameId },
+        { gameUrl: gameUrl },
         { gameTitle: 1, gameOption: 1 }
       );
       const title = game.gameTitle;
@@ -121,7 +122,7 @@ class ScoreModel {
     honorsRanking.sort((b, a) => a[1] - b[1]);
     const transformedRanking = honorsRanking.map((data) => ({
       userNickname: data[0],
-      score: data[1],
+      score: parseFloat(data[1]).toFixed(2),
     }));
     return transformedRanking;
   }

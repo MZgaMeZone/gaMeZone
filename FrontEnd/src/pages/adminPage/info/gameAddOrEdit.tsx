@@ -66,7 +66,7 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   //새로 등록시
   const handleAddClick = () => {
     axios
-      .post('http://localhost:8080/api/games', {
+      .post(`${process.env.REACT_APP_API_URL}/api/games`, {
         gameTitle: name,
         gameCategory: category,
         gameImageUrl: imageUrl,

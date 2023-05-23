@@ -7,6 +7,7 @@ function MainFooter(props: any) {
   const mainModal = props.mainModal;
   const setMainModal = props.setMainModal;
   const [timer, setTimer] = React.useState('');
+  const [hide, setHide] = React.useState(0);
 
   //   현재 시간을 출력하는 함수
   React.useEffect(() => {
@@ -41,9 +42,25 @@ function MainFooter(props: any) {
         <SubButton to="/login">Login</SubButton>
         <SubButton to="/ranking">Ranking</SubButton>
         <SubButton to="/community">Community</SubButton>
-        <SubButton to="/mypage">MyPage</SubButton>
-        <SubButton to="/admin">AdminPage</SubButton>
-        <Clock>{timer}</Clock>
+        {hide > 5 && (
+          <>
+            <SubButton to="/mypage">MyPage</SubButton>
+            <SubButton to="/admin">AdminPage</SubButton>
+          </>
+        )}
+        <Clock>
+          <button
+            onClick={() => {
+              setHide(hide + 1);
+            }}
+          ></button>
+          {timer}
+          <button
+            onClick={() => {
+              setHide(0);
+            }}
+          ></button>
+        </Clock>
       </FooterBar>
     </>
   );
@@ -91,7 +108,7 @@ const Clock = styled.div`
   text-align: center;
   padding: 1rem 1rem 0 1rem;
   white-space: nowrap;
-  width: 110px;
+  width: fit-content;
   height: 3.8rem;
   box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.6);
   border: #e0e0e0 solid 2px;

@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema } from "mongoose";
 
 const GameSchema = new Schema(
   {
@@ -11,19 +11,19 @@ const GameSchema = new Schema(
       type: [String],
       validate: {
         validator: (v) => v.length > 0,
-        message: '카테고리는 1개 이상 존재해야 합니다.',
+        message: "카테고리는 1개 이상 존재해야 합니다.",
       },
     },
     gameUrl: {
-      // 게임 접속 주소
+      // 게임 접속 주소 - 고유한 값이어야함
       type: String,
-      required: false,
+      required: true, // Url을 식별자로 사용해야 하기 때문에 true로 변경
     },
-    gameIconUrl: {
-      // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다.
-      type: String,
-      required: false,
-    },
+    // gameIconUrl: {
+    //   // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다. - 미사용
+    //   type: String,
+    //   required: false,
+    // },
     gameImageUrl: {
       // 게임 이미지 : Multer를 사용해서 imgUrl로 사용한다.
       type: String,
@@ -53,7 +53,7 @@ const GameSchema = new Schema(
   {
     // 타임스탬프와 DB에서 사용할 컬렉션 이름 설정
     timestamps: true,
-    collection: 'games',
+    collection: "games",
   }
 );
 

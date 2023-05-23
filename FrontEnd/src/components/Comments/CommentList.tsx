@@ -1,11 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components'
+import axios from 'axios';
 
 import ModifiedComment from './PatchComment';
 import DeleteComment from './DeleteComment';
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+  Authorization: `Bearer ${userToken}`,
+  },
+};
+
 const CommentList = ({ comment, postId }: any) => {
     const [patchModal, setPatchModal] = useState(false);
+    const [userEmail, setUserEmail] = useState<string>("");
+
+    if (userToken) {
+      axios.get(url + '/api/users', config).then((res) => {
+        setUserEmail(res.data.email);
+      });
+    }
   
     const togglePatchModal = () => {
       setPatchModal(!patchModal);
@@ -21,16 +37,20 @@ const CommentList = ({ comment, postId }: any) => {
         <div style={{ display: "flex" }}>
           <Author>{comment.author.nickname}</Author>
           <Date>{comment.createdAt}</Date>
-          {patchModal ? (
-            <ModifiedComment
-              postId={postId}
-              closeModal={togglePatchModal}
-              commentId={comment._id}
-            />
-          ) : (
-            <ModifiedButton onClick={handleCommentClick}>수정</ModifiedButton>
-          )}
-          <DeleteComment commentId={comment._id} postId={postId}/>
+          {userEmail === comment.author.email &&
+            <ButtonContainer>
+            {patchModal ? (
+              <ModifiedComment
+                postId={postId}
+                closeModal={togglePatchModal}
+                commentId={comment._id}
+              />
+            ) : (
+              <ModifiedButton onClick={handleCommentClick}>수정</ModifiedButton>
+            )}
+            <DeleteComment commentId={comment._id} postId={postId}/>
+            </ButtonContainer>           
+          }
         </div>
       </Comments>
     );
@@ -56,6 +76,10 @@ const Author = styled.p`
 const Date = styled.p`
   margin: 1rem;
 `
+
+const ButtonContainer = styled.div`
+  display: flex;
+` 
 
 const ModifiedButton = styled.button`
   margin: 0.7rem 0;

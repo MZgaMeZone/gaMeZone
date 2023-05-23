@@ -46,7 +46,7 @@ function Signup() {
     console.log(nickname);
 
     await axios
-      .post('http://localhost:8080/api/users/signup/nicknameDuplicateCheck', {
+      .post(url + '/api/users/signup/nicknameDuplicateCheck', {
         nickname: nickname,
       })
       .then((res) => {
@@ -67,7 +67,7 @@ function Signup() {
     console.log(email, nickname, password, passwordCheck);
 
     await axios
-      .post('http://localhost:8080/api/users/signup', {
+      .post(url + '/api/users/signup', {
         email: email,
         nickname: nickname,
         password: password,
@@ -143,8 +143,8 @@ function Signup() {
             </NicknameContainer>
             <ErrorMessageContainer>
               {nickname
-                ? nickname.length < 2 && (
-                    <p>닉네임을 2자리 이상 입력해주세요.</p>
+                ? (nickname.length < 2 || nickname.length > 10) && (
+                    <p>닉네임을 2자리 이상 10자리 이하로 입력해주세요.</p>
                   )
                 : ''}
             </ErrorMessageContainer>
