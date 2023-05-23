@@ -29,6 +29,10 @@ class ScoreService {
   async userRanking() {
     return await scoreModel.userRanking();
   }
+
+  async updateScore(userEmail, userNickname) {
+    return await scoreModel.updateScore(userEmail, userNickname);
+  }
 }
 
 const scoreService = new ScoreService(scoreModel);
