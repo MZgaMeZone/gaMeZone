@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { GameInfo, GameData } from './interface';
+import DropDown from '../dropdown';
 
 type ChildProps = {
   onValue: (
@@ -18,6 +19,9 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   onValue,
   receivedData,
 }) => {
+  //드롭다운 컴포넌트에 전달할 배열
+  const options = ['온라인', '점검중', '숨김'];
+
   //input 처리
   //null로 받아올 경우 (isAdding=== true일 경우)  input은 빈값으로 처리,
   //receivedData값이 있을 경우 (isEditing=== true) input에 해당 아이템의 값을 넣어 준다.
@@ -145,12 +149,13 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       </ContentDiv>
       <ContentDiv>
         <p>게임 상태</p>
-        <input
+        <DropDown options={options} />
+        {/* <input
           type="text"
           name="status"
           value={status}
           onChange={handleChange}
-        />
+        /> */}
       </ContentDiv>
       <ButtonDiv>
         <Button onClick={() => handleCancelClick()}>취소</Button>
@@ -183,7 +188,7 @@ const Container = styled.div`
   }
   input {
     width: 60rem;
-    height: 3.4rem;
+    height: 4rem;
     margin: 1rem;
     padding-left: 2rem;
     background-color: rgb(233, 233, 233);
