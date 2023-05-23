@@ -4,6 +4,7 @@ import axios from 'axios';
 import { GameInfo } from '../info/interface';
 import GameDropDown from './gameDropdown';
 import { Score } from './scoreInterface';
+import Modal from './modal';
 
 type Props = {
   URL: string;
@@ -45,6 +46,18 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
       .catch((err) => console.log(err));
   }, [gameId]);
 
+  //게임정보 상세 보기(모달창)
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   //삭제
   const handleDeleteClick = (id: string, user: string) => {
     const deleteConfirm = window.confirm(
@@ -79,7 +92,8 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
               <NameText>{item.userNickname}</NameText>
               <ScoreText>{item.averageScore}</ScoreText>
               <div>
-                <Button>상세</Button>
+                <Modal isOpen={isOpen} onClose={closeModal}></Modal>
+                <Button onClick={openModal}>상세</Button>
                 <Button
                   onClick={() => handleDeleteClick(item._id, item.userNickname)}
                 >
