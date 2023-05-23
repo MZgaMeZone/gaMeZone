@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { scoreModel } from "../db/index.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { scoreModel } from '../db/index.js';
 
 class ScoreService {
   constructor() {
@@ -9,6 +9,11 @@ class ScoreService {
   //GET
   async findScoresByGame(id) {
     return await scoreModel.findScoresByGame(id);
+  }
+
+  //GET
+  async findScoresByGameId(id) {
+    return await scoreModel.findScoresByGameId(id);
   }
   //GET
   async findScoresById(id) {

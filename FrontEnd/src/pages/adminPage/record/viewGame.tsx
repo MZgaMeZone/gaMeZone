@@ -35,8 +35,13 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
   const handleDropDownValue = (id: string) => {
     setGameId(id);
   };
-
   console.log(gameId);
+  useEffect(() => {
+    axios
+      .get(`${URL}/games/gameId/${gameId}`)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  }, [gameId]);
   return (
     <Container>
       {<GameDropDown options={gameData} onValue={handleDropDownValue} />}
