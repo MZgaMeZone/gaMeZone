@@ -14,6 +14,10 @@ const PostSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

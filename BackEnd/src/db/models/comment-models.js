@@ -19,6 +19,15 @@ export class CommentModel {
     await newComment.save();
   };
 
+  async findComment(id) {
+    //특정 댓글 조회
+    const findComment = await Comment.find({_id: id});
+    if (!findComment) {
+      console.log("등록된 댓글이 없습니다.");
+    }
+    return findComment;
+  }
+
   async findAllComments(id) {
     // 특정 게시물의 댓글 조회
     const findComments = await Comment.find({post: id}).populate("author", "nickname email");

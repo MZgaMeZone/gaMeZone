@@ -17,6 +17,20 @@ commentRouter.get("/post/:id", async(req, res, next) => {
   }
 });
 
+//특정 댓글을 가져오는 GET요청
+commentRouter.get("/comment/:id", async(req, res, next) => {
+  try {
+    const commentId = req.params.id;
+    console.log("댓글을 출력합니다.");
+    const comment = await commentService.findComment(commentId);
+    console.log("댓글 출력이 완료되었습니다.");
+    res.status(201).json(comment);
+  } catch(err) {
+    console.log(`${err}`);
+    next(err);
+  }
+});
+
 //특정 유저의 댓글 가져오는 GET요청
 commentRouter.get("/:email", async(req, res, next) => {
   try {
