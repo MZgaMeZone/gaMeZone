@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../style/reset.css';
 import '../../style/mypage.css';
@@ -28,7 +29,12 @@ function MyPage() {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
   const [nickName, setNickName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
+  const navigate = useNavigate();
 
+  if (!userToken) {
+    alert('로그인 후 이용 가능한 서비스입니다.');
+    navigate('/');
+  }
   useEffect(() => {
     const getUserInfo = async () => {
       const { data } = await axios.get(url + '/api/users', config);

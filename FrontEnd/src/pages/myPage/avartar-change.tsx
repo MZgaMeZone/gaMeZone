@@ -4,6 +4,16 @@ import profile from '../../style/icons/profile.svg';
 import React, { useState } from 'react';
 
 function AvartarChange() {
+  const updatePofile = () => {
+    console.log('클릭');
+  };
+
+  const deletePofile = () => {
+    alert('프로필이 삭제되었습니다');
+    setImageSrc('');
+    //나중에 기본 이미지로 데이터를 전송해줘야하나?
+  };
+
   const [imageSrc, setImageSrc] = useState('');
 
   const encodeFileToBase64 = (fileBlob: File) => {
@@ -34,12 +44,18 @@ function AvartarChange() {
         <Line />
         <Avartar>
           <Preview>
-            <img src={profile} alt="profile" />
-            {imageSrc && <img src={imageSrc} alt="preview-img" />}
+            {imageSrc ? (
+              <img src={imageSrc} alt="preview-img" />
+            ) : (
+              <img src={profile} alt="profile" />
+            )}
+            {/* <img src={profile} alt="profile" />
+            {imageSrc && <img src={imageSrc} alt="preview-img" />} */}
           </Preview>
           <h2>이미지 미리보기</h2>
           <input type="file" onChange={handleFileChange} />
-          <Button>프로필 수정</Button>
+          <Button onClick={updatePofile}>프로필 이미지 수정</Button>
+          <Button onClick={deletePofile}>프로필 이미지 삭제</Button>
         </Avartar>
       </Container>
     </div>
@@ -66,6 +82,10 @@ const Button = styled.button`
     box-shadow: none;
     box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
   }
+  &:not(:first-of-type) {
+    margin-bottom: 3rem;
+    margin-top: 0px;
+  }
 `;
 const Line = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -80,10 +100,10 @@ const Title = styled.h1`
 
 const Preview = styled.div`
   margin: 3rem 0 3rem 0;
-  width: 20rem;
-  height: 20rem;
   img {
     border-radius: 50%;
+    width: 20rem;
+    height: 20rem;
   }
 `;
 
