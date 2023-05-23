@@ -10,7 +10,7 @@ interface Input {
   addInput: string;
 }
 const GameCategory = () => {
-  const URL: string = 'http://localhost:8080/api/categories';
+  const URL: string = `${process.env.REACT_APP_API_URL}/api/categories`;
   const [data, setData] = useState<Category[]>([]);
 
   // input 처리

@@ -10,7 +10,7 @@ const GameInfoEdit = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/games')
+      .get(`${process.env.REACT_APP_API_URL}/api/games`)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
