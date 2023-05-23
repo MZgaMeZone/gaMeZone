@@ -16,8 +16,8 @@ class PostService {
   }
 
   //GET user's posts
-  async findUserPosts(id) {
-    return await postModel.findUserPosts(id);
+  async findUserPosts(email) {
+    return await postModel.findUserPosts(email);
   }
 
   //POST

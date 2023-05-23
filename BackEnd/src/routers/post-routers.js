@@ -31,11 +31,11 @@ postRouter.get("/post/:postId", async(req, res, next) => {
 })
 
 //특정 유저의 게시물 가져오는 GET요청
-postRouter.get("/:id", async(req, res, next) => {
+postRouter.get("/:email", async(req, res, next) => {
   try {
-    const id = req.params.id;
+    const email = req.params.email;
     console.log("해당 유저의 게시물을 출력합니다.");
-    const postList = await postService.findUserPosts(id);
+    const postList = await postService.findUserPosts(email);
     console.log("해당 유저의 게시물 출력이 완료되었습니다.");
     res.status(201).json(postList);
   } catch(err) {
