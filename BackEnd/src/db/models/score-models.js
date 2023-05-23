@@ -1,17 +1,27 @@
-import mongoose from "mongoose";
-import GameSchema from "../schemas/game-schema.js";
-import ScoreSchema from "../schemas/score-schema.js";
-import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
-import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
+import mongoose from 'mongoose';
+import GameSchema from '../schemas/game-schema.js';
+import ScoreSchema from '../schemas/score-schema.js';
+import { nanoid } from 'nanoid'; // npm install nanoid 로 라이브러리 설치해야 함
+import dayjs from 'dayjs'; // npm install dayjs 로 라이브러리 설치해야 함
 
-const Game = mongoose.model("games", GameSchema);
-const Score = mongoose.model("scores", ScoreSchema);
+const Game = mongoose.model('games', GameSchema);
+const Score = mongoose.model('scores', ScoreSchema);
 
 class ScoreModel {
   async findScoresByGame(id) {
     // 게임명으로 검색하여 모든 기록정보를 불러오기
     // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
     const findScores = await Score.find({ gameUrl: id });
+    if (findScores.length < 1) {
+      console.log(`저장된 기록이 없습니다.`);
+    }
+    return findScores;
+  }
+
+  async findScoresByGameId(id) {
+    // 게임명으로 검색하여 모든 기록정보를 불러오기
+    // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
+    const findScores = await Score.find({ gameId: id });
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
@@ -38,14 +48,14 @@ class ScoreModel {
     // 기록 데이터는 프론트단에서 걸러서 와야함.(기준이 게임마다 다르기 때문)
     // option은 Average Score, High Score 중 어느 것을 랭킹 기준으로 할 지
     const findScores = await Score.find({ gameUrl: id });
-    let nonOption = "default";
-    let option = "default";
-    if (param === "avr") {
-      option = "averageScore";
-      nonOption = "highScore";
+    let nonOption = 'default';
+    let option = 'default';
+    if (param === 'avr') {
+      option = 'averageScore';
+      nonOption = 'highScore';
     } else {
-      option = "highScore";
-      nonOption = "averageScore";
+      option = 'highScore';
+      nonOption = 'averageScore';
     }
     // 랭킹등록 우선순위 : 1순위(option) 2순위(non-option) 3순위(달성시점)
     const ranking = [...findScores].sort((b, a) =>
@@ -94,15 +104,15 @@ class ScoreModel {
           score: 0,
         };
       }
-      if (game.gameOption === "avr") {
-        userRanking[userNickname][title]["sumOfAvr"] += averageScore;
-        userRanking[userNickname][title]["count"] += 1;
-        userRanking[userNickname][title]["score"] =
-          userRanking[userNickname][title]["sumOfAvr"] /
-          userRanking[userNickname][title]["count"];
+      if (game.gameOption === 'avr') {
+        userRanking[userNickname][title]['sumOfAvr'] += averageScore;
+        userRanking[userNickname][title]['count'] += 1;
+        userRanking[userNickname][title]['score'] =
+          userRanking[userNickname][title]['sumOfAvr'] /
+          userRanking[userNickname][title]['count'];
       } else {
-        if (userRanking[userNickname][title]["score"] < highScore) {
-          userRanking[userNickname][title]["score"] = highScore;
+        if (userRanking[userNickname][title]['score'] < highScore) {
+          userRanking[userNickname][title]['score'] = highScore;
         }
       }
     }
@@ -115,7 +125,7 @@ class ScoreModel {
         if (!final[user]) {
           final[user] = 0;
         }
-        final[user] += userRanking[user][game]["score"];
+        final[user] += userRanking[user][game]['score'];
       }
     }
     const honorsRanking = Object.entries(final);

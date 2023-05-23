@@ -5,12 +5,14 @@ import GameAddOrEdit from './gameAddOrEdit';
 import { GameInfo, GameData } from './interface';
 
 const GameInfoEdit = () => {
+  const URL = `${process.env.REACT_APP_API_URL}/api/games`;
+
   const [data, setData] = useState<GameInfo[]>([]);
   const [sendingData, setSendingData] = useState<GameData>();
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/games`)
+      .get(URL)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -82,13 +84,11 @@ const GameInfoEdit = () => {
     );
     if (deleteConfirm) {
       try {
-        await axios.delete(`http://localhost:8080/api/games/${id}`);
+        await axios.delete(`${URL}/${id}`);
         setData(data.filter((item) => item._id !== id));
       } catch (err) {
         console.error(err);
       }
-    } else {
-      alert('삭제가 취소되었습니다.');
     }
   };
   // 추가 수정 GameAddOrEdit 컴포넌트에서 한 번에 진행,
