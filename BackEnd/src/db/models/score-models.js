@@ -77,9 +77,9 @@ class ScoreModel {
     const userRanking = {};
 
     for (let data of scoreData) {
-      const { userNickname, gameId, averageScore, highScore } = data;
+      const { userNickname, gameUrl, averageScore, highScore } = data;
       const game = await Game.findOne(
-        { gameUrl: gameId },
+        { gameUrl: gameUrl },
         { gameTitle: 1, gameOption: 1 }
       );
       const title = game.gameTitle;

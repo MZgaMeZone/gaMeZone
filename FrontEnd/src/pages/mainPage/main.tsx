@@ -10,26 +10,27 @@ import TimeStopGame from '../../components/Games/StopWatch/timeStop';
 const Main = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
 
-  //더미데이터------------------------------------------------------------
+  // 더미데이터------------------------------------------------------------
+  // 현재는 수동으로 관리함.
   const hitGameList: any[] = [
     {
       name: '고마오',
-      url: 'game1',
+      url: '',
       img: require('../../images/gomao.png'),
     },
     {
       name: '귀엽네',
-      url: 'game1',
-      img: require('../../images/cute.png'),
+      url: '',
+      img: require('../../images/gomao.png'),
     },
     {
       name: '10초게임',
       url: '10seconds',
-      img: require('../../images/gomao.png'),
+      img: require('../../images/cute.png'),
     },
-    { name: '고고마오', url: 'main', img: require('../../images/gomao.png') },
-    { name: '고고마오', url: 'main', img: require('../../images/gomao.png') },
-    { name: '고고마오', url: 'main', img: require('../../images/gomao.png') },
+    { name: '게임 준비중', url: '', img: require('../../images/gomao.png') },
+    { name: '게임 준비중', url: '', img: require('../../images/gomao.png') },
+    { name: '게임 준비중', url: '', img: require('../../images/gomao.png') },
   ];
   //-----------------------------------------------------------------------
 
