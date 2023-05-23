@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,22 @@ function MainFooter(props: any) {
   const setMainModal = props.setMainModal;
   const [timer, setTimer] = React.useState('');
   const [hide, setHide] = React.useState(0);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  function handleLogout() {
+    localStorage.removeItem('userToken');
+    console.log('Logout 실행');
+    console.log('userToken 삭제');
+    setIsLoggedIn(false);
+  }
+
+  React.useEffect(() => {
+    const userToken = localStorage.getItem('userToken');
+    if (userToken) {
+      console.log('userToken를 정상적으로 받아왔습니다!');
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   //   현재 시간을 출력하는 함수
   React.useEffect(() => {
@@ -39,7 +56,13 @@ function MainFooter(props: any) {
           카테고리
         </StartButton>
         <SubButton to="/">Home</SubButton>
-        <SubButton to="/login">Login</SubButton>
+        {isLoggedIn ? (
+          <SubButton to="/login" onClick={handleLogout}>
+            Logout
+          </SubButton>
+        ) : (
+          <SubButton to="/login">Login</SubButton>
+        )}
         <SubButton to="/ranking">Ranking</SubButton>
         <SubButton to="/community">Community</SubButton>
         {hide > 5 && (
