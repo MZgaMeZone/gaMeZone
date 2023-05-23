@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import '../../../style/profile.css';
 
 type ProfileProps = {
-  user: string;
+  email: string;
   img: string;
-  nick: string;
+  nickName: string;
 };
 
-function Profile({ user, img, nick }: ProfileProps) {
+function Profile({ img, email, nickName }: ProfileProps) {
   return (
     <>
-      <h1 className="greeting">{`안녕하세요 ${user}님!`}</h1>
+      <h1 className="greeting">{`안녕하세요 ${email}님!`}</h1>
       <div
         style={{
           borderBottom: '1px solid rgba(0,0,0,0.2)',
@@ -22,8 +22,8 @@ function Profile({ user, img, nick }: ProfileProps) {
         <div className="avartar">
           <img src={img} alt="유저 프로필" />
           <div className="nick_box">
-            <p>{user}</p>
-            <p>{nick}</p>
+            <p>{email}</p>
+            <p>{nickName}</p>
           </div>
         </div>
         <LogoutButton>로그아웃</LogoutButton>
