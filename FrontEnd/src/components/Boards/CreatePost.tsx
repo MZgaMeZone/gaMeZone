@@ -22,7 +22,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     axios.get(url + '/api/users', config).then((res) => {
-      console.log(res.data);
+      console.log(res.data.email);
       setUserEmail(res.data.email);
       });
   }, []);

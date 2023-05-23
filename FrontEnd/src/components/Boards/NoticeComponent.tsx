@@ -136,7 +136,7 @@ const PostItemInfo = styled.div`
 
 const PostItemNumber = styled.p`
   margin: 0 10rem 0 0;
-  width: 7rem;
+  width: 2rem;
 `;
 
 const PostItemTitle = styled.div`
@@ -150,5 +150,5 @@ const PostDate = styled.p`
 
 const PostUser = styled.p`
   margin: 0 0 0 1rem;
-  width: 6rem;
+  width: 18rem;
 `;
