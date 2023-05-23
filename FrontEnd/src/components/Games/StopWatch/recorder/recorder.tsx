@@ -34,9 +34,18 @@ function Recorder(props: RecorderProps) {
   const [userNickName, setUserNickName] = useState<string>('');
 
   useEffect(() => {
-    axios.get(url + '/api/users', config).then((res) => {
-      setUserNickName(res.data.nickname);
-    });
+    axios
+      .get(url + '/api/users', config)
+      .then((res) => {
+        // if (!res.data.nickname) {
+        //   setUserNickName('Anonymous');
+        // } else {
+        setUserNickName(res.data.nickname);
+        // }
+      })
+      .catch((e) => {
+        setUserNickName('Anonymous');
+      });
   }, []);
 
   // 현재 저장된 기록을 제출하려고함.
@@ -141,7 +150,7 @@ function Recorder(props: RecorderProps) {
                 //게임 오버로 데이터 넘깁시다
                 navigate('/game/gameOver', {
                   state: {
-                    gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
+                    gameId: '10seconds', // 나중에 state로 관리
                     userNickName: userNickName, //나중에 token으로 관리
                     userAverageScore: printScore[2],
                     userHighScore: printScore[0],
