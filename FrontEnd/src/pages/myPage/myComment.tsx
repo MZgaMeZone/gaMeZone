@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
 
 import CommunityContainer from './components/communityContainer';
 import Comment from './components/comment';

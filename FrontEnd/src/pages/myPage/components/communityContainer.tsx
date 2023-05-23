@@ -9,8 +9,10 @@ type CommunityContainer = {
 
 function CommunityContainer({ children }: CommunityContainer) {
   const [exit, setIsExit] = useState(false);
+  const navigate = useNavigate();
   const handleExit = () => {
-    setIsExit(true);
+    // setIsExit(true);
+    navigate('/mypage');
   };
   return (
     <>
