@@ -21,7 +21,7 @@ function MainFooter(props: any) {
   React.useEffect(() => {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
-      console.log('userToken를 정상적으로 받아왔습니다!');
+      // console.log('userToken를 정상적으로 받아왔습니다!'); // 현재 정상 동작하는 기능으로 주석 처리함
       setIsLoggedIn(true);
     }
   }, []);
