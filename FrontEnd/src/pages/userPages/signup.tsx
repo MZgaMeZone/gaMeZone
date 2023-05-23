@@ -46,7 +46,7 @@ function Signup() {
     console.log(nickname);
 
     await axios
-      .post('http://localhost:8080/api/users/signup/nicknameDuplicateCheck', {
+      .post(url + '/api/users/signup/nicknameDuplicateCheck', {
         nickname: nickname,
       })
       .then((res) => {
@@ -67,7 +67,7 @@ function Signup() {
     console.log(email, nickname, password, passwordCheck);
 
     await axios
-      .post('http://localhost:8080/api/users/signup', {
+      .post(url + '/api/users/signup', {
         email: email,
         nickname: nickname,
         password: password,
