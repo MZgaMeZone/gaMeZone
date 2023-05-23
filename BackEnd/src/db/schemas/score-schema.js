@@ -8,6 +8,11 @@ const ScoreSchema = new Schema(
       ref: "Game", // 참조할 모델 이름
       required: true,
     },
+    gameUrl: {
+      type: String,
+      ref: "Game",
+      required: true,
+    },
     // userId: {
     //   type: Schema.Types.ObjectId,
     //   ref: "User", // 참조할 모델 이름
