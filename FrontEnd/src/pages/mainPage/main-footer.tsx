@@ -91,7 +91,7 @@ const Clock = styled.div`
   text-align: center;
   padding: 1rem 1rem 0 1rem;
   white-space: nowrap;
-  width: 110px;
+  width: fit-content;
   height: 3.8rem;
   box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.6);
   border: #e0e0e0 solid 2px;
