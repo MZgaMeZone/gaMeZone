@@ -31,11 +31,12 @@ function MyPage() {
   const [email, setEmail] = React.useState<string>('');
   const navigate = useNavigate();
 
-  if (!userToken) {
-    alert('로그인 후 이용 가능한 서비스입니다.');
-    navigate('/');
-  }
   useEffect(() => {
+    if (!userToken) {
+      alert('로그인 후 이용 가능한 서비스입니다.');
+      navigate('/');
+    }
+
     const getUserInfo = async () => {
       const { data } = await axios.get(url + '/api/users', config);
       setNickName(data.nickname);

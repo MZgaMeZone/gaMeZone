@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import '../../../style/profile.css';
+import axios from 'axios';
 
 type ProfileProps = {
   email: string;
@@ -8,6 +9,9 @@ type ProfileProps = {
 };
 
 function Profile({ img, email, nickName }: ProfileProps) {
+  const handleLogout = async () => {
+    // await axios.get('/api/auth/logout');
+  };
   return (
     <>
       <h1 className="greeting">{`안녕하세요 ${email}님!`}</h1>
@@ -26,7 +30,7 @@ function Profile({ img, email, nickName }: ProfileProps) {
             <p>{nickName}</p>
           </div>
         </div>
-        <LogoutButton>로그아웃</LogoutButton>
+        <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
       </ProfileBox>
     </>
   );
