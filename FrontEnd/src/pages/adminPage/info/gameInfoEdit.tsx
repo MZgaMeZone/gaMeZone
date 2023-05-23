@@ -89,8 +89,6 @@ const GameInfoEdit = () => {
       } catch (err) {
         console.error(err);
       }
-    } else {
-      alert('삭제가 취소되었습니다.');
     }
   };
   // 추가 수정 GameAddOrEdit 컴포넌트에서 한 번에 진행,

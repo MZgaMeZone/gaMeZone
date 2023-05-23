@@ -44,32 +44,52 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
       .then((res) => setScoreData(res.data))
       .catch((err) => console.log(err));
   }, [gameId]);
+
+  //삭제
+  const handleDeleteClick = (id: string, user: string) => {
+    const deleteConfirm = window.confirm(
+      `[${user}] 님의 기록을 삭제하시겠습니까?`
+    );
+    if (deleteConfirm) {
+      axios
+        .delete(`${URL}/${id}`)
+        .then((res) =>
+          setScoreData(scoreData.filter((item) => item._id !== id))
+        )
+        .catch((err) => console.log(err));
+    }
+  };
   return (
     <Container>
       <DropdownDiv>
         <GameDropDown options={gameData} onValue={handleDropDownValue} />
       </DropdownDiv>
-      {scoreData.length === 0 ? (
-        <ResetContent>등록된 기록이 없습니다..</ResetContent>
+      {scoreData.length === 0 && gameId ? (
+        <ResetContent>등록된 기록이 없습니다.</ResetContent>
+      ) : gameId === '' ? (
+        <ResetContent>조회할 게임을 선택해주세요.</ResetContent>
       ) : (
         <Main>
           <Title>
             <p>user</p>
             <p style={{ paddingLeft: '18rem' }}>score</p>
           </Title>
-          {scoreData.map((item: Score, inex) => (
-            <Content key={inex}>
+          {scoreData.map((item: Score) => (
+            <Content key={item._id}>
               <NameText>{item.userNickname}</NameText>
               <ScoreText>{item.averageScore}</ScoreText>
               <div>
                 <Button>상세</Button>
-                <Button>삭제</Button>
+                <Button
+                  onClick={() => handleDeleteClick(item._id, item.userNickname)}
+                >
+                  삭제
+                </Button>
               </div>
             </Content>
           ))}
         </Main>
       )}
-
       <FooterDiv />
     </Container>
   );
