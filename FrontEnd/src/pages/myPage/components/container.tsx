@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactNode, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import exitImg from '../../../style/icons/x-solid.svg';
 
 type ContainerProps = {
@@ -9,8 +9,10 @@ type ContainerProps = {
 
 function Container({ children }: ContainerProps) {
   const [exit, setIsExit] = useState(false);
+  const navigate = useNavigate();
   const handleExit = () => {
-    setIsExit(true);
+    // setIsExit(true);
+    navigate('/mypage');
   };
   return (
     <>
@@ -47,7 +49,7 @@ const Container_Box = styled.div`
 
 const Header_Bar = styled.div`
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
   align-items: center;
   justify-content: center;
   border-top-right-radius: 3px;

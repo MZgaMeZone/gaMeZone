@@ -9,8 +9,10 @@ type CommunityContainer = {
 
 function CommunityContainer({ children }: CommunityContainer) {
   const [exit, setIsExit] = useState(false);
+  const navigate = useNavigate();
   const handleExit = () => {
-    setIsExit(true);
+    // setIsExit(true);
+    navigate('/mypage');
   };
   return (
     <>
@@ -48,7 +50,7 @@ const Container_Box = styled.div`
 
 const Header_Bar = styled.div`
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
   align-items: center;
   justify-content: center;
   border-top-right-radius: 3px;
