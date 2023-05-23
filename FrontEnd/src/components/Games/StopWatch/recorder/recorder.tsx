@@ -48,6 +48,7 @@ function Recorder(props: RecorderProps) {
     const data = {
       gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
       userNickname: userNickName, // 나중에 token으로 관리
+      gameUrl: '10seconds',
       totalScores: score,
       averageScore: averagescore,
       highScore: highscore,
