@@ -23,7 +23,6 @@ const ScoreSchema = new Schema(
       required: true,
     },
     userNickname: {
-      //사용자가 자율 입력
       type: String,
       required: true,
     },

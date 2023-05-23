@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { scoreModel } from '../db/index.js';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { scoreModel } from "../db/index.js";
 
 class ScoreService {
   constructor() {
@@ -37,6 +37,9 @@ class ScoreService {
 
   async updateScore(userEmail, userNickname) {
     return await scoreModel.updateScore(userEmail, userNickname);
+  }
+  async deleteScoreByUserNickname(userNickname) {
+    return await scoreModel.deleteScoreByUserNickname(userNickname);
   }
 }
 
