@@ -4,7 +4,7 @@ import moment from 'moment';
 import styled from 'styled-components'
 import axios from 'axios';
 
-import Pagination from '../Boards/Pagination';
+import Pagination from '../FreeBoards/Pagination';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 
@@ -18,15 +18,21 @@ interface Comment {
   createdAt: string,
 }
 
-interface CommentProps {
-  postId: string | undefined,
+interface Post {
+  category: string,
 }
 
-const CommentComponent =({ postId }:CommentProps) => {
+interface CommentProps {
+  postId: string | undefined,
+  category: string,
+}
+
+const CommentComponent =({ postId, category }:CommentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
-  const [postModal, setPostModal] = useState(false);
+  const [postModal, setPostModal] = useState(false);  
   const [comments, setComments] = useState<Comment[]>([]);
+  const [post, setPost] = useState<Post[]>([]);
 
   useEffect(() => {
     axios
@@ -37,7 +43,6 @@ const CommentComponent =({ postId }:CommentProps) => {
         ...item,
         createdAt: moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")
       }));
-      console.log(formattedData);
       setComments(formattedData);
     })
   }, []);
@@ -59,14 +64,14 @@ const CommentComponent =({ postId }:CommentProps) => {
         <CommentContainer>
         {currentComments.map((comment: Comment) => (
           <CommentList
-            key={comment._id}
             comment={comment}
             postId={postId}
+            key={comment._id}
           />
         ))}
       </CommentContainer>
     <Footer>
-      <BackLink to="/community">뒤로가기</BackLink>
+      {category === "free" ? <BackLink to="/community">뒤로가기</BackLink> : <BackLink to="/community/certified">뒤로가기</BackLink>}
       <Pagination 
       postsPerPage={commentsPerPage}
       totalPosts={comments.length}

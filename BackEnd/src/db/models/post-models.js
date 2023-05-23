@@ -13,14 +13,24 @@ export class PostModel {
       title: data.title,
       content: data.content,
       author: userId._id,
+      category: data.category,
     });
 
     await newPost.save();
   };
 
-  async findAllPost() {
-    // 모든 게시물 조회
-    const findPosts = await Post.find({}).populate("author", "nickname email").lean();
+  async findAllFreePost() {
+    // 자유게시판의 모든 게시물 조회
+    const findPosts = await Post.find({category: "free"}).populate("author", "nickname email").lean();
+    if (findPosts.length < 1) {
+      console.log(`등록된 게시물이 없습니다.`);
+    }
+    return findPosts;
+  };
+
+  async findAllCertPost() {
+    // 인증게시판의 모든 게시물 조회
+    const findPosts = await Post.find({category: "cert"}).populate("author", "nickname email").lean();
     if (findPosts.length < 1) {
       console.log(`등록된 게시물이 없습니다.`);
     }

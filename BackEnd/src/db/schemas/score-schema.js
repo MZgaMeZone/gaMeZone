@@ -18,6 +18,10 @@ const ScoreSchema = new Schema(
     //   ref: "User", // 참조할 모델 이름
     //   required: true,
     // },
+    userEmail: {
+      type: String,
+      required: true,
+    },
     userNickname: {
       //사용자가 자율 입력
       type: String,

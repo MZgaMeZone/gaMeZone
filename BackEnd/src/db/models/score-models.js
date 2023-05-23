@@ -147,6 +147,18 @@ class ScoreModel {
       throw new Error(e);
     }
   }
+  async updateScore(userEmail, userNickname) {
+    try {
+      const updatedData = await Score.updateMany(
+        { userEmail: userEmail },
+        { userNickname: userNickname }
+      );
+      return updatedData;
+    } catch (e) {
+      console.log("[게임 기록 내 유저 이메일 업데이트 실패]");
+      throw new Error(e);
+    }
+  }
 }
 
 const scoreModel = new ScoreModel();

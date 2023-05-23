@@ -28,9 +28,6 @@ function PostWithComment() {
 const Title = styled.h1`
   margin-left: 6.3rem;
   margin-top: 3rem;
-  &:not(:first-child):hover {
-    border-bottom: 2px solid #000;
-  }
 `;
 const Line = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

@@ -4,7 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import Pagination from './Pagination';
+import Pagination from '../FreeBoards/Pagination';
 
 const userToken: string | null = localStorage.getItem('userToken');
 
@@ -12,10 +12,11 @@ interface postType {
   _id: string;
   title: string;
   author: { nickname: string };
+  category: string;
   createdAt: string;
 }
 
-const NoticeComponent = () => {
+const CertComponent = () => {
   const nav = useNavigate();
   const [posts, setPosts] = useState<postType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,11 +24,10 @@ const NoticeComponent = () => {
 
   useEffect(() => {
       // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
-    axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}/api/posts/cert`).then((res) => {
       const data = res.data.reverse();
       // console.log(data);
       setPosts(data);
-      console.log(data);
     });
   }, []);
 
@@ -42,7 +42,7 @@ const NoticeComponent = () => {
         <TopContainer>
           {userToken && <WriteButton
             onClick={() => {
-              nav('/community/write');
+              nav('/community/certified/write');
             }}
           >
             글쓰기
@@ -52,7 +52,7 @@ const NoticeComponent = () => {
           {currentPosts.map((post: postType, index: number) => (
             <PostItem
               key={post._id}
-              onClick={() => nav(`/community/${post._id}`)}
+              onClick={() => nav(`/community/certified/${post._id}`)}
             >
               <PostItemHeader>
                 <PostItemNumber>{posts.length - index}</PostItemNumber>
@@ -78,7 +78,7 @@ const NoticeComponent = () => {
   );
 };
 
-export default NoticeComponent;
+export default CertComponent;
 
 const NoticeSection = styled.div`
   font-family: 'Noto Sans Korean,Malgun Gothic,sans-serif';

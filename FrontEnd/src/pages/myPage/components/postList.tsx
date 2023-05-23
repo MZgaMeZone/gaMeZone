@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import gomaImg from '../../../images/gomao.png';
@@ -14,75 +15,39 @@ const config = {
   },
 };
 
-function Comment() {
+function PostList() {
+  interface Post {
+    _id: string;
+    content: string;
+    author: { nickname: string };
+    title: string;
+    createdAt: string;
+  }
+  // /api/posts/:userId
   useEffect(() => {
-    console.log('Check effect');
+    console.log('유즈이펙트');
     const fetchData = async () => {
       const {
         data: { email },
       } = await axios.get(url + '/api/users', config);
-      const { data: commentList } = await axios.get(
-        url + `/api/comments/${email}`
-      );
-      const formattedData = commentList.map((item: any) => ({
+
+      const { data: postList } = await axios.get(url + `/api/posts/${email}`);
+      const formattedData = postList.map((item: any) => ({
         ...item,
         createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
       }));
-      setCommentList(formattedData);
+      setPostList(formattedData);
     };
     fetchData();
   }, []);
 
-  //   const comment = [
-  //     {
-  //       id: 1,
-  //       nickname: 'gomao',
-  //       date: '2023-05-19',
-  //       content:
-  //         '오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?',
-  //       category: '자유게시판',
-  //     },
-  //     {
-  //       id: 2,
-  //       nickname: 'cute',
-  //       date: '2023-05-20',
-  //       content: '재밌어여',
-  //       category: '인증게시판',
-  //     },
-  //     {
-  //       id: 3,
-  //       nickname: 'cute',
-  //       date: '2023-05-21',
-  //       content: '엥 나보다 못함 ㅋ',
-  //       category: '인증게시판',
-  //     },
-  //     {
-  //       id: 4,
-  //       nickname: 'cute',
-  //       date: '2023-05-22',
-  //       content: 'ㅎ ㅏ 벌써 한시사십분이여',
-  //       category: '인증게시판',
-  //     },
-  //   ];
-
-  interface Comment {
-    _id: string;
-    content: string;
-    author: { nickname: string };
-    post: string;
-    createdAt: string;
-  }
-
-  const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [postList, setPostList] = useState<Post[]>([]);
   //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentComments = commentList.slice(
-    indexOfFirstComment,
-    indexOfLastComment
-  );
+  const currentPosts = postList.slice(indexOfFirstComment, indexOfLastComment);
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -94,28 +59,29 @@ function Comment() {
   return (
     <>
       <Wrapper>
-        {currentComments.length === 0 ? (
+        {currentPosts.length === 0 ? (
           <h1>내가 쓴 댓글이 없습니다.</h1>
         ) : (
-          currentComments.map((comment) => {
-            const shortComment = comment.content.slice(0, textLimit); //보여줄 짧은 글
-            const isLongComment = comment.content.length > textLimit; //긴글인지 확인
+          currentPosts.map((post) => {
+            const shortComment = post.content.slice(0, textLimit); //보여줄 짧은 글
+            const isLongComment = post.content.length > textLimit; //긴글인지 확인
             return (
               <>
-                <Link to={`/community/${comment.post}`}>
-                  <CommentInfo key={comment._id}>
+                <Link to={`/community/${post._id}`}>
+                  <CommentInfo key={post._id}>
                     <ProfileBox>
                       <img src={gomaImg} alt="프로필" />
-                      <h1>{comment.author.nickname}</h1>
+                      <h1>{post.author.nickname}</h1>
                       <Date>
-                        <h1>{comment.createdAt}</h1>
+                        <h1>{post.createdAt}</h1>
                       </Date>
                     </ProfileBox>
+                    <Line />
                     <CommentContent>
-                      {' '}
+                      <h3>{post.title}</h3>
                       {isLongComment && !isShowMore
                         ? shortComment
-                        : comment.content}
+                        : post.content}
                     </CommentContent>
                     <div
                       onClick={() => setIsShowMore(!isShowMore)}
@@ -125,10 +91,9 @@ function Comment() {
                         cursor: 'pointer',
                       }}
                     >
-                      {comment.content.length > textLimit &&
+                      {post.content.length > textLimit &&
                         (isShowMore ? '[닫기]' : '...[더보기]')}
                     </div>
-                    {/* <h2>{comment.category}</h2> */}
                   </CommentInfo>
                 </Link>
               </>
@@ -139,7 +104,7 @@ function Comment() {
       <PagenationBox>
         <Pagination
           postsPerPage={commentsPerPage}
-          totalPosts={commentList.length}
+          totalPosts={postList.length}
           paginate={paginate}
           currentPage={currentPage}
         />
@@ -152,7 +117,6 @@ const Wrapper = styled.div`
   margin: 3rem auto;
   width: 90%;
   height: 45rem;
-
   //스크롤
   overflow-y: scroll;
   overflow-x: hidden;
@@ -170,13 +134,19 @@ const Wrapper = styled.div`
   }
 `;
 
+const Line = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 95%;
+  margin: 2rem auto;
+`;
+
 const CommentInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 1.5rem;
   padding: 2rem;
+  margin-top: 1.5rem;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
   background-color: white;
 
   img {
@@ -208,7 +178,6 @@ const Date = styled.div`
 `;
 
 const CommentContent = styled.div`
-  margin-top: 2.5rem;
   margin-left: 3rem;
   font-size: 2rem;
   font-weight: 500;
@@ -220,4 +189,4 @@ const PagenationBox = styled.div`
   margin: 1rem;
 `;
 
-export default Comment;
+export default PostList;
