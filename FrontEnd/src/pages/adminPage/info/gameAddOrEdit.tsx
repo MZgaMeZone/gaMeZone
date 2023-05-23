@@ -19,6 +19,8 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   onValue,
   receivedData,
 }) => {
+  const URL = `${process.env.REACT_APP_API_URL}/api/games`;
+
   //gameServiceStatus는 드롭다운 컴포넌트로 값을 받아온다, input x
 
   //드롭다운 컴포넌트에 전달할 배열
@@ -36,7 +38,6 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   //input 처리
   //null로 받아올 경우 (isAdding=== true일 경우)  input은 빈값으로 처리,
   //receivedData값이 있을 경우 (isEditing=== true) input에 해당 아이템의 값을 넣어 준다.
-  const URL = process.env.REACT_APP_API_URL;
   const [inputs, setInputs] = useState<GameData>({
     id: '',
     name: receivedData?.name ?? '',
@@ -66,7 +67,7 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   //새로 등록시
   const handleAddClick = () => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/games`, {
+      .post(URL, {
         gameTitle: name,
         gameCategory: category,
         gameImageUrl: imageUrl,
@@ -87,7 +88,7 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   const handleSaveClick = () => {
     if (receivedData) {
       axios
-        .patch(`http://localhost:8080/api/games/${receivedData.id}`, {
+        .patch(`${URL}/${receivedData.id}`, {
           gameTitle: name,
           gameCategory: category,
           gameImageUrl: imageUrl,
