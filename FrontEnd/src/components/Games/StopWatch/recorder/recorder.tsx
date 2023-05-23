@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +13,14 @@ type RecorderProps = {
   setGameMode: React.Dispatch<React.SetStateAction<string>>;
 };
 
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
+
 function Recorder(props: RecorderProps) {
   const scores = props.scores;
   const setScores = props.setScores;
@@ -23,6 +31,14 @@ function Recorder(props: RecorderProps) {
   const setGameMode = props.setGameMode;
   const navigate = useNavigate();
 
+  const [userNickName, setUserNickName] = useState<string>('');
+
+  useEffect(() => {
+    axios.get(url + '/api/users', config).then((res) => {
+      setUserNickName(res.data.nickname);
+    });
+  }, []);
+
   // 현재 저장된 기록을 제출하려고함.
   function scoreSubmit(
     score: string[],
@@ -31,7 +47,7 @@ function Recorder(props: RecorderProps) {
   ) {
     const data = {
       gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
-      userNickname: 'ㄱㅁㅇ', // 나중에 token으로 관리
+      userNickname: userNickName, // 나중에 token으로 관리
       totalScores: score,
       averageScore: averagescore,
       highScore: highscore,
@@ -125,7 +141,7 @@ function Recorder(props: RecorderProps) {
                 navigate('/game/gameOver', {
                   state: {
                     gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
-                    userNickName: 'gomao', //나중에 token으로 관리
+                    userNickName: userNickName, //나중에 token으로 관리
                     userAverageScore: printScore[2],
                     userHighScore: printScore[0],
                   },
