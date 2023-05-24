@@ -28,6 +28,17 @@ class ScoreModel {
     return findScores;
   }
 
+  //닉네임으로 검색 하기
+  async findScoresByNickname(nickname) {
+    const findScores = await Score.find({
+      userNickname: { $regex: new RegExp(`${nickname}`, 'i') },
+    });
+    if (findScores.length < 1) {
+      console.log(`저장된 기록이 없습니다.`);
+    }
+    return findScores;
+  }
+
   async findScoresById(id) {
     // 유저아이디로 검색하여 달성한 모든 기록정보를 불러오기
     const findScores = await Score.find({ userNickname: id });
@@ -156,7 +167,7 @@ class ScoreModel {
       );
       return updatedData;
     } catch (e) {
-      console.log("[게임 기록 내 유저 이메일 업데이트 실패]");
+      console.log('[게임 기록 내 유저 이메일 업데이트 실패]');
       throw new Error(e);
     }
   }

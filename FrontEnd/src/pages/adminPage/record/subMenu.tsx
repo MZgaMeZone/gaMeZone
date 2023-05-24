@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ViewGame from './viewGame';
-import ViewUser from './viewUser';
+import ViewScore from './viewScore';
+import ViewUser from './searchUser';
 
 const SubMenu = () => {
   const URL = `${process.env.REACT_APP_API_URL}/api/scores`;
@@ -30,7 +30,13 @@ const SubMenu = () => {
         </div>
       </Nav>
       <Content>
-        {menu === 0 ? <ViewGame URL={URL} /> : menu === 1 ? <ViewUser /> : ''}
+        {menu === 0 ? (
+          <ViewScore URL={URL} menu={0} />
+        ) : menu === 1 ? (
+          <ViewScore URL={URL} menu={1} />
+        ) : (
+          ''
+        )}
       </Content>
     </Container>
   );
@@ -47,10 +53,11 @@ const Nav = styled.div`
     cursor: pointer;
     font-size: 2rem;
     font-weight: 500;
-    color:#242424
+    color: #242424;
     &:active {
       font-weight: 600;
     }
+  }
 `;
 
 const Content = styled.div`
