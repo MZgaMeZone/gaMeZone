@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import '../../../style/profile.css';
 import axios from 'axios';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type ProfileProps = {
   email: string;
@@ -9,8 +11,21 @@ type ProfileProps = {
 };
 
 function Profile({ img, email, nickName }: ProfileProps) {
-  const handleLogout = async () => {
-    // await axios.get('/api/auth/logout');
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    const userToken = localStorage.getItem('userToken');
+    if (userToken) {
+      console.log('userToken를 정상적으로 받아왔습니다!');
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    alert('로그아웃 되었습니다.');
+    navigate('/');
+    setIsLoggedIn(false);
   };
   return (
     <>

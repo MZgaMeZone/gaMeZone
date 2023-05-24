@@ -53,6 +53,10 @@ function AvartarChange() {
             {imageSrc && <img src={imageSrc} alt="preview-img" />} */}
           </Preview>
           <h2>이미지 미리보기</h2>
+          <form
+            action="http://localhost:8080//public/images"
+            method="POST"
+          ></form>
           <input type="file" onChange={handleFileChange} />
           <Button onClick={updatePofile}>프로필 이미지 수정</Button>
           <Button onClick={deletePofile}>프로필 이미지 삭제</Button>
