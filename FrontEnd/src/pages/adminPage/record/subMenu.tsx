@@ -30,7 +30,13 @@ const SubMenu = () => {
         </div>
       </Nav>
       <Content>
-        {menu === 0 ? <ViewGame URL={URL} /> : menu === 1 ? <ViewUser /> : ''}
+        {menu === 0 ? (
+          <ViewGame URL={URL} />
+        ) : menu === 1 ? (
+          <ViewUser URL={URL} />
+        ) : (
+          ''
+        )}
       </Content>
     </Container>
   );

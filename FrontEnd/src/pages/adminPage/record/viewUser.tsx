@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
-const ViewUser = () => {
+import axios from 'axios';
+
+type Props = {
+  URL: string;
+};
+
+const ViewUser: React.FC<Props> = ({ URL }) => {
+  console.log(URL);
   const [input, setInput] = useState<string>('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
   const handleClick = () => {
-    console.log(input);
-    setInput('');
+    axios
+      .get(`${URL}/search/${input}`)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
+
   return (
     <Content>
       <SearchInput
         onChange={handleChange}
+        value={input}
         placeholder="조회할 유저의 닉네임을 입력해주세요."
       ></SearchInput>
       <Button onClick={handleClick}>

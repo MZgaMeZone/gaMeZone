@@ -16,6 +16,10 @@ class ScoreService {
     return await scoreModel.findScoresByGameId(id);
   }
   //GET
+  async findScoresByNickname(nickname) {
+    return await scoreModel.findScoresByNickname(nickname);
+  }
+  //GET
   async findScoresById(id) {
     return await scoreModel.findScoresById(id);
   }

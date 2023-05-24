@@ -36,6 +36,22 @@ scoreRouter.get('/games/gameId/:id', async (req, res, next) => {
     next(err);
   }
 });
+//닉네임으로 게임 기록 조회하는 get 요청
+scoreRouter.get('/search/:nickname', async (req, res, next) => {
+  try {
+    const nickname = req.params.nickname;
+    console.log(nickname);
+    console.log('🖐️ 해당 게임의 기록을 요청합니다.');
+    const scoreList = await scoreService.findScoresByNickname(nickname);
+
+    console.log('✔️ 해당 게임의 모든 기록을 불러오는 데 성공했습니다!');
+
+    res.status(201).json(scoreList);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
 
 // 해당 user의 모든 기록정보를 가져오는 GET 요청
 scoreRouter.get('/users/:id', async (req, res, next) => {
@@ -116,23 +132,23 @@ scoreRouter.delete('/:id', async (req, res, next) => {
 });
 
 //해당 유저의 기록에서 저장된 nickname을 모두 변경
-scoreRouter.patch("/", async (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
+scoreRouter.patch('/', async (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
   if (!token) {
-    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+    return res.status(401).json('토큰이 없습니다. 로그인 후 이용해주세요.');
   }
-  console.log("😸 게임 기록 내 유저 이메일 업데이트합니다...");
+  console.log('😸 게임 기록 내 유저 이메일 업데이트합니다...');
   const { userEmail, userNickname } = req.body;
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log("✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.");
+    console.log('✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.');
 
     const updatedScore = await scoreService.updateScore(
       userEmail,
       userNickname
     );
-    console.log("✔️ 게임 기록 내 유저 이메일 업데이트 완료!");
+    console.log('✔️ 게임 기록 내 유저 이메일 업데이트 완료!');
     return res.status(200).json(updatedScore);
   } catch (err) {
     console.log(`❌ ${err}`);
