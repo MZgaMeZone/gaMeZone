@@ -26,6 +26,7 @@ function Login() {
         if (res.status === 200) {
           localStorage.setItem('userToken', res.data.userToken);
           navigate('/');
+          window.location.reload();
         }
       })
       .catch((e) => {

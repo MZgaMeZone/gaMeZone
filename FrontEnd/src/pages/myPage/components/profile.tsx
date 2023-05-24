@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import '../../../style/profile.css';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 type ProfileProps = {

@@ -9,20 +9,22 @@
 | POST   | /api/users/signup/nicknameDuplicateCheck | 회원가입 시 닉네임 중복검사   |
 | POST   | /api/users/login                         | 로그인                        |
 | GET    | /api/users                               | 사용자 정보 조회              |
-| PUT    | /api/users                               | 사용자 정보 수정              |
+| PUT    | /api/users/nicknameChange                | 사용자 닉네임 수정            |
+| PUT    | /api/users/passwordChange                | 사용자 비밀번호 수정          |
+| PUT    | /api/users/userIconChange                | 사용자 아이콘 수정            |
 | DELETE | /api/users                               | 사용자 정보 삭제              |
 | GET    | /api/users/allUsers                      | 사용자 전체 정보 조회(관리자) |
 
 ### 게임 명세
 
-| Method | URI                         | Description             |
-| ------ | --------------------------- | ----------------------- |
-| GET    | /api/games                  | 게임목록 전체조회       |
+| Method | URI                         | Description            |
+| ------ | --------------------------- | ---------------------- |
+| GET    | /api/games                  | 게임목록 전체조회      |
 | GET    | /api/games/:id              | 게임ID로 게임설명 조회 |
-| GET    | /api/games/categories/:name | 카테고리로 게임조회     |
-| POST   | /api/games                  | 새 게임정보 등록        |
-| PATCH  | /api/games/:id              | 게임정보 수정           |
-| DELETE | /api/games                  | 등록된 게임 삭제        |
+| GET    | /api/games/categories/:name | 카테고리로 게임조회    |
+| POST   | /api/games                  | 새 게임정보 등록       |
+| PATCH  | /api/games/:id              | 게임정보 수정          |
+| DELETE | /api/games                  | 등록된 게임 삭제       |
 
 ### 게임기록 명세
 
