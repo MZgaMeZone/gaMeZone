@@ -48,16 +48,13 @@ export class UserModel {
     }
   }
 
-  // 유저 정보 수정
-  async updateUser(userId, toUpdateInfo) {
+  // 유저 닉네임 수정
+  async updateNickname(email, nickname) {
     try {
-      // returnOriginal 옵션을 false로 설정되면 업데이트된 사용자 리턴
       const updatedUser = await User.findOneAndUpdate(
-        { email: userId },
-        toUpdateInfo,
-        {
-          returnOriginal: false,
-        }
+        { email },
+        { $set: { nickname } },
+        { new: true }
       );
       return updatedUser;
     } catch (err) {
