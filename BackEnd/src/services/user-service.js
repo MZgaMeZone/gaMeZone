@@ -105,13 +105,31 @@ class UserService {
     }
   }
 
-  // 회원 정보 업데이트
+  // 회원 닉네임 업데이트
   async updateNickname(email, newNickname) {
     const updatedNickname = await this.userModel.updateNickname(
       email,
       newNickname
     );
     return updatedNickname;
+  }
+
+  // 회원 비밀번호 확인
+  async checkPassword(email, password) {
+    const userData = await this.userModel.findById(email);
+    const hashedUserPassword = userData.password;
+    const comparePassword = await bcrypt.compare(password, hashedUserPassword);
+
+    return comparePassword;
+  }
+
+  async updatePassword(email, newPassword) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updatedPassword = await this.userModel.updatePassword(
+      email,
+      hashedPassword
+    );
+    return updatedPassword;
   }
 
   // // 회원 정보 업데이트
