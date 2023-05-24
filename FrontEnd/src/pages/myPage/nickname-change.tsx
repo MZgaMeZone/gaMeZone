@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { MouseEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { get } from 'http';
 
 const url = process.env.REACT_APP_API_URL;
 const userToken: string | null = localStorage.getItem('userToken');
