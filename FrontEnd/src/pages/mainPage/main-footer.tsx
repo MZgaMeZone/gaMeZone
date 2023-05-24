@@ -16,6 +16,7 @@ function MainFooter(props: any) {
     console.log('Logout 실행');
     console.log('userToken 삭제');
     setIsLoggedIn(false);
+    alert('로그아웃 되었습니다.');
   }
 
   React.useEffect(() => {
