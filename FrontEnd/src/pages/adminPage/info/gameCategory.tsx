@@ -57,7 +57,6 @@ const GameCategory = () => {
         const res = await axios.post(URL, {
           categoryName: addInput,
         });
-        console.log(res.data);
         setData([...data, res.data]);
         setInputs((prev) => ({
           ...prev,

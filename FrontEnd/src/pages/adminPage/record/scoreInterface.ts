@@ -3,7 +3,8 @@ export interface Score {
   gameId: string;
   gameUrl: string;
   userNickname: string;
-  totalScores: string;
+  totalScores: any;
   averageScore: string;
   highScore: string;
+  createdAt: string;
 }
