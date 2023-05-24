@@ -42,9 +42,17 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
       });
     }, []);
 
+  
+    useEffect(() => {
+      if (content) {
+        // content가 가져와졌을 때 기본값으로 사용할 데이터를 설정
+        setComment(Id[0].content);
+      }
+    }, [content]);
+
     if (!content) {
       return null;
-    };
+    }
 
     if (!Id) {
       return null;
