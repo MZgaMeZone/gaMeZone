@@ -53,10 +53,11 @@ const Nav = styled.div`
     cursor: pointer;
     font-size: 2rem;
     font-weight: 500;
-    color:#242424
+    color: #242424;
     &:active {
       font-weight: 600;
     }
+  }
 `;
 
 const Content = styled.div`
