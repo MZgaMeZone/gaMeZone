@@ -7,19 +7,23 @@ type Props = {
   URL: string;
 };
 
-const ViewUser: React.FC<Props> = ({ URL }) => {
-  console.log(URL);
+const SearchUser: React.FC<Props> = ({ URL }) => {
+  //유저 닉네임을 검색하여 게임 기록 조회
+
+  //input 처리
   const [input, setInput] = useState<string>('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
+
+  //검색 API
+  const [data, setData] = useState('');
   const handleClick = () => {
     axios
       .get(`${URL}/search/${input}`)
-      .then((res) => console.log(res.data))
+      .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };
-
   return (
     <Content>
       <SearchInput
@@ -34,7 +38,7 @@ const ViewUser: React.FC<Props> = ({ URL }) => {
   );
 };
 
-export default ViewUser;
+export default SearchUser;
 
 const Content = styled.div`
   display: flex;

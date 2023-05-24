@@ -1,37 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { GameInfo } from '../info/interface';
 import GameDropDown from './gameDropdown';
 import { Score } from './scoreInterface';
-import Modal from './modal';
+import ScoreModal from './scoreModal';
+import SearchUser from './searchUser';
 
 type Props = {
   URL: string;
+  menu: number;
 };
 
-const ViewGame: React.FC<Props> = ({ URL }) => {
+const ViewScore: React.FC<Props> = ({ URL, menu }) => {
+  //****게임별 보기  => 드롭다운 menu === 0
+  //****유저별 보기  => 검색창  menu === 1
+
   //**드롭다운을 통해 게임이름을 선택하면 받아온 게임아이디를 scoreAPI get요청하여 게임 기록정보를 받아온다.
-
-  //게임 드롭다운에 쓰일 게임아이디, 게임 타이틀을 담아줄 객체
-  const [gameData, setGameData] = useState<GameInfo>({
-    _id: '',
-    gameTitle: '',
-    gameIconUrl: '',
-    gameImageUrl: '',
-    gameCategory: '',
-    gameDescription: '',
-    gameManual: '',
-    gameServiceStatus: '',
-  });
-  //게임 정보 가져오는 API를 통해서 게임 데이터를 게임드롭다운 컴포넌트로 전달 한다.
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/games`)
-      .then((res) => setGameData(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
   //게임 컴포넌트에서 받아온 게임아이디를 gameId에 담아준다.
   const [gameId, setGameId] = useState<string>('');
   const handleDropDownValue = (id: string) => {
@@ -83,7 +67,13 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
   return (
     <Container>
       <DropdownDiv>
-        <GameDropDown options={gameData} onValue={handleDropDownValue} />
+        {menu === 0 ? (
+          <GameDropDown onValue={handleDropDownValue} />
+        ) : menu === 1 ? (
+          <SearchUser URL={URL} />
+        ) : (
+          ''
+        )}
       </DropdownDiv>
       {scoreData.length === 0 && gameId ? (
         <ResetContent>등록된 기록이 없습니다.</ResetContent>
@@ -101,12 +91,12 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
               <ScoreText>{item.averageScore}</ScoreText>
               <div>
                 {isOpen[item._id] ? (
-                  <Modal
+                  <ScoreModal
                     isOpen={isOpen}
                     onClose={closeModal}
                     id={item._id}
                     data={modalData}
-                  ></Modal>
+                  ></ScoreModal>
                 ) : (
                   ''
                 )}
@@ -126,7 +116,7 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
   );
 };
 
-export default ViewGame;
+export default ViewScore;
 
 const Container = styled.div`
   position: relative;

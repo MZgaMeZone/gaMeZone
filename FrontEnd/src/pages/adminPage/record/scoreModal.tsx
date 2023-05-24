@@ -10,7 +10,7 @@ type ModalProps = {
   data?: Score;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, data }) => {
+const ScoreModal: React.FC<ModalProps> = ({ isOpen, onClose, id, data }) => {
   const value = {
     user: data?.userNickname,
     avgScore: data?.averageScore,
@@ -81,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, data }) => {
   );
 };
 
-export default Modal;
+export default ScoreModal;
 
 const ModalContainer = styled.div`
   position: fixed;

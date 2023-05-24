@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as DownIcon } from '../../../style/icons/String-icon-ChevronDown.svg';
 import { GameInfo } from '../info/interface';
+import axios from 'axios';
 interface DropDownProps {
-  options: GameInfo;
   onValue: (value: string) => void;
 }
 
-const GameDropDown: React.FC<DropDownProps> = ({ options, onValue }) => {
+const GameDropDown: React.FC<DropDownProps> = ({ onValue }) => {
   const [currentValue, setCurrentValue] =
     useState('조회할 게임을 선택해주세요:)');
+
   const [showOptions, setShowOptions] = useState(false);
+
+  //게임 드롭다운에 쓰일 게임아이디, 게임 타이틀을 담아줄 객체
+  const [options, setOptions] = useState('');
+  //게임 정보 가져오는 API를 통해서 게임 데이터를 게임드롭다운의 옵션들을 받아옴
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/games`)
+      .then((res) => setOptions(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleOptionClick = (selectedOption: string, id: string) => {
     setCurrentValue(selectedOption);
     setShowOptions(false);
     onValue(id);
   };
-
+  //받아온 옵션들을 맵으로 돌려준다.
   return (
     <DropDownContainer onClick={() => setShowOptions(!showOptions)}>
       <CurrentOption>
