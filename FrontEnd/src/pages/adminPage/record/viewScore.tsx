@@ -16,9 +16,17 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
   //****유저별 보기  => 검색창  menu === 1 SearchUser
 
   const [scoreData, setScoreData] = useState<Score[]>([]);
-  const handleDropDownValue = (data: any) => {
+
+  // 받아오는 데이터
+  const handleData = (data: any) => {
     setScoreData(data);
   };
+
+  useEffect(() => {
+    return () => {
+      setScoreData([]);
+    };
+  }, [menu]);
 
   //게임정보 상세 보기(모달창)
   const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({});
@@ -57,16 +65,18 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
     <Container>
       <DropdownDiv>
         {menu === 0 ? (
-          <SelectGame onValue={handleDropDownValue} URL={URL} />
+          <SelectGame onValue={handleData} URL={URL} />
         ) : menu === 1 ? (
-          <SearchUser URL={URL} />
+          <SearchUser onValue={handleData} URL={URL} />
         ) : (
           ''
         )}
       </DropdownDiv>
-      {scoreData.length === 0 ? (
-        <ResetContent>등록된 기록이 없습니다.</ResetContent>
-      ) : (
+      {menu === 0 && scoreData.length === 0 ? (
+        <ResetContent>조회할 게임을 선택해주세요.</ResetContent>
+      ) : menu === 1 && scoreData.length === 0 ? (
+        <ResetContent>조회할 유저의 닉네임을 입력해주세요.</ResetContent>
+      ) : scoreData.length > 0 ? (
         <Main>
           <Title>
             <p>user</p>
@@ -97,6 +107,8 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
             </Content>
           ))}
         </Main>
+      ) : (
+        ''
       )}
       <FooterDiv />
     </Container>

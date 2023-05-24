@@ -57,7 +57,7 @@ const AdminRecord = () => {
 export default AdminRecord;
 
 const Scroll = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 16px;

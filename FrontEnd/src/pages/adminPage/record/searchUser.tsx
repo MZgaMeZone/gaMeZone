@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
 import axios from 'axios';
-
-type Props = {
+import { Score } from './scoreInterface';
+interface Props {
+  onValue: (value: Score) => void;
   URL: string;
-};
+}
 
-const SearchUser: React.FC<Props> = ({ URL }) => {
+const SearchUser: React.FC<Props> = ({ onValue, URL }) => {
   //유저 닉네임을 검색하여 게임 기록 조회
 
   //input 처리
@@ -17,17 +18,19 @@ const SearchUser: React.FC<Props> = ({ URL }) => {
   };
 
   //검색 API
-  const [data, setData] = useState('');
   const handleClick = () => {
     axios
       .get(`${URL}/search/${input}`)
-      .then((res) => setData(res.data))
+      .then((res) => onValue(res.data))
       .catch((err) => console.log(err));
   };
   return (
     <Content>
       <SearchInput
         onChange={handleChange}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') handleClick();
+        }}
         value={input}
         placeholder="조회할 유저의 닉네임을 입력해주세요."
       ></SearchInput>
@@ -53,6 +56,8 @@ const SearchInput = styled.input`
   border: 0;
   border-radius: 10px;
   outline: none;
+  color: #242424;
+  font-size: 2rem;
 `;
 const Button = styled.div`
   justify-content: center;
