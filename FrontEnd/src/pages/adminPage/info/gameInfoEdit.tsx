@@ -5,12 +5,14 @@ import GameAddOrEdit from './gameAddOrEdit';
 import { GameInfo, GameData } from './interface';
 
 const GameInfoEdit = () => {
+  const URL = `${process.env.REACT_APP_API_URL}/api/games`;
+
   const [data, setData] = useState<GameInfo[]>([]);
   const [sendingData, setSendingData] = useState<GameData>();
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/games`)
+      .get(URL)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -35,7 +37,7 @@ const GameInfoEdit = () => {
         id: gameInfo._id,
         name: gameInfo.gameTitle,
         imageUrl: gameInfo.gameImageUrl.toString(),
-        category: gameInfo.gameCategory,
+        category: gameInfo.gameCategory[0].split(','), // 게임 카테고리 스키마에 맞게 데이터 양식 변경함 by dw
         description: gameInfo.gameDescription,
         menual: gameInfo.gameManual,
         status: gameInfo.gameServiceStatus,
@@ -82,13 +84,11 @@ const GameInfoEdit = () => {
     );
     if (deleteConfirm) {
       try {
-        await axios.delete(`http://localhost:8080/api/games/${id}`);
+        await axios.delete(`${URL}/${id}`);
         setData(data.filter((item) => item._id !== id));
       } catch (err) {
         console.error(err);
       }
-    } else {
-      alert('삭제가 취소되었습니다.');
     }
   };
   // 추가 수정 GameAddOrEdit 컴포넌트에서 한 번에 진행,
@@ -115,7 +115,7 @@ const GameInfoEdit = () => {
                 <Content>
                   <FlexContnet>
                     <SubTitle>카테고리:</SubTitle>
-                    <ContentText>{item.gameCategory}</ContentText>
+                    <ContentText>{item.gameCategory.join(', ')}</ContentText>
                   </FlexContnet>
                   <FlexContnet>
                     <SubTitle>게임 설명:</SubTitle>

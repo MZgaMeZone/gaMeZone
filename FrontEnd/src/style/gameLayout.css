@@ -3,7 +3,7 @@
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: "neodgm", cursive;
+  font-family: 'neodgm', cursive;
   display: flex;
   justify-content: center;
 }
@@ -90,4 +90,11 @@ nav p:hover {
   flex-basis: 30%;
   box-shadow: inset -3px -3px 3px rgba(255, 255, 255, 0.8),
     inset 3px 3px 3px rgba(0, 0, 0, 0.32);
+  padding: 0.6rem 0.6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-box.box2 {
+  flex-basis: 60%;
 }

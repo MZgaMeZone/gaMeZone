@@ -10,6 +10,11 @@ class ScoreService {
   async findScoresByGame(id) {
     return await scoreModel.findScoresByGame(id);
   }
+
+  //GET
+  async findScoresByGameId(id) {
+    return await scoreModel.findScoresByGameId(id);
+  }
   //GET
   async findScoresById(id) {
     return await scoreModel.findScoresById(id);
@@ -28,6 +33,13 @@ class ScoreService {
   }
   async userRanking() {
     return await scoreModel.userRanking();
+  }
+
+  async updateScore(userEmail, userNickname) {
+    return await scoreModel.updateScore(userEmail, userNickname);
+  }
+  async deleteScoreByUserNickname(userNickname) {
+    return await scoreModel.deleteScoreByUserNickname(userNickname);
   }
 }
 

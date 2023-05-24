@@ -18,9 +18,19 @@ class ScoreModel {
     return findScores;
   }
 
+  async findScoresByGameId(id) {
+    // 게임명으로 검색하여 모든 기록정보를 불러오기
+    // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
+    const findScores = await Score.find({ gameId: id });
+    if (findScores.length < 1) {
+      console.log(`저장된 기록이 없습니다.`);
+    }
+    return findScores;
+  }
+
   async findScoresById(id) {
     // 유저아이디로 검색하여 달성한 모든 기록정보를 불러오기
-    const findScores = await Score.find({ userId: id });
+    const findScores = await Score.find({ userNickname: id });
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
@@ -134,6 +144,30 @@ class ScoreModel {
       return deleteData;
     } catch (e) {
       console.log(`[기록 삭제 실패] 입력한 id를 다시 확인해주세요`);
+      throw new Error(e);
+    }
+  }
+  async updateScore(userEmail, userNickname) {
+    // 닉네임 변경유저 기록 업데이트 기능?
+    try {
+      const updatedData = await Score.updateMany(
+        { userEmail: userEmail },
+        { userNickname: userNickname }
+      );
+      return updatedData;
+    } catch (e) {
+      console.log("[게임 기록 내 유저 이메일 업데이트 실패]");
+      throw new Error(e);
+    }
+  }
+
+  async deleteScoreByUserNickname(userNickname) {
+    // 특정 유저의 기록을 말소하는 기능
+    try {
+      const deleteData = await Score.deleteMany({ userNickname: userNickname });
+      return deleteData;
+    } catch (e) {
+      console.log("[기록 삭제 실패] 입력한 닉네임을 다시 확인해주세요");
       throw new Error(e);
     }
   }

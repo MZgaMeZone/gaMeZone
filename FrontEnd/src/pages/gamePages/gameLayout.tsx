@@ -133,35 +133,11 @@ const GameLayout = () => {
             </nav>
             <div className="game-container-body">{gameComponent}</div>
             <div className="game-container-footer">
-              <div
-                className="footer-box"
-                style={{
-                  padding: '0.6rem 0.6rem',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                Nickname&Role
-              </div>
-              <div
-                className="footer-box"
-                style={{
-                  padding: '0.6rem 0.6rem',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                {userNickname ? userNickname : ''}
-              </div>
-              <div
-                className="footer-box"
-                style={{
-                  padding: '0.6rem 0.6rem',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
+              <div className="footer-box box1">
                 {userRole ? userRole : 'guest'}
+              </div>
+              <div className="footer-box box2">
+                {userNickname ? userNickname : ''}
               </div>
             </div>
           </div>

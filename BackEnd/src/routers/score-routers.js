@@ -12,7 +12,24 @@ scoreRouter.get("/games/:id", async (req, res, next) => {
     const gameId = req.params.id;
     console.log("🖐️ 해당 게임의 기록을 요청합니다.");
     const scoreList = await scoreService.findScoresByGame(gameId);
+
     console.log("✔️ 해당 게임의 모든 기록을 불러오는 데 성공했습니다!");
+
+    res.status(201).json(scoreList);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+// 해당 game의 gameId로 모든 기록정보 가져오는 GET 요청
+scoreRouter.get("/games/gameId/:id", async (req, res, next) => {
+  try {
+    const gameId = req.params.id;
+    console.log("🖐️ 해당 게임의 기록을 요청합니다.");
+    const scoreList = await scoreService.findScoresByGameId(gameId);
+
+    console.log("✔️ 해당 게임의 모든 기록을 불러오는 데 성공했습니다!");
+
     res.status(201).json(scoreList);
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -71,7 +88,7 @@ scoreRouter.get("/:id/:option", async (req, res, next) => {
   }
 });
 
-// 해당 game의 모든 기록정보를 가져오는 GET 요청
+// 명예의 전당
 scoreRouter.get("/honors", async (req, res, next) => {
   try {
     console.log("🖐️ 명예의 전당을 출력합니다.");
@@ -84,12 +101,51 @@ scoreRouter.get("/honors", async (req, res, next) => {
   }
 });
 
-// 게임정보를 삭제하는 DELETE 요청
+// 기록정보를 삭제하는 DELETE 요청
 scoreRouter.delete("/:id", async (req, res, next) => {
   try {
     const index = req.params.id;
     console.log("🖐️ 해당 기록 데이터를 삭제합니다.");
     await scoreService.deleteScore(index);
+    console.log("✔️ 기록 삭제 완료!");
+    res.status(201).send("기록 삭제 완료");
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
+//해당 유저의 기록에서 저장된 nickname을 모두 변경
+scoreRouter.patch("/", async (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+  }
+  console.log("😸 게임 기록 내 유저 이메일 업데이트합니다...");
+  const { userEmail, userNickname } = req.body;
+
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log("✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.");
+
+    const updatedScore = await scoreService.updateScore(
+      userEmail,
+      userNickname
+    );
+    console.log("✔️ 게임 기록 내 유저 이메일 업데이트 완료!");
+    return res.status(200).json(updatedScore);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
+
+// 게임정보를 삭제하는 DELETE 요청
+scoreRouter.delete("/users/:name", async (req, res, next) => {
+  try {
+    const userNickname = req.params.name;
+    console.log(`🖐️ ${userNickname} 유저의 기록 데이터를 삭제합니다.`);
+    await scoreService.deleteScoreByUserNickname(userNickname);
     console.log("✔️ 기록 삭제 완료!");
     res.status(201).send("기록 삭제 완료");
   } catch (err) {
