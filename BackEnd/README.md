@@ -47,20 +47,23 @@
 
 ### 게시물 명세
 
-| Method | URI                | Description             |
-| ------ | ------------------ | ----------------------- |
-| GET    | /api/posts         | 전체 게시물 조회        |
-| GET    | /api/posts/:userId | 특정 유저의 게시물 조회 |
-| POST   | /api/posts         | 새 게시물 생성          |
-| PATCH  | /api/posts/:postId | 특정 게시물 수정        |
-| DELETE | /api/posts/:postId | 특정 게시물 삭제        |
+| Method | URI                     | Description                 |
+| ------ | ----------------------- | --------------------------- |
+| GET    | /api/posts              | 자유게시판 전체 게시물 조회 |
+| GET    | /api/posts/cert         | 인증게시판 전체 게시물 조회 |
+| GET    | /api/posts/post/:postId | 특정 게시물 조회            |
+| GET    | /api/posts/:userId      | 특정 유저의 게시물 조회     |
+| POST   | /api/posts              | 새 게시물 생성              |
+| PATCH  | /api/posts/:postId      | 특정 게시물 수정            |
+| DELETE | /api/posts/:postId      | 특정 게시물 삭제            |
 
 ### 댓글 명세
 
-| Method | URI                        | Description                  |
-| ------ | -------------------------- | ---------------------------- |
-| GET    | /api/comments/post/:postId | 특정 게시물의 모든 댓글 조회 |
-| GET    | /api/comments/:userId      | 특정 유저의 모든 댓글 조회   |
-| POST   | /api/comments              | 새로운 댓글 생성             |
-| PATCH  | /api/comments/:commentId   | 특정 댓글 수정               |
-| DELETE | /api/comments/:commentId   | 특정 댓글 삭제               |
+| Method | URI                           | Description                  |
+| ------ | ----------------------------- | ---------------------------- |
+| GET    | /api/comments/post/:postId    | 특정 게시물의 모든 댓글 조회 |
+| GET    | /api/comments/comment/:postId | 특정 댓글 조회               |
+| GET    | /api/comments/:userId         | 특정 유저의 모든 댓글 조회   |
+| POST   | /api/comments                 | 새로운 댓글 생성             |
+| PATCH  | /api/comments/:commentId      | 특정 댓글 수정               |
+| DELETE | /api/comments/:commentId      | 특정 댓글 삭제               |

@@ -14,6 +14,7 @@ interface commentsType {
 
 interface comment {
   author: string,
+  content: string,
 }
 
 const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
@@ -41,9 +42,17 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
       });
     }, []);
 
+  
+    useEffect(() => {
+      if (content) {
+        // content가 가져와졌을 때 기본값으로 사용할 데이터를 설정
+        setComment(Id[0].content);
+      }
+    }, [content]);
+
     if (!content) {
       return null;
-    };
+    }
 
     if (!Id) {
       return null;
@@ -91,7 +100,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
           <ModalTitle>댓글 수정</ModalTitle>
           <ModalMain>
             <Main>내용</Main>
-            <MainText value={comment} onChange={handleContentChange} />
+            <MainText value={Id[0].content} onChange={handleContentChange} />
           </ModalMain>
           <ButtonContainer>
             <CompleteButton onClick={clickHandler}>수정하기</CompleteButton>
