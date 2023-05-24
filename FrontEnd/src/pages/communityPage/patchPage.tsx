@@ -7,13 +7,14 @@ interface postsType {
     _id: string;
     title: string;
     content: string;
+    category: string;
     author: { nickname: string, _id: string};
     createdAt: string;
   }
 
 const ModifiedPost = () => {
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
   const navigate = useNavigate();
   const {postId} = useParams<{ postId: string }>();
@@ -61,7 +62,11 @@ const ModifiedPost = () => {
       await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, postData);
 
       alert('게시물 수정이 완료되었습니다.');
-      navigate(`/community/${postId}`);
+      if (post.category === "free") {
+        navigate(`/community/${postId}`)
+      } else {
+        navigate(`/community/certified/${postId}`)
+      }
     } catch (error) {
       console.error(error);
       alert('게시물 작성 중 오류가 발생했습니다.');
@@ -74,14 +79,14 @@ const ModifiedPost = () => {
       <PostForm onSubmit={handleFormSubmit}>
         <TitleForm>
           <TitleLabel>제목</TitleLabel>
-          <TitleInput type="text" value={post.title} onChange={handleTitleChange} />
+          <TitleInput type="text" value={title} onChange={handleTitleChange} />
         </TitleForm>
         <MainForm>
           <MainLabel>내용</MainLabel>
-          <MainInput value={post.content} onChange={handleContentChange} />
+          <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
         <PostFooter>
-          <GoBack to="/community">뒤로 가기</GoBack>
+          {post.category === "free" ? <GoBack to="/community">뒤로 가기</GoBack> : <GoBack to="/community/certified">뒤로 가기</GoBack>}
           <PostButton type="submit">작성 완료</PostButton>
         </PostFooter>
       </PostForm>
