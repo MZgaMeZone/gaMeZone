@@ -1,28 +1,24 @@
-import React, {useState, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
 import axios from 'axios';
 
 const DeleteComment = ({commentId, postId}:any) => {
-    const navigate = useNavigate();
 
-    const clickHandler = async () => {
-        try {
-            axios.delete(`${process.env.REACT_APP_API_URL}/api/comments/${commentId}`);
-            alert("댓글이 삭제되었습니다.");
-            navigate(`/community/${postId}`);
-        } catch(err) {
-            alert('댓글 삭제 중 오류가 발생했습니다.');
-        }
-    };
+  const clickHandler = async () => {
+      try {
+          axios.delete(`${process.env.REACT_APP_API_URL}/api/comments/${commentId}`);
+          alert("댓글이 삭제되었습니다.");
+          window.location.reload();
+      } catch(err) {
+          alert('댓글 삭제 중 오류가 발생했습니다.');
+      }
+  };
 
-    
-
-    return (
-        <div>
-            <DeleteButton onClick={clickHandler}>삭제</DeleteButton>
-        </div>
-    )
+  return (
+      <div>
+          <DeleteButton onClick={clickHandler}>삭제</DeleteButton>
+      </div>
+  )
 };
 
 export default DeleteComment;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import axios from 'axios';
 
@@ -18,7 +18,8 @@ interface comment {
 }
 
 const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
-    const nav = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
     const [comment, setComment] = useState<string>("");
     const [content, setContent] = useState<commentsType | null>(null); // 코멘트 하나만 가져오기 위해 상태를 단일 코멘트로 변경
     const [Id, setId] = useState<comment[]>([]);
@@ -42,7 +43,6 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
       });
     }, []);
 
-  
     useEffect(() => {
       if (content) {
         // content가 가져와졌을 때 기본값으로 사용할 데이터를 설정
@@ -83,6 +83,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
         closeModal(true);
   
         alert("댓글 수정이 완료되었습니다.");
+        window.location.reload();
       } catch (err) {
         console.error(err);
         alert("댓글 수정 중 오류가 발생했습니다.");
@@ -91,7 +92,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
   
     const goBackHandler = () => {
       closeModal(true);
-      nav(`/community/${postId}`);
+      navigate(location.pathname);
     };
   
     return (
@@ -100,7 +101,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
           <ModalTitle>댓글 수정</ModalTitle>
           <ModalMain>
             <Main>내용</Main>
-            <MainText value={Id[0].content} onChange={handleContentChange} />
+            <MainText value={comment} onChange={handleContentChange} />
           </ModalMain>
           <ButtonContainer>
             <CompleteButton onClick={clickHandler}>수정하기</CompleteButton>
