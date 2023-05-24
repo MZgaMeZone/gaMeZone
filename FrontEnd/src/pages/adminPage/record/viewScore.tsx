@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import GameDropDown from './gameDropdown';
+import SelectGame from './selectGame';
 import { Score } from './scoreInterface';
 import ScoreModal from './scoreModal';
 import SearchUser from './searchUser';
@@ -12,8 +12,8 @@ type Props = {
 };
 
 const ViewScore: React.FC<Props> = ({ URL, menu }) => {
-  //****게임별 보기  => 드롭다운 menu === 0
-  //****유저별 보기  => 검색창  menu === 1
+  //****게임별 보기  => 드롭다운 menu === 0 SelectGame
+  //****유저별 보기  => 검색창  menu === 1 SearchUser
 
   //**드롭다운을 통해 게임이름을 선택하면 받아온 게임아이디를 scoreAPI get요청하여 게임 기록정보를 받아온다.
   //게임 컴포넌트에서 받아온 게임아이디를 gameId에 담아준다.
@@ -68,7 +68,7 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
     <Container>
       <DropdownDiv>
         {menu === 0 ? (
-          <GameDropDown onValue={handleDropDownValue} />
+          <SelectGame onValue={handleDropDownValue} />
         ) : menu === 1 ? (
           <SearchUser URL={URL} />
         ) : (

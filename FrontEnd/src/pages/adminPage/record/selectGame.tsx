@@ -7,7 +7,7 @@ interface DropDownProps {
   onValue: (value: string) => void;
 }
 
-const GameDropDown: React.FC<DropDownProps> = ({ onValue }) => {
+const SelectGame: React.FC<DropDownProps> = ({ onValue }) => {
   const [currentValue, setCurrentValue] =
     useState('조회할 게임을 선택해주세요:)');
 
@@ -54,7 +54,7 @@ const GameDropDown: React.FC<DropDownProps> = ({ onValue }) => {
   );
 };
 
-export default GameDropDown;
+export default SelectGame;
 
 const DropDownContainer = styled.div`
   position: relative;
