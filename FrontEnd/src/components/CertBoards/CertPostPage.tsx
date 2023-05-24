@@ -84,25 +84,26 @@ const CertPostPage = () => {
             <CurrentLink to="/community/certified">인증게시판</CurrentLink>
           </Header>
           <Body>
-            <Post>
-              <TitleContainer>
-                <Title>{post.title}</Title>
-                <AuthorContainer>
-                  <Author>{post.author.nickname}</Author>
-                  <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Date>
-                </AuthorContainer>
-              </TitleContainer>
-              {userEmail === post.author.email && 
-              <ButtonContainer>
-                <ModifiedButton onClick={clickHandler}>수정하기</ModifiedButton>
-                <CertDeletePost postId={postId}/>
-              </ButtonContainer>
-              }
-              <MainText>{post.content.split("\n").map((item, index) => {
-                return <Text key={index}>{item}</Text>
-              })}</MainText>
-              
-            </Post>
+            <TitleContainer>
+              <Title>{post.title}</Title>
+              <AuthorContainer>
+                <Author>{post.author.nickname}</Author>
+                <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Date>
+              </AuthorContainer>
+            </TitleContainer>
+            <ScrollContainer>
+              <Post>
+                {userEmail === post.author.email && 
+                <ButtonContainer>
+                  <ModifiedButton onClick={clickHandler}>수정하기</ModifiedButton>
+                  <CertDeletePost postId={postId}/>
+                </ButtonContainer>
+                }
+                <MainText>{post.content.split("\n").map((item, index) => {
+                  return <Text key={index}>{item}</Text>
+                })}</MainText>
+              </Post>
+            </ScrollContainer>
             <CommentComponent postId={postId} category={category}/>
           </Body>
         </CommunityBody>
@@ -130,8 +131,6 @@ const CommunityContainer = styled.div`
   background-color: var(--background--gray);
   padding: 0.5rem 0;
 `;
-
-
 
 const CommunityHeader = styled.div`
   display: flex;
@@ -202,11 +201,30 @@ const Body = styled.div`
   margin: 0 3rem;
 `;
 
+const ScrollContainer = styled.div`
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-bottom: 1px solid var(--background--gray);
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 10%;
+    background-clip: padding-box;
+    border: 3px solid #ebeded;
+    background: silver;
+    box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
+    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
+  }
+  &::-webkit-scrollbar-track {
+    background: #ebeded;
+  }
+`
+
 const Post = styled.div`
   display: flex;
   flex-direction: column;
-  height: 37rem;
-  border-bottom: 1px solid var(--background--gray);
+  height: 31rem;
 `;
 
 const TitleContainer = styled.div`

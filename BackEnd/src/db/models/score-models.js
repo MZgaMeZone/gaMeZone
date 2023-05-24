@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
-import GameSchema from '../schemas/game-schema.js';
-import ScoreSchema from '../schemas/score-schema.js';
-import { nanoid } from 'nanoid'; // npm install nanoid 로 라이브러리 설치해야 함
-import dayjs from 'dayjs'; // npm install dayjs 로 라이브러리 설치해야 함
+import mongoose from "mongoose";
+import GameSchema from "../schemas/game-schema.js";
+import ScoreSchema from "../schemas/score-schema.js";
+import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
+import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
 
-const Game = mongoose.model('games', GameSchema);
-const Score = mongoose.model('scores', ScoreSchema);
+const Game = mongoose.model("games", GameSchema);
+const Score = mongoose.model("scores", ScoreSchema);
 
 class ScoreModel {
   async findScoresByGame(id) {
@@ -41,7 +41,7 @@ class ScoreModel {
 
   async findScoresById(id) {
     // 유저아이디로 검색하여 달성한 모든 기록정보를 불러오기
-    const findScores = await Score.find({ userId: id });
+    const findScores = await Score.find({ userNickname: id });
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
@@ -59,14 +59,14 @@ class ScoreModel {
     // 기록 데이터는 프론트단에서 걸러서 와야함.(기준이 게임마다 다르기 때문)
     // option은 Average Score, High Score 중 어느 것을 랭킹 기준으로 할 지
     const findScores = await Score.find({ gameUrl: id });
-    let nonOption = 'default';
-    let option = 'default';
-    if (param === 'avr') {
-      option = 'averageScore';
-      nonOption = 'highScore';
+    let nonOption = "default";
+    let option = "default";
+    if (param === "avr") {
+      option = "averageScore";
+      nonOption = "highScore";
     } else {
-      option = 'highScore';
-      nonOption = 'averageScore';
+      option = "highScore";
+      nonOption = "averageScore";
     }
     // 랭킹등록 우선순위 : 1순위(option) 2순위(non-option) 3순위(달성시점)
     const ranking = [...findScores].sort((b, a) =>
@@ -115,15 +115,15 @@ class ScoreModel {
           score: 0,
         };
       }
-      if (game.gameOption === 'avr') {
-        userRanking[userNickname][title]['sumOfAvr'] += averageScore;
-        userRanking[userNickname][title]['count'] += 1;
-        userRanking[userNickname][title]['score'] =
-          userRanking[userNickname][title]['sumOfAvr'] /
-          userRanking[userNickname][title]['count'];
+      if (game.gameOption === "avr") {
+        userRanking[userNickname][title]["sumOfAvr"] += averageScore;
+        userRanking[userNickname][title]["count"] += 1;
+        userRanking[userNickname][title]["score"] =
+          userRanking[userNickname][title]["sumOfAvr"] /
+          userRanking[userNickname][title]["count"];
       } else {
-        if (userRanking[userNickname][title]['score'] < highScore) {
-          userRanking[userNickname][title]['score'] = highScore;
+        if (userRanking[userNickname][title]["score"] < highScore) {
+          userRanking[userNickname][title]["score"] = highScore;
         }
       }
     }
@@ -136,7 +136,7 @@ class ScoreModel {
         if (!final[user]) {
           final[user] = 0;
         }
-        final[user] += userRanking[user][game]['score'];
+        final[user] += userRanking[user][game]["score"];
       }
     }
     const honorsRanking = Object.entries(final);
@@ -159,6 +159,7 @@ class ScoreModel {
     }
   }
   async updateScore(userEmail, userNickname) {
+    // 닉네임 변경유저 기록 업데이트 기능?
     try {
       const updatedData = await Score.updateMany(
         { userEmail: userEmail },
@@ -167,6 +168,17 @@ class ScoreModel {
       return updatedData;
     } catch (e) {
       console.log('[게임 기록 내 유저 이메일 업데이트 실패]');
+      throw new Error(e);
+    }
+  }
+
+  async deleteScoreByUserNickname(userNickname) {
+    // 특정 유저의 기록을 말소하는 기능
+    try {
+      const deleteData = await Score.deleteMany({ userNickname: userNickname });
+      return deleteData;
+    } catch (e) {
+      console.log("[기록 삭제 실패] 입력한 닉네임을 다시 확인해주세요");
       throw new Error(e);
     }
   }

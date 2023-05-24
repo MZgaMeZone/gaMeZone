@@ -22,7 +22,6 @@ const CreateFreePost = () => {
 
   useEffect(() => {
     axios.get(url + '/api/users', config).then((res) => {
-      console.log(res.data.email);
       setUserEmail(res.data.email);
       });
   }, []);
@@ -55,8 +54,6 @@ const CreateFreePost = () => {
         content: content,
         category: "free",
       };
-
-      console.log(postData);
 
       axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, postData);
       

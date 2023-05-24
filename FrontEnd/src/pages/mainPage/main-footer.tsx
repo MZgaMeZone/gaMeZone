@@ -16,12 +16,13 @@ function MainFooter(props: any) {
     console.log('Logout 실행');
     console.log('userToken 삭제');
     setIsLoggedIn(false);
+    alert('로그아웃 되었습니다.');
   }
 
   React.useEffect(() => {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
-      console.log('userToken를 정상적으로 받아왔습니다!');
+      // console.log('userToken를 정상적으로 받아왔습니다!'); // 현재 정상 동작하는 기능으로 주석 처리함
       setIsLoggedIn(true);
     }
   }, []);
@@ -56,33 +57,42 @@ function MainFooter(props: any) {
           카테고리
         </StartButton>
         <SubButton to="/">Home</SubButton>
+        <SubButton to="/ranking">Ranking</SubButton>
+        <SubButton to="/community">Community</SubButton>
         {isLoggedIn ? (
-          <SubButton to="/login" onClick={handleLogout}>
-            Logout
-          </SubButton>
+          <>
+            <SubButton to="/login" onClick={handleLogout}>
+              Logout
+            </SubButton>
+            <SubButton to="/mypage">MyPage</SubButton>
+          </>
         ) : (
           <SubButton to="/login">Login</SubButton>
         )}
-        <SubButton to="/ranking">Ranking</SubButton>
-        <SubButton to="/community">Community</SubButton>
+
         {hide > 5 && (
           <>
-            <SubButton to="/mypage">MyPage</SubButton>
             <SubButton to="/admin">AdminPage</SubButton>
           </>
         )}
         <Clock>
           <button
+            style={{ cursor: 'default', color: 'rgb(232,232,232)' }}
             onClick={() => {
               setHide(hide + 1);
             }}
-          ></button>
+          >
+            _
+          </button>
           {timer}
           <button
+            style={{ cursor: 'default', color: 'rgb(232,232,232)' }}
             onClick={() => {
               setHide(0);
             }}
-          ></button>
+          >
+            _
+          </button>
         </Clock>
       </FooterBar>
     </>

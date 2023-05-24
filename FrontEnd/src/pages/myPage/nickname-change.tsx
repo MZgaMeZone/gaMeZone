@@ -3,21 +3,21 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { MouseEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { get } from 'http';
 
 const url = process.env.REACT_APP_API_URL;
 const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-};
+
 function NicknameChange() {
   const [currenNickname, setCurrentNickname] = useState('');
   const [newNickname, setNewNickname] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
 
   const getCurrentNickname = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
     await axios.get(url + '/api/users', config).then((res) => {
       console.log(res.data);
       setCurrentNickname(res.data.nickname);
@@ -48,15 +48,25 @@ function NicknameChange() {
       });
   };
 
-  const updateNickname = async () => {
+  const updateNickname = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
     console.log('일단 이거 대기!'); //isDuplicate값이 true면 return
-    // await axios.put(url + '/api/users',config,{
 
-    // })
-    //   .then((res)=>{
-    //     console.log(res.data);
-    //   })
+    await axios
+      .patch(`${url}/api/users/nicknameChange`, { newNickname }, config)
+      .then((res) => {
+        alert(`${res.data.nickname}님 성공적으로 변경되었습니다!`);
+      })
+      .catch((err) => {
+        console.log('에러 발생', err);
+      });
   };
+
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 

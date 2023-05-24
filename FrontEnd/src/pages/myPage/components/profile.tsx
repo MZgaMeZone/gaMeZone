@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import '../../../style/profile.css';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 type ProfileProps = {
   email: string;
@@ -9,8 +9,10 @@ type ProfileProps = {
 };
 
 function Profile({ img, email, nickName }: ProfileProps) {
+  const navigate = useNavigate();
   const handleLogout = async () => {
-    // await axios.get('/api/auth/logout');
+    localStorage.removeItem('userToken');
+    navigate('/login');
   };
   return (
     <>

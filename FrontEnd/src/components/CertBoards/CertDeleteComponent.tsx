@@ -16,8 +16,6 @@ const CertDeletePost = ({postId}:any) => {
         }
     };
 
-    
-
     return (
         <div>
             <DeleteButton onClick={clickHandler}>삭제하기</DeleteButton>
@@ -28,7 +26,7 @@ const CertDeletePost = ({postId}:any) => {
 export default CertDeletePost;
 
 const DeleteButton = styled.button`
-  margin-left: 1rem;
+  margin: auto 1rem;
   height: 3rem;
   background: #d9d9d9;
   box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,

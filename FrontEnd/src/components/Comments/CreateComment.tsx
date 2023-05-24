@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import axios from "axios";
 
@@ -12,7 +12,8 @@ const config = {
 };
 
 const CreateComment = ({postId, closeModal}: any) => {
-  const nav = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [comment, setComment] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
 
@@ -43,7 +44,7 @@ const CreateComment = ({postId, closeModal}: any) => {
       closeModal(true);
 
       alert("댓글 작성이 완료되었습니다.");
-      nav(`/community/${postId}`);
+      window.location.reload();
     } catch(err) {
       console.error(err);
       alert('댓글 작성 중 오류가 발생했습니다.');
@@ -52,7 +53,7 @@ const CreateComment = ({postId, closeModal}: any) => {
 
   const goBackHandler = () => {
     closeModal(true);
-    nav(`/community/${postId}`);
+    navigate(location.pathname);
   }
 
   return (
