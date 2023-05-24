@@ -22,6 +22,7 @@ function PostList() {
     author: { nickname: string };
     title: string;
     createdAt: string;
+    category: string;
   }
   // /api/posts/:userId
   useEffect(() => {
@@ -35,8 +36,10 @@ function PostList() {
       const formattedData = postList.map((item: any) => ({
         ...item,
         createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+        key: item._id,
       }));
       setPostList(formattedData);
+      console.log(postList);
     };
     fetchData();
   }, []);
@@ -94,6 +97,13 @@ function PostList() {
                       {post.content.length > textLimit &&
                         (isShowMore ? '[닫기]' : '...[더보기]')}
                     </div>
+                    <Category>
+                      {post.category === 'free' ? (
+                        <h3>자유게시판</h3>
+                      ) : (
+                        <h3>인증게시판</h3>
+                      )}
+                    </Category>
                   </CommentInfo>
                 </Link>
               </>
@@ -189,4 +199,8 @@ const PagenationBox = styled.div`
   margin: 1rem;
 `;
 
+const Category = styled.div`
+  margin-left: 2.7rem;
+  margin-top: 1rem;
+`;
 export default PostList;
