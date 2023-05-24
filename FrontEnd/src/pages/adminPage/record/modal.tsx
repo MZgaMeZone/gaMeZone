@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import { Score } from './scoreInterface';
 
 type ModalProps = {
   isOpen: { [key: string]: boolean };
   onClose: () => void;
   id: string;
+  data?: Score;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, data }) => {
+  const value = {
+    avgScore: data?.averageScore,
+    highScore: data?.highScore,
+    totalScore: data?.totalScores,
+  };
   const [modalContainer, setModalContainer] = useState<HTMLDivElement | null>(
     null
   );
@@ -35,7 +42,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id }) => {
           <Header>
             <Close onClick={onClose}>&times;</Close>
           </Header>
-          <ModalContent>{/* {children} */}</ModalContent>
+          <ModalContent>
+            <p>{value.avgScore}</p>
+            <p>{value.highScore}</p>
+            <p>{value.totalScore}</p>
+          </ModalContent>
         </ModalContainer>,
         modalContainer
       )}

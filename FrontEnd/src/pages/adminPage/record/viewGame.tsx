@@ -4,7 +4,7 @@ import axios from 'axios';
 import { GameInfo } from '../info/interface';
 import GameDropDown from './gameDropdown';
 import { Score } from './scoreInterface';
-import Modal from '../modal';
+import Modal from './modal';
 
 type Props = {
   URL: string;
@@ -49,8 +49,10 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
   //게임정보 상세 보기(모달창)
 
   const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({});
+  const [modalData, setModalData] = useState<Score>();
 
-  const openModal = (id: string) => {
+  const openModal = (data: Score, id: string) => {
+    setModalData(data);
     setIsOpen((prevState) => ({ ...prevState, [id]: true }));
   };
 
@@ -98,12 +100,17 @@ const ViewGame: React.FC<Props> = ({ URL }) => {
               <NameText>{item.userNickname}</NameText>
               <ScoreText>{item.averageScore}</ScoreText>
               <div>
-                <Modal
-                  isOpen={isOpen}
-                  onClose={closeModal}
-                  id={item._id}
-                ></Modal>
-                <Button onClick={() => openModal(item._id)}>상세</Button>
+                {isOpen[item._id] ? (
+                  <Modal
+                    isOpen={isOpen}
+                    onClose={closeModal}
+                    id={item._id}
+                    data={modalData}
+                  ></Modal>
+                ) : (
+                  ''
+                )}
+                <Button onClick={() => openModal(item, item._id)}>상세</Button>
                 <Button
                   onClick={() => handleDeleteClick(item._id, item.userNickname)}
                 >
