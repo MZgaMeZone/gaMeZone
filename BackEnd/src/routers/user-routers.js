@@ -128,6 +128,24 @@ userRouter.patch("/nicknameChange", loginRequired, async (req, res, next) => {
   }
 });
 
+// 패스워드 변경
+userRouter.patch("/passwordChange", loginRequired, async (req, res, next) => {
+  const { currPwd, newPwd } = req.body;
+  const passwordCheck = await userService.checkPassword(req.email, currPwd);
+
+  if (passwordCheck) {
+    try {
+      const updatedUser = await userService.updatePassword(req.email, newPwd);
+      return res.status(200).json(updatedUser);
+    } catch (err) {
+      console.log(`⛔ ${err}`);
+      next(err);
+    }
+  } else {
+    return res.status(400).json({ message: "wrong password" });
+  }
+});
+
 // //업데이트
 // userRouter.patch("/", loginRequired, async (req, res, next) => {
 //   //req 헤더의 autho token

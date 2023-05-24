@@ -62,6 +62,20 @@ export class UserModel {
     }
   }
 
+  // 유저 비밀번호 수정
+  async updatePassword(email, password) {
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { email },
+        { $set: { password } },
+        { new: true }
+      );
+      return updatedUser;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   //전체 유저 정보 불러오기
   async getAllUsers() {
     try {
