@@ -14,6 +14,7 @@ interface commentsType {
 
 interface comment {
   author: string,
+  content: string,
 }
 
 const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
@@ -91,7 +92,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
           <ModalTitle>댓글 수정</ModalTitle>
           <ModalMain>
             <Main>내용</Main>
-            <MainText value={comment} onChange={handleContentChange} />
+            <MainText value={Id[0].content} onChange={handleContentChange} />
           </ModalMain>
           <ButtonContainer>
             <CompleteButton onClick={clickHandler}>수정하기</CompleteButton>

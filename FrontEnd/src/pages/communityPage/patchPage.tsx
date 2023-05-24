@@ -74,11 +74,11 @@ const ModifiedPost = () => {
       <PostForm onSubmit={handleFormSubmit}>
         <TitleForm>
           <TitleLabel>제목</TitleLabel>
-          <TitleInput type="text" value={title} onChange={handleTitleChange} />
+          <TitleInput type="text" value={post.title} onChange={handleTitleChange} />
         </TitleForm>
         <MainForm>
           <MainLabel>내용</MainLabel>
-          <MainInput value={content} onChange={handleContentChange} />
+          <MainInput value={post.content} onChange={handleContentChange} />
         </MainForm>
         <PostFooter>
           <GoBack to="/community">뒤로 가기</GoBack>
