@@ -15,23 +15,12 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
   //****게임별 보기  => 드롭다운 menu === 0 SelectGame
   //****유저별 보기  => 검색창  menu === 1 SearchUser
 
-  //**드롭다운을 통해 게임이름을 선택하면 받아온 게임아이디를 scoreAPI get요청하여 게임 기록정보를 받아온다.
-  //게임 컴포넌트에서 받아온 게임아이디를 gameId에 담아준다.
-  const [gameId, setGameId] = useState<string>('');
-  const handleDropDownValue = (id: string) => {
-    setGameId(id);
+  const [scoreData, setScoreData] = useState<Score[]>([]);
+  const handleDropDownValue = (data: any) => {
+    setScoreData(data);
   };
 
-  const [scoreData, setScoreData] = useState<Score[]>([]);
-  useEffect(() => {
-    axios
-      .get(`${URL}/games/gameId/${gameId}`)
-      .then((res) => setScoreData(res.data))
-      .catch((err) => console.log(err));
-  }, [gameId]);
-
   //게임정보 상세 보기(모달창)
-
   const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({});
   const [modalData, setModalData] = useState<Score>();
 
@@ -68,17 +57,15 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
     <Container>
       <DropdownDiv>
         {menu === 0 ? (
-          <SelectGame onValue={handleDropDownValue} />
+          <SelectGame onValue={handleDropDownValue} URL={URL} />
         ) : menu === 1 ? (
           <SearchUser URL={URL} />
         ) : (
           ''
         )}
       </DropdownDiv>
-      {scoreData.length === 0 && gameId ? (
+      {scoreData.length === 0 ? (
         <ResetContent>등록된 기록이 없습니다.</ResetContent>
-      ) : gameId === '' ? (
-        <ResetContent>조회할 게임을 선택해주세요.</ResetContent>
       ) : (
         <Main>
           <Title>

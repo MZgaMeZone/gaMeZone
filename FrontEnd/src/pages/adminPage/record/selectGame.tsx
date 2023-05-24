@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as DownIcon } from '../../../style/icons/String-icon-ChevronDown.svg';
-import { GameInfo } from '../info/interface';
 import axios from 'axios';
+import { Score } from './scoreInterface';
 interface DropDownProps {
-  onValue: (value: string) => void;
+  onValue: (value: Score) => void;
+  URL: string;
 }
 
-const SelectGame: React.FC<DropDownProps> = ({ onValue }) => {
+const SelectGame: React.FC<DropDownProps> = ({ onValue, URL }) => {
   const [currentValue, setCurrentValue] =
     useState('조회할 게임을 선택해주세요:)');
-
   const [showOptions, setShowOptions] = useState(false);
 
   //게임 드롭다운에 쓰일 게임아이디, 게임 타이틀을 담아줄 객체
@@ -22,12 +22,25 @@ const SelectGame: React.FC<DropDownProps> = ({ onValue }) => {
       .then((res) => setOptions(res.data))
       .catch((err) => console.log(err));
   }, []);
+  //**드롭다운을 통해 게임이름을 선택하면 받아온 게임아이디를 scoreAPI get요청하여 게임 기록정보를 받아온다.
+  //게임 컴포넌트에서 받아온 게임아이디를 gameId에 담아준다.
+  const [gameId, setGameId] = useState<string>('');
 
+  //클릭시, 게임 아이디 담아주고  드롭다운 value 담아줌
   const handleOptionClick = (selectedOption: string, id: string) => {
     setCurrentValue(selectedOption);
     setShowOptions(false);
-    onValue(id);
+    setGameId(id);
   };
+
+  // 담은 아이디로 get 요청
+  useEffect(() => {
+    axios
+      .get(`${URL}/games/gameId/${gameId}`)
+      .then((res) => onValue(res.data))
+      .catch((err) => console.log(err));
+  }, [gameId]);
+
   //받아온 옵션들을 맵으로 돌려준다.
   return (
     <DropDownContainer onClick={() => setShowOptions(!showOptions)}>
