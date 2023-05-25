@@ -1,5 +1,6 @@
 import Container from './components/container';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { MouseEvent, FormEvent } from 'react';
 import axios from 'axios';
@@ -11,6 +12,7 @@ function NicknameChange() {
   const [currenNickname, setCurrentNickname] = useState('');
   const [newNickname, setNewNickname] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const navigate = useNavigate();
 
   const getCurrentNickname = async () => {
     const config = {
@@ -61,6 +63,7 @@ function NicknameChange() {
       .patch(`${url}/api/users/nicknameChange`, { newNickname }, config)
       .then((res) => {
         alert(`${res.data.nickname}님 성공적으로 변경되었습니다!`);
+        navigate('/mypage');
       })
       .catch((err) => {
         console.log('에러 발생', err);
@@ -95,6 +98,7 @@ function NicknameChange() {
               name="current-nickname"
               onChange={handleChange}
               value={currenNickname}
+              disabled={true}
             />
             <NicknameCheck>
               <NewnicknameBox>
@@ -103,7 +107,6 @@ function NicknameChange() {
                   type="text"
                   id="new-nickname"
                   name="new-nickname"
-                  value={newNickname}
                   onChange={handleChange}
                   placeholder="새로운 닉네임을 입력해주세요"
                 />
