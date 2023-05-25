@@ -8,6 +8,11 @@ profileRouter.post(
   "/:email",
   imageUploadHelper.single("img"),
   async (req, res, next) => {
+    if (!req.file) {
+      console.log("파일이 없음");
+      return;
+    }
+
     try {
       const { userIcon } = req.body;
       const { email } = req.params;
