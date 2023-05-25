@@ -31,7 +31,7 @@ class ScoreModel {
   //닉네임으로 검색 하기
   async findScoresByNickname(nickname) {
     const findScores = await Score.find({
-      userNickname: { $regex: new RegExp(`${nickname}`, 'i') },
+      userNickname: { $regex: new RegExp(`${nickname}`, "i") },
     });
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
@@ -80,8 +80,8 @@ class ScoreModel {
   }
 
   async userRanking() {
-    // 명예의전당을 출력하는 함수. 효율적이지 않음. 하루에 1번 실행됨.
-    // 일단 모든 게임기록을 가져와야함.
+    // 명예의전당을 출력하는 함수.
+    // 명예의 전당은 총 기록이 3개 이상이어야 등록 가능함.
     const scoreData = await Score.find(
       {},
       {
@@ -96,7 +96,6 @@ class ScoreModel {
     // scoreData는 배열에 다음 객체들이 담길 예정임
     // 일단 게임데이터가 있는 유저목록을 객체로 관리해야함
     const userRanking = {};
-
     for (let data of scoreData) {
       const { userNickname, gameUrl, averageScore, highScore } = data;
       const game = await Game.findOne(
@@ -115,6 +114,7 @@ class ScoreModel {
           score: 0,
         };
       }
+
       if (game.gameOption === "avr") {
         userRanking[userNickname][title]["sumOfAvr"] += averageScore;
         userRanking[userNickname][title]["count"] += 1;
@@ -127,7 +127,8 @@ class ScoreModel {
         }
       }
     }
-    // 아직 끝이 아니었어.. sorting을 이제부터 해야돼.
+
+    // 가져온 데이터를 sorting 한다.
     const users = Object.keys(userRanking);
     const final = {};
     for (let user of users) {
@@ -136,7 +137,13 @@ class ScoreModel {
         if (!final[user]) {
           final[user] = 0;
         }
-        final[user] += userRanking[user][game]["score"];
+        // ★★★★★★★★★ 명예의전당 산정 최소 기록갯수를 정하는 부분 ★★★★★★★★★
+        if (
+          userRanking[user][game]["count"] === 0 || // count 속성이 0이라면 avr종목이 아니므로 점수반영
+          userRanking[user][game]["count"] >= 5 // count 속성이 0이 아니라면 5회 이상이어야 반영함.
+        ) {
+          final[user] += userRanking[user][game]["score"];
+        }
       }
     }
     const honorsRanking = Object.entries(final);
@@ -167,7 +174,7 @@ class ScoreModel {
       );
       return updatedData;
     } catch (e) {
-      console.log('[게임 기록 내 유저 이메일 업데이트 실패]');
+      console.log("[게임 기록 내 유저 이메일 업데이트 실패]");
       throw new Error(e);
     }
   }
@@ -185,5 +192,4 @@ class ScoreModel {
 }
 
 const scoreModel = new ScoreModel();
-scoreModel.userRanking();
 export { scoreModel };
