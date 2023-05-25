@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { MouseEvent } from 'react';
+import axios from 'axios';
 
 function PasswordChange() {
   const [currPwd, setCurrPwd] = useState('');
@@ -14,17 +15,36 @@ function PasswordChange() {
   const navigate = useNavigate();
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     if (!newPwd || !newPwdCheck || !currPwd) {
       alert('모든 항목은 필수조건 입니다!');
-      e.preventDefault();
     } else if (!isPwdSame) {
       alert('비밀번호가 일치하지 않습니다!');
-      e.preventDefault();
     } else if (newPwd.length < 8 && newPwdCheck.length < 8) {
       alert('비밀번호는 8글자 이상 입니다.');
-      e.preventDefault();
     } else {
-      navigate('/');
+      console.log(currPwd, newPwd);
+      const userToken = localStorage.getItem('userToken');
+      const config = { headers: { Authorization: `Bearer ${userToken}` } };
+      const url = process.env.REACT_APP_API_URL;
+
+      axios
+        .patch(`${url}/api/users/passwordChange`, { currPwd, newPwd }, config)
+        .then((res) => {
+          alert('비밀번호 변경이 완료되었습니다.');
+          setCurrPwd('');
+          setNewPwd('');
+          setNewPwdCheck('');
+        })
+        .catch((err) => {
+          if (err.response && err.response.status === 400) {
+            alert('현재 비밀번호를 확인해주세요.');
+          } else {
+            console.error(err);
+            alert('알 수 없는 오류가 발생했습니다.');
+          }
+        });
     }
   };
 
@@ -54,6 +74,7 @@ function PasswordChange() {
               id="current-password"
               name="current-password"
               placeholder="비밀번호는 8글자 이상입니다"
+              value={currPwd}
               onChange={(e) => {
                 setCurrPwd(e.target.value);
               }}
@@ -64,6 +85,7 @@ function PasswordChange() {
               id="new-password"
               name="new-password"
               placeholder="비밀번호는 8글자 이상입니다"
+              value={newPwd}
               onChange={(e) => {
                 setNewPwd(e.target.value);
               }}
@@ -74,6 +96,7 @@ function PasswordChange() {
               id="new-password-check"
               name="new-password-check"
               placeholder="비밀번호는 8글자 이상입니다"
+              value={newPwdCheck}
               onChange={(e) => {
                 setNewPwdCheck(e.target.value);
               }}

@@ -112,37 +112,71 @@ userRouter.delete("/", loginRequired, async (req, res, next) => {
   }
 });
 
-//업데이트
-userRouter.patch("/", loginRequired, async (req, res, next) => {
-  //req 헤더의 autho token
-  const token = req.headers["authorization"]?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
-  }
-  console.log("🔄 유저 정보를 업데이트합니다...");
-  const { nickname, password } = req.body;
+// 닉네임 변경
+userRouter.patch("/nicknameChange", loginRequired, async (req, res, next) => {
+  const { newNickname } = req.body;
 
-  const toUpdateInfo = {
-    //password값이 있을 경우(true), password 속성: req.body에서 받은 password 변수 값 --> ex) {password : "myPassword1234"}
-    //false인 경우 toUpdateInfo Object에 추가되지 않음.
-    ...(nickname && { nickname }),
-    ...(password && { password }),
-  };
-
-  console.log("🔎 토큰 확인 중...");
   try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log("✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.");
-    const updatedUser = await userService.updateUser(
-      decodedToken.userId,
-      toUpdateInfo
+    const updatedUser = await userService.updateNickname(
+      req.email,
+      newNickname
     );
     return res.status(200).json(updatedUser);
   } catch (err) {
-    console.log(`❌ ${err}`);
+    console.log(`⛔ ${err}`);
     next(err);
   }
 });
+
+// 패스워드 변경
+userRouter.patch("/passwordChange", loginRequired, async (req, res, next) => {
+  const { currPwd, newPwd } = req.body;
+  const passwordCheck = await userService.checkPassword(req.email, currPwd);
+
+  if (passwordCheck) {
+    try {
+      const updatedUser = await userService.updatePassword(req.email, newPwd);
+      return res.status(200).json(updatedUser);
+    } catch (err) {
+      console.log(`⛔ ${err}`);
+      next(err);
+    }
+  } else {
+    return res.status(400).json({ message: "wrong password" });
+  }
+});
+
+// //업데이트
+// userRouter.patch("/", loginRequired, async (req, res, next) => {
+//   //req 헤더의 autho token
+//   const token = req.headers["authorization"]?.split(" ")[1];
+//   if (!token) {
+//     return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
+//   }
+//   console.log("🔄 유저 정보를 업데이트합니다...");
+//   const { nickname, password } = req.body;
+
+//   const toUpdateInfo = {
+//     //password값이 있을 경우(true), password 속성: req.body에서 받은 password 변수 값 --> ex) {password : "myPassword1234"}
+//     //false인 경우 toUpdateInfo Object에 추가되지 않음.
+//     ...(nickname && { nickname }),
+//     ...(password && { password }),
+//   };
+
+//   console.log("🔎 토큰 확인 중...");
+//   try {
+//     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+//     console.log("✔️ 토큰 검증 완료. 유저 정보를 업데이트 합니다.");
+//     const updatedUser = await userService.updateUser(
+//       decodedToken.userId,
+//       toUpdateInfo
+//     );
+//     return res.status(200).json(updatedUser);
+//   } catch (err) {
+//     console.log(`❌ ${err}`);
+//     next(err);
+//   }
+// });
 
 // //유저 권한(role) 변경 - 추가기능으로 활용 예정
 // userRouter.patch(

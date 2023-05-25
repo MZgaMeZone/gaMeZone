@@ -15,15 +15,15 @@ const GameSchema = new Schema(
       },
     },
     gameUrl: {
-      // 게임 접속 주소
+      // 게임 접속 주소 - 고유한 값이어야함
       type: String,
-      required: true,
+      required: true, // Url을 식별자로 사용해야 하기 때문에 true로 변경
     },
-    gameIconUrl: {
-      // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다.
-      type: String,
-      required: true,
-    },
+    // gameIconUrl: {
+    //   // 게임 아이콘 : Multer를 사용해서 imgUrl로 사용한다. - 미사용
+    //   type: String,
+    //   required: false,
+    // },
     gameImageUrl: {
       // 게임 이미지 : Multer를 사용해서 imgUrl로 사용한다.
       type: String,

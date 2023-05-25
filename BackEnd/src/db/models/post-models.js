@@ -7,21 +7,30 @@ const User = mongoose.model("User", UserSchema);
 
 export class PostModel {
   async createNewPost(data) {
-    console.log(data);
-    const userId = await User.findOne({email: data.author});
+    const user = await User.findOne({email: data.author});
     //새 게시글 등록
     const newPost = new Post ({
       title: data.title,
       content: data.content,
-      author: userId._id,
+      author: user._id,
+      category: data.category,
     });
 
     await newPost.save();
   };
 
-  async findAllPost() {
-    // 모든 게시물 조회
-    const findPosts = await Post.find({}).populate("author", "nickname email").lean();
+  async findAllFreePost() {
+    // 자유게시판의 모든 게시물 조회
+    const findPosts = await Post.find({category: "free"}).populate("author", "nickname email").lean();
+    if (findPosts.length < 1) {
+      console.log(`등록된 게시물이 없습니다.`);
+    }
+    return findPosts;
+  };
+
+  async findAllCertPost() {
+    // 인증게시판의 모든 게시물 조회
+    const findPosts = await Post.find({category: "cert"}).populate("author", "nickname email").lean();
     if (findPosts.length < 1) {
       console.log(`등록된 게시물이 없습니다.`);
     }
@@ -37,9 +46,11 @@ export class PostModel {
     return findPost;
   }
 
-  async findUserPosts(id) {
+  async findUserPosts(email) {
     // 특정 유저의 게시물 조회
-    const findPosts = await Post.find({author: id}).populate("author", "-password").lean();
+    const user = await User.findOne({email});
+    console.log(userId);
+    const findPosts = await Post.find({author: user._id}).populate("author", "-password").lean();
     if (findPosts.length < 1) {
       console.log("등록된 게시물이 없습니다.");
     }

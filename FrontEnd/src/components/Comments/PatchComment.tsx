@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from "styled-components";
 import axios from 'axios';
 
@@ -12,10 +12,17 @@ interface commentsType {
     closeModal: any;
 }
 
+interface comment {
+  author: string,
+  content: string,
+}
+
 const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
-    const nav = useNavigate();
+    const location = useLocation();
+    const navigate = useNavigate();
     const [comment, setComment] = useState<string>("");
     const [content, setContent] = useState<commentsType | null>(null); // 코멘트 하나만 가져오기 위해 상태를 단일 코멘트로 변경
+    const [Id, setId] = useState<comment[]>([]);
   
     useEffect(() => {
       axios
@@ -26,11 +33,31 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
         });
     }, [postId]);
   
+    useEffect(() => {
+      axios
+      .get(`${process.env.REACT_APP_API_URL}/api/comments/comment/${commentId}`)
+      .then((res) => {
+        const data = res.data;
+        setId(data);
+        
+      });
+    }, []);
+
+    useEffect(() => {
+      if (content) {
+        // content가 가져와졌을 때 기본값으로 사용할 데이터를 설정
+        setComment(Id[0].content);
+      }
+    }, [content]);
+
     if (!content) {
       return null;
-    };
+    }
 
-  
+    if (!Id) {
+      return null;
+    }
+
     const handleContentChange = (e: any) => {
       setComment(e.target.value);
     };
@@ -46,10 +73,8 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
           _id: commentId,
           content: comment,
           post: postId,
-          author: "646630a5a15cbd3845528d92",
+          author: Id[0].author,
         };
-  
-        console.log(commentData);
   
         await axios.patch(
           `${process.env.REACT_APP_API_URL}/api/comments/${postId}`,
@@ -58,7 +83,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
         closeModal(true);
   
         alert("댓글 수정이 완료되었습니다.");
-        nav(`/community/${postId}`);
+        window.location.reload();
       } catch (err) {
         console.error(err);
         alert("댓글 수정 중 오류가 발생했습니다.");
@@ -67,7 +92,7 @@ const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
   
     const goBackHandler = () => {
       closeModal(true);
-      nav(`/community/${postId}`);
+      navigate(location.pathname);
     };
   
     return (

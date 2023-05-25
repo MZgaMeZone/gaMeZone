@@ -203,6 +203,10 @@
   width: 21%;
 }
 
+.all-ranking-section-subtitle .subtitle3 {
+  width: 42%;
+}
+
 .all-ranking-section-body > ul li {
   width: 93%;
   height: 10rem;
@@ -227,5 +231,10 @@
 }
 .all-ranking-section-body > ul li > .high-score {
   flex: 1.3;
+  text-align: start;
+}
+
+.all-ranking-section-body > ul li > .score {
+  flex: 2.9;
   text-align: start;
 }

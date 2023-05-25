@@ -2,32 +2,53 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { GameInfo, GameData } from './interface';
+import DropDown from '../dropdown';
 
 type ChildProps = {
-  onValue: (updateData: GameInfo | null, value: boolean) => void;
+  onValue: (
+    newData: GameInfo | null,
+    updateData: GameInfo | null,
+    value: boolean
+  ) => void;
 };
 type ChildPropsData = {
-  receivedData: GameData;
+  receivedData: GameData | null;
 };
 
-const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
+const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   onValue,
   receivedData,
 }) => {
-  //input 처리
+  const URL = `${process.env.REACT_APP_API_URL}/api/games`;
 
-  const URL = process.env.REACT_APP_API_URL;
+  //gameServiceStatus는 드롭다운 컴포넌트로 값을 받아온다, input x
+
+  //드롭다운 컴포넌트에 전달할 배열
+  const options = ['온라인', '점검중', '숨김'];
+
+  //receivedData(기존 데이터)가 있을 경우 그데이터의 status 값을 넣어주고 없을 경우 opions의 첫번째 값을 넣어줌 .
+  const [statusValue, setStatusValue] = useState<string>(
+    receivedData?.status ?? options[0]
+  );
+  //드롭다운 값 받을때 쓰는 함수
+  const handleDropDownValue = (value: string) => {
+    setStatusValue(value);
+  };
+
+  //input 처리
+  //null로 받아올 경우 (isAdding=== true일 경우)  input은 빈값으로 처리,
+  //receivedData값이 있을 경우 (isEditing=== true) input에 해당 아이템의 값을 넣어 준다.
   const [inputs, setInputs] = useState<GameData>({
     id: '',
-    name: receivedData.name,
-    iconUrl: receivedData.iconUrl,
-    category: receivedData.category,
-    description: receivedData.description,
-    menual: receivedData.menual,
-    status: receivedData.status,
+    name: receivedData?.name ?? '',
+    imageUrl: receivedData?.imageUrl ?? '',
+    category: receivedData?.category ?? '',
+    description: receivedData?.description ?? '',
+    menual: receivedData?.menual ?? '',
+    status: '',
   });
 
-  const { name, iconUrl, category, description, menual, status } = inputs;
+  const { name, imageUrl, category, description, menual } = inputs;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -41,26 +62,47 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
 
   //취소
   const handleCancelClick = () => {
-    onValue(null, false);
+    onValue(null, null, false);
   };
-  //저장
-  const handleSaveClick = () => {
+  //새로 등록시
+  const handleAddClick = () => {
     axios
-      .patch(`http://localhost:8080/api/games/${receivedData.id}`, {
+      .post(URL, {
         gameTitle: name,
         gameCategory: category,
-        gameIconUrl: iconUrl,
+        gameImageUrl: imageUrl,
         gameDescription: description,
         gameManual: menual,
-        gameServiceStatus: status,
+        gameServiceStatus: statusValue,
       })
       .then((res) => {
         console.log(res.data);
-        onValue(res.data, false);
+        onValue(res.data, null, false);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  //수정내용 저장
+  const handleSaveClick = () => {
+    if (receivedData) {
+      axios
+        .patch(`${URL}/${receivedData.id}`, {
+          gameTitle: name,
+          gameCategory: category,
+          gameImageUrl: imageUrl,
+          gameDescription: description,
+          gameManual: menual,
+          gameServiceStatus: statusValue,
+        })
+        .then((res) => {
+          onValue(null, res.data, false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -76,12 +118,12 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
         />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 아이콘</p>{' '}
+        <p>게임 이미지</p>
         <div>
           <input
             type="text"
-            name="iconUrl"
-            value={iconUrl}
+            name="imageUrl"
+            value={imageUrl}
             onChange={handleChange}
             style={{ width: '48rem' }}
           />
@@ -97,7 +139,7 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
         </div>
       </ContentDiv>
       <ContentDiv>
-        <p>카테고리</p>{' '}
+        <p>카테고리</p>
         <input
           type="text"
           name="category"
@@ -106,7 +148,7 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
         />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 설명</p>{' '}
+        <p>게임 설명</p>
         <textarea
           name="description"
           value={description}
@@ -114,27 +156,30 @@ const GameInfoEditing: React.FC<ChildProps & ChildPropsData> = ({
         />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 조작</p>{' '}
+        <p>게임 조작</p>
         <textarea name="menual" value={menual} onChange={handleChange} />
       </ContentDiv>
       <ContentDiv>
-        <p>게임 상태</p>{' '}
-        <input
-          type="text"
-          name="status"
-          value={status}
-          onChange={handleChange}
+        <p>게임 상태</p>
+        <DropDown
+          currentStatus={statusValue}
+          options={options}
+          onValue={handleDropDownValue}
         />
       </ContentDiv>
       <ButtonDiv>
         <Button onClick={() => handleCancelClick()}>취소</Button>
-        <Button onClick={() => handleSaveClick()}>저장</Button>
+        {receivedData ? (
+          <Button onClick={() => handleSaveClick()}>저장</Button>
+        ) : (
+          <Button onClick={() => handleAddClick()}>등록</Button>
+        )}
       </ButtonDiv>
     </Container>
   );
 };
 
-export default GameInfoEditing;
+export default GameAddOrEdit;
 
 const Container = styled.div`
   display: flex;
@@ -147,13 +192,13 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 2rem;
     line-height: 24px;
     color: #242424;
   }
   input {
     width: 60rem;
-    height: 3.4rem;
+    height: 4rem;
     margin: 1rem;
     padding-left: 2rem;
     background-color: rgb(233, 233, 233);

@@ -12,6 +12,7 @@ interface postType {
   _id: string;
   title: string;
   author: { nickname: string };
+  category: string;
   createdAt: string;
 }
 
@@ -25,9 +26,7 @@ const NoticeComponent = () => {
       // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
     axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
       const data = res.data.reverse();
-      // console.log(data);
       setPosts(data);
-      console.log(data);
     });
   }, []);
 
@@ -136,7 +135,7 @@ const PostItemInfo = styled.div`
 
 const PostItemNumber = styled.p`
   margin: 0 10rem 0 0;
-  width: 7rem;
+  width: 2rem;
 `;
 
 const PostItemTitle = styled.div`
@@ -150,5 +149,5 @@ const PostDate = styled.p`
 
 const PostUser = styled.p`
   margin: 0 0 0 1rem;
-  width: 6rem;
+  width: 18rem;
 `;

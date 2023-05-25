@@ -7,11 +7,11 @@ const User = mongoose.model("User", UserSchema);
 
 export class CommentModel {
   async createNewComment(data) {
-    const userId = await User.findOne({email: data.author});
+    const user = await User.findOne({email: data.author});
     //새 댓글 등록
     console.log(data);
     const newComment = new Comment ({
-      author: userId._id,
+      author: user._id,
       content: data.content,
       post: data.post,
     });
@@ -19,9 +19,18 @@ export class CommentModel {
     await newComment.save();
   };
 
+  async findComment(id) {
+    //특정 댓글 조회
+    const findComment = await Comment.find({_id: id});
+    if (!findComment) {
+      console.log("등록된 댓글이 없습니다.");
+    }
+    return findComment;
+  }
+
   async findAllComments(id) {
     // 특정 게시물의 댓글 조회
-    const findComments = await Comment.find({post: id}).populate("author", "nickname");
+    const findComments = await Comment.find({post: id}).populate("author", "nickname email");
     if (findComments.length < 1) {
       console.log(`등록된 댓글이 없습니다.`);
     }

@@ -15,6 +15,7 @@ function MainBody(props: MainBodyProps) {
   const [categoryModal, setCategoryModal] = React.useState<boolean>(false);
   const [categoryList, setCategoryList] = React.useState<any[]>([]);
   const [gameList, setGameList] = React.useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('');
 
   // 시작버튼을 누를 때 리스트를 뽑아오는 함수
   React.useEffect(() => {
@@ -38,7 +39,7 @@ function MainBody(props: MainBodyProps) {
         `${process.env.REACT_APP_API_URL}/api/games/categories/${item}` // 됨!
       );
       const gameData = response.data;
-      console.log(gameData);
+      // console.log(gameData);
       setGameList(gameData);
     } catch (error) {
       console.error('게임 목록 요청 실패:', error);
@@ -66,6 +67,7 @@ function MainBody(props: MainBodyProps) {
                         onClick={() => {
                           setCategoryModal(true);
                           fetchGameList(item.categoryName);
+                          setSelectedCategory(item.categoryName);
                         }}
                       >
                         {item.categoryName}
@@ -81,7 +83,7 @@ function MainBody(props: MainBodyProps) {
         <CategoryContainer>
           <div className={styles.container}>
             <CategoryHeader>
-              <CategoryTitle>카테고리명</CategoryTitle>
+              <CategoryTitle>{selectedCategory}</CategoryTitle>
               <CategoryHeaderButton
                 onClick={() => {
                   setCategoryModal(false);

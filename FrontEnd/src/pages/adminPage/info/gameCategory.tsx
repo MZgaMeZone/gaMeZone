@@ -10,7 +10,7 @@ interface Input {
   addInput: string;
 }
 const GameCategory = () => {
-  const URL: string = 'http://localhost:8080/api/categories';
+  const URL: string = `${process.env.REACT_APP_API_URL}/api/categories`;
   const [data, setData] = useState<Category[]>([]);
 
   // input 처리
@@ -57,7 +57,6 @@ const GameCategory = () => {
         const res = await axios.post(URL, {
           categoryName: addInput,
         });
-        console.log(res.data);
         setData([...data, res.data]);
         setInputs((prev) => ({
           ...prev,
@@ -120,8 +119,6 @@ const GameCategory = () => {
       } catch (err) {
         console.error(err);
       }
-    } else {
-      alert('삭제가 취소되었습니다.');
     }
   };
 

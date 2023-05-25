@@ -14,7 +14,7 @@ const config = {
 };
 
 
-const CreatePost = () => {
+const CreateCertPost = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>("");
@@ -22,7 +22,6 @@ const CreatePost = () => {
 
   useEffect(() => {
     axios.get(url + '/api/users', config).then((res) => {
-      console.log(res.data);
       setUserEmail(res.data.email);
       });
   }, []);
@@ -53,14 +52,13 @@ const CreatePost = () => {
         author: userEmail,
         title: title,
         content: content,
+        category: "cert",
       };
-
-      console.log(postData);
 
       axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, postData);
       
       alert('게시물이 작성되었습니다.');
-      navigate('/community');
+      navigate('/community/certified');
     } catch (error) {
       console.error(error);
       alert('게시물 작성 중 오류가 발생했습니다.');
@@ -89,7 +87,7 @@ const CreatePost = () => {
           <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
         <PostFooter>
-          <GoBack to="/community">뒤로 가기</GoBack>
+          <GoBack to="/community/certified">뒤로 가기</GoBack>
           <PostButton type="submit">작성 완료</PostButton>
         </PostFooter>
       </PostForm>
@@ -98,7 +96,7 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreateCertPost;
 
 const PostSection = styled.div`
   background-color: var(--background--gray);
