@@ -29,6 +29,7 @@ function MyPage() {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
   const [nickName, setNickName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
+  const [userIcon, setUserIcon] = React.useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +42,7 @@ function MyPage() {
       const { data } = await axios.get(url + '/api/users', config);
       setNickName(data.nickname);
       setEmail(data.email);
+      setUserIcon(data.userIcon);
     };
     getUserInfo();
   }, []);
@@ -57,7 +59,7 @@ function MyPage() {
       }}
     >
       <Container>
-        <Profile img={img} email={email} nickName={nickName} />
+        <Profile userIcon={userIcon} email={email} nickName={nickName} />
         <Content>
           <UserInfo />
           <UserCommu />

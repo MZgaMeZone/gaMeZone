@@ -1,18 +1,40 @@
 import styled from 'styled-components';
 import '../../../style/profile.css';
+import axios from 'axios';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type ProfileProps = {
   email: string;
-  img: string;
+  userIcon: string;
   nickName: string;
 };
 
-function Profile({ img, email, nickName }: ProfileProps) {
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
+
+function Profile({ userIcon, email, nickName }: ProfileProps) {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
-  const handleLogout = async () => {
+  console.log(userIcon);
+  React.useEffect(() => {
+    const userToken = localStorage.getItem('userToken');
+    if (userToken) {
+      console.log('userToken를 정상적으로 받아왔습니다!');
+      setIsLoggedIn(true);
+    }
+  }, []);
+  console.log(url + '/' + userIcon);
+  const handleLogout = () => {
     localStorage.removeItem('userToken');
-    navigate('/login');
+    alert('로그아웃 되었습니다.');
+    navigate('/');
+    setIsLoggedIn(false);
   };
   return (
     <>
@@ -26,7 +48,9 @@ function Profile({ img, email, nickName }: ProfileProps) {
       ></div>
       <ProfileBox>
         <div className="avartar">
-          <img src={img} alt="유저 프로필" />
+          {/* <img src={userIcon} alt="프로필" /> */}
+          <img src={url + '/' + userIcon} alt="프로필" />
+
           <div className="nick_box">
             <p>{email}</p>
             <p>{nickName}</p>

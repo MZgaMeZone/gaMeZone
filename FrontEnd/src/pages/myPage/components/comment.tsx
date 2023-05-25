@@ -14,16 +14,25 @@ const config = {
   },
 };
 
+interface Comment {
+  _id: string;
+  content: string;
+  author: { nickname: string };
+  post: string;
+  createdAt: string;
+}
+
 function Comment() {
   useEffect(() => {
     console.log('Check effect');
     const fetchData = async () => {
       const {
-        data: { email },
+        data: { email, userIcon },
       } = await axios.get(url + '/api/users', config);
       const { data: commentList } = await axios.get(
         url + `/api/comments/${email}`
       );
+      setUserIcon(userIcon);
       const formattedData = commentList.map((item: any) => ({
         ...item,
         createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
@@ -33,47 +42,8 @@ function Comment() {
     fetchData();
   }, []);
 
-  //   const comment = [
-  //     {
-  //       id: 1,
-  //       nickname: 'gomao',
-  //       date: '2023-05-19',
-  //       content:
-  //         '오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?오 진짜 유익하네요 감사합니다 이 댓글은 있잖아요 정말로 엄청나게 길어요 왜냐하면 제가 더보기 기능을 구현해보고싶거든요 그래서 정말이지 무지무지길답니다 정말 길죠?',
-  //       category: '자유게시판',
-  //     },
-  //     {
-  //       id: 2,
-  //       nickname: 'cute',
-  //       date: '2023-05-20',
-  //       content: '재밌어여',
-  //       category: '인증게시판',
-  //     },
-  //     {
-  //       id: 3,
-  //       nickname: 'cute',
-  //       date: '2023-05-21',
-  //       content: '엥 나보다 못함 ㅋ',
-  //       category: '인증게시판',
-  //     },
-  //     {
-  //       id: 4,
-  //       nickname: 'cute',
-  //       date: '2023-05-22',
-  //       content: 'ㅎ ㅏ 벌써 한시사십분이여',
-  //       category: '인증게시판',
-  //     },
-  //   ];
-
-  interface Comment {
-    _id: string;
-    content: string;
-    author: { nickname: string };
-    post: string;
-    createdAt: string;
-  }
-
   const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [userIcon, setUserIcon] = useState<string>('');
   //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
@@ -105,7 +75,7 @@ function Comment() {
                 <Link to={`/community/${comment.post}`}>
                   <CommentInfo key={comment._id}>
                     <ProfileBox>
-                      <img src={gomaImg} alt="프로필" />
+                      <img src={url + '/' + userIcon} alt="프로필" />
                       <h1>{comment.author.nickname}</h1>
                       <Date>
                         <h1>{comment.createdAt}</h1>
@@ -128,7 +98,13 @@ function Comment() {
                       {comment.content.length > textLimit &&
                         (isShowMore ? '[닫기]' : '...[더보기]')}
                     </div>
-                    {/* <h2>{comment.category}</h2> */}
+                    <Category>
+                      {comment.post === '646ca1b8e194dbc95ff4d857' ? (
+                        <h3>자유게시판</h3>
+                      ) : (
+                        <h3>인증게시판</h3>
+                      )}
+                    </Category>
                   </CommentInfo>
                 </Link>
               </>
@@ -181,6 +157,7 @@ const CommentInfo = styled.div`
 
   img {
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
     margin-right: 2rem;
@@ -218,6 +195,11 @@ const PagenationBox = styled.div`
   display: flex;
   justify-content: center;
   margin: 1rem;
+`;
+
+const Category = styled.div`
+  margin-left: 2.7rem;
+  margin-top: 1rem;
 `;
 
 export default Comment;

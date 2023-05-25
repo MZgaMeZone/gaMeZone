@@ -98,6 +98,7 @@ function NicknameChange() {
               name="current-nickname"
               onChange={handleChange}
               value={currenNickname}
+              disabled={true}
             />
             <NicknameCheck>
               <NewnicknameBox>
@@ -106,7 +107,6 @@ function NicknameChange() {
                   type="text"
                   id="new-nickname"
                   name="new-nickname"
-                  value={newNickname}
                   onChange={handleChange}
                   placeholder="새로운 닉네임을 입력해주세요"
                 />
