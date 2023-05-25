@@ -4,7 +4,7 @@ import axios from 'axios';
 import { GameInfo, GameData } from './interface';
 import DropDown from '../dropdown';
 import CategoryModal from './categoryModal';
-import { Category } from './interface';
+
 type ChildProps = {
   onValue: (
     newData: GameInfo | null,
@@ -52,7 +52,6 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
 
   const { name, imageUrl, category, description, menual } = inputs;
 
-  console.log(category);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -89,7 +88,7 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
     axios
       .post(URL, {
         gameTitle: name,
-        gameCategory: categoryData.length > 0 ? categoryData : category,
+        gameCategory: categoryData,
         gameImageUrl: imageUrl,
         gameDescription: description,
         gameManual: menual,
@@ -109,13 +108,14 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       axios
         .patch(`${URL}/${receivedData.id}`, {
           gameTitle: name,
-          gameCategory: setCategoryData,
+          gameCategory: categoryData.length > 0 ? categoryData : category,
           gameImageUrl: imageUrl,
           gameDescription: description,
           gameManual: menual,
           gameServiceStatus: statusValue,
         })
         .then((res) => {
+          console.log(res.data);
           onValue(null, res.data, false);
         })
         .catch((err) => {
@@ -173,8 +173,8 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
             name="category"
             value={categoryData.length > 0 ? categoryData : category}
             onChange={handleChange}
-            readOnly
             style={{ width: '45rem' }}
+            readOnly
           />
 
           <Button
