@@ -13,7 +13,7 @@ const AdminInfomation = () => {
     setMenuIdx(idx);
   };
   return (
-    <>
+    <div>
       <Menu idx={1} />
       <div className={styles.container}>
         <header>
@@ -70,7 +70,7 @@ const AdminInfomation = () => {
         </footer>
       </div>
       <Footer idx={1} />
-    </>
+    </div>
   );
 };
 export default AdminInfomation;

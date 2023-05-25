@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { GameInfo, GameData } from './interface';
 import DropDown from '../dropdown';
-
+import CategoryModal from './categoryModal';
 type ChildProps = {
   onValue: (
     newData: GameInfo | null,
@@ -104,10 +104,29 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
         });
     }
   };
+  //게임정보 상세 보기(모달창)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [modalData, setModalData] = useState('');
+
+  const openModal = (value: boolean) => {
+    // setModalData(data);
+    setIsOpen(value);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <Container>
       <ContentDiv>
+        {isOpen && (
+          <CategoryModal
+            isOpen={isOpen}
+            onClose={closeModal}
+            // data={modalData}
+          ></CategoryModal>
+        )}
         <p>게임명</p>
         <input
           type="text"
@@ -140,12 +159,24 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       </ContentDiv>
       <ContentDiv>
         <p>카테고리</p>
-        <input
+        {/* <input
           type="text"
           name="category"
           value={category}
           onChange={handleChange}
-        />
+          style={{ width: '40rem' }}
+        /> */}
+        <p>{category}</p>
+        <Button
+          onClick={() => openModal(true)}
+          style={{
+            width: '15rem',
+            fontSize: '1.6rem',
+            margin: '0.4rem 0 0 0',
+          }}
+        >
+          카테고리 선택
+        </Button>
       </ContentDiv>
       <ContentDiv>
         <p>게임 설명</p>

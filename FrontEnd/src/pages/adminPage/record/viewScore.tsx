@@ -12,6 +12,7 @@ type Props = {
 };
 
 const ViewScore: React.FC<Props> = ({ URL, menu }) => {
+  //*페이지ㄴㅔ이션은 추후에 추가할 예정
   //****게임별 보기  => 드롭다운 menu === 0 SelectGame
   //****유저별 보기  => 검색창  menu === 1 SearchUser
 
