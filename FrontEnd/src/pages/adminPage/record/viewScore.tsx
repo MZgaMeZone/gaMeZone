@@ -70,7 +70,13 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
     <Container>
       <DropdownDiv>
         {menu === 0 ? (
-          <SelectGame onValue={handleData} onToggle={handleToggle} URL={URL} />
+          <span>
+            <SelectGame
+              onValue={handleData}
+              onToggle={handleToggle}
+              URL={URL}
+            />
+          </span>
         ) : menu === 1 ? (
           <SearchUser onValue={handleData} onToggle={handleToggle} URL={URL} />
         ) : (
@@ -138,6 +144,9 @@ const DropdownDiv = styled.div`
   justify-content: center;
   padding: 4rem 0;
   width: 100%;
+  span {
+    margin-bottom: 0.2rem;
+  }
 `;
 const Main = styled.div`
   position: relative;
@@ -212,7 +221,7 @@ const FooterDiv = styled.div`
 
 const ResetContent = styled.div`
   width: 100%;
-  height: 23.4rem;
+  height: 23rem;
   display: flex;
   align-items: center;
   justify-content: center;

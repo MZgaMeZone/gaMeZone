@@ -13,7 +13,9 @@ const SubMenu = () => {
       <Nav>
         {menu === 0 ? (
           <SelectedMenu>
-            <p>게임별 보기</p>
+            <p>
+              게임별 보기<span></span>
+            </p>
           </SelectedMenu>
         ) : (
           <p onClick={() => handleMenuClick(0)}>게임별 보기</p>
@@ -21,7 +23,9 @@ const SubMenu = () => {
         <div>
           {menu === 1 ? (
             <SelectedMenu>
-              <p>유저별 보기</p>
+              <p>
+                유저별 보기 <span></span>
+              </p>
             </SelectedMenu>
           ) : (
             <p onClick={() => handleMenuClick(1)}>유저별 보기</p>
@@ -66,8 +70,13 @@ const Content = styled.div`
 `;
 
 const SelectedMenu = styled.div`
-  // border: 1px solid #242424;
   p {
     font-weight: 600;
+    span {
+      display: flex;
+      width: 6rem;
+      border: 1px solid #000080;
+      border-radius: 1px;
+    }
   }
 `;
