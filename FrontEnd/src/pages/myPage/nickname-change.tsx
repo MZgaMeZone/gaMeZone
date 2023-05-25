@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { MouseEvent, FormEvent } from 'react';
 import axios from 'axios';
-import { get } from 'http';
 
 const url = process.env.REACT_APP_API_URL;
 const userToken: string | null = localStorage.getItem('userToken');
@@ -48,15 +47,19 @@ function NicknameChange() {
       });
   };
 
-  const updateNickname = async () => {
-    console.log('일단 이거 대기!'); //isDuplicate값이 true면 return
-    // await axios.put(url + '/api/users',config,{
+  const updateNickname = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
-    // })
-    //   .then((res)=>{
-    //     console.log(res.data);
-    //   })
+    await axios
+      .patch(`${url}/api/users/nicknameChange`, { newNickname }, config)
+      .then((res) => {
+        alert(`${res.data.nickname}님 성공적으로 변경되었습니다!`);
+      })
+      .catch((err) => {
+        console.log('에러 발생', err);
+      });
   };
+
   const handleChange = (e: FormEvent<HTMLInputElement>) => {
     const { name } = e.currentTarget;
 
@@ -85,6 +88,7 @@ function NicknameChange() {
               name="current-nickname"
               onChange={handleChange}
               value={currenNickname}
+              disabled={true}
             />
             <NicknameCheck>
               <NewnicknameBox>
@@ -93,7 +97,6 @@ function NicknameChange() {
                   type="text"
                   id="new-nickname"
                   name="new-nickname"
-                  value={newNickname}
                   onChange={handleChange}
                   placeholder="새로운 닉네임을 입력해주세요"
                 />

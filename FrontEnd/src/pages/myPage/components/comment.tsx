@@ -27,11 +27,12 @@ function Comment() {
     console.log('Check effect');
     const fetchData = async () => {
       const {
-        data: { email },
+        data: { email, userIcon },
       } = await axios.get(url + '/api/users', config);
       const { data: commentList } = await axios.get(
         url + `/api/comments/${email}`
       );
+      setUserIcon(userIcon);
       const formattedData = commentList.map((item: any) => ({
         ...item,
         createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
@@ -42,6 +43,7 @@ function Comment() {
   }, []);
 
   const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [userIcon, setUserIcon] = useState<string>('');
   //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
@@ -73,7 +75,7 @@ function Comment() {
                 <Link to={`/community/${comment.post}`}>
                   <CommentInfo key={comment._id}>
                     <ProfileBox>
-                      <img src={gomaImg} alt="프로필" />
+                      <img src={url + '/' + userIcon} alt="프로필" />
                       <h1>{comment.author.nickname}</h1>
                       <Date>
                         <h1>{comment.createdAt}</h1>
@@ -155,6 +157,7 @@ const CommentInfo = styled.div`
 
   img {
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
     margin-right: 2rem;

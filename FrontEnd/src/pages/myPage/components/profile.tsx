@@ -6,13 +6,22 @@ import { useNavigate } from 'react-router-dom';
 
 type ProfileProps = {
   email: string;
-  img: string;
+  userIcon: string;
   nickName: string;
 };
 
-function Profile({ img, email, nickName }: ProfileProps) {
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
+
+function Profile({ userIcon, email, nickName }: ProfileProps) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
+  console.log(userIcon);
   React.useEffect(() => {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
@@ -20,7 +29,7 @@ function Profile({ img, email, nickName }: ProfileProps) {
       setIsLoggedIn(true);
     }
   }, []);
-
+  console.log(url + '/' + userIcon);
   const handleLogout = () => {
     localStorage.removeItem('userToken');
     alert('로그아웃 되었습니다.');
@@ -39,7 +48,9 @@ function Profile({ img, email, nickName }: ProfileProps) {
       ></div>
       <ProfileBox>
         <div className="avartar">
-          <img src={img} alt="유저 프로필" />
+          {/* <img src={userIcon} alt="프로필" /> */}
+          <img src={url + '/' + userIcon} alt="프로필" />
+
           <div className="nick_box">
             <p>{email}</p>
             <p>{nickName}</p>

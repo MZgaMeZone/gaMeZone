@@ -29,9 +29,9 @@ function PostList() {
     console.log('유즈이펙트');
     const fetchData = async () => {
       const {
-        data: { email },
+        data: { email, userIcon },
       } = await axios.get(url + '/api/users', config);
-
+      setUserIcon(userIcon);
       const { data: postList } = await axios.get(url + `/api/posts/${email}`);
       const formattedData = postList.map((item: any) => ({
         ...item,
@@ -45,6 +45,7 @@ function PostList() {
   }, []);
 
   const [postList, setPostList] = useState<Post[]>([]);
+  const [userIcon, setUserIcon] = useState<string>('');
   //페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
@@ -73,7 +74,7 @@ function PostList() {
                 <Link to={`/community/${post._id}`}>
                   <CommentInfo key={post._id}>
                     <ProfileBox>
-                      <img src={gomaImg} alt="프로필" />
+                      <img src={url + '/' + userIcon} alt="프로필" />
                       <h1>{post.author.nickname}</h1>
                       <Date>
                         <h1>{post.createdAt}</h1>
@@ -161,6 +162,7 @@ const CommentInfo = styled.div`
 
   img {
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
     margin-right: 2rem;
