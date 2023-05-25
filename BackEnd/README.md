@@ -9,20 +9,22 @@
 | POST   | /api/users/signup/nicknameDuplicateCheck | 회원가입 시 닉네임 중복검사   |
 | POST   | /api/users/login                         | 로그인                        |
 | GET    | /api/users                               | 사용자 정보 조회              |
-| PUT    | /api/users                               | 사용자 정보 수정              |
+| PUT    | /api/users/nicknameChange                | 사용자 닉네임 수정            |
+| PUT    | /api/users/passwordChange                | 사용자 비밀번호 수정          |
+| PUT    | /api/users/userIconChange                | 사용자 아이콘 수정            |
 | DELETE | /api/users                               | 사용자 정보 삭제              |
 | GET    | /api/users/allUsers                      | 사용자 전체 정보 조회(관리자) |
 
 ### 게임 명세
 
-| Method | URI                         | Description             |
-| ------ | --------------------------- | ----------------------- |
-| GET    | /api/games                  | 게임목록 전체조회       |
+| Method | URI                         | Description            |
+| ------ | --------------------------- | ---------------------- |
+| GET    | /api/games                  | 게임목록 전체조회      |
 | GET    | /api/games/:id              | 게임ID로 게임설명 조회 |
-| GET    | /api/games/categories/:name | 카테고리로 게임조회     |
-| POST   | /api/games                  | 새 게임정보 등록        |
-| PATCH  | /api/games/:id              | 게임정보 수정           |
-| DELETE | /api/games                  | 등록된 게임 삭제        |
+| GET    | /api/games/categories/:name | 카테고리로 게임조회    |
+| POST   | /api/games                  | 새 게임정보 등록       |
+| PATCH  | /api/games/:id              | 게임정보 수정          |
+| DELETE | /api/games                  | 등록된 게임 삭제       |
 
 ### 게임기록 명세
 
@@ -47,20 +49,23 @@
 
 ### 게시물 명세
 
-| Method | URI                | Description             |
-| ------ | ------------------ | ----------------------- |
-| GET    | /api/posts         | 전체 게시물 조회        |
-| GET    | /api/posts/:userId | 특정 유저의 게시물 조회 |
-| POST   | /api/posts         | 새 게시물 생성          |
-| PATCH  | /api/posts/:postId | 특정 게시물 수정        |
-| DELETE | /api/posts/:postId | 특정 게시물 삭제        |
+| Method | URI                     | Description                 |
+| ------ | ----------------------- | --------------------------- |
+| GET    | /api/posts              | 자유게시판 전체 게시물 조회 |
+| GET    | /api/posts/cert         | 인증게시판 전체 게시물 조회 |
+| GET    | /api/posts/post/:postId | 특정 게시물 조회            |
+| GET    | /api/posts/:userId      | 특정 유저의 게시물 조회     |
+| POST   | /api/posts              | 새 게시물 생성              |
+| PATCH  | /api/posts/:postId      | 특정 게시물 수정            |
+| DELETE | /api/posts/:postId      | 특정 게시물 삭제            |
 
 ### 댓글 명세
 
-| Method | URI                        | Description                  |
-| ------ | -------------------------- | ---------------------------- |
-| GET    | /api/comments/post/:postId | 특정 게시물의 모든 댓글 조회 |
-| GET    | /api/comments/:userId      | 특정 유저의 모든 댓글 조회   |
-| POST   | /api/comments              | 새로운 댓글 생성             |
-| PATCH  | /api/comments/:commentId   | 특정 댓글 수정               |
-| DELETE | /api/comments/:commentId   | 특정 댓글 삭제               |
+| Method | URI                           | Description                  |
+| ------ | ----------------------------- | ---------------------------- |
+| GET    | /api/comments/post/:postId    | 특정 게시물의 모든 댓글 조회 |
+| GET    | /api/comments/comment/:postId | 특정 댓글 조회               |
+| GET    | /api/comments/:userId         | 특정 유저의 모든 댓글 조회   |
+| POST   | /api/comments                 | 새로운 댓글 생성             |
+| PATCH  | /api/comments/:commentId      | 특정 댓글 수정               |
+| DELETE | /api/comments/:commentId      | 특정 댓글 삭제               |

@@ -69,7 +69,7 @@ class UserService {
 
       // email과 권한을  jwt페이로드에 포함시키고 , 서명키에 secretKey전달 , 토큰의 유효시간은 1시간
       const userToken = jwt.sign(
-        { userEmail: userData.email, role: userData.role },
+        { email: userData.email, role: userData.role },
         secretKey,
         { expiresIn: "1h" } //토큰 유효시간 1시간 설정
       );
@@ -105,20 +105,47 @@ class UserService {
     }
   }
 
-  // 회원 정보 업데이트
-  async updateUser(email, toUpdateInfo) {
-    // 사용자가 입력한 바꾸고싶은 비밀번호
-    const { password } = toUpdateInfo;
-
-    // 변경할 비밀번호가 있을 시
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      toUpdateInfo.password = hashedPassword;
-    }
-
-    const updatedUser = await this.userModel.updateUser(email, toUpdateInfo);
-    return updatedUser;
+  // 회원 닉네임 업데이트
+  async updateNickname(email, newNickname) {
+    const updatedNickname = await this.userModel.updateNickname(
+      email,
+      newNickname
+    );
+    return updatedNickname;
   }
+
+  // 회원 비밀번호 확인
+  async checkPassword(email, password) {
+    const userData = await this.userModel.findById(email);
+    const hashedUserPassword = userData.password;
+    const comparePassword = await bcrypt.compare(password, hashedUserPassword);
+
+    return comparePassword;
+  }
+
+  async updatePassword(email, newPassword) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const updatedPassword = await this.userModel.updatePassword(
+      email,
+      hashedPassword
+    );
+    return updatedPassword;
+  }
+
+  // // 회원 정보 업데이트
+  // async updateNickname(email, toUpdateInfo) {
+  //   // 사용자가 입력한 바꾸고싶은 비밀번호
+  //   const { password } = toUpdateInfo;
+
+  //   // 변경할 비밀번호가 있을 시
+  //   if (password) {
+  //     const hashedPassword = await bcrypt.hash(password, 10);
+  //     toUpdateInfo.password = hashedPassword;
+  //   }
+
+  //   const updatedUser = await this.userModel.updateUser(email, toUpdateInfo);
+  //   return updatedUser;
+  // }
 
   // 전체 유저 정보 조회
   async getAllUsers() {
@@ -133,7 +160,7 @@ class UserService {
       console.log("토큰이 유효하지않거나 ID를 찾을 수 없습니다.");
       return;
     }
-    const userData = await this.userModel.findByEmail(token.userEmail);
+    const userData = await this.userModel.findByEmail(token.email);
     return userData;
   }
 }

@@ -26,7 +26,7 @@ function AvartarChange() {
         console.log(email);
 
         const form = document.getElementById('profileForm') as HTMLFormElement;
-        form.action = `http://localhost:8080/api/users/profile`;
+        form.action = `http://localhost:8080/api/users/profile${email}`;
       } catch (e) {
         console.log(e);
       }

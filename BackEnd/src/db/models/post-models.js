@@ -7,12 +7,12 @@ const User = mongoose.model("User", UserSchema);
 
 export class PostModel {
   async createNewPost(data) {
-    const userId = await User.findOne({email: data.author});
+    const user = await User.findOne({email: data.author});
     //새 게시글 등록
     const newPost = new Post ({
       title: data.title,
       content: data.content,
-      author: userId._id,
+      author: user._id,
       category: data.category,
     });
 
@@ -48,9 +48,9 @@ export class PostModel {
 
   async findUserPosts(email) {
     // 특정 유저의 게시물 조회
-    const userId = await User.findOne({email});
+    const user = await User.findOne({email});
     console.log(userId);
-    const findPosts = await Post.find({author: userId._id}).populate("author", "-password").lean();
+    const findPosts = await Post.find({author: user._id}).populate("author", "-password").lean();
     if (findPosts.length < 1) {
       console.log("등록된 게시물이 없습니다.");
     }

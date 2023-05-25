@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as DownIcon } from '../../../src/style/icons/String-icon-ChevronDown.svg';
-
 interface DropDownProps {
   currentStatus: string;
   options: string[];

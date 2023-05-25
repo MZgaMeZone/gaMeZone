@@ -36,6 +36,22 @@ scoreRouter.get("/games/gameId/:id", async (req, res, next) => {
     next(err);
   }
 });
+//닉네임으로 게임 기록 조회하는 get 요청
+scoreRouter.get("/search/:nickname", async (req, res, next) => {
+  try {
+    const nickname = req.params.nickname;
+    console.log(nickname);
+    console.log("🖐️ 해당 게임의 기록을 요청합니다.");
+    const scoreList = await scoreService.findScoresByNickname(nickname);
+
+    console.log("✔️ 해당 게임의 모든 기록을 불러오는 데 성공했습니다!");
+
+    res.status(201).json(scoreList);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
 
 // 해당 user의 모든 기록정보를 가져오는 GET 요청
 scoreRouter.get("/users/:id", async (req, res, next) => {
