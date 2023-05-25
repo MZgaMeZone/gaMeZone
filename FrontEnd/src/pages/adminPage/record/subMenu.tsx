@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ViewScore from './viewScore';
-import ViewUser from './searchUser';
 
 const SubMenu = () => {
   const URL = `${process.env.REACT_APP_API_URL}/api/scores`;

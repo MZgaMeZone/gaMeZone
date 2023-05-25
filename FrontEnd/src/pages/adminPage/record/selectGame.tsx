@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { ReactComponent as DownIcon } from '../../../style/icons/String-icon-ChevronDown.svg';
 import axios from 'axios';
 import { Score } from './scoreInterface';
-interface DropDownProps {
-  onValue: (value: Score) => void;
+interface Props {
+  onValue: (data: Score) => void;
+  onToggle: (toggle: boolean) => void;
   URL: string;
 }
 
-const SelectGame: React.FC<DropDownProps> = ({ onValue, URL }) => {
+const SelectGame: React.FC<Props> = ({ onValue, onToggle, URL }) => {
   const [currentValue, setCurrentValue] =
     useState('조회할 게임을 선택해주세요:)');
   const [showOptions, setShowOptions] = useState(false);
@@ -32,13 +33,16 @@ const SelectGame: React.FC<DropDownProps> = ({ onValue, URL }) => {
     setShowOptions(false);
     setGameId(id);
   };
-
   // 담은 아이디로 get 요청
+  // onValue 함수로 받아온 데이터를 viewScore에 넘겨줌
   useEffect(() => {
-    axios
-      .get(`${URL}/games/gameId/${gameId}`)
-      .then((res) => onValue(res.data))
-      .catch((err) => console.log(err));
+    if (gameId.length > 0) {
+      onToggle(true);
+      axios
+        .get(`${URL}/games/gameId/${gameId}`)
+        .then((res) => onValue(res.data))
+        .catch((err) => console.log(err));
+    }
   }, [gameId]);
 
   //받아온 옵션들을 맵으로 돌려준다.
