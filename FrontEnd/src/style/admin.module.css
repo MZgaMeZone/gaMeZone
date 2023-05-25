@@ -99,6 +99,7 @@ footer .footer_content {
   width: 2.1rem;
   border: #000000 1px solid;
   border-radius: 10px;
+  border-radius: 1px;
 }
 .menu_hover:hover {
   transition: 0.2s;
