@@ -12,6 +12,7 @@ function NicknameChange() {
   const [currenNickname, setCurrentNickname] = useState('');
   const [newNickname, setNewNickname] = useState('');
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
   const navigate = useNavigate();
 
   const getCurrentNickname = async () => {
@@ -22,6 +23,7 @@ function NicknameChange() {
     };
     await axios.get(url + '/api/users', config).then((res) => {
       console.log(res.data);
+      setUserEmail(res.data.userEmail);
       setCurrentNickname(res.data.nickname);
     });
   };
@@ -59,9 +61,15 @@ function NicknameChange() {
     };
     console.log('일단 이거 대기!'); //isDuplicate값이 true면 return
 
+    const patchScoreBody = {
+      userNickname: newNickname,
+      userEmail: userEmail,
+    };
+
     await axios
       .patch(`${url}/api/users/nicknameChange`, { newNickname }, config)
       .then((res) => {
+        axios.patch(`${url}/api/scores`, patchScoreBody, config);
         alert(`${res.data.nickname}님 성공적으로 변경되었습니다!`);
         navigate('/mypage');
       })
