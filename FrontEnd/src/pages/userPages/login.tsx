@@ -13,7 +13,6 @@ function Login() {
 
   function handleLogin(email: string, password: string) {
     if (email === '' || password === '') {
-      console.log('이메일 비밀번호 빈칸');
       return alert('이메일과 비밀번호 모두 입력해주세요.');
     }
     axios
@@ -30,7 +29,6 @@ function Login() {
         }
       })
       .catch((e) => {
-        console.log(e);
         alert('올바른 이메일과 비밀번호를 입력하세요.');
       });
   }
