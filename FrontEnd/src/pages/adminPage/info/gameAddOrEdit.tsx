@@ -266,10 +266,13 @@ const ContentInput = styled.input`
   font-weight: 500;
   font-size: 1.8rem;
   vertical-align: top;
-  /* 
-  &:focus {
+  ${({ readOnly }) =>
+    !readOnly &&
+    `
+    &:focus {
     border: 2px solid #008080;
-  } */
+  }
+  `}
 `;
 const ContentDiv = styled.div`
   width: 80rem;
