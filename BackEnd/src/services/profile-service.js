@@ -9,6 +9,10 @@ class ProfileService {
   async uploadeProfile(userIcon, email) {
     return await profileModel.uploadeProfile(userIcon, email);
   }
+
+  async deleteProfile(image, email) {
+    return await profileModel.deleteProfile(image, email);
+  }
 }
 
 const profileService = new ProfileService();
