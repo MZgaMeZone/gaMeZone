@@ -25,4 +25,18 @@ profileRouter.post(
   }
 );
 
+profileRouter.post("/edit/:email", async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const image = "../../public/images/pngwing.com.png";
+    console.log("🖐️ 유저 프로필 사진을 삭제합니다.");
+    const newProfile = await profileService.deleteProfile(image, email);
+    console.log("✔️ 유저 프로필 사진 등록이 완료되었습니다!");
+    res.status(201).json(newProfile);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 export { profileRouter };
