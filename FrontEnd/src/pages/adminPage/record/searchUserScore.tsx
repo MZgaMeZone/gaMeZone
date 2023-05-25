@@ -9,7 +9,7 @@ interface Props {
   URL: string;
 }
 
-const SearchUser: React.FC<Props> = ({ onValue, onToggle, URL }) => {
+const SearchUserScore: React.FC<Props> = ({ onValue, onToggle, URL }) => {
   //유저 닉네임을 검색하여 게임 기록 조회
 
   //input 처리
@@ -45,7 +45,7 @@ const SearchUser: React.FC<Props> = ({ onValue, onToggle, URL }) => {
   );
 };
 
-export default SearchUser;
+export default SearchUserScore;
 
 const Content = styled.div`
   display: flex;

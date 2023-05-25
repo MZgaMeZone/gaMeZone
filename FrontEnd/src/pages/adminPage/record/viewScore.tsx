@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import SelectGame from './selectGame';
+import SelectGameScore from './selectGameScore';
 import { Score } from './scoreInterface';
 import ScoreModal from './scoreModal';
-import SearchUser from './searchUser';
+import SearchUserScore from './searchUserScore';
 
 type Props = {
   URL: string;
@@ -72,14 +72,18 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
       <DropdownDiv>
         {menu === 0 ? (
           <span>
-            <SelectGame
+            <SelectGameScore
               onValue={handleData}
               onToggle={handleToggle}
               URL={URL}
             />
           </span>
         ) : menu === 1 ? (
-          <SearchUser onValue={handleData} onToggle={handleToggle} URL={URL} />
+          <SearchUserScore
+            onValue={handleData}
+            onToggle={handleToggle}
+            URL={URL}
+          />
         ) : (
           ''
         )}

@@ -3,8 +3,8 @@ import styles from '../../../../src/style/admin.module.css';
 import Menu from '../menu';
 import Footer from '../footer';
 import { ReactComponent as Star } from '../../../style/icons/star.svg';
-import AdminUserInfo from './adminUserInfo';
-import AdminUserOut from './adminUserOut';
+import UserList from './userList';
+import SearchUser from './searchUser';
 const AdminUser = () => {
   const [menuIdx, setMenuIdx] = useState<number>(0);
 
@@ -31,49 +31,25 @@ const AdminUser = () => {
             <p>회원 정보 관리</p>
             {menuIdx === 0 ? <span className={styles.span} /> : ''}
           </div>
-          <div
-            className={`${styles.menu_item} ${
-              menuIdx === 1 ? styles.selected_menu : styles.menu_hover
-            }`}
-            onClick={() => handleClick(1)}
-          >
-            <p>회원 탈퇴</p>
-            {menuIdx === 1 ? <span className={styles.span} /> : ''}
-          </div>
-          <div
-            className={`${styles.menu_item} ${
-              menuIdx === 2 ? styles.selected_menu : styles.menu_hover
-            }`}
-            onClick={() => handleClick(2)}
-          >
-            <p>블랙리스트</p>
-            {menuIdx === 2 ? <span className={styles.span} /> : ''}
-          </div>
         </div>
-        <main>
+        <div className={styles.scroll}>
           <div className={styles.content}>
             <div className={styles.sub_title}>
-              {menuIdx === 0 ? (
-                <p>회원 정보 관리</p>
-              ) : menuIdx === 1 ? (
-                <p>회원 탈퇴</p>
-              ) : menuIdx === 2 ? (
-                <p>블랙리스트 명단</p>
-              ) : (
-                ''
-              )}
+              {menuIdx === 0 ? <p>회원 정보 관리</p> : ''}
             </div>
             <div className={styles.main_text}>
               {menuIdx === 0 ? (
-                <AdminUserInfo />
-              ) : menuIdx === 1 ? (
-                <AdminUserOut />
+                <>
+                  <SearchUser />
+                  <UserList />
+                </>
               ) : (
                 ''
               )}
             </div>
+            <div className={styles.footer_div}></div>
           </div>
-        </main>
+        </div>
         <footer>
           <div className={styles.footer_box}>
             <div className={styles.footer_content}></div>
