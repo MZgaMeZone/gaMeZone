@@ -11,15 +11,27 @@ type IconIdx = {
 
 const Footer = ({ idx }: IconIdx) => {
   const icon = idx;
-  const date = new Date();
-  let hour = date.getHours();
-  const minutes = date.getMinutes();
-  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const [minute, setMinute] = useState('');
+  const [hour, setHour] = useState(0);
+  const [ampm, setAMPM] = useState('');
 
-  hour %= 12;
-  hour = hour || 12;
-  const minute: string =
-    minutes.toString().length === 1 ? '0' + minutes : minutes.toString();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const date = new Date();
+      const minutes = date.getMinutes();
+      const formattedMinute = minutes.toString().padStart(2, '0');
+      setMinute(formattedMinute);
+
+      let hours = date.getHours();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours %= 12;
+      hours = hours || 12;
+      setHour(hours);
+      setAMPM(ampm);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className={styles.container}>

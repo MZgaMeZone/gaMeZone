@@ -11,8 +11,16 @@ const Category = mongoose.model("categories", CategorySchema);
 class GameModel {
   async createNewGame(data) {
     // 새 게임정보 등록하기. [Joi에서 사전 검증할 예정임]
-    const newGame = await Game.create(data);
-    return newGame;
+    try {
+      const findGameByUrl = await Game.find({ gameUrl: data.gameUrl });
+      if (findGameByUrl.length > 0) {
+        throw new Error("url은 중복될 수 없습니다. 다른 url을 사용해 주세요.");
+      }
+      const newGame = await Game.create(data);
+      return newGame;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   async findAllGames() {
@@ -26,7 +34,7 @@ class GameModel {
   async findGame(id) {
     // 게임 아이디로 게임 정보 불러오기
     try {
-      const findGame = await Game.findOne({ _id: id });
+      const findGame = await Game.findOne({ gameUrl: id });
       return findGame;
     } catch (e) {
       console.log(`해당 id에 일치하는 게임정보가 없습니다.`);

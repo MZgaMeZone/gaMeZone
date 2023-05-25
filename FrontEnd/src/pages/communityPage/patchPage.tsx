@@ -7,61 +7,86 @@ interface postsType {
     _id: string;
     title: string;
     content: string;
+    category: string;
     author: { nickname: string, _id: string};
     createdAt: string;
   }
 
+interface postData {
+  title: string,
+  content: string,
+}
+
 const ModifiedPost = () => {
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
   const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
+  const [data, setData] = useState<postData>({
+    title: "",
+    content: "",
+  });
   const navigate = useNavigate();
   const {postId} = useParams<{ postId: string }>();
 
+  //post 데이터 불러오기
   useEffect(() => {
     axios
     .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
     .then((res) => {
       setPost(res.data);
     });
-  }, [post]); 
+  }, [postId]);
+
+  //수정 시 default 값이 수정 전 데이터가 되도록 구현
+  useEffect(() => {
+    if (post) {
+      setData((prevData) => ({
+        ...prevData,
+        title: post.title,
+        content: post.content,
+      }));
+    }
+  }, [post]);
 
   if (!post) {
     return null;
-  };
+  }; 
 
-  const handleTitleChange = (e:any) => {
-    setTitle(e.target.value);
-  };
-
-  const handleContentChange = (e:any) => {
-    setContent(e.target.value);
-  };
+  const dataChange = ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {name, value} = e.target;
+    setData({
+      ...data,
+      [name]: value
+    })
+  })
+  
 
   const handleFormSubmit = async (e:any) => {
     e.preventDefault();
 
-    if (title.trim() === '') {
+    if (data.title.trim() === '') {
       alert('제목을 입력해주세요');
       return;
     }
 
-    if (content.trim() === '') {
+    if (data.content.trim() === '') {
       alert('내용을 입력해주세요');
       return;
     }
 
     try {
       const postData = {
-        title: title,
-        content: content,
+        title: data.title,
+        content: data.content,
         author: post.author._id
       };
 
       await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, postData);
 
       alert('게시물 수정이 완료되었습니다.');
-      navigate(`/community/${postId}`);
+      if (post.category === "free") {
+        navigate(`/community/${postId}`)
+      } else {
+        navigate(`/community/certified/${postId}`)
+      }
     } catch (error) {
       console.error(error);
       alert('게시물 작성 중 오류가 발생했습니다.');
@@ -74,14 +99,14 @@ const ModifiedPost = () => {
       <PostForm onSubmit={handleFormSubmit}>
         <TitleForm>
           <TitleLabel>제목</TitleLabel>
-          <TitleInput type="text" value={title} onChange={handleTitleChange} />
+          <TitleInput type="text" name="title" value={data.title} onChange={dataChange} />
         </TitleForm>
         <MainForm>
           <MainLabel>내용</MainLabel>
-          <MainInput value={content} onChange={handleContentChange} />
+          <MainInput name="content" value={data.content} onChange={dataChange} />
         </MainForm>
         <PostFooter>
-          <GoBack to="/community">뒤로 가기</GoBack>
+          {post.category === "free" ? <GoBack to="/community">뒤로 가기</GoBack> : <GoBack to="/community/certified">뒤로 가기</GoBack>}
           <PostButton type="submit">작성 완료</PostButton>
         </PostFooter>
       </PostForm>

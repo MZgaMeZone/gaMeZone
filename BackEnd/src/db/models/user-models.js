@@ -21,6 +21,24 @@ export class UserModel {
     }
   }
 
+  // 이메일 조회
+  async findByEmail(email) {
+    const userData = await User.findOne(
+      { email },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
+
+  // 닉네임 조회
+  async findByNickname(nickname) {
+    const userData = await User.findOne(
+      { nickname },
+      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
+    );
+    return userData;
+  }
+
   // 탈퇴
   async deleteUser(userId) {
     try {
@@ -30,16 +48,27 @@ export class UserModel {
     }
   }
 
-  // 유저 정보 수정
-  async updateUser(userId, toUpdateInfo) {
+  // 유저 닉네임 수정
+  async updateNickname(email, nickname) {
     try {
-      // returnOriginal 옵션을 false로 설정되면 업데이트된 사용자 리턴
       const updatedUser = await User.findOneAndUpdate(
-        { email: userId },
-        toUpdateInfo,
-        {
-          returnOriginal: false,
-        }
+        { email },
+        { $set: { nickname } },
+        { new: true }
+      );
+      return updatedUser;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  // 유저 비밀번호 수정
+  async updatePassword(email, password) {
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { email },
+        { $set: { password } },
+        { new: true }
       );
       return updatedUser;
     } catch (err) {
@@ -58,22 +87,6 @@ export class UserModel {
     } catch (err) {
       throw new Error(err);
     }
-  }
-
-  async findUserById(email) {
-    const userData = await User.findOne(
-      { email },
-      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
-    );
-    return userData;
-  }
-
-  async findUserByNickname(nickname) {
-    const userData = await User.findOne(
-      { nickname },
-      { _id: 0, password: 0, status: 0, createdAt: 0, updatedAt: 0 }
-    );
-    return userData;
   }
 }
 export const userModel = new UserModel();

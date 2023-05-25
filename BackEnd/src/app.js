@@ -7,6 +7,7 @@ import { scoreRouter } from "./routers/score-routers.js";
 import { postRouter } from "./routers/post-routers.js";
 import { commentRouter } from "./routers/comment-routers.js";
 import { categoryRouter } from "./routers/category-routers.js";
+import { profileRouter } from "./routers/profile-routers.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import path from "path";
 import bodyParser from "body-parser";
@@ -30,6 +31,7 @@ app.use("/api/scores", scoreRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
 app.use("/api/categories", categoryRouter);
+app.use("/api/users/profile", profileRouter);
 app.use("/", viewsRouter);
 // app.use(errorHandler);
 

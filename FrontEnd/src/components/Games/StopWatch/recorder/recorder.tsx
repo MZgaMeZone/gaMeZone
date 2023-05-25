@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +13,19 @@ type RecorderProps = {
   setGameMode: React.Dispatch<React.SetStateAction<string>>;
 };
 
+interface userDataType {
+  email?: string;
+  nickname: string;
+}
+
+const url = process.env.REACT_APP_API_URL;
+const userToken: string | null = localStorage.getItem('userToken');
+const config = {
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+  },
+};
+
 function Recorder(props: RecorderProps) {
   const scores = props.scores;
   const setScores = props.setScores;
@@ -23,6 +36,24 @@ function Recorder(props: RecorderProps) {
   const setGameMode = props.setGameMode;
   const navigate = useNavigate();
 
+  const [userData, setUserData] = useState<userDataType>({
+    nickname: 'Anonymous',
+  });
+
+  useEffect(() => {
+    if (userToken) {
+      axios
+        .get(url + '/api/users', config)
+        .then((res) => {
+          setUserData(res.data);
+        })
+        .catch((e) => {
+          setUserData({ nickname: 'Anonymous' });
+        });
+    }
+  }, []);
+  console.log(userData);
+
   // 현재 저장된 기록을 제출하려고함.
   function scoreSubmit(
     score: string[],
@@ -31,7 +62,9 @@ function Recorder(props: RecorderProps) {
   ) {
     const data = {
       gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
-      userNickname: 'ㄱㅁㅇ', // 나중에 token으로 관리
+      userNickname: userData.nickname, // 나중에 token으로 관리
+      userEmail: userData.email,
+      gameUrl: '10seconds',
       totalScores: score,
       averageScore: averagescore,
       highScore: highscore,
@@ -124,8 +157,8 @@ function Recorder(props: RecorderProps) {
                 //게임 오버로 데이터 넘깁시다
                 navigate('/game/gameOver', {
                   state: {
-                    gameId: '64673c9e003fef9471f58799', // 나중에 state로 관리
-                    userNickName: 'gomao', //나중에 token으로 관리
+                    gameId: '10seconds', // 나중에 state로 관리
+                    userNickName: userData.nickname, //나중에 token으로 관리
                     userAverageScore: printScore[2],
                     userHighScore: printScore[0],
                   },

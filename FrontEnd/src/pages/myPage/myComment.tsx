@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
 
 import CommunityContainer from './components/communityContainer';
 import Comment from './components/comment';
@@ -11,15 +11,14 @@ function MyComment() {
       <CommunityContainer>
         <Title>내가 쓴 댓글</Title>
         <Line></Line>
-        <CommentMenu>
+        {/* <CommentMenu>
           <Link to="/mypage/mycomment">
             <Links>내가 쓴 댓글</Links>
           </Link>
           <Link to="/mypage/mycomment-post">
             <Links>내가 댓글 단 게시글</Links>
           </Link>
-        </CommentMenu>
-
+        </CommentMenu> */}
         <Comment />
       </CommunityContainer>
     </>

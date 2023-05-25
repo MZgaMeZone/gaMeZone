@@ -5,10 +5,14 @@ class PostService {
     this.postModel = postModel;
   }
 
-  //GET all posts
-  async findAllPosts() {
-    return await postModel.findAllPost();
+  //GET all freeboard posts
+  async findAllFreePosts() {
+    return await postModel.findAllFreePost();
   };
+
+  async findAllCertPosts() {
+    return await postModel.findAllCertPost();
+  }
 
   //GET one post
   async findPost(id) {
@@ -16,8 +20,8 @@ class PostService {
   }
 
   //GET user's posts
-  async findUserPosts(id) {
-    return await postModel.findUserPosts(id);
+  async findUserPosts(email) {
+    return await postModel.findUserPosts(email);
   }
 
   //POST

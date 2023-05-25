@@ -3,11 +3,24 @@ import { postService } from "../services/post-service.js";
 
 const postRouter = Router();
 
-//모든 게시물 가져오는 GET요청
+//자유게시판의 모든 게시물 가져오는 GET요청
 postRouter.get("/", async(req, res, next) => {
   try {
     console.log("모든 게시물을 출력합니다.");
-    const postList = await postService.findAllPosts();
+    const postList = await postService.findAllFreePosts();
+    console.log("게시물 출력이 완료되었습니다.");
+    res.status(201).json(postList);
+  } catch(err) {
+    console.log(`${err}`);
+    next(err);
+  }
+});
+
+//인증게시판의 모든 게시물 가져오는 GET요청
+postRouter.get("/cert", async(req, res, next) => {
+  try {
+    console.log("모든 게시물을 출력합니다.");
+    const postList = await postService.findAllCertPosts();
     console.log("게시물 출력이 완료되었습니다.");
     res.status(201).json(postList);
   } catch(err) {
@@ -31,11 +44,11 @@ postRouter.get("/post/:postId", async(req, res, next) => {
 })
 
 //특정 유저의 게시물 가져오는 GET요청
-postRouter.get("/:id", async(req, res, next) => {
+postRouter.get("/:email", async(req, res, next) => {
   try {
-    const id = req.params.id;
+    const email = req.params.email;
     console.log("해당 유저의 게시물을 출력합니다.");
-    const postList = await postService.findUserPosts(id);
+    const postList = await postService.findUserPosts(email);
     console.log("해당 유저의 게시물 출력이 완료되었습니다.");
     res.status(201).json(postList);
   } catch(err) {

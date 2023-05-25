@@ -22,10 +22,11 @@ function Login() {
         password,
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         if (res.status === 200) {
           localStorage.setItem('userToken', res.data.userToken);
           navigate('/');
+          window.location.reload();
         }
       })
       .catch((e) => {

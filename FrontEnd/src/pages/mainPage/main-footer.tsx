@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,24 @@ function MainFooter(props: any) {
   const mainModal = props.mainModal;
   const setMainModal = props.setMainModal;
   const [timer, setTimer] = React.useState('');
+  const [hide, setHide] = React.useState(0);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  function handleLogout() {
+    localStorage.removeItem('userToken');
+    console.log('Logout 실행');
+    console.log('userToken 삭제');
+    setIsLoggedIn(false);
+    alert('로그아웃 되었습니다.');
+  }
+
+  React.useEffect(() => {
+    const userToken = localStorage.getItem('userToken');
+    if (userToken) {
+      // console.log('userToken를 정상적으로 받아왔습니다!'); // 현재 정상 동작하는 기능으로 주석 처리함
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   //   현재 시간을 출력하는 함수
   React.useEffect(() => {
@@ -38,12 +57,43 @@ function MainFooter(props: any) {
           카테고리
         </StartButton>
         <SubButton to="/">Home</SubButton>
-        <SubButton to="/login">Login</SubButton>
         <SubButton to="/ranking">Ranking</SubButton>
         <SubButton to="/community">Community</SubButton>
-        <SubButton to="/mypage">MyPage</SubButton>
-        <SubButton to="/admin">AdminPage</SubButton>
-        <Clock>{timer}</Clock>
+        {isLoggedIn ? (
+          <>
+            <SubButton to="/login" onClick={handleLogout}>
+              Logout
+            </SubButton>
+            <SubButton to="/mypage">MyPage</SubButton>
+          </>
+        ) : (
+          <SubButton to="/login">Login</SubButton>
+        )}
+
+        {hide > 5 && (
+          <>
+            <SubButton to="/admin">AdminPage</SubButton>
+          </>
+        )}
+        <Clock>
+          <button
+            style={{ cursor: 'default', color: 'rgb(232,232,232)' }}
+            onClick={() => {
+              setHide(hide + 1);
+            }}
+          >
+            _
+          </button>
+          {timer}
+          <button
+            style={{ cursor: 'default', color: 'rgb(232,232,232)' }}
+            onClick={() => {
+              setHide(0);
+            }}
+          >
+            _
+          </button>
+        </Clock>
       </FooterBar>
     </>
   );
@@ -91,7 +141,7 @@ const Clock = styled.div`
   text-align: center;
   padding: 1rem 1rem 0 1rem;
   white-space: nowrap;
-  width: 110px;
+  width: fit-content;
   height: 3.8rem;
   box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.6);
   border: #e0e0e0 solid 2px;
