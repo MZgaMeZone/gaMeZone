@@ -10,7 +10,7 @@ profileRouter.post(
   async (req, res, next) => {
     try {
       const { userIcon } = req.body;
-      const { email } = req.params.email;
+      const { email } = req.params;
       console.log(email);
       console.log(userIcon);
       const imgpath = req.file.path.replace(/\\/g, "/");
