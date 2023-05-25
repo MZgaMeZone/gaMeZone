@@ -18,6 +18,21 @@ class ProfileModel {
       throw new Error(error);
     }
   }
+
+  async deleteProfile(image, email) {
+    try {
+      const deleteProfile = await User.findOneAndUpdate(
+        { email: email },
+        { userIcon: image },
+        { new: true }
+      );
+      console.log("deleteProfile:" + deleteProfile);
+      return deleteProfile;
+    } catch (error) {
+      console.log("delete 프로필 에러 발생:" + error);
+      throw new Error(error);
+    }
+  }
 }
 
 const profileModel = new ProfileModel();

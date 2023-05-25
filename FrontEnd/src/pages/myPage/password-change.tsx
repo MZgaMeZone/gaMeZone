@@ -32,7 +32,9 @@ function PasswordChange() {
       axios
         .patch(`${url}/api/users/passwordChange`, { currPwd, newPwd }, config)
         .then((res) => {
-          alert('비밀번호 변경이 완료되었습니다.');
+          alert('비밀번호 변경이 완료되었습니다.'); //로그아웃되고 로그인으로 이동
+          localStorage.removeItem('userToken');
+          navigate('/login');
           setCurrPwd('');
           setNewPwd('');
           setNewPwdCheck('');
