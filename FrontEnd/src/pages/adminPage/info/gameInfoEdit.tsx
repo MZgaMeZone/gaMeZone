@@ -52,7 +52,6 @@ const GameInfoEdit = () => {
     updateData: GameInfo | null,
     value: boolean
   ) => {
-    console.log(updateData);
     if (newData) {
       setData([...data, newData]);
     }
