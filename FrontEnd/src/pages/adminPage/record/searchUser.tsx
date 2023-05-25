@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
 import axios from 'axios';
 import { Score } from './scoreInterface';
 interface Props {
-  onValue: (value: Score) => void;
+  onValue: (data: Score) => void;
+  onToggle: (toggle: boolean) => void;
   URL: string;
 }
 
-const SearchUser: React.FC<Props> = ({ onValue, URL }) => {
+const SearchUser: React.FC<Props> = ({ onValue, onToggle, URL }) => {
   //유저 닉네임을 검색하여 게임 기록 조회
 
   //input 처리
@@ -18,12 +19,15 @@ const SearchUser: React.FC<Props> = ({ onValue, URL }) => {
   };
 
   //검색 API
+  // onValue 함수로 받아온 데이터를 viewScore에 넘겨줌
   const handleClick = () => {
     axios
       .get(`${URL}/search/${input}`)
       .then((res) => onValue(res.data))
       .catch((err) => console.log(err));
+    onToggle(true);
   };
+
   return (
     <Content>
       <SearchInput

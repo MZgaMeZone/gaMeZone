@@ -16,15 +16,20 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
   //****유저별 보기  => 검색창  menu === 1 SearchUser
 
   const [scoreData, setScoreData] = useState<Score[]>([]);
-
+  const [toggle, setToggle] = useState<boolean>(false);
   // 받아오는 데이터
   const handleData = (data: any) => {
     setScoreData(data);
   };
 
+  //받아오는 토글
+  const handleToggle = (toggle: boolean) => {
+    setToggle(toggle);
+  };
   useEffect(() => {
     return () => {
       setScoreData([]);
+      setToggle(false);
     };
   }, [menu]);
 
@@ -65,17 +70,19 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
     <Container>
       <DropdownDiv>
         {menu === 0 ? (
-          <SelectGame onValue={handleData} URL={URL} />
+          <SelectGame onValue={handleData} onToggle={handleToggle} URL={URL} />
         ) : menu === 1 ? (
-          <SearchUser onValue={handleData} URL={URL} />
+          <SearchUser onValue={handleData} onToggle={handleToggle} URL={URL} />
         ) : (
           ''
         )}
       </DropdownDiv>
-      {menu === 0 && scoreData.length === 0 ? (
+      {menu === 0 && !toggle && scoreData.length === 0 && !toggle ? (
         <ResetContent>조회할 게임을 선택해주세요.</ResetContent>
-      ) : menu === 1 && scoreData.length === 0 ? (
+      ) : menu === 1 && !toggle && scoreData.length === 0 && !toggle ? (
         <ResetContent>조회할 유저의 닉네임을 입력해주세요.</ResetContent>
+      ) : scoreData.length === 0 && toggle ? (
+        <ResetContent>등록된 기록이 없습니다.</ResetContent>
       ) : scoreData.length > 0 ? (
         <Main>
           <Title>
@@ -205,7 +212,7 @@ const FooterDiv = styled.div`
 
 const ResetContent = styled.div`
   width: 100%;
-  height: 20rem;
+  height: 23.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
