@@ -47,7 +47,10 @@ const SubMenu = () => {
 
 export default SubMenu;
 
-const Container = styled.div``;
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+`;
 
 const Nav = styled.div`
   display: flex;

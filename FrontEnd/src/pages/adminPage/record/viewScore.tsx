@@ -123,7 +123,11 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
       ) : (
         ''
       )}
-      <FooterDiv />
+      {scoreData.length === 1 ? (
+        <FooterDiv style={{ padding: '10rem' }} />
+      ) : (
+        <FooterDiv />
+      )}
     </Container>
   );
 };
@@ -142,7 +146,7 @@ const DropdownDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0;
+  padding: 6rem 0;
   width: 100%;
   span {
     margin-bottom: 0.2rem;
@@ -151,6 +155,7 @@ const DropdownDiv = styled.div`
 const Main = styled.div`
   position: relative;
   width: 116rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -215,13 +220,13 @@ const Button = styled.button`
   }
 `;
 const FooterDiv = styled.div`
-  padding: 2rem;
+  padding: 5rem;
   border-bottom: 2px solid #e0e0e0;
 `;
 
 const ResetContent = styled.div`
   width: 100%;
-  height: 23rem;
+  height: 13rem;
   display: flex;
   align-items: center;
   justify-content: center;
