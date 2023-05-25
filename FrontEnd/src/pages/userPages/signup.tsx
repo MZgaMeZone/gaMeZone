@@ -20,7 +20,6 @@ function Signup() {
 
   async function handleEmailDuplicateCheck(e: { preventDefault: () => void }) {
     e.preventDefault();
-    console.log(email);
 
     await axios
       .post(url + '/api/users/signup/emailDuplicateCheck', {
@@ -29,10 +28,8 @@ function Signup() {
       .then((res) => {
         if (res.data.success) {
           setEmailDuplicateCheck(true);
-          console.log('email success: ', res);
           alert('사용 가능한 email입니다.');
         } else {
-          console.log('email fail: ', res.data);
           setEmail('');
           alert('중복된 email입니다. 다른 email을 입력해주세요.');
         }
@@ -43,7 +40,6 @@ function Signup() {
     preventDefault: () => void;
   }) {
     e.preventDefault();
-    console.log(nickname);
 
     await axios
       .post(url + '/api/users/signup/nicknameDuplicateCheck', {
@@ -51,11 +47,9 @@ function Signup() {
       })
       .then((res) => {
         if (res.data.success) {
-          console.log('nickname success: ', res.data);
           setNicknameDuplicateCheck(true);
           alert('사용 가능한 nickname입니다.');
         } else {
-          console.log('nickname fail: ', res.data);
           setNickname('');
           alert('중복된 nickname입니다. 다른 nickname을 입력해주세요.');
         }
@@ -64,7 +58,6 @@ function Signup() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(email, nickname, password, passwordCheck);
 
     await axios
       .post(url + '/api/users/signup', {
@@ -73,7 +66,6 @@ function Signup() {
         password: password,
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 201) {
           alert(`회원가입이 완료되었습니다. 환영합니다 ${nickname}님!`);
           navigate('/login');
