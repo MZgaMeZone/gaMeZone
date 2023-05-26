@@ -3,18 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
 import UserModal from './userModal';
-
-const token = localStorage.getItem('userToken');
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-};
-
-type Props = {
-  URL: string;
-};
+import { Config, Props } from './userInterface';
 
 const SearchUser = ({ URL }: Props) => {
   const [nicknameInput, setNicknameInput] = useState<string>('');
@@ -27,7 +16,7 @@ const SearchUser = ({ URL }: Props) => {
   const openModal = (value: boolean) => {
     setIsOpen(value);
     axios
-      .get(`${URL}/search/${nicknameInput}`, config)
+      .get(`${URL}/search/${nicknameInput}`, Config)
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };

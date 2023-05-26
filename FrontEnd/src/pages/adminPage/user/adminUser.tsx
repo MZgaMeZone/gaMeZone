@@ -43,7 +43,7 @@ const AdminUser = () => {
               {menuIdx === 0 ? (
                 <>
                   <SearchUser URL={URL} />
-                  <UserList />
+                  <UserList URL={URL} />
                 </>
               ) : (
                 ''

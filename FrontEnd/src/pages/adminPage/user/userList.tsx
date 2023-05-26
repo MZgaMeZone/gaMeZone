@@ -1,27 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Config, User, Props } from './userInterface';
 
-const token = localStorage.getItem('userToken');
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-};
-
-interface User {
-  nickname: string;
-  email: string;
-}
-const UserList = () => {
-  const URL = `${process.env.REACT_APP_API_URL}/api/users`;
+const UserList = ({ URL }: Props) => {
   const [userData, setUserData] = useState<User[]>([]);
 
   //회원 리스트 불러오는 get 요청
   useEffect(() => {
     axios
-      .get(`${URL}/allUsers`, config)
+      .get(`${URL}/allUsers`, Config)
       .then((res) => setUserData(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -31,7 +19,7 @@ const UserList = () => {
     const deleteConfirm = window.confirm(`[${nickname}]님을 탈퇴시키겠습니까?`);
     if (deleteConfirm) {
       axios
-        .delete(`${URL}/userDelete/${email}`, config)
+        .delete(`${URL}/userDelete/${email}`, Config)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
