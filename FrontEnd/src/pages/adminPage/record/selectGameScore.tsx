@@ -9,7 +9,7 @@ interface Props {
   URL: string;
 }
 
-const SelectGame: React.FC<Props> = ({ onValue, onToggle, URL }) => {
+const SelectGameScore: React.FC<Props> = ({ onValue, onToggle, URL }) => {
   const [currentValue, setCurrentValue] =
     useState('조회할 게임을 선택해주세요:)');
   const [showOptions, setShowOptions] = useState(false);
@@ -71,7 +71,7 @@ const SelectGame: React.FC<Props> = ({ onValue, onToggle, URL }) => {
   );
 };
 
-export default SelectGame;
+export default SelectGameScore;
 
 const DropDownContainer = styled.div`
   position: relative;

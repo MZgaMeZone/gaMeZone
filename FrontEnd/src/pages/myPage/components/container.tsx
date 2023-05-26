@@ -11,7 +11,6 @@ function Container({ children }: ContainerProps) {
   const [exit, setIsExit] = useState(false);
   const navigate = useNavigate();
   const handleExit = () => {
-    // setIsExit(true);
     navigate('/mypage');
   };
   return (

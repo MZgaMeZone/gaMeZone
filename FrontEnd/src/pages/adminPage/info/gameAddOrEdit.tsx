@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { GameInfo, GameData } from './interface';
 import DropDown from '../dropdown';
+import CategoryModal from './categoryModal';
 
 type ChildProps = {
   onValue: (
@@ -11,6 +12,7 @@ type ChildProps = {
     value: boolean
   ) => void;
 };
+
 type ChildPropsData = {
   receivedData: GameData | null;
 };
@@ -60,23 +62,39 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
     });
   };
 
+  //카테고리 선택할 체크박스(모달창)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [categoryData, setCategoryData] = useState<string[]>([]);
+  //체크박스 모달창을 통해 카테고리  데이터 받아옴
+  const openModal = (value: boolean) => {
+    setIsOpen(value);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const updateCategory = (arr: string[]) => {
+    setCategoryData(arr);
+  };
+
   //취소
   const handleCancelClick = () => {
     onValue(null, null, false);
   };
+
   //새로 등록시
   const handleAddClick = () => {
     axios
       .post(URL, {
         gameTitle: name,
-        gameCategory: category,
+        gameCategory: categoryData,
         gameImageUrl: imageUrl,
         gameDescription: description,
         gameManual: menual,
         gameServiceStatus: statusValue,
       })
       .then((res) => {
-        console.log(res.data);
         onValue(res.data, null, false);
       })
       .catch((err) => {
@@ -90,13 +108,14 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       axios
         .patch(`${URL}/${receivedData.id}`, {
           gameTitle: name,
-          gameCategory: category,
+          gameCategory: categoryData.length > 0 ? categoryData : category,
           gameImageUrl: imageUrl,
           gameDescription: description,
           gameManual: menual,
           gameServiceStatus: statusValue,
         })
         .then((res) => {
+          console.log(res.data);
           onValue(null, res.data, false);
         })
         .catch((err) => {
@@ -108,8 +127,15 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
   return (
     <Container>
       <ContentDiv>
+        {isOpen && (
+          <CategoryModal
+            isOpen={isOpen}
+            onClose={closeModal}
+            updateCategory={updateCategory}
+          ></CategoryModal>
+        )}
         <p>게임명</p>
-        <input
+        <ContentInput
           type="text"
           name="name"
           value={name}
@@ -120,12 +146,13 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       <ContentDiv>
         <p>게임 이미지</p>
         <div>
-          <input
+          <ContentInput
             type="text"
             name="imageUrl"
             value={imageUrl}
             onChange={handleChange}
             style={{ width: '48rem' }}
+            readOnly
           />
           <Button
             style={{
@@ -140,12 +167,27 @@ const GameAddOrEdit: React.FC<ChildProps & ChildPropsData> = ({
       </ContentDiv>
       <ContentDiv>
         <p>카테고리</p>
-        <input
-          type="text"
-          name="category"
-          value={category}
-          onChange={handleChange}
-        />
+        <div>
+          <ContentInput
+            type="text"
+            name="category"
+            value={categoryData.length > 0 ? categoryData : category}
+            onChange={handleChange}
+            style={{ width: '45rem' }}
+            readOnly
+          />
+
+          <Button
+            onClick={() => openModal(true)}
+            style={{
+              width: '15rem',
+              fontSize: '1.6rem',
+              margin: '0.4rem 0 0 0',
+            }}
+          >
+            카테고리 선택
+          </Button>
+        </div>
       </ContentDiv>
       <ContentDiv>
         <p>게임 설명</p>
@@ -196,22 +238,6 @@ const Container = styled.div`
     line-height: 24px;
     color: #242424;
   }
-  input {
-    width: 60rem;
-    height: 4rem;
-    margin: 1rem;
-    padding-left: 2rem;
-    background-color: rgb(233, 233, 233);
-    border: 0;
-    border-radius: 15px;
-    font-weight: 500;
-    font-size: 1.8rem;
-    vertical-align: top;
-
-    &:focus {
-      border: 2px solid #008080;
-    }
-  }
   textarea {
     box-sizing: border-box;
     width: 61rem;
@@ -228,6 +254,25 @@ const Container = styled.div`
       outline-color: #008080;
     }
   }
+`;
+const ContentInput = styled.input`
+  width: 60rem;
+  height: 4rem;
+  margin: 1rem;
+  padding-left: 2rem;
+  background-color: rgb(233, 233, 233);
+  border: 0;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 1.8rem;
+  vertical-align: top;
+  ${({ readOnly }) =>
+    !readOnly &&
+    `
+    &:focus {
+    border: 2px solid #008080;
+  }
+  `}
 `;
 const ContentDiv = styled.div`
   width: 80rem;
