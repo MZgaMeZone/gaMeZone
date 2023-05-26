@@ -24,9 +24,8 @@ function PostList() {
     createdAt: string;
     category: string;
   }
-  // /api/posts/:userId
+
   useEffect(() => {
-    console.log('유즈이펙트');
     const fetchData = async () => {
       const {
         data: { email, userIcon },
@@ -39,7 +38,6 @@ function PostList() {
         key: item._id,
       }));
       setPostList(formattedData);
-      console.log(postList);
     };
     fetchData();
   }, []);

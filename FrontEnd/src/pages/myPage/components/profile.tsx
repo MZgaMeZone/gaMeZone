@@ -47,9 +47,7 @@ function Profile({ userIcon, email, nickName }: ProfileProps) {
       ></div>
       <ProfileBox>
         <div className="avartar">
-          {/* <img src={userIcon} alt="프로필" /> */}
           <img src={url + '/' + userIcon} alt="프로필" />
-
           <div className="nick_box">
             <p>{email}</p>
             <p>{nickName}</p>
