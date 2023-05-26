@@ -21,7 +21,6 @@ const config = {
 function Profile({ userIcon, email, nickName }: ProfileProps) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
-  console.log(userIcon);
   React.useEffect(() => {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
