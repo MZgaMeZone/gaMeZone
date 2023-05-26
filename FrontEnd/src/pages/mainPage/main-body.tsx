@@ -58,8 +58,6 @@ function MainBody(props: MainBodyProps) {
   }
   return (
     <>
-      <TodayVisitor>Today : {countVisitor}</TodayVisitor>
-      <TotalVisitor>Total : {countVisitor}</TotalVisitor>
       <MainContainer>
         {mainModal && (
           <>

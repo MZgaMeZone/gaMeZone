@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
+import Tracker from '../../countingToday';
 
 interface HitGame {
   name: string;
@@ -30,7 +31,17 @@ const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
               color: 'yellow',
             }}
           >
-            Top5 Games
+            <Tracker />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              fontSize: '2.5rem',
+              color: 'yellow',
+            }}
+          >
+            <div>Top5 Games</div>
           </div>
           {hitGameList &&
             //hitGame은 최대 5개까지 출력함.
