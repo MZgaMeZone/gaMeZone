@@ -19,7 +19,7 @@ async function loginRequired(req, res, next) {
     req.role = role;
     next();
   } catch (err) {
-    res.json('loginRequired에러', err);
+    res.status(500).json({ error: 'loginRequired에러', message: err.message }); //민영 > 이 부분때문에 에러떠서 수정 좀 했엉!
   }
 }
 

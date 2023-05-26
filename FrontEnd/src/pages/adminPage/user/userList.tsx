@@ -83,7 +83,7 @@ const Main = styled.div`
 `;
 const NavBar = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
   margin: 3rem 0 0 0;
   padding: 1.6rem 55rem 1.6rem 7rem;
