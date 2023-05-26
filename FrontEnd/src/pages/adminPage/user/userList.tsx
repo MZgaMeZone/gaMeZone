@@ -27,11 +27,14 @@ const UserList = () => {
   }, []);
 
   //회원 탈퇴 요청
-  const handleDeleteClick = (email: string) => {
-    axios
-      .delete(`${URL}/userDelete/${email}`, config)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+  const handleDeleteClick = (email: string, nickname: string) => {
+    const deleteConfirm = window.confirm(`[${nickname}]님을 탈퇴시키겠습니까?`);
+    if (deleteConfirm) {
+      axios
+        .delete(`${URL}/userDelete/${email}`, config)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -55,7 +58,9 @@ const UserList = () => {
             <NameText>{item.nickname}</NameText>
             <EmailText>{item.email}</EmailText>
             <ButtonDiv>
-              <Button onClick={() => handleDeleteClick(item.email)}>
+              <Button
+                onClick={() => handleDeleteClick(item.email, item.nickname)}
+              >
                 탈퇴
               </Button>
             </ButtonDiv>
