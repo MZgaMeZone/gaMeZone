@@ -1,8 +1,8 @@
-import { model } from "mongoose";
-import UserSchema from "../schemas/user-schema.js";
+import { model } from 'mongoose';
+import UserSchema from '../schemas/user-schema.js';
 
 // UserSchema를 기준으로 User라는 모델 생성
-const User = model("User", UserSchema);
+const User = model('User', UserSchema);
 
 export class UserModel {
   // 로그인
@@ -42,7 +42,8 @@ export class UserModel {
   // 탈퇴
   async deleteUser(userId) {
     try {
-      await User.findOneAndUpdate({ email: userId }, { status: 0 });
+      console.log('유저 모델');
+      await User.findOneAndDelete({ email: userId }, { status: 0 }); //민영>>findOneAndDelete로 해야되는데 findOneAndUpdate로 넣어져있길래 수정했엉
     } catch (err) {
       throw new Error(err);
     }
@@ -81,9 +82,22 @@ export class UserModel {
     try {
       const allUsers = await User.find(
         {},
-        { email: 1, nickname: 1, role: 1 }
+        { email: 1, nickname: 1, role: 1, userIcon: 1 }
       ).lean();
       return allUsers;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+  async searchUser(nickname) {
+    try {
+      const searchUser = await User.find({
+        nickname: { $regex: new RegExp(`${nickname}`, 'i') },
+      });
+      if (searchUser.length < 1) {
+        console.log(`저장된 기록이 없습니다.`);
+      }
+      return searchUser;
     } catch (err) {
       throw new Error(err);
     }

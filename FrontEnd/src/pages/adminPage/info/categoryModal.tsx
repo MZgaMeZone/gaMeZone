@@ -54,7 +54,7 @@ const CategoryModal: React.FC<ModalProps> = ({
   };
 
   //버튼을 통해 체크박스 데이터를 보내준다.
-  const handleClick = () => {
+  const handleModalClick = () => {
     updateCategory(checkList);
     onClose();
   };
@@ -84,7 +84,7 @@ const CategoryModal: React.FC<ModalProps> = ({
             </label>
           </div>
         ))}
-        <button onClick={handleClick}>완료</button>
+        <button onClick={handleModalClick}>완료</button>
       </ModalContent>
     </ModalContainer>
   );
