@@ -3,9 +3,11 @@ import GameSchema from "../schemas/game-schema.js";
 import ScoreSchema from "../schemas/score-schema.js";
 import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
 import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
+import UserSchema from "../schemas/user-schema.js";
 
 const Game = mongoose.model("games", GameSchema);
 const Score = mongoose.model("scores", ScoreSchema);
+const User = mongoose.model("User", UserSchema);
 
 class ScoreModel {
   async findScoresByGame(id) {
@@ -21,7 +23,7 @@ class ScoreModel {
   async findScoresByGameId(id) {
     // 게임명으로 검색하여 모든 기록정보를 불러오기
     // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
-    const findScores = await Score.find({ gameId: id });
+    const findScores = await Score.find({ gameId: id }).populate("userIcon");
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
@@ -148,10 +150,21 @@ class ScoreModel {
     }
     const honorsRanking = Object.entries(final);
     honorsRanking.sort((b, a) => a[1] - b[1]);
-    const transformedRanking = honorsRanking.map((data) => ({
+    console.log(honorsRanking);
+    const honorsRankingWithIcon = await Promise.all(
+      honorsRanking.map(async (a) => {
+        const user = await User.findOne({ nickname: a[0] });
+        const userIcon = user ? user.userIcon : null;
+        return [...a, userIcon];
+      })
+    );
+    console.log(honorsRankingWithIcon);
+    const transformedRanking = honorsRankingWithIcon.map((data) => ({
       userNickname: data[0],
       score: parseFloat(data[1]).toFixed(2),
+      userIcon: data[2],
     }));
+    console.log(transformedRanking);
     return transformedRanking;
   }
 
@@ -168,10 +181,12 @@ class ScoreModel {
   async updateScore(userEmail, userNickname) {
     // 닉네임 변경유저 기록 업데이트 기능?
     try {
+      console.log(userEmail, userNickname);
       const updatedData = await Score.updateMany(
         { userEmail: userEmail },
-        { userNickname: userNickname }
+        { $set: { userNickname: userNickname } }
       );
+      console.log(updatedData);
       return updatedData;
     } catch (e) {
       console.log("[게임 기록 내 유저 이메일 업데이트 실패]");

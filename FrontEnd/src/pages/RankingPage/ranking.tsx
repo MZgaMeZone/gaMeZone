@@ -25,9 +25,10 @@ interface rankingDataType {
   averageScore?: number;
   highScore?: number;
   score?: number;
+  userIcon?: string;
 }
 
-const Lanking = () => {
+const Ranking = () => {
   const [showGameList, setShowGameList] = useState(false);
   const [gameList, setGameList] = useState<gameListType[]>([]);
   const [selectedGame, setSelectedGame] = useState<gameListType>({
@@ -159,7 +160,10 @@ const Lanking = () => {
                             <p>{idx + 1}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           {data.score && (
@@ -208,7 +212,10 @@ const Lanking = () => {
                             <p>{idx + 3}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           {data.score && <p className="score">{data.score}</p>}
@@ -233,7 +240,10 @@ const Lanking = () => {
                             <p>{idx + 3}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           <p className="avg-score">{data.averageScore}</p>
@@ -256,4 +266,4 @@ const Lanking = () => {
   );
 };
 
-export default Lanking;
+export default Ranking;
