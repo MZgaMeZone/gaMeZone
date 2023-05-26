@@ -177,7 +177,10 @@ const Ranking = () => {
                             <p>{idx + 1}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           <p className="avg-score">{`AVG: ${data.averageScore}`}</p>

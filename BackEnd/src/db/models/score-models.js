@@ -23,7 +23,7 @@ class ScoreModel {
   async findScoresByGameId(id) {
     // 게임명으로 검색하여 모든 기록정보를 불러오기
     // 무한스크롤이나 페이지네이션을 구현해야 할 것임.
-    const findScores = await Score.find({ gameId: id }).populate("userIcon");
+    const findScores = await Score.find({ gameId: id });
     if (findScores.length < 1) {
       console.log(`저장된 기록이 없습니다.`);
     }
@@ -78,7 +78,17 @@ class ScoreModel {
           : a[nonOption] - b[nonOption]
         : a[option] - b[option]
     );
-    return ranking;
+    const rankingWithIcon = await Promise.all(
+      // 유저 아이콘 추가
+      ranking.map(async (rankingItem) => {
+        const userData = await User.findOne({
+          nickname: rankingItem.userNickname,
+        });
+        const userIcon = userData ? userData.userIcon : null;
+        return { ...rankingItem._doc, userIcon: userIcon };
+      })
+    );
+    return rankingWithIcon;
   }
 
   async userRanking() {
@@ -150,21 +160,20 @@ class ScoreModel {
     }
     const honorsRanking = Object.entries(final);
     honorsRanking.sort((b, a) => a[1] - b[1]);
-    console.log(honorsRanking);
+
     const honorsRankingWithIcon = await Promise.all(
+      //유저 아이콘 추가
       honorsRanking.map(async (a) => {
         const user = await User.findOne({ nickname: a[0] });
         const userIcon = user ? user.userIcon : null;
         return [...a, userIcon];
       })
     );
-    console.log(honorsRankingWithIcon);
     const transformedRanking = honorsRankingWithIcon.map((data) => ({
       userNickname: data[0],
       score: parseFloat(data[1]).toFixed(2),
       userIcon: data[2],
     }));
-    console.log(transformedRanking);
     return transformedRanking;
   }
 
