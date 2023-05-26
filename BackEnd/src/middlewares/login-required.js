@@ -17,7 +17,6 @@ async function loginRequired(req, res, next) {
     // 라우터에서 필요한경우 req.userId , req.role 을 통해 접근가능!
     req.email = email;
     req.role = role;
-    console.log(req.role);
     next();
   } catch (err) {
     res.json('loginRequired에러', err);

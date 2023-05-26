@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+const token = localStorage.getItem('userToken');
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
+interface User {
+  nickname: string;
+  email: string;
+}
 const UserList = () => {
-  const dermyData = [
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '*^O^/', email: '1234567@gmail.com' },
-  ];
+  console.log(token);
+  const URL = `${process.env.REACT_APP_API_URL}/api/users`;
+  const [userData, setUserData] = useState<User[]>([]);
+
+  useEffect(() => {
+    axios
+      .get(`${URL}/allUsers`, config)
+      .then((res) => setUserData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(userData);
 
   return (
     <Container>
@@ -20,7 +37,7 @@ const UserList = () => {
           <p>닉네임</p>
           <p>이메일</p>
         </NavBar>
-        {dermyData.map((item, index) => (
+        {userData.map((item, index) => (
           <Content key={index}>
             <ImageContent>
               <GameImage
@@ -90,10 +107,10 @@ const Content = styled.div`
   }
 `;
 const NameText = styled.p`
-  left: 29rem;
+  left: 22rem;
 `;
 const EmailText = styled.p`
-  left: 45rem;
+  left: 47rem;
 `;
 const ImageContent = styled.div`
   margin: 1rem 0 1rem 5rem;
