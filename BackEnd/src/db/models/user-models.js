@@ -89,5 +89,18 @@ export class UserModel {
       throw new Error(err);
     }
   }
+  async searchUser(nickname) {
+    try {
+      const searchUser = await User.find({
+        nickname: { $regex: new RegExp(`${nickname}`, 'i') },
+      });
+      if (searchUser.length < 1) {
+        console.log(`저장된 기록이 없습니다.`);
+      }
+      return searchUser;
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
 }
 export const userModel = new UserModel();

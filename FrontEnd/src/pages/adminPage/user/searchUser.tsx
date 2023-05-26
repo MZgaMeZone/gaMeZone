@@ -1,12 +1,37 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
 import UserModal from './userModal';
-const SearchUser = () => {
+
+const token = localStorage.getItem('userToken');
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+};
+
+type Props = {
+  URL: string;
+};
+
+const SearchUser = ({ URL }: Props) => {
+  const [nicknameInput, setNicknameInput] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNicknameInput(e.target.value);
+  };
+
   const openModal = (value: boolean) => {
     setIsOpen(value);
+    axios
+      .get(`${URL}/search/${nicknameInput}`, config)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   };
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -16,7 +41,11 @@ const SearchUser = () => {
       <Container>
         <Title>회원 검색</Title>
         <div>
-          <SearchInput placeholder="검색할 유저의 닉네임을 입력해주세요."></SearchInput>
+          <SearchInput
+            value={nicknameInput}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="검색할 유저의 닉네임을 입력해주세요."
+          ></SearchInput>
           <Button onClick={() => openModal(true)}>
             <Search style={{ width: '5.2rem', height: '5.2rem' }} />
           </Button>

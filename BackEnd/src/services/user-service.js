@@ -163,7 +163,12 @@ class UserService {
     const userData = await this.userModel.findByEmail(token.email);
     return userData;
   }
-}
 
+  //닉네임으로 유저 검색
+  async searchUser(nickname) {
+    const result = await this.userModel.searchUser(nickname);
+    return result;
+  }
+}
 const userService = new UserService(userModel);
 export { userService };

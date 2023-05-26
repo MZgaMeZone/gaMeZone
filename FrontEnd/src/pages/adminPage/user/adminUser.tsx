@@ -5,7 +5,9 @@ import Footer from '../footer';
 import { ReactComponent as Star } from '../../../style/icons/star.svg';
 import UserList from './userList';
 import SearchUser from './searchUser';
+
 const AdminUser = () => {
+  const URL = `${process.env.REACT_APP_API_URL}/api/users`;
   const [menuIdx, setMenuIdx] = useState<number>(0);
 
   const handleClick = (idx: number) => {
@@ -40,7 +42,7 @@ const AdminUser = () => {
             <div className={styles.main_text}>
               {menuIdx === 0 ? (
                 <>
-                  <SearchUser />
+                  <SearchUser URL={URL} />
                   <UserList />
                 </>
               ) : (

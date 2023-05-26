@@ -220,7 +220,7 @@ userRouter.get('/allUsers', loginRequired, async (req, res, next) => {
   }
 });
 
-// 전체 유저 조회(관리자) - 추가기능으로 활용 예정
+// 유저 탈퇴 기능(관리자)
 userRouter.delete(
   '/userDelete/:email',
   loginRequired,
@@ -229,7 +229,6 @@ userRouter.delete(
       throw new Error('관리자가 아닙니다.');
     }
     const { email } = req.params;
-    console.log(email);
     try {
       console.log('✔️ 토큰 검증 완료. 계속해서 회원 탈퇴를 진행합니다.');
       await userService.deleteUser(email);
@@ -240,5 +239,21 @@ userRouter.delete(
     }
   }
 );
+// 유저 검색 기능(관리자)
+userRouter.get('/search/:nickname', loginRequired, async (req, res, next) => {
+  if (req.role !== 'admin' && req.role !== 'super-admin') {
+    throw new Error('관리자가 아닙니다.');
+  }
+  const { nickname } = req.params;
+  try {
+    console.log('✔️ 토큰 검증 완료. 계속해서 회원 검색을 진행합니다.');
+    const findUser = await userService.searchUser(nickname);
+    console.log('🖥️ 유저 정보 출력 중..');
+    return res.status(200).json(findUser);
+  } catch (err) {
+    console.log(`❌ ${err}`);
+    next(err);
+  }
+});
 
 export { userRouter };
