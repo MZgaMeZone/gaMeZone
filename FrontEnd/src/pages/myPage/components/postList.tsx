@@ -32,10 +32,10 @@ function PostList() {
       } = await axios.get(url + '/api/users', config);
       setUserIcon(userIcon);
       const { data: postList } = await axios.get(url + `/api/posts/${email}`);
-      const formattedData = postList.map((item: any) => ({
+      const formattedData = postList.map((item: any, index: any) => ({
         ...item,
         createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-        key: item._id,
+        key: index,
       }));
       setPostList(formattedData);
     };
