@@ -64,18 +64,17 @@ const Ranking = () => {
         .get(`${process.env.REACT_APP_API_URL}/api/scores/honors`)
         .then((res) => {
           setRankingData(res.data);
-          // console.log(res.data); <------ 미사용 콘솔 삭제
         })
         .catch((err) => console.log(err));
     } else {
       //선택된 게임 요청
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}?num=20`
+          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}/honors/?num=20`
         )
         .then((res) => {
           setRankingData(res.data);
-          // console.log(res.data); <------ 미사용 콘솔 삭제
+          console.log(res.data);
         })
         .catch((err) => console.log(err));
     }
