@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
+import { Config, User, Props, URL } from './userInterface';
+import UserDataContext from './userDataContext';
 
 const UserList = () => {
-  const dermyData = [
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '^O^/', email: '1234567@gmail.com' },
-    { nickname: '*^O^/', email: '1234567@gmail.com' },
-  ];
+  const [userData, setUserData] = useState<User[]>([]);
+
+  //회원 리스트 불러오는 get 요청
+  useEffect(() => {
+    axios
+      .get(`${URL}/allUsers`, Config)
+      .then((res) => setUserData(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  //회원 탈퇴 요청
+  const handleDeleteClick = (email: string, nickname: string, id: string) => {
+    const deleteConfirm = window.confirm(`[${nickname}]님을 탈퇴시키겠습니까?`);
+    if (deleteConfirm) {
+      axios
+        .delete(`${URL}/userDelete/${email}`, Config)
+        .then((res) => setUserData(userData.filter((item) => item._id !== id))) //탈퇴 후 삭제된 유저 데이터 바로 반영
+        .catch((err) => console.log(err));
+    }
+  };
+  //모달창에서 삭제된 데이터반영
+  //context로 삭제한 아이디 받아오고 삭제한 아이디에 필터후 userData를 업데이트 해준다.
+  const [deleteData] = useContext(UserDataContext);
+  useEffect(() => {
+    const updateData = userData.filter((item) => item._id !== deleteData);
+    if (updateData) {
+      setUserData(updateData);
+    }
+  }, [deleteData]);
 
   return (
     <Container>
@@ -17,11 +41,11 @@ const UserList = () => {
       <Main>
         <NavBar>
           <p>프로필</p>
-          <p>닉네임</p>
-          <p>이메일</p>
+          <p style={{ margin: '0 0 0 10rem' }}>닉네임</p>
+          <p style={{ margin: '0 0 0 20rem' }}>이메일</p>
         </NavBar>
-        {dermyData.map((item, index) => (
-          <Content key={index}>
+        {userData.map((item) => (
+          <Content key={item._id}>
             <ImageContent>
               <GameImage
                 // src={item.gameImageUrl}
@@ -32,12 +56,18 @@ const UserList = () => {
             <NameText>{item.nickname}</NameText>
             <EmailText>{item.email}</EmailText>
             <ButtonDiv>
-              <Button>수정</Button>
-              <Button>탈퇴</Button>
+              <Button
+                onClick={() =>
+                  handleDeleteClick(item.email, item.nickname, item._id)
+                }
+              >
+                탈퇴
+              </Button>
             </ButtonDiv>
           </Content>
         ))}
       </Main>
+      <FooterDiv></FooterDiv>
     </Container>
   );
 };
@@ -51,14 +81,14 @@ const Container = styled.div`
 `;
 
 const Title = styled.p`
-  margin: 3rem 0 0 5rem;
+  margin: 5rem;
   font-size: 2.4rem;
   margin-bottom: 4rem;
   font-weight: 600;
 `;
 const Main = styled.div`
   position: relative;
-  width: 112rem;
+  width: 110rem;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -67,17 +97,15 @@ const Main = styled.div`
 `;
 const NavBar = styled.div`
   display: flex;
-  justify-content: space-between;
   width: 100%;
-  margin: 3rem 0 0 0;
-  padding: 1.6rem 54rem 1.6rem 7rem;
+  padding: 1.4rem 0 1.4rem 7rem;
   font-size: 1.8rem;
   font-weight: 600;
   color: #242424;
-  background: #d9d9d9;
+  background: #ebeded;
 
-  border-top: 3px solid #808080;
-  border-bottom: 3px solid #808080;
+  border-top: 3px solid #b9b9b9;
+  border-bottom: 3px solid #b9b9b9;
 `;
 const Content = styled.div`
   display: flex;
@@ -85,27 +113,28 @@ const Content = styled.div`
   position: relative;
   align-items: center;
   border-bottom: 2px solid #e0e0e0;
+  background: #f5fafa;
   p {
     position: absolute;
     font-size: 2rem;
   }
 `;
 const NameText = styled.p`
-  left: 28rem;
+  left: 22rem;
 `;
 const EmailText = styled.p`
-  left: 48rem;
+  left: 47rem;
 `;
 const ImageContent = styled.div`
   margin: 1rem 0 1rem 5rem;
-  width: 10rem;
-  height: 10rem;
+  width: 9rem;
+  height: 9rem;
   border: 3px solid #242424;
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 10px;
+  border-radius: 50%;
 `;
 const GameImage = styled.img`
-  border-radius: 7px;
+  border-radius: 50%;
   width: 10rem;
 `;
 const ButtonDiv = styled.div`
@@ -120,7 +149,7 @@ const Button = styled.button`
   border-radius: 10px;
   color: #ffffff;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   cursor: pointer;
   &:hover {
     background: rgba(0, 0, 128, 0.8);
@@ -129,4 +158,8 @@ const Button = styled.button`
     background: rgba(0, 0, 128, 0.6);
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.4);
   }
+`;
+const FooterDiv = styled.div`
+  padding: 5rem;
+  border-bottom: 2px solid #e0e0e0;
 `;

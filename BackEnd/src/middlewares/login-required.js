@@ -1,12 +1,12 @@
-import "dotenv/config";
-import jwt from "jsonwebtoken";
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
 
 async function loginRequired(req, res, next) {
   //req 헤더에 auth-token 토큰 추출
-  const userToken = req.headers["authorization"]?.split(" ")[1];
+  const userToken = req.headers['authorization']?.split(' ')[1];
   //토큰이 없으면 로그인 페이지로
   if (!userToken) {
-    return res.status(403).json({ message: "no token" });
+    return res.status(403).json({ message: 'no token' });
   }
 
   try {
@@ -19,7 +19,7 @@ async function loginRequired(req, res, next) {
     req.role = role;
     next();
   } catch (err) {
-    res.json("loginRequired에러", err);
+    res.status(500).json({ error: 'loginRequired에러', message: err.message }); //민영 > 이 부분때문에 에러떠서 수정 좀 했엉!
   }
 }
 
