@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import SelectGame from './selectGame';
+import SelectGameScore from './selectGameScore';
 import { Score } from './scoreInterface';
 import ScoreModal from './scoreModal';
-import SearchUser from './searchUser';
+import SearchUserScore from './searchUserScore';
 
 type Props = {
   URL: string;
@@ -12,6 +12,7 @@ type Props = {
 };
 
 const ViewScore: React.FC<Props> = ({ URL, menu }) => {
+  //*페이지ㄴㅔ이션은 추후에 추가할 예정
   //****게임별 보기  => 드롭다운 menu === 0 SelectGame
   //****유저별 보기  => 검색창  menu === 1 SearchUser
 
@@ -70,9 +71,19 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
     <Container>
       <DropdownDiv>
         {menu === 0 ? (
-          <SelectGame onValue={handleData} onToggle={handleToggle} URL={URL} />
+          <span>
+            <SelectGameScore
+              onValue={handleData}
+              onToggle={handleToggle}
+              URL={URL}
+            />
+          </span>
         ) : menu === 1 ? (
-          <SearchUser onValue={handleData} onToggle={handleToggle} URL={URL} />
+          <SearchUserScore
+            onValue={handleData}
+            onToggle={handleToggle}
+            URL={URL}
+          />
         ) : (
           ''
         )}
@@ -117,7 +128,11 @@ const ViewScore: React.FC<Props> = ({ URL, menu }) => {
       ) : (
         ''
       )}
-      <FooterDiv />
+      {scoreData.length === 1 ? (
+        <FooterDiv style={{ padding: '10rem' }} />
+      ) : (
+        <FooterDiv />
+      )}
     </Container>
   );
 };
@@ -136,12 +151,16 @@ const DropdownDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0;
+  padding: 6rem 0;
   width: 100%;
+  span {
+    margin-bottom: 0.2rem;
+  }
 `;
 const Main = styled.div`
   position: relative;
   width: 116rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -206,13 +225,13 @@ const Button = styled.button`
   }
 `;
 const FooterDiv = styled.div`
-  padding: 2rem;
+  padding: 5rem;
   border-bottom: 2px solid #e0e0e0;
 `;
 
 const ResetContent = styled.div`
   width: 100%;
-  height: 23.4rem;
+  height: 13rem;
   display: flex;
   align-items: center;
   justify-content: center;

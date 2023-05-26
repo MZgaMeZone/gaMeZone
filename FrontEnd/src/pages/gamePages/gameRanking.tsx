@@ -30,7 +30,7 @@ const GameRanking = (props: {
       .get(`${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr?num=10`)
       .then((res) => {
         setRankingData(res.data);
-        console.log(res.data);
+        // console.log(res.data); <---------- 미사용 콘솔 삭제(objectId 노출됨)
       })
       .catch((err) => console.log(err));
     // setRankingData(ExampleRankingData);

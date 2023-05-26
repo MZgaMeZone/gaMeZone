@@ -47,7 +47,7 @@ const Lanking = () => {
           },
           ...res.data,
         ]);
-        console.log('게임데이터', res.data);
+        // console.log('게임데이터', res.data); <------ 미사용 콘솔 삭제
       })
       .catch((err) => console.log(err));
   }, []);
@@ -63,7 +63,7 @@ const Lanking = () => {
         .get(`${process.env.REACT_APP_API_URL}/api/scores/honors`)
         .then((res) => {
           setRankingData(res.data);
-          console.log(res.data);
+          // console.log(res.data); <------ 미사용 콘솔 삭제
         })
         .catch((err) => console.log(err));
     } else {
@@ -74,7 +74,7 @@ const Lanking = () => {
         )
         .then((res) => {
           setRankingData(res.data);
-          console.log(res.data);
+          // console.log(res.data); <------ 미사용 콘솔 삭제
         })
         .catch((err) => console.log(err));
     }

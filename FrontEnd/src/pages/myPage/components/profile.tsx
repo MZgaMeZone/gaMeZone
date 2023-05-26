@@ -21,15 +21,13 @@ const config = {
 function Profile({ userIcon, email, nickName }: ProfileProps) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
-  console.log(userIcon);
   React.useEffect(() => {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
-      console.log('userToken를 정상적으로 받아왔습니다!');
       setIsLoggedIn(true);
     }
   }, []);
-  console.log(url + '/' + userIcon);
+
   const handleLogout = () => {
     localStorage.removeItem('userToken');
     alert('로그아웃 되었습니다.');
@@ -48,9 +46,7 @@ function Profile({ userIcon, email, nickName }: ProfileProps) {
       ></div>
       <ProfileBox>
         <div className="avartar">
-          {/* <img src={userIcon} alt="프로필" /> */}
           <img src={url + '/' + userIcon} alt="프로필" />
-
           <div className="nick_box">
             <p>{email}</p>
             <p>{nickName}</p>

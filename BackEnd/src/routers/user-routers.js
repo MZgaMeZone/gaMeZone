@@ -82,9 +82,9 @@ userRouter.get("/", async (req, res, next) => {
     return res.status(401).json("토큰이 없습니다. 로그인 후 이용해주세요.");
   }
   try {
-    console.log("🔎 유저 정보를 조회합니다...");
+    // console.log("🔎 유저 정보를 조회합니다...");
     const userData = await userService.verifyToken(token);
-    console.log("🖥️ 유저 정보 출력 중..");
+    // console.log("🖥️ 유저 정보 출력 중..");
     return res.status(200).json(userData);
   } catch (err) {
     console.log(`❌ ${err}`);

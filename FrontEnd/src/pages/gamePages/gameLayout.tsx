@@ -6,6 +6,7 @@ import GameLoading from './gameLoading';
 import GameRanking from './gameRanking';
 import GameManual from './gameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
+import DefaultPage from '../../components/Games/defaultPage';
 import axios from 'axios';
 import exitImg from '../../style/icons/x-solid.svg';
 import gameFavicon from '../../style/icons/game_favicon.svg';
@@ -57,7 +58,9 @@ const GameLayout = () => {
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
       break;
     default:
-      gameComponent = <div>Invalid Game ID</div>;
+      gameComponent = (
+        <DefaultPage setGameName={handleGameName}>Invalid Game ID</DefaultPage>
+      );
   }
   // 닉네임과 게임명을 얻어오고 싶음.
   useEffect(() => {

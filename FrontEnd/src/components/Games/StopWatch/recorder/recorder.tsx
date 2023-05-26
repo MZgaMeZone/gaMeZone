@@ -52,7 +52,6 @@ function Recorder(props: RecorderProps) {
         });
     }
   }, []);
-  console.log(userData);
 
   // 현재 저장된 기록을 제출하려고함.
   function scoreSubmit(

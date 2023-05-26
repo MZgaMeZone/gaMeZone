@@ -13,7 +13,7 @@ const AdminInfomation = () => {
     setMenuIdx(idx);
   };
   return (
-    <>
+    <div>
       <Menu idx={1} />
       <div className={styles.container}>
         <header>
@@ -42,7 +42,7 @@ const AdminInfomation = () => {
             {menuIdx === 1 ? <span className={styles.span} /> : ''}
           </div>
         </div>
-        <Scroll>
+        <div className={styles.scroll}>
           <div className={styles.content}>
             <div className={styles.sub_title}>
               {menuIdx === 0 ? (
@@ -60,9 +60,9 @@ const AdminInfomation = () => {
             ) : (
               ''
             )}
-            <FooterLine></FooterLine>
+            <div className={styles.footer_div}></div>
           </div>
-        </Scroll>
+        </div>
         <footer>
           <div className={styles.footer_box}>
             <div className={styles.footer_content}></div>
@@ -70,28 +70,7 @@ const AdminInfomation = () => {
         </footer>
       </div>
       <Footer idx={1} />
-    </>
+    </div>
   );
 };
 export default AdminInfomation;
-
-const Scroll = styled.div`
-  overflow-y: scroll;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 10%;
-    background-clip: padding-box;
-    border: 4px solid #ebeded;
-    background: #b3b5b5;
-    border-radius: 50px;
-  }
-  &::-webkit-scrollbar-track {
-    background: #ebeded;
-  }
-`;
-const FooterLine = styled.div`
-  padding: 2rem;
-`;
