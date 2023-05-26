@@ -24,7 +24,6 @@ function PasswordChange() {
     } else if (newPwd.length < 8 && newPwdCheck.length < 8) {
       alert('비밀번호는 8글자 이상 입니다.');
     } else {
-      console.log(currPwd, newPwd);
       const userToken = localStorage.getItem('userToken');
       const config = { headers: { Authorization: `Bearer ${userToken}` } };
       const url = process.env.REACT_APP_API_URL;

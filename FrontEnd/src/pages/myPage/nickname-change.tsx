@@ -32,17 +32,14 @@ function NicknameChange() {
 
   const duplicateCheck = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log('newNickname: ', newNickname);
     await axios
       .post(url + '/api/users/signup/nicknameDuplicateCheck', {
         nickname: newNickname,
       })
       .then((res) => {
         if (res.data.success) {
-          console.log('nickname success: ', res.data);
           alert('사용 가능한 nickname입니다.');
         } else {
-          console.log('nickname fail: ', res.data);
           setIsDuplicate(true);
           setNewNickname('');
           alert('중복된 nickname입니다. 다른 nickname을 입력해주세요.');
@@ -57,7 +54,6 @@ function NicknameChange() {
         Authorization: `Bearer ${userToken}`,
       },
     };
-    console.log('일단 이거 대기!'); //isDuplicate값이 true면 return
 
     await axios
       .patch(`${url}/api/users/nicknameChange`, { newNickname }, config)
