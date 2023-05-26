@@ -44,18 +44,6 @@ function AvartarChange() {
   const [file, setFile] = useState<File | undefined>(undefined);
   const navigate = useNavigate();
 
-  const encodeFileToBase64 = (fileBlob: File) => {
-    const reader = new FileReader(); //File, Blob 객체를 핸들링
-    reader.readAsDataURL(fileBlob); //File, Blob 객체를 읽고 base64로 인코딩한 문자열을 FileReader.result속성에 담아줌
-    return new Promise<void>((resolve) => {
-      reader.onload = () => {
-        //파일이 성공적으로 읽혀지면 트리거됨
-        setImageSrc(reader.result as string); //인코딩 된 문자열을 setImage에 넣어서 미리보기
-        resolve();
-      };
-    });
-  };
-
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files !== null) {
