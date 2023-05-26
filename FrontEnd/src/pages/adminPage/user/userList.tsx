@@ -44,7 +44,7 @@ const UserList = () => {
         <NavBar>
           <p>프로필</p>
           <p style={{ margin: '0 0 0 10rem' }}>닉네임</p>
-          <p style={{ margin: '0 0 0 19.4rem' }}>이메일</p>
+          <p style={{ margin: '0 0 0 20rem' }}>이메일</p>
         </NavBar>
         {userData.map((item, index) => (
           <Content key={index}>

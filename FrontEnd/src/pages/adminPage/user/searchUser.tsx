@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
+import UserModal from './userModal';
 const SearchUser = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const openModal = (value: boolean) => {
+    setIsOpen(value);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
-    <Container>
-      <Title>회원 검색</Title>
-      <div>
-        <SearchInput placeholder="검색할 유저의 닉네임을 입력해주세요."></SearchInput>
-        <Button>
-          <Search style={{ width: '5.2rem', height: '5.2rem' }} />
-        </Button>
-      </div>
-    </Container>
+    <>
+      {isOpen && <UserModal isOpen={isOpen} onClose={closeModal} />}
+      <Container>
+        <Title>회원 검색</Title>
+        <div>
+          <SearchInput placeholder="검색할 유저의 닉네임을 입력해주세요."></SearchInput>
+          <Button onClick={() => openModal(true)}>
+            <Search style={{ width: '5.2rem', height: '5.2rem' }} />
+          </Button>
+        </div>
+      </Container>
+    </>
   );
 };
 
