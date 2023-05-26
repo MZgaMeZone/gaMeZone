@@ -32,7 +32,6 @@ const UserList = () => {
             <NameText>{item.nickname}</NameText>
             <EmailText>{item.email}</EmailText>
             <ButtonDiv>
-              <Button>수정</Button>
               <Button>탈퇴</Button>
             </ButtonDiv>
           </Content>
@@ -58,7 +57,7 @@ const Title = styled.p`
 `;
 const Main = styled.div`
   position: relative;
-  width: 112rem;
+  width: 110rem;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -70,7 +69,7 @@ const NavBar = styled.div`
   justify-content: space-between;
   width: 100%;
   margin: 3rem 0 0 0;
-  padding: 1.6rem 54rem 1.6rem 7rem;
+  padding: 1.6rem 55rem 1.6rem 7rem;
   font-size: 1.8rem;
   font-weight: 600;
   color: #242424;
@@ -91,21 +90,21 @@ const Content = styled.div`
   }
 `;
 const NameText = styled.p`
-  left: 28rem;
+  left: 29rem;
 `;
 const EmailText = styled.p`
-  left: 48rem;
+  left: 45rem;
 `;
 const ImageContent = styled.div`
   margin: 1rem 0 1rem 5rem;
-  width: 10rem;
-  height: 10rem;
+  width: 9rem;
+  height: 9rem;
   border: 3px solid #242424;
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 10px;
+  border-radius: 50%;
 `;
 const GameImage = styled.img`
-  border-radius: 7px;
+  border-radius: 50%;
   width: 10rem;
 `;
 const ButtonDiv = styled.div`
@@ -120,7 +119,7 @@ const Button = styled.button`
   border-radius: 10px;
   color: #ffffff;
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   cursor: pointer;
   &:hover {
     background: rgba(0, 0, 128, 0.8);

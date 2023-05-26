@@ -8,7 +8,7 @@ const SearchUser = () => {
       <div>
         <SearchInput placeholder="검색할 유저의 닉네임을 입력해주세요."></SearchInput>
         <Button>
-          <Search />
+          <Search style={{ width: '' }} />
         </Button>
       </div>
     </Container>

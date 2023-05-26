@@ -1,8 +1,8 @@
-import { model } from "mongoose";
-import UserSchema from "../schemas/user-schema.js";
+import { model } from 'mongoose';
+import UserSchema from '../schemas/user-schema.js';
 
 // UserSchema를 기준으로 User라는 모델 생성
-const User = model("User", UserSchema);
+const User = model('User', UserSchema);
 
 export class UserModel {
   // 로그인
@@ -81,7 +81,7 @@ export class UserModel {
     try {
       const allUsers = await User.find(
         {},
-        { email: 1, nickname: 1, role: 1 }
+        { email: 1, nickname: 1, role: 1, userIcon: 1 }
       ).lean();
       return allUsers;
     } catch (err) {

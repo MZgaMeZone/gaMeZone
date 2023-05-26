@@ -1,12 +1,12 @@
-import "dotenv/config";
-import jwt from "jsonwebtoken";
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
 
 async function loginRequired(req, res, next) {
   //req 헤더에 auth-token 토큰 추출
-  const userToken = req.headers["authorization"]?.split(" ")[1];
+  const userToken = req.headers['authorization']?.split(' ')[1];
   //토큰이 없으면 로그인 페이지로
   if (!userToken) {
-    return res.status(403).json({ message: "no token" });
+    return res.status(403).json({ message: 'no token' });
   }
 
   try {
@@ -17,9 +17,10 @@ async function loginRequired(req, res, next) {
     // 라우터에서 필요한경우 req.userId , req.role 을 통해 접근가능!
     req.email = email;
     req.role = role;
+    console.log(req.role);
     next();
   } catch (err) {
-    res.json("loginRequired에러", err);
+    res.json('loginRequired에러', err);
   }
 }
 
