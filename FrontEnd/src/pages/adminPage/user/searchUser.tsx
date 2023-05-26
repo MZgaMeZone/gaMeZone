@@ -8,7 +8,7 @@ const SearchUser = () => {
       <div>
         <SearchInput placeholder="검색할 유저의 닉네임을 입력해주세요."></SearchInput>
         <Button>
-          <Search style={{ width: '' }} />
+          <Search style={{ width: '5.2rem', height: '5.2rem' }} />
         </Button>
       </div>
     </Container>
@@ -34,7 +34,7 @@ const Title = styled.p`
 `;
 const SearchInput = styled.input`
   width: 60rem;
-  height: 5rem;
+  height: 5.4rem;
   padding: 1rem 2rem;
   margin-right: 0.5rem;
   border-radius: 15px;
@@ -44,11 +44,9 @@ const SearchInput = styled.input`
   outline: none;
   color: #242424;
   font-size: 2rem;
+  font-size: 2rem;
 `;
 const Button = styled.div`
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
   &:active {
     transform: scale(1.1);
   }
