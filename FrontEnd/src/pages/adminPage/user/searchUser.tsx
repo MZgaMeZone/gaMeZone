@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { ReactComponent as Search } from '../../../style/icons/icons8-google.svg';
 import UserModal from './userModal';
-import { Config, Props, User } from './userInterface';
+import { Config, User, URL } from './userInterface';
+import UserDataContext from './userDataContext';
 
-const SearchUser = ({ URL }: Props) => {
+const SearchUser = () => {
   //검색창 닉네임 값 받아옴
   const [nicknameInput, setNicknameInput] = useState<string>('');
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +19,7 @@ const SearchUser = ({ URL }: Props) => {
   const [userData, setUserData] = useState<User[]>([]);
   // 검색시 유저데이터가 없다면(length === 0) alert 띄어주고 모달 X
   //유저데이터가 있다면 모달 O
+
   const openModal = (value: boolean) => {
     axios
       .get(`${URL}/search/${nicknameInput}`, Config)
@@ -31,6 +33,16 @@ const SearchUser = ({ URL }: Props) => {
       })
       .catch((err) => console.log(err));
   };
+  //삭제된 데이터 업데이트
+  //context로 삭제한 아이디 받아오고 삭제한 아이디에 필터후 userData를 업데이트 해준다.
+  const [deleteData] = useContext(UserDataContext);
+  useEffect(() => {
+    const updateData = userData.filter((item) => item._id !== deleteData);
+    if (updateData) {
+      setUserData(updateData);
+      setNicknameInput('');
+    }
+  }, [deleteData]);
 
   //모달창 close
   const closeModal = () => {

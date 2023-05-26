@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { User } from './userInterface';
+import { User, Config, URL } from './userInterface';
+import axios from 'axios';
+import UserDataContext from './userDataContext';
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,10 +11,28 @@ interface ModalProps {
 }
 
 const UserModal: React.FC<ModalProps> = ({ isOpen, onClose, data }) => {
+  const [, setDeleteData] = useContext(UserDataContext);
+
   if (!isOpen) {
     return null;
   }
-  const handleDeleteClick = () => {};
+
+  //회원 탈퇴 요청
+
+  const handleDeleteClick = (
+    email: string,
+    nickname: string,
+    deleteId: string
+  ) => {
+    const deleteConfirm = window.confirm(`[${nickname}]님을 탈퇴시키겠습니까?`);
+    if (deleteConfirm) {
+      axios
+        .delete(`${URL}/userDelete/${email}`, Config)
+
+        .then((res) => setDeleteData(deleteId))
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <ModalContainer>
@@ -39,7 +59,13 @@ const UserModal: React.FC<ModalProps> = ({ isOpen, onClose, data }) => {
                 <NameText>{item.nickname}</NameText>
                 <EmailText>{item.email}</EmailText>
                 <ButtonDiv>
-                  <Button onClick={() => handleDeleteClick()}>탈퇴</Button>
+                  <Button
+                    onClick={() =>
+                      handleDeleteClick(item.email, item.nickname, item._id)
+                    }
+                  >
+                    탈퇴
+                  </Button>
                 </ButtonDiv>
               </Content>
             ))}

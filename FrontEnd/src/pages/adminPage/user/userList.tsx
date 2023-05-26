@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { Config, User, Props } from './userInterface';
+import { Config, User, Props, URL } from './userInterface';
+import UserDataContext from './userDataContext';
 
-const UserList = ({ URL }: Props) => {
+const UserList = () => {
   const [userData, setUserData] = useState<User[]>([]);
 
   //회원 리스트 불러오는 get 요청
@@ -15,15 +16,24 @@ const UserList = ({ URL }: Props) => {
   }, []);
 
   //회원 탈퇴 요청
-  const handleDeleteClick = (email: string, nickname: string) => {
+  const handleDeleteClick = (email: string, nickname: string, id: string) => {
     const deleteConfirm = window.confirm(`[${nickname}]님을 탈퇴시키겠습니까?`);
     if (deleteConfirm) {
       axios
         .delete(`${URL}/userDelete/${email}`, Config)
-        .then((res) => console.log(res))
+        .then((res) => setUserData(userData.filter((item) => item._id !== id))) //탈퇴 후 삭제된 유저 데이터 바로 반영
         .catch((err) => console.log(err));
     }
   };
+  //모달창에서 삭제된 데이터반영
+  //context로 삭제한 아이디 받아오고 삭제한 아이디에 필터후 userData를 업데이트 해준다.
+  const [deleteData] = useContext(UserDataContext);
+  useEffect(() => {
+    const updateData = userData.filter((item) => item._id !== deleteData);
+    if (updateData) {
+      setUserData(updateData);
+    }
+  }, [deleteData]);
 
   return (
     <Container>
@@ -47,7 +57,9 @@ const UserList = ({ URL }: Props) => {
             <EmailText>{item.email}</EmailText>
             <ButtonDiv>
               <Button
-                onClick={() => handleDeleteClick(item.email, item.nickname)}
+                onClick={() =>
+                  handleDeleteClick(item.email, item.nickname, item._id)
+                }
               >
                 탈퇴
               </Button>

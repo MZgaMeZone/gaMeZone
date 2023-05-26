@@ -6,6 +6,7 @@ export const Config = {
   },
 };
 
+export const URL = `${process.env.REACT_APP_API_URL}/api/users`;
 export interface User {
   _id: string;
   nickname: string;
