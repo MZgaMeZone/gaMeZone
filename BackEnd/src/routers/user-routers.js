@@ -229,11 +229,11 @@ userRouter.delete(
       throw new Error('관리자가 아닙니다.');
     }
     const { email } = req.params;
+    console.log(email);
     try {
-      console.log('🔎 검증 완료! 모든 유저 리스트를 조회합니다...');
-      const allUsers = await userService.deleteUser(email);
-      console.log('🖥️ 유저 정보 출력 중..');
-      return res.status(200).json(allUsers);
+      console.log('✔️ 토큰 검증 완료. 계속해서 회원 탈퇴를 진행합니다.');
+      await userService.deleteUser(email);
+      return res.status(200).json({ result: '탈퇴되었습니다' });
     } catch (err) {
       console.log(`❌ ${err}`);
       next(err);

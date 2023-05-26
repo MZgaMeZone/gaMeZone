@@ -42,7 +42,8 @@ export class UserModel {
   // 탈퇴
   async deleteUser(userId) {
     try {
-      await User.findOneAndUpdate({ email: userId }, { status: 0 });
+      console.log('유저 모델');
+      await User.findOneAndDelete({ email: userId }, { status: 0 }); //민영>>findOneAndDelete로 해야되는데 findOneAndUpdate로 넣어져있길래 수정했엉
     } catch (err) {
       throw new Error(err);
     }

@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { userModel } from "../db/index.js";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { userModel } from '../db/index.js';
 
 class UserService {
   // 마지막 코드에서 클래스 생성 시 userModel을 인자로 받아옴
@@ -37,7 +37,7 @@ class UserService {
     // 가입된 이메일 확인
     if (usingIdCheck) {
       console.log(
-        "[회원가입 실패] 이미 사용중인 이메일입니다. 다시 입력해주세요."
+        '[회원가입 실패] 이미 사용중인 이메일입니다. 다시 입력해주세요.'
       );
       return;
     }
@@ -71,15 +71,15 @@ class UserService {
       const userToken = jwt.sign(
         { email: userData.email, role: userData.role },
         secretKey,
-        { expiresIn: "1h" } //토큰 유효시간 1시간 설정
+        { expiresIn: '1h' } //토큰 유효시간 1시간 설정
       );
 
-      if (userData.role === "super-admin") {
-        console.log("✨ 총관리자 로그인 성공! ✨");
+      if (userData.role === 'super-admin') {
+        console.log('✨ 총관리자 로그인 성공! ✨');
         return { userToken };
       }
-      if (userData.role === "admin") {
-        console.log("✨ 관리자 로그인 성공! ✨");
+      if (userData.role === 'admin') {
+        console.log('✨ 관리자 로그인 성공! ✨');
         return { userToken };
       }
       return { userToken };
@@ -92,14 +92,14 @@ class UserService {
 
     // 보안상 비밀번호만 틀렸다고 표시하지않는게 좋다고 알고있어요.
     // 비밀번호 일치하지 않을시
-    console.log("[로그인 실패] 아이디 또는 비밀번호가 일치하지 않습니다.");
+    console.log('[로그인 실패] 아이디 또는 비밀번호가 일치하지 않습니다.');
     return;
   }
 
   // 회원 탈퇴
   async deleteUser(email) {
     try {
-      await this.userModel.deleteUser(email);
+      await userModel.deleteUser(email);
     } catch (err) {
       throw new Error(err);
     }
@@ -157,7 +157,7 @@ class UserService {
   async verifyToken(userToken) {
     const token = jwt.verify(userToken, process.env.JWT_SECRET_KEY);
     if (!token) {
-      console.log("토큰이 유효하지않거나 ID를 찾을 수 없습니다.");
+      console.log('토큰이 유효하지않거나 ID를 찾을 수 없습니다.');
       return;
     }
     const userData = await this.userModel.findByEmail(token.email);

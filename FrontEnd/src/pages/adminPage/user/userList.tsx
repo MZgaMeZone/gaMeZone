@@ -15,10 +15,10 @@ interface User {
   email: string;
 }
 const UserList = () => {
-  console.log(token);
   const URL = `${process.env.REACT_APP_API_URL}/api/users`;
   const [userData, setUserData] = useState<User[]>([]);
 
+  //회원 리스트 불러오는 get 요청
   useEffect(() => {
     axios
       .get(`${URL}/allUsers`, config)
@@ -26,7 +26,13 @@ const UserList = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(userData);
+  //회원 탈퇴 요청
+  const handleDeleteClick = (email: string) => {
+    axios
+      .delete(`${URL}/userDelete/${email}`, config)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Container>
@@ -49,7 +55,9 @@ const UserList = () => {
             <NameText>{item.nickname}</NameText>
             <EmailText>{item.email}</EmailText>
             <ButtonDiv>
-              <Button>탈퇴</Button>
+              <Button onClick={() => handleDeleteClick(item.email)}>
+                탈퇴
+              </Button>
             </ButtonDiv>
           </Content>
         ))}
