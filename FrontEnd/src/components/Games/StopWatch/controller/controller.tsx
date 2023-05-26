@@ -54,10 +54,8 @@ function Controller(props: ControllerProps) {
       const elapsedTime = (end.getTime() - initTime[1].getTime()) / 1000;
       setElapsedTime(elapsedTime);
       if (elapsedTime >= 20) {
-        console.log(elapsedTime, '2차');
         setScores([...scores, [0, gameModeChecker]]);
       } else {
-        console.log(elapsedTime, '3차');
         setScores([...scores, [elapsedTime, gameModeChecker]]);
       }
       // localStorage.setItem("score", JSON.stringify([...scores, elapsedTime])); // 로컬스토리지 사용 보류
@@ -160,7 +158,7 @@ function Controller(props: ControllerProps) {
         ((10 - Math.abs(worstScore[0] - 10)) * 10).toFixed(2),
         ((100 * (10 - averageScore)) / 10).toFixed(2),
       ];
-      console.log(finalMessage);
+
       setPrintScore(finalMessage);
     } else {
       setPrintScore([]);
