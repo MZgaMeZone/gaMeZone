@@ -49,7 +49,7 @@ export class PostModel {
   async findUserPosts(email) {
     // 특정 유저의 게시물 조회
     const user = await User.findOne({email});
-    console.log(userId);
+    console.log(user);
     const findPosts = await Post.find({author: user._id}).populate("author", "-password").lean();
     if (findPosts.length < 1) {
       console.log("등록된 게시물이 없습니다.");
