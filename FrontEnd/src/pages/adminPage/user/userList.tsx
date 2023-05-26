@@ -34,8 +34,8 @@ const UserList = ({ URL }: Props) => {
           <p style={{ margin: '0 0 0 10rem' }}>닉네임</p>
           <p style={{ margin: '0 0 0 20rem' }}>이메일</p>
         </NavBar>
-        {userData.map((item, index) => (
-          <Content key={index}>
+        {userData.map((item) => (
+          <Content key={item._id}>
             <ImageContent>
               <GameImage
                 // src={item.gameImageUrl}

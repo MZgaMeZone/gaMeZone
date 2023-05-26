@@ -7,8 +7,10 @@ export const Config = {
 };
 
 export interface User {
+  _id: string;
   nickname: string;
   email: string;
+  userIcon: string;
 }
 
 export type Props = {
