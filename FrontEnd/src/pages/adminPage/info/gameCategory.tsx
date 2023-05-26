@@ -1,10 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-interface Category {
-  _id: string;
-  categoryName: string;
-}
+import { Category } from './interface';
 interface Input {
   editInput: string;
   addInput: string;

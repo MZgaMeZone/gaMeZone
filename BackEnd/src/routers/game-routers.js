@@ -9,9 +9,9 @@ const gameRouter = Router();
 // 모든 게임정보를 가져오는 GET 요청
 gameRouter.get("/", async (req, res, next) => {
   try {
-    console.log("🖐️ 모든 게임정보를 출력합니다.");
+    // console.log("🖐️ 모든 게임정보를 출력합니다.");
     const gameList = await gameService.findAllGames();
-    console.log("✔️ 게임정보 출력 완료!");
+    // console.log("✔️ 게임정보 출력 완료!");
     res.status(201).json(gameList);
   } catch (err) {
     console.log(`❌ ${err}`);
@@ -79,9 +79,9 @@ gameRouter.delete("/:id", async (req, res, next) => {
 gameRouter.get("/categories/:name", async (req, res, next) => {
   try {
     const category = req.params.name;
-    console.log("🖐️ 해당 카테고리명을 가진 게임을 검색합니다.");
+    // console.log("🖐️ 해당 카테고리명을 가진 게임을 검색합니다.");
     const gameList = await gameService.findGamesByCategory(category);
-    console.log("✔️ 게임정보 출력 완료!");
+    // console.log("✔️ 게임정보 출력 완료!");
     res.status(201).json(gameList);
   } catch (err) {
     console.log(`❌ ${err}`);

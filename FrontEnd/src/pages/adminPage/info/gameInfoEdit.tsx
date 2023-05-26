@@ -37,7 +37,7 @@ const GameInfoEdit = () => {
         id: gameInfo._id,
         name: gameInfo.gameTitle,
         imageUrl: gameInfo.gameImageUrl.toString(),
-        category: gameInfo.gameCategory[0].split(','), // 게임 카테고리 스키마에 맞게 데이터 양식 변경함 by dw
+        category: gameInfo.gameCategory,
         description: gameInfo.gameDescription,
         menual: gameInfo.gameManual,
         status: gameInfo.gameServiceStatus,
@@ -62,7 +62,7 @@ const GameInfoEdit = () => {
             if (item._id === updateData._id) {
               return {
                 ...item,
-                categoryName: updateData.gameCategory,
+                gameCategory: updateData.gameCategory,
                 gameDescription: updateData.gameDescription,
                 gameIconUrl: updateData.gameIconUrl,
                 gameManual: updateData.gameManual,

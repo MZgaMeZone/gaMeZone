@@ -8,7 +8,7 @@ class CommentService {
   //GET post's comments
   async findAllComments(id) {
     return await commentModel.findAllComments(id);
-  };
+  }
 
   //GET user's posts
   async findUserComments(email) {
@@ -23,7 +23,7 @@ class CommentService {
   //POST
   async createNewComment(data) {
     return await commentModel.createNewComment(data);
-  };
+  }
 
   //DELETE
   async deleteComment(id) {
@@ -38,4 +38,4 @@ class CommentService {
 
 const commentService = new CommentService(commentModel);
 
-export {commentService};
+export { commentService };

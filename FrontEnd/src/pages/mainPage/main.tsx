@@ -15,12 +15,12 @@ const Main = () => {
   const hitGameList: any[] = [
     {
       name: '고마오',
-      url: '',
+      url: 'default',
       img: require('../../images/gomao.png'),
     },
     {
       name: '귀엽네',
-      url: '',
+      url: 'default',
       img: require('../../images/gomao.png'),
     },
     {
@@ -28,9 +28,21 @@ const Main = () => {
       url: '10seconds',
       img: require('../../images/cute.png'),
     },
-    { name: '게임 준비중', url: '', img: require('../../images/gomao.png') },
-    { name: '게임 준비중', url: '', img: require('../../images/gomao.png') },
-    { name: '게임 준비중', url: '', img: require('../../images/gomao.png') },
+    {
+      name: '게임 준비중',
+      url: 'default',
+      img: require('../../images/gomao.png'),
+    },
+    {
+      name: '게임 준비중',
+      url: 'default',
+      img: require('../../images/gomao.png'),
+    },
+    {
+      name: '게임 준비중',
+      url: 'default',
+      img: require('../../images/gomao.png'),
+    },
   ];
   //-----------------------------------------------------------------------
 

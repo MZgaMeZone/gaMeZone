@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import TimeStopGame from './components/Games/StopWatch/timeStop';
-import GameStarter from './components/gameStart';
 import Admin from './pages/adminPage/admin';
 import GameLoading from './pages/gamePages/gameLoading';
 import GameLayout from './pages/gamePages/gameLayout';

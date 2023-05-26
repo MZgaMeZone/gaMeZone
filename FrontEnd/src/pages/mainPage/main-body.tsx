@@ -16,6 +16,11 @@ function MainBody(props: MainBodyProps) {
   const [categoryList, setCategoryList] = React.useState<any[]>([]);
   const [gameList, setGameList] = React.useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('');
+  const [countVisitor, setCountVisitor] = React.useState<number>(0);
+  // 방문자수 확인
+  React.useEffect(() => {
+    setCountVisitor(countVisitor + 1);
+  }, []);
 
   // 시작버튼을 누를 때 리스트를 뽑아오는 함수
   React.useEffect(() => {
@@ -53,6 +58,8 @@ function MainBody(props: MainBodyProps) {
   }
   return (
     <>
+      <TodayVisitor>Today : {countVisitor}</TodayVisitor>
+      <TotalVisitor>Total : {countVisitor}</TotalVisitor>
       <MainContainer>
         {mainModal && (
           <>
@@ -135,6 +142,23 @@ function MainBody(props: MainBodyProps) {
   );
 }
 export default MainBody;
+
+const TodayVisitor = styled.div`
+  background-color: beige;
+  position: fixed;
+  top: 0;
+  display: flex;
+  margin: 10px 27px;
+  font-size: 2rem;
+`;
+const TotalVisitor = styled.div`
+  background-color: beige;
+  position: fixed;
+  top: 0;
+  display: flex;
+  margin: 25px 27px;
+  font-size: 2rem;
+`;
 
 const MainContainer = styled.div`
   height: 100%;

@@ -2,6 +2,7 @@ import Container from './components/container';
 import styled from 'styled-components';
 import profile from '../../style/icons/profile.svg';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const url = process.env.REACT_APP_API_URL;
@@ -23,10 +24,6 @@ function AvartarChange() {
         const newData = userIcon;
         setImageSrc(newData);
         setEmail(email);
-        console.log(email);
-
-        const form = document.getElementById('profileForm') as HTMLFormElement;
-        form.action = `http://localhost:8080/api/users/profile${email}`;
       } catch (e) {
         console.log(e);
       }
@@ -35,40 +32,46 @@ function AvartarChange() {
     fetchData();
   }, []);
 
-  const updatePofile = () => {
-    alert('프로필 이미지가 변경되었습니다.');
-  };
-
   const deletePofile = async () => {
-    await axios.put(url + '/api/users/profile');
+    await axios.post(url + `/api/users/profile/edit/${email}`);
+    alert('프로필 이미지가 삭제되었습니다.');
+    window.location.reload();
   };
 
   const [imageSrc, setImageSrc] = useState('');
-  const [isUploaded, IsSetPreview] = useState(false);
+  const [isUploaded, IsSetUploaded] = useState(false);
   const [email, setEmail] = useState('');
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const navigate = useNavigate();
 
-  const encodeFileToBase64 = (fileBlob: File) => {
-    const reader = new FileReader(); //File, Blob 객체를 핸들링
-    reader.readAsDataURL(fileBlob); //File, Blob 객체를 읽고 base64로 인코딩한 문자열을 FileReader.result속성에 담아줌
-    return new Promise<void>((resolve) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.target.files !== null) {
+      const file = e.target.files[0];
+      setFile(file);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onload = () => {
-        //파일이 성공적으로 읽혀지면 트리거됨
-        console.log('파일업 선택함');
-        setImageSrc(reader.result as string); //인코딩 된 문자열을 setImage에 넣어서 미리보기
-        console.log('미리보기세팅');
-        resolve();
+        setImageSrc(reader.result as string);
       };
-    });
-  };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //input 이미지가 변경되면 이 함수에서 파일 체크
-    console.log(e.target.files);
-    console.log('이미지 변경되고있음');
-
-    const file = e.target.files?.[0]; //파일이 있다면 file 변수에 할당, null이거나 정의되지 않았다면 file이 정의되지 않은 것으로 간주 없다면  undefined
-    if (file) {
-      encodeFileToBase64(file);
+      const formData = new FormData();
+      formData.append('img', file);
+      IsSetUploaded(true);
+      try {
+        await axios.post(url + `/api/users/profile/${email}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        alert('프로필이 업로드 되었습니다');
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+        alert('프로필 업로드에 실패했습니다.');
+      }
     }
   };
 
@@ -79,34 +82,26 @@ function AvartarChange() {
         <Line />
         <Avartar>
           <Preview>
-            {imageSrc === 'undefined' ? (
-              <img src={profile} alt="profile" />
+            {isUploaded ? (
+              <img src={imageSrc} />
             ) : (
               <img src={url + '/' + imageSrc} alt="profile" />
             )}
           </Preview>
           <h2>이미지 미리보기</h2>
 
-          <form
-            id="profileForm"
-            // action=`http://localhost:8080/api/users/profile/${email}` //rynn
-            method="POST"
-            encType="multipart/form-data"
-          >
-            <input
-              type="file"
-              name="img"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
+          <label htmlFor="profileImageBtn"> 프로필 이미지 수정</label>
+          <input
+            type="file"
+            id="profileImageBtn"
+            name="img"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
 
-            <Button name="uploadeBtn" onClick={updatePofile}>
-              프로필 이미지 수정
-            </Button>
-            <Button name="deleteBtn" onClick={deletePofile}>
-              프로필 이미지 삭제
-            </Button>
-          </form>
+          <Button className="deleteBtn" onClick={deletePofile}>
+            프로필 이미지 삭제
+          </Button>
         </Avartar>
       </Container>
     </div>
@@ -127,23 +122,42 @@ const Avartar = styled.div`
     justify-content: center;
     width: 100%;
   }
+
+  label {
+    height: 5rem;
+    width: 90%;
+    margin-top: 3rem;
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
+    background-color: var(--color--header);
+    border-radius: 0.5rem;
+    color: white;
+    text-align: center;
+    font-size: 1.8rem;
+    padding-top: 1.5rem;
+    cursor: pointer;
+  }
+
+  input {
+    display: none;
+  }
 `;
 
 const Button = styled.button`
   height: 5rem;
   width: 90%;
-  margin: 3rem 0 3rem 0;
+  margin-top: 3rem;
   box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
   background-color: var(--color--header);
   border-radius: 0.5rem;
   color: white;
+
   &:active {
     box-shadow: none;
     box-shadow: inset 0.3rem 0.3rem 0.3rem 0rem rgba(0, 0, 0, 0.3);
   }
-  &:not(:first-of-type) {
+  &.deleteBtn {
+    margin-top: 3rem;
     margin-bottom: 3rem;
-    margin-top: 0px;
   }
 `;
 const Line = styled.div`
