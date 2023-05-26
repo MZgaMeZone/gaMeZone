@@ -34,8 +34,8 @@ const UserList = () => {
       <Main>
         <NavBar>
           <p>프로필</p>
-          <p>닉네임</p>
-          <p>이메일</p>
+          <p style={{ margin: '0 0 0 10rem' }}>닉네임</p>
+          <p style={{ margin: '0 0 0 19.4rem' }}>이메일</p>
         </NavBar>
         {userData.map((item, index) => (
           <Content key={index}>
@@ -54,6 +54,7 @@ const UserList = () => {
           </Content>
         ))}
       </Main>
+      <FooterDiv></FooterDiv>
     </Container>
   );
 };
@@ -67,7 +68,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.p`
-  margin: 3rem 0 0 5rem;
+  margin: 5rem;
   font-size: 2.4rem;
   margin-bottom: 4rem;
   font-weight: 600;
@@ -83,17 +84,15 @@ const Main = styled.div`
 `;
 const NavBar = styled.div`
   display: flex;
-  /* justify-content: space-between; */
   width: 100%;
-  margin: 3rem 0 0 0;
-  padding: 1.6rem 55rem 1.6rem 7rem;
+  padding: 1.4rem 0 1.4rem 7rem;
   font-size: 1.8rem;
   font-weight: 600;
   color: #242424;
-  background: #d9d9d9;
+  background: #ebeded;
 
-  border-top: 3px solid #808080;
-  border-bottom: 3px solid #808080;
+  border-top: 3px solid #b9b9b9;
+  border-bottom: 3px solid #b9b9b9;
 `;
 const Content = styled.div`
   display: flex;
@@ -101,6 +100,7 @@ const Content = styled.div`
   position: relative;
   align-items: center;
   border-bottom: 2px solid #e0e0e0;
+  background: #f5fafa;
   p {
     position: absolute;
     font-size: 2rem;
@@ -145,4 +145,8 @@ const Button = styled.button`
     background: rgba(0, 0, 128, 0.6);
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.4);
   }
+`;
+const FooterDiv = styled.div`
+  padding: 5rem;
+  border-bottom: 2px solid #e0e0e0;
 `;
