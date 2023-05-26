@@ -24,22 +24,20 @@ function PostList() {
     createdAt: string;
     category: string;
   }
-  // /api/posts/:userId
+
   useEffect(() => {
-    console.log('유즈이펙트');
     const fetchData = async () => {
       const {
         data: { email, userIcon },
       } = await axios.get(url + '/api/users', config);
       setUserIcon(userIcon);
       const { data: postList } = await axios.get(url + `/api/posts/${email}`);
-      const formattedData = postList.map((item: any) => ({
+      const formattedData = postList.map((item: any, index: any) => ({
         ...item,
         createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-        key: item._id,
+        key: index,
       }));
       setPostList(formattedData);
-      console.log(postList);
     };
     fetchData();
   }, []);

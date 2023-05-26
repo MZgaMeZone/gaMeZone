@@ -24,7 +24,6 @@ interface Comment {
 
 function Comment() {
   useEffect(() => {
-    console.log('Check effect');
     const fetchData = async () => {
       const {
         data: { email, userIcon },

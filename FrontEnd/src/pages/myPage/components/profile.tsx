@@ -21,7 +21,6 @@ const config = {
 function Profile({ userIcon, email, nickName }: ProfileProps) {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const navigate = useNavigate();
-  console.log(userIcon);
   React.useEffect(() => {
     const userToken = localStorage.getItem('userToken');
     if (userToken) {
@@ -47,9 +46,7 @@ function Profile({ userIcon, email, nickName }: ProfileProps) {
       ></div>
       <ProfileBox>
         <div className="avartar">
-          {/* <img src={userIcon} alt="프로필" /> */}
           <img src={url + '/' + userIcon} alt="프로필" />
-
           <div className="nick_box">
             <p>{email}</p>
             <p>{nickName}</p>

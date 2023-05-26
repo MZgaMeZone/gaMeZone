@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import TimeStopGame from './components/Games/StopWatch/timeStop';
-import GameStarter from './components/gameStart';
 import Admin from './pages/adminPage/admin';
 import GameLoading from './pages/gamePages/gameLoading';
 import GameLayout from './pages/gamePages/gameLayout';
@@ -26,34 +25,37 @@ import MyComment from './pages/myPage/myComment';
 import MyArticle from './pages/myPage/myArticle';
 import AvartarChange from './pages/myPage/avartar-change';
 import PostWithComment from './pages/myPage/postWithComment';
+import Tracker from './countingToday';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/mypage/password" element={<PasswordChange />} />
-        <Route path="/mypage/nickname" element={<NicknameChange />} />
-        <Route path="/mypage/mycomment" element={<MyComment />} />
-        <Route path="/mypage/myarticle" element={<MyArticle />} />
-        <Route path="/mypage/avartar" element={<AvartarChange />} />
-        <Route path="/mypage/mycomment-post" element={<PostWithComment />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/information" element={<AdminInfomation />} />
-        <Route path="/admin/record" element={<AdminRecord />} />
-        <Route path="/admin/user" element={<AdminUser />} />
-        <Route path="/community/*" element={<Community />} />
-        <Route path="/game/:id" element={<GameLayout />} />
-        {/* <Route path="/game1" element={<TimeStopGame />} /> */}
-        <Route path="/game/gameover" element={<GameOver />} />
-        <Route path="/gameLoading" element={<GameLoading />} />
-        <Route path="/ranking" element={<Ranking />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/users" element={<Users />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/password" element={<PasswordChange />} />
+          <Route path="/mypage/nickname" element={<NicknameChange />} />
+          <Route path="/mypage/mycomment" element={<MyComment />} />
+          <Route path="/mypage/myarticle" element={<MyArticle />} />
+          <Route path="/mypage/avartar" element={<AvartarChange />} />
+          <Route path="/mypage/mycomment-post" element={<PostWithComment />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/information" element={<AdminInfomation />} />
+          <Route path="/admin/record" element={<AdminRecord />} />
+          <Route path="/admin/user" element={<AdminUser />} />
+          <Route path="/community/*" element={<Community />} />
+          <Route path="/game/:id" element={<GameLayout />} />
+          {/* <Route path="/game1" element={<TimeStopGame />} /> */}
+          <Route path="/game/gameover" element={<GameOver />} />
+          <Route path="/gameLoading" element={<GameLoading />} />
+          <Route path="/ranking" element={<Ranking />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/users" element={<Users />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

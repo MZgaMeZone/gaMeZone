@@ -23,13 +23,7 @@ function AvartarChange() {
         } = await axios.get(url + '/api/users', config);
         const newData = userIcon;
         setImageSrc(newData);
-        // setImageSrc(url + '/' + imageSrc);
         setEmail(email);
-
-        // const form = document.getElementById('profileForm') as HTMLFormElement;
-        // console.log('액션전');
-        // form.action = `http://localhost:8080/api/users/profile/${email}`;
-        // console.log('액션후');
       } catch (e) {
         console.log(e);
       }
@@ -44,51 +38,11 @@ function AvartarChange() {
     window.location.reload();
   };
 
-  const uploadPofile = async () => {
-    IsSetUploaded(true);
-    await axios.post(url + `/api/users/profile/${email}`);
-    alert('프로필 이미지가 변경되었습니다.');
-    window.location.reload();
-  };
-
-  // const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   window.location.reload();
-  // };
-
   const [imageSrc, setImageSrc] = useState('');
   const [isUploaded, IsSetUploaded] = useState(false);
   const [email, setEmail] = useState('');
   const [file, setFile] = useState<File | undefined>(undefined);
   const navigate = useNavigate();
-
-  const encodeFileToBase64 = (fileBlob: File) => {
-    const reader = new FileReader(); //File, Blob 객체를 핸들링
-    reader.readAsDataURL(fileBlob); //File, Blob 객체를 읽고 base64로 인코딩한 문자열을 FileReader.result속성에 담아줌
-    return new Promise<void>((resolve) => {
-      reader.onload = () => {
-        //파일이 성공적으로 읽혀지면 트리거됨
-        setImageSrc(reader.result as string); //인코딩 된 문자열을 setImage에 넣어서 미리보기
-        resolve();
-      };
-    });
-  };
-
-  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   //input 이미지가 변경되면 이 함수에서 파일 체크
-  //   e.preventDefault();
-  //   console.log(e.target.files);
-  //   IsSetUploaded(true);
-  //   console.log('이미지 변경되고있음');
-
-  //   const file = e.target.files?.[0]; //파일이 있다면 file 변수에 할당, null이거나 정의되지 않았다면 file이 정의되지 않은 것으로 간주 없다면  undefined
-  //   if (file) {
-  //     console.log('이미지 선택했음');
-  //     encodeFileToBase64(file);
-  //   } else {
-  //     console.log('이미지선택안함');
-  //   }
-  // };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -104,7 +58,7 @@ function AvartarChange() {
 
       const formData = new FormData();
       formData.append('img', file);
-
+      IsSetUploaded(true);
       try {
         await axios.post(url + `/api/users/profile/${email}`, formData, {
           headers: {
@@ -136,11 +90,6 @@ function AvartarChange() {
           </Preview>
           <h2>이미지 미리보기</h2>
 
-          {/* <form
-            id="profileForm"
-            method="POST"
-            encType="multipart/form-data"
-          > */}
           <label htmlFor="profileImageBtn"> 프로필 이미지 수정</label>
           <input
             type="file"
@@ -149,10 +98,7 @@ function AvartarChange() {
             accept="image/*"
             onChange={handleFileChange}
           />
-          {/* <Button type="button" name="uploadeBtn" onClick={uploadPofile}>
-            프로필 이미지 수정
-          </Button> */}
-          {/* </form> */}
+
           <Button className="deleteBtn" onClick={deletePofile}>
             프로필 이미지 삭제
           </Button>
@@ -188,6 +134,7 @@ const Avartar = styled.div`
     text-align: center;
     font-size: 1.8rem;
     padding-top: 1.5rem;
+    cursor: pointer;
   }
 
   input {
