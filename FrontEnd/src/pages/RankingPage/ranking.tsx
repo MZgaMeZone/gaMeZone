@@ -74,7 +74,6 @@ const Ranking = () => {
         )
         .then((res) => {
           setRankingData(res.data);
-          console.log(res.data);
         })
         .catch((err) => console.log(err));
     }
@@ -128,7 +127,7 @@ const Ranking = () => {
                 {gameList &&
                   gameList.map((data) => (
                     <li
-                      key={data._id}
+                      key={data.gameTitle}
                       onClick={() => {
                         setSelectedGame(data);
                         setShowGameList(!showGameList);
@@ -154,7 +153,7 @@ const Ranking = () => {
                   (selectedGame.gameTitle === '전체 랭킹' ||
                   selectedGame.gameTitle === '--- 게임을 선택해주세요 ---'
                     ? rankingData.slice(0, 3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 1}</p>
                           </div>
@@ -171,7 +170,7 @@ const Ranking = () => {
                         </li>
                       ))
                     : rankingData.slice(0, 3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 1}</p>
                           </div>
@@ -209,7 +208,7 @@ const Ranking = () => {
                   <div className="all-ranking-section-body">
                     <ul>
                       {rankingData.slice(3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 3}</p>
                           </div>
@@ -237,7 +236,7 @@ const Ranking = () => {
                   <div className="all-ranking-section-body">
                     <ul>
                       {rankingData.slice(3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 3}</p>
                           </div>
