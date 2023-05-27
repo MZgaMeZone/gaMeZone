@@ -34,7 +34,9 @@ const GameOver = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr?num=10`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr/nonHonors?num=10`
+      )
       .then((res) => {
         setRankingData(res.data);
         console.log(res.data);
