@@ -186,7 +186,8 @@ const Title = styled.p`
 `;
 const Input = styled.input`
   margin: 0 4rem;
-  padding: 1.2rem;
+  padding: 1rem 2rem;
+  height: 5rem;
   width: 60rem;
   font-size: 2rem;
   background-color: rgb(233, 233, 233);

@@ -25,9 +25,10 @@ interface rankingDataType {
   averageScore?: number;
   highScore?: number;
   score?: number;
+  userIcon?: string;
 }
 
-const Lanking = () => {
+const Ranking = () => {
   const [showGameList, setShowGameList] = useState(false);
   const [gameList, setGameList] = useState<gameListType[]>([]);
   const [selectedGame, setSelectedGame] = useState<gameListType>({
@@ -63,18 +64,16 @@ const Lanking = () => {
         .get(`${process.env.REACT_APP_API_URL}/api/scores/honors`)
         .then((res) => {
           setRankingData(res.data);
-          // console.log(res.data); <------ 미사용 콘솔 삭제
         })
         .catch((err) => console.log(err));
     } else {
       //선택된 게임 요청
       axios
         .get(
-          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}?num=20`
+          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}/honors/?num=20`
         )
         .then((res) => {
           setRankingData(res.data);
-          // console.log(res.data); <------ 미사용 콘솔 삭제
         })
         .catch((err) => console.log(err));
     }
@@ -128,7 +127,7 @@ const Lanking = () => {
                 {gameList &&
                   gameList.map((data) => (
                     <li
-                      key={data._id}
+                      key={data.gameTitle}
                       onClick={() => {
                         setSelectedGame(data);
                         setShowGameList(!showGameList);
@@ -154,12 +153,15 @@ const Lanking = () => {
                   (selectedGame.gameTitle === '전체 랭킹' ||
                   selectedGame.gameTitle === '--- 게임을 선택해주세요 ---'
                     ? rankingData.slice(0, 3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 1}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           {data.score && (
@@ -168,12 +170,15 @@ const Lanking = () => {
                         </li>
                       ))
                     : rankingData.slice(0, 3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 1}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           <p className="avg-score">{`AVG: ${data.averageScore}`}</p>
@@ -203,12 +208,15 @@ const Lanking = () => {
                   <div className="all-ranking-section-body">
                     <ul>
                       {rankingData.slice(3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 3}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           {data.score && <p className="score">{data.score}</p>}
@@ -228,12 +236,15 @@ const Lanking = () => {
                   <div className="all-ranking-section-body">
                     <ul>
                       {rankingData.slice(3).map((data, idx) => (
-                        <li>
+                        <li key={data.userNickname}>
                           <div className="ranking-idx">
                             <p>{idx + 3}</p>
                           </div>
                           <div className="img-circle">
-                            <img src={starIcon} alt="userImg" />
+                            <img
+                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
+                              alt="userImg"
+                            />
                           </div>
                           <p className="userId">{data.userNickname}</p>
                           <p className="avg-score">{data.averageScore}</p>
@@ -256,4 +267,4 @@ const Lanking = () => {
   );
 };
 
-export default Lanking;
+export default Ranking;

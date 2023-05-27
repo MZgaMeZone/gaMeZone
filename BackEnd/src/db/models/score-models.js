@@ -3,9 +3,11 @@ import GameSchema from "../schemas/game-schema.js";
 import ScoreSchema from "../schemas/score-schema.js";
 import { nanoid } from "nanoid"; // npm install nanoid 로 라이브러리 설치해야 함
 import dayjs from "dayjs"; // npm install dayjs 로 라이브러리 설치해야 함
+import UserSchema from "../schemas/user-schema.js";
 
 const Game = mongoose.model("games", GameSchema);
 const Score = mongoose.model("scores", ScoreSchema);
+const User = mongoose.model("User", UserSchema);
 
 class ScoreModel {
   async findScoresByGame(id) {
@@ -76,7 +78,17 @@ class ScoreModel {
           : a[nonOption] - b[nonOption]
         : a[option] - b[option]
     );
-    return ranking;
+    const rankingWithIcon = await Promise.all(
+      // 유저 아이콘 추가
+      ranking.map(async (rankingItem) => {
+        const userData = await User.findOne({
+          nickname: rankingItem.userNickname,
+        });
+        const userIcon = userData ? userData.userIcon : null;
+        return { ...rankingItem._doc, userIcon: userIcon };
+      })
+    );
+    return rankingWithIcon;
   }
 
   async userRanking() {
@@ -148,9 +160,19 @@ class ScoreModel {
     }
     const honorsRanking = Object.entries(final);
     honorsRanking.sort((b, a) => a[1] - b[1]);
-    const transformedRanking = honorsRanking.map((data) => ({
+
+    const honorsRankingWithIcon = await Promise.all(
+      //유저 아이콘 추가
+      honorsRanking.map(async (a) => {
+        const user = await User.findOne({ nickname: a[0] });
+        const userIcon = user ? user.userIcon : null;
+        return [...a, userIcon];
+      })
+    );
+    const transformedRanking = honorsRankingWithIcon.map((data) => ({
       userNickname: data[0],
       score: parseFloat(data[1]).toFixed(2),
+      userIcon: data[2],
     }));
     return transformedRanking;
   }
@@ -168,10 +190,12 @@ class ScoreModel {
   async updateScore(userEmail, userNickname) {
     // 닉네임 변경유저 기록 업데이트 기능?
     try {
+      console.log(userEmail, userNickname);
       const updatedData = await Score.updateMany(
         { userEmail: userEmail },
-        { userNickname: userNickname }
+        { $set: { userNickname: userNickname } }
       );
+      console.log(updatedData);
       return updatedData;
     } catch (e) {
       console.log("[게임 기록 내 유저 이메일 업데이트 실패]");
