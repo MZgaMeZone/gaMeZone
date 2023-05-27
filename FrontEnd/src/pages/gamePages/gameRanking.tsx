@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import '../../style/gameRanking.css';
 import exitImg from '../../style/icons/x-solid.svg';
 import backgroundImg from '../../style/icons/ranking-background.png';
 import rankingFavicon from '../../style/icons/ranking_favicon.svg';
-
-import ExampleRankingData from '../../components/Games/sampleRankingData';
 
 interface rankingDataType {
   gameId: string;
@@ -27,13 +24,13 @@ const GameRanking = (props: {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr?num=10`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr/nonHnors/?num=10`
+      )
       .then((res) => {
         setRankingData(res.data);
-        // console.log(res.data); <---------- 미사용 콘솔 삭제(objectId 노출됨)
       })
       .catch((err) => console.log(err));
-    // setRankingData(ExampleRankingData);
   }, []);
 
   return (

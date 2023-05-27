@@ -5,7 +5,10 @@ import Footer from '../footer';
 import { ReactComponent as Star } from '../../../style/icons/star.svg';
 import UserList from './userList';
 import SearchUser from './searchUser';
+import UserDataContext from './userDataContext';
+
 const AdminUser = () => {
+  const sharedData = useState('');
   const [menuIdx, setMenuIdx] = useState<number>(0);
 
   const handleClick = (idx: number) => {
@@ -39,10 +42,10 @@ const AdminUser = () => {
             </div>
             <div className={styles.main_text}>
               {menuIdx === 0 ? (
-                <>
+                <UserDataContext.Provider value={sharedData}>
                   <SearchUser />
                   <UserList />
-                </>
+                </UserDataContext.Provider>
               ) : (
                 ''
               )}
