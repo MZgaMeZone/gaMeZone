@@ -91,6 +91,7 @@ const GameInfoEdit = () => {
       }
     }
   };
+  console.log(data[0]);
   // 추가 수정 GameAddOrEdit 컴포넌트에서 한 번에 진행,
   //receivedData={null}이면 GameAddOrEdit에 input 값이 빈값으로 시작
   //receivedData={sendingData} 보내는 데이터가 있으면 받은 값으로 input값이 들어감
@@ -105,8 +106,8 @@ const GameInfoEdit = () => {
             <Container key={item._id}>
               <ImageContent>
                 <GameImage
-                  // src={item.gameImageUrl}
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
+                  src={`${process.env.REACT_APP_API_URL}${item.gameImageUrl}`}
+                  // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
                   alt="게임 아이콘"
                 />
               </ImageContent>
