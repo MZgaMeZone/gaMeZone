@@ -13,7 +13,20 @@ const config = {
   },
 };
 
-const CommentList = ({ comment, postId }: any) => {
+interface CommentListProps {
+  comment: {
+    content: string,
+    author : {
+      nickname: string,
+      email: string,
+    },
+    createdAt: string,
+    _id: string,
+  };
+  postId: string,
+}
+
+const CommentList = ({ comment, postId }: CommentListProps) => {
     const [patchModal, setPatchModal] = useState(false);
     const [userEmail, setUserEmail] = useState<string>("");
 
@@ -48,7 +61,7 @@ const CommentList = ({ comment, postId }: any) => {
             ) : (
               <ModifiedButton onClick={handleCommentClick}>수정</ModifiedButton>
             )}
-            <DeleteComment commentId={comment._id} postId={postId}/>
+            <DeleteComment commentId={comment._id}/>
             </ButtonContainer>           
           }
         </div>

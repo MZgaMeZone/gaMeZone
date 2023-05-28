@@ -26,15 +26,15 @@ const CreateFreePost = () => {
       });
   }, []);
 
-  const handleTitleChange = (e:any) => {
+  const handleTitleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const handleContentChange = (e:any) => {
+  const handleContentChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
-  const handleFormSubmit = async (e:any) => {
+  const handleFormSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (title.trim() === '') {

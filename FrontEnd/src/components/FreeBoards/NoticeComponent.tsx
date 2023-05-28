@@ -72,7 +72,7 @@ const NoticeComponent = () => {
         totalPosts={posts.length}
         currentPage={currentPage}
         paginate={paginate}
-      ></Pagination>
+      />
     </NoticeSection>
   );
 };

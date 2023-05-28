@@ -11,7 +11,12 @@ const config = {
   },
 };
 
-const CreateComment = ({postId, closeModal}: any) => {
+interface CreateCommentProps {
+  postId: string | undefined;
+  closeModal: (patchModal: boolean) => void;
+}
+
+const CreateComment = ({postId, closeModal}: CreateCommentProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [comment, setComment] = useState<string>("");
@@ -23,7 +28,7 @@ const CreateComment = ({postId, closeModal}: any) => {
       });
   }, []);
 
-  const handleContentChange = (e:any) => {
+  const handleContentChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   }
 

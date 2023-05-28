@@ -13,7 +13,10 @@ const userToken: string | null = localStorage.getItem('userToken');
 interface Comment {
   _id: string,
   content: string,
-  author: {nickname: string},
+  author: {
+    nickname: string,
+    email: string
+  },
   post: string,
   createdAt: string,
 }
@@ -23,7 +26,7 @@ interface Post {
 }
 
 interface CommentProps {
-  postId: string | undefined,
+  postId: string,
   category: string,
 }
 
@@ -39,7 +42,9 @@ const CommentComponent =({ postId, category }:CommentProps) => {
     .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
     .then((res) => {
       const data = res.data;
-      const formattedData = data.map((item:any) => ({
+      const formattedData = data.map((item :{
+        createdAt: string
+      }) => ({
         ...item,
         createdAt: moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")
       }));

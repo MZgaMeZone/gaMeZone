@@ -13,11 +13,17 @@ interface commentsType {
 }
 
 interface comment {
-  author: string,
-  content: string,
+  author: string;
+  content: string;
 }
 
-const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
+interface ModifiedCommentProps {
+  postId: string;
+  closeModal: (patchModal: boolean) => void;
+  commentId: string;
+}
+
+const ModifiedComment = ({ postId, closeModal, commentId }: ModifiedCommentProps) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [comment, setComment] = useState<string>("");
