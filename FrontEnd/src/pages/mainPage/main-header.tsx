@@ -59,13 +59,15 @@ export default MainHeader;
 
 const HitGameBox = styled.div`
   display: flex;
+  position: fixed;
+  top: 45px;
   justify-content: flex-end;
   // background-color: beige;
-  margin-top: 6rem;
+  // margin-top: 7rem;
   margin-right: 2rem;
-  align-items: center;
+  // align-items: center;
   width: fit-content;
-  height: fit-content;
+  height: 600px;
 `;
 const HitGame = styled.button`
   display: flex;
