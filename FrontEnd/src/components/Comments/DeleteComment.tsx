@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import axios from 'axios';
 
-const DeleteComment = ({commentId, postId}:any) => {
+interface IdType {
+  commentId: string | undefined
+}
+
+const DeleteComment = ({commentId}:IdType) => {
 
   const clickHandler = async () => {
       try {

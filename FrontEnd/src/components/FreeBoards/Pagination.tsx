@@ -5,7 +5,7 @@ interface PageType {
   postsPerPage: number,
   totalPosts: number,
   currentPage: number,
-  paginate: any,
+  paginate: (pageNumber: number) => void,
 }
 
 const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }: PageType) => {

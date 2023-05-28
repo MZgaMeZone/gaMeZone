@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios';
 
-const CertDeletePost = ({postId}:any) => {
+interface IdType {
+  postId: string | undefined
+}
+
+const CertDeletePost = ({postId}:IdType) => {
     const navigate = useNavigate();
 
     const clickHandler = async () => {

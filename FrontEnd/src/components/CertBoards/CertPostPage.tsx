@@ -55,7 +55,7 @@ const CertPostPage = () => {
     }
   }, [post])
 
-  if (!post) {
+  if (!post || !postId) {
     // postId에 해당하는 데이터가 없을 경우에 대한 처리
     return <div>게시물을 찾을 수 없습니다.</div>;
   }
