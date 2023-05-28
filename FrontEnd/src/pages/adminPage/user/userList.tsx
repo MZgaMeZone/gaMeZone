@@ -48,9 +48,9 @@ const UserList = () => {
           <Content key={item._id}>
             <ImageContent>
               <GameImage
-                // src={item.gameImageUrl}
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
-                alt="게임 아이콘"
+                // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
+                src={`${process.env.REACT_APP_API_URL}/${item.userIcon}`}
+                alt="프로필 이미지"
               />
             </ImageContent>
             <NameText>{item.nickname}</NameText>
