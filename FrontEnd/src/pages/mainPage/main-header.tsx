@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import Tracker from '../../countingToday';
+import Tracker from '../../components/Tools/countingToday';
 
 interface HitGame {
   name: string;
@@ -30,9 +30,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
               fontSize: '2.5rem',
               color: 'yellow',
             }}
-          >
-            <Tracker />
-          </div>
+          ></div>
           <div
             style={{
               display: 'flex',
@@ -61,13 +59,15 @@ export default MainHeader;
 
 const HitGameBox = styled.div`
   display: flex;
+  position: fixed;
+  top: 45px;
   justify-content: flex-end;
   // background-color: beige;
-  margin-top: 6rem;
+  // margin-top: 7rem;
   margin-right: 2rem;
-  align-items: center;
+  // align-items: center;
   width: fit-content;
-  height: fit-content;
+  height: 600px;
 `;
 const HitGame = styled.button`
   display: flex;

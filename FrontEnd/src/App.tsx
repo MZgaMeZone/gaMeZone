@@ -25,7 +25,6 @@ import MyComment from './pages/myPage/myComment';
 import MyArticle from './pages/myPage/myArticle';
 import AvartarChange from './pages/myPage/avartar-change';
 import PostWithComment from './pages/myPage/postWithComment';
-import Tracker from './countingToday';
 
 function App() {
   return (
