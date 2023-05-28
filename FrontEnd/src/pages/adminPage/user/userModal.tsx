@@ -51,8 +51,7 @@ const UserModal: React.FC<ModalProps> = ({ isOpen, onClose, data }) => {
               <Content key={item._id}>
                 <ImageContent>
                   <GameImage
-                    // src={item.gameImageUrl}
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7aRfWK5rqENOh5_8z0VK5FEKlGLcEfi-CLg&usqp=CAU"
+                    src={`${process.env.REACT_APP_API_URL}/${item.userIcon}`}
                     alt="게임 아이콘"
                   />
                 </ImageContent>
@@ -162,14 +161,13 @@ const EmailText = styled.p`
 `;
 const ImageContent = styled.div`
   margin: 1rem 0 1rem 5rem;
-  width: 7rem;
-  height: 7rem;
-  border: 3px solid #242424;
-  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  width: 9rem;
+  height: 9rem;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
   border-radius: 50%;
+  overflow: hidden;
 `;
 const GameImage = styled.img`
-  border-radius: 50%;
   width: 10rem;
 `;
 const ButtonDiv = styled.div`
