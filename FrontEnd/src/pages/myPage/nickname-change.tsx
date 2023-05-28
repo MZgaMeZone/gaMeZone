@@ -23,7 +23,7 @@ function NicknameChange() {
     };
     await axios.get(url + '/api/users', config).then((res) => {
       console.log(res.data);
-      setUserEmail(res.data.userEmail);
+      setUserEmail(res.data.email);
       setCurrentNickname(res.data.nickname);
     });
   };
@@ -61,6 +61,7 @@ function NicknameChange() {
       userNickname: newNickname,
       userEmail: userEmail,
     };
+    console.log(patchScoreBody);
 
     await axios
       .patch(`${url}/api/users/nicknameChange`, { newNickname }, config)
