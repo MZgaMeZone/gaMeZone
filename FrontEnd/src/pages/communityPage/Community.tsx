@@ -1,13 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import FreeBoard from './freeBoard/freeBoard';
-import CertifyBoard from './certBoard/certificationBoard';
+import FreeBoard from './freeBoard/FreeBoard';
+import CertifyBoard from './certBoard/CertificationBoard';
 import CreateFreePost from './freeBoard/CreateFreePost';
 import CreateCertPost from './certBoard/CreateCertPost';
 import FreePost from './freeBoard/FreePost';
 import CertPost from './certBoard/CertPost';
-import ModifiedPost from './patchPage';
+import ModifiedPost from './PatchPage';
 import MainBody from '../mainPage/main-body';
 import MainFooter from '../mainPage/main-footer';
 
