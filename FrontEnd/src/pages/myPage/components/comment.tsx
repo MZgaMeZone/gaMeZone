@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import gomaImg from '../../../images/gomao.png';
 import axios from 'axios';
-import moment from 'moment';
 import Pagination from './pagination';
+import { dateFormatter } from '../../../utils/dateUtil';
 
 const url = process.env.REACT_APP_API_URL;
 const userToken: string | null = localStorage.getItem('userToken');
@@ -34,7 +34,7 @@ function Comment() {
       setUserIcon(userIcon);
       const formattedData = commentList.map((item: any) => ({
         ...item,
-        createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+        createdAt: dateFormatter(item.createdAt, 'YYYY-MM-DD HH:mm:ss'),
       }));
       setCommentList(formattedData);
     };
