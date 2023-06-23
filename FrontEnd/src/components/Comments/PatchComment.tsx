@@ -1,111 +1,117 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from "styled-components";
 import axios from 'axios';
 
-import {
-  CommentDataType,
-  CommentDataList,
-  ModifiedCommentProps,
-} from '../../types/CommentType';
+interface commentsType {
+    _id: string;
+    content: string;
+    author: { nickname: string};
+    createdAt: string;
+    postId: string | undefined;
+    closeModal: any;
+}
 
-const ModifiedComment = ({
-  postId,
-  closeModal,
-  commentId,
-}: ModifiedCommentProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [comment, setComment] = useState<string>('');
-  const [content, setContent] = useState<CommentDataType | null>(null); // 코멘트 하나만 가져오기 위해 상태를 단일 코멘트로 변경
-  const [Id, setId] = useState<CommentDataList>([]);
+interface comment {
+  author: string,
+  content: string,
+}
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
-      .then((res) => {
-        const data = res.data;
-        setContent(data);
-      });
-  }, [postId]);
-
-  useEffect(() => {
-    axios
+const ModifiedComment = ({ postId, closeModal, commentId }: any) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [comment, setComment] = useState<string>("");
+    const [content, setContent] = useState<commentsType | null>(null); // 코멘트 하나만 가져오기 위해 상태를 단일 코멘트로 변경
+    const [Id, setId] = useState<comment[]>([]);
+  
+    useEffect(() => {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
+        .then((res) => {
+          const data = res.data;
+          setContent(data);
+        });
+    }, [postId]);
+  
+    useEffect(() => {
+      axios
       .get(`${process.env.REACT_APP_API_URL}/api/comments/comment/${commentId}`)
       .then((res) => {
         const data = res.data;
         setId(data);
+        
       });
-  }, []);
+    }, []);
 
-  useEffect(() => {
-    if (content) {
-      // content가 가져와졌을 때 기본값으로 사용할 데이터를 설정
-      setComment(Id[0].content);
-    }
-  }, [content]);
+    useEffect(() => {
+      if (content) {
+        // content가 가져와졌을 때 기본값으로 사용할 데이터를 설정
+        setComment(Id[0].content);
+      }
+    }, [content]);
 
-  if (!content) {
-    return null;
-  }
-
-  if (!Id) {
-    return null;
-  }
-
-  const handleContentChange = (e: any) => {
-    setComment(e.target.value);
-  };
-
-  const clickHandler = async () => {
-    if (comment.trim() === '') {
-      alert('내용을 입력해주세요');
-      return;
+    if (!content) {
+      return null;
     }
 
-    try {
-      const commentData = {
-        _id: commentId,
-        content: comment,
-        post: postId,
-        author: Id[0].author,
-      };
+    if (!Id) {
+      return null;
+    }
 
-      await axios.patch(
-        `${process.env.REACT_APP_API_URL}/api/comments/${postId}`,
-        commentData
-      );
+    const handleContentChange = (e: any) => {
+      setComment(e.target.value);
+    };
+  
+    const clickHandler = async () => {
+      if (comment.trim() === "") {
+        alert("내용을 입력해주세요");
+        return;
+      }
+  
+      try {
+        const commentData = {
+          _id: commentId,
+          content: comment,
+          post: postId,
+          author: Id[0].author,
+        };
+  
+        await axios.patch(
+          `${process.env.REACT_APP_API_URL}/api/comments/${postId}`,
+          commentData
+        );
+        closeModal(true);
+  
+        alert("댓글 수정이 완료되었습니다.");
+        window.location.reload();
+      } catch (err) {
+        console.error(err);
+        alert("댓글 수정 중 오류가 발생했습니다.");
+      }
+    };
+  
+    const goBackHandler = () => {
       closeModal(true);
-
-      alert('댓글 수정이 완료되었습니다.');
-      window.location.reload();
-    } catch (err) {
-      console.error(err);
-      alert('댓글 수정 중 오류가 발생했습니다.');
-    }
+      navigate(location.pathname);
+    };
+  
+    return (
+      <ModifiedSection>
+        <Modal>
+          <ModalTitle>댓글 수정</ModalTitle>
+          <ModalMain>
+            <Main>내용</Main>
+            <MainText value={comment} onChange={handleContentChange} />
+          </ModalMain>
+          <ButtonContainer>
+            <CompleteButton onClick={clickHandler}>수정하기</CompleteButton>
+            <GoBackButton onClick={goBackHandler}>뒤로가기</GoBackButton>
+          </ButtonContainer>
+        </Modal>
+      </ModifiedSection>
+    );
   };
-
-  const goBackHandler = () => {
-    closeModal(true);
-    navigate(location.pathname);
-  };
-
-  return (
-    <ModifiedSection>
-      <Modal>
-        <ModalTitle>댓글 수정</ModalTitle>
-        <ModalMain>
-          <Main>내용</Main>
-          <MainText value={comment} onChange={handleContentChange} />
-        </ModalMain>
-        <ButtonContainer>
-          <CompleteButton onClick={clickHandler}>수정하기</CompleteButton>
-          <GoBackButton onClick={goBackHandler}>뒤로가기</GoBackButton>
-        </ButtonContainer>
-      </Modal>
-    </ModifiedSection>
-  );
-};
+  
 
 export default ModifiedComment;
 
@@ -119,7 +125,7 @@ const ModifiedSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-`;
+`
 
 const Modal = styled.div`
   position: absolute;
@@ -129,32 +135,32 @@ const Modal = styled.div`
   background-color: rgb(255, 255, 255);
   border-radius: 2px;
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-`;
+`
 
 const ModalTitle = styled.h3`
   margin-left: 2rem;
-`;
+`
 
 const ModalMain = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const Main = styled.p`
   margin-right: 3rem;
-`;
+`
 
 const MainText = styled.textarea`
   width: 100rem;
   height: 7rem;
   font-size: 1.7rem;
-`;
+`
 
 const ButtonContainer = styled.div`
   margin: 2rem;
   text-align: center;
-`;
+`
 const GoBackButton = styled.button`
   word-wrap: normal;
   margin: 0 3rem 2rem;
@@ -165,10 +171,10 @@ const GoBackButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:active {
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`;
+`
 const CompleteButton = styled.button`
   word-wrap: normal;
   margin: 0 3rem 2rem;
@@ -179,7 +185,7 @@ const CompleteButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:active {
+  &:active{
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`;
+`

@@ -1,15 +1,16 @@
-import { useNavigate, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { useNavigate, NavLink } from "react-router-dom";
+import styled, { createGlobalStyle } from "styled-components";
 
-import NoticeComponent from '../../../components/Boards/NoticeComponent';
-import exitImg from '../../../style/icons/x-solid.svg';
+import NoticeComponent from "../../components/FreeBoards/NoticeComponent";
+import exitImg from "../../style/icons/x-solid.svg";
 
-const CertifyBoard = () => {
+const CommunityPage = () => {
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    navigate('/');
-  };
+    navigate("/");
+  }
 
   return (
     <CommunitySection>
@@ -17,23 +18,23 @@ const CertifyBoard = () => {
         <CommunityHeader>
           커뮤니티
           <ExitButton onClick={clickHandler}>
-            <ExitImage src={exitImg} alt="exitImg" />
+          <ExitImage src={exitImg} alt="exitImg" />
           </ExitButton>
         </CommunityHeader>
         <CommunityBody>
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>
-            <CommunityLink to="/community">자유게시판</CommunityLink>
-            <CurrentLink to="/community/certified">인증게시판</CurrentLink>
+            <CurrentLink to="/community">자유게시판</CurrentLink>
+            <CommunityLink to="/community/certified">인증게시판</CommunityLink>
           </Header>
-          <NoticeComponent boardCategory="cert" />
+          <NoticeComponent />
         </CommunityBody>
       </CommunityContainer>
     </CommunitySection>
   );
 };
 
-export default CertifyBoard;
+export default CommunityPage;
 
 const CommunitySection = styled.div`
   background-color: var(--background--gray);
@@ -71,7 +72,7 @@ const ExitButton = styled.div`
   box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
     inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
-`;
+`
 
 const ExitImage = styled.img`
   width: 65%;
@@ -79,7 +80,7 @@ const ExitImage = styled.img`
   display: flex;
   margin: 0.6rem auto;
   padding-bottom: 0.3rem;
-`;
+`
 
 const CommunityBody = styled.div`
   margin: 1rem;

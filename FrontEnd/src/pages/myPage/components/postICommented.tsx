@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import cuteImg from '../../../images/cute.png';
 import gomaImg from '../../../images/gomao.png';
 import axios from 'axios';
-import { dateFormatter } from '../../../utils/dateUtil';
+import moment from 'moment';
 import Pagination from './pagination';
 
 const url = process.env.REACT_APP_API_URL;
@@ -56,7 +56,7 @@ function PostICommented() {
       );
       const formattedData = commentList.map((item: any) => ({
         ...item,
-        createdAt: dateFormatter(item.createdAt, 'YYYY-MM-DD HH:mm:ss'),
+        createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
       }));
       setCommentList(formattedData);
     };
