@@ -3,23 +3,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-interface postsType {
-  _id: string;
-  title: string;
-  content: string;
-  category: string;
-  author: { nickname: string; _id: string };
-  createdAt: string;
-}
-
-interface postData {
-  title: string;
-  content: string;
-}
+import { PostType, PostData } from '../../types/CommunityType';
 
 const ModifiedPost = () => {
-  const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
-  const [data, setData] = useState<postData>({
+  const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
+  const [data, setData] = useState<PostData>({
     title: '',
     content: '',
   });

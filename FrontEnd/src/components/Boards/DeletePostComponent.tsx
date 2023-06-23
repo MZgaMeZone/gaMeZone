@@ -2,10 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-interface PostDataProps {
-  postId: string | undefined;
-  boardCategory: string;
-}
+import { PostDataProps } from '../../types/CommunityType';
 
 const DeletePost = ({ postId, boardCategory }: PostDataProps) => {
   const navigate = useNavigate();

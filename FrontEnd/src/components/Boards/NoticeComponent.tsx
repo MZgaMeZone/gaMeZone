@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import axios from 'axios';
 import styled from 'styled-components';
 
 import Pagination from '../../utils/Pagination';
+import { dateFormatter } from '../../utils/dateUtil';
 import {
   CategoryType,
   PostType,
@@ -76,7 +76,7 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
                 <PostItemTitle>{post.title}</PostItemTitle>
                 <PostItemInfo>
                   <PostDate>
-                    {moment(post.createdAt).format('YYYY-MM-DD')}
+                    {dateFormatter(post.createdAt, 'YYYY-MM-DD')}
                   </PostDate>
                   <PostUser>{post.author.nickname}</PostUser>
                 </PostItemInfo>
