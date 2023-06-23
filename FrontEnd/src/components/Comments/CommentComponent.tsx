@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
+import { get } from '../../api/api';
 import Pagination from '../../utils/Pagination';
-import { dateFormatter } from '../../utils/dateUtil';
 import {
   CommentDataType,
   CommentListType,
@@ -13,8 +12,6 @@ import {
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 
-const userToken: string | null = localStorage.getItem('userToken');
-
 const CommentComponent = ({ postId, category }: CommentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
@@ -22,24 +19,18 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
   const [comments, setComments] = useState<CommentListType>([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
-      .then((res) => {
-        const data = res.data;
-        const formattedData = data.map((item: { createdAt: string }) => ({
-          ...item,
-          createdAt: dateFormatter(item.createdAt, 'YYYY-MM-DD HH:mm:ss'),
-        }));
-        setComments(formattedData);
-      });
+    const fetchData = async () => {
+      const responseData = await get<any>(`/api/comments/post/${postId}`);
+      setComments(responseData);
+    };
+    fetchData();
   }, []);
 
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentComments = comments.slice(
-    indexOfFirstComment,
-    indexOfLastComment
-  );
+  const currentComments = comments
+    ? comments.slice(indexOfFirstComment, indexOfLastComment)
+    : '';
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -52,9 +43,10 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
   return (
     <CommentSection>
       <CommentContainer>
-        {currentComments.map((comment: CommentDataType) => (
-          <CommentList comment={comment} postId={postId} key={comment._id} />
-        ))}
+        {currentComments &&
+          currentComments.map((comment: CommentDataType) => (
+            <CommentList comment={comment} postId={postId} key={comment._id} />
+          ))}
       </CommentContainer>
       <Footer>
         {category === 'free' ? (
@@ -68,7 +60,7 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
           paginate={paginate}
           currentPage={currentPage}
         />
-        {userToken && (
+        {
           <div>
             {postModal ? (
               <CreateComment postId={postId} closeModal={togglePostModal} />
@@ -76,7 +68,7 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
               <CommentButton onClick={togglePostModal}>댓글 쓰기</CommentButton>
             )}
           </div>
-        )}
+        }
       </Footer>
     </CommentSection>
   );

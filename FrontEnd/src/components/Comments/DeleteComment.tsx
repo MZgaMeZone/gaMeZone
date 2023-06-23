@@ -1,14 +1,12 @@
 import styled from 'styled-components';
-import axios from 'axios';
 
+import { del } from '../../api/api';
 import { CommentIdType } from '../../types/CommentType';
 
 const DeleteComment = ({ commentId }: CommentIdType) => {
   const clickHandler = async () => {
     try {
-      axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/comments/${commentId}`
-      );
+      del(`/api/comments/${commentId}`, {});
       alert('댓글이 삭제되었습니다.');
       window.location.reload();
     } catch (err) {
