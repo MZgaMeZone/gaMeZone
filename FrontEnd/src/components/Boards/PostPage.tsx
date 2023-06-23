@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -8,6 +7,7 @@ import axios from 'axios';
 import CommentComponent from '../Comments/CommentComponent';
 import DeletePost from './DeletePostComponent';
 import { CategoryType, PostType } from '../../types/CommunityType';
+import { dateFormatter } from '../../utils/dateUtil';
 
 import exitImg from '../../style/icons/x-solid.svg';
 
@@ -103,7 +103,7 @@ const PostPage = ({ boardCategory }: CategoryType) => {
               <AuthorContainer>
                 <Author>{post.author.nickname}</Author>
                 <Date>
-                  {moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                  {dateFormatter(post.createdAt, 'YYYY-MM-DD HH:mm:ss')}
                 </Date>
               </AuthorContainer>
             </TitleContainer>
