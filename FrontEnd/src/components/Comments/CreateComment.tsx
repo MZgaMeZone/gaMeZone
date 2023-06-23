@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styled from "styled-components";
-import axios from "axios";
+import styled from 'styled-components';
+import axios from 'axios';
+
+import { CreateCommentProps } from '../../types/CommentType';
 
 const url = process.env.REACT_APP_API_URL;
 const userToken: string | null = localStorage.getItem('userToken');
 const config = {
   headers: {
-  Authorization: `Bearer ${userToken}`,
+    Authorization: `Bearer ${userToken}`,
   },
 };
 
-interface CreateCommentProps {
-  postId: string | undefined;
-  closeModal: (patchModal: boolean) => void;
-}
-
-const CreateComment = ({postId, closeModal}: CreateCommentProps) => {
+const CreateComment = ({ postId, closeModal }: CreateCommentProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [comment, setComment] = useState<string>("");
-  const [userEmail, setUserEmail] = useState<string>("");
+  const [comment, setComment] = useState<string>('');
+  const [userEmail, setUserEmail] = useState<string>('');
 
   useEffect(() => {
     axios.get(url + '/api/users', config).then((res) => {
       setUserEmail(res.data.email);
-      });
+    });
   }, []);
 
-  const handleContentChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
-  }
+  };
 
   const clickHandler = async () => {
     if (comment.trim() === '') {
@@ -42,15 +39,15 @@ const CreateComment = ({postId, closeModal}: CreateCommentProps) => {
       const commentData = {
         author: userEmail,
         content: comment,
-        post: postId
+        post: postId,
       };
 
       axios.post(`${process.env.REACT_APP_API_URL}/api/comments`, commentData);
       closeModal(true);
 
-      alert("댓글 작성이 완료되었습니다.");
+      alert('댓글 작성이 완료되었습니다.');
       window.location.reload();
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       alert('댓글 작성 중 오류가 발생했습니다.');
     }
@@ -59,7 +56,7 @@ const CreateComment = ({postId, closeModal}: CreateCommentProps) => {
   const goBackHandler = () => {
     closeModal(true);
     navigate(location.pathname);
-  }
+  };
 
   return (
     <CreateSection>
@@ -75,8 +72,8 @@ const CreateComment = ({postId, closeModal}: CreateCommentProps) => {
         </ButtonContainer>
       </Modal>
     </CreateSection>
-  )
-}
+  );
+};
 
 export default CreateComment;
 
@@ -90,7 +87,7 @@ const CreateSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: end;
-`
+`;
 
 const Modal = styled.div`
   position: absolute;
@@ -100,32 +97,32 @@ const Modal = styled.div`
   background-color: rgb(255, 255, 255);
   border-radius: 2px;
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-`
+`;
 
 const ModalTitle = styled.h3`
   margin-left: 2rem;
-`
+`;
 
 const ModalMain = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const Main = styled.p`
   margin-right: 3rem;
-`
+`;
 
 const MainText = styled.textarea`
   width: 100rem;
   height: 7rem;
   font-size: 1.7rem;
-`
+`;
 
 const ButtonContainer = styled.div`
   margin: 2rem;
   text-align: center;
-`
+`;
 const GoBackButton = styled.button`
   word-wrap: normal;
   margin: 0 3rem 2rem;
@@ -136,10 +133,10 @@ const GoBackButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:active{
+  &:active {
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`
+`;
 const CompleteButton = styled.button`
   word-wrap: normal;
   margin: 0 3rem 2rem;
@@ -150,7 +147,7 @@ const CompleteButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:active{
+  &:active {
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`
+`;

@@ -1,36 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import Pagination from '../../utils/Pagination';
+import { dateFormatter } from '../../utils/dateUtil';
+import {
+  CommentDataType,
+  CommentListType,
+  CommentProps,
+} from '../../types/CommentType';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 
 const userToken: string | null = localStorage.getItem('userToken');
 
-interface Comment {
-  _id: string;
-  content: string;
-  author: {
-    nickname: string;
-    email: string;
-  };
-  post: string;
-  createdAt: string;
-}
-
-interface CommentProps {
-  postId: string;
-  category: string;
-}
-
 const CommentComponent = ({ postId, category }: CommentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage] = useState(3);
   const [postModal, setPostModal] = useState(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<CommentListType>([]);
 
   useEffect(() => {
     axios
@@ -39,7 +28,7 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
         const data = res.data;
         const formattedData = data.map((item: { createdAt: string }) => ({
           ...item,
-          createdAt: moment(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+          createdAt: dateFormatter(item.createdAt, 'YYYY-MM-DD HH:mm:ss'),
         }));
         setComments(formattedData);
       });
@@ -63,7 +52,7 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
   return (
     <CommentSection>
       <CommentContainer>
-        {currentComments.map((comment: Comment) => (
+        {currentComments.map((comment: CommentDataType) => (
           <CommentList comment={comment} postId={postId} key={comment._id} />
         ))}
       </CommentContainer>
