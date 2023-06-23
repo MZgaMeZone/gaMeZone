@@ -1,26 +1,24 @@
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 import axios from 'axios';
 
-import { CommentIdType } from '../../types/CommentType';
+const DeleteComment = ({commentId, postId}:any) => {
 
-const DeleteComment = ({ commentId }: CommentIdType) => {
   const clickHandler = async () => {
-    try {
-      axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/comments/${commentId}`
-      );
-      alert('댓글이 삭제되었습니다.');
-      window.location.reload();
-    } catch (err) {
-      alert('댓글 삭제 중 오류가 발생했습니다.');
-    }
+      try {
+          axios.delete(`${process.env.REACT_APP_API_URL}/api/comments/${commentId}`);
+          alert("댓글이 삭제되었습니다.");
+          window.location.reload();
+      } catch(err) {
+          alert('댓글 삭제 중 오류가 발생했습니다.');
+      }
   };
 
   return (
-    <div>
-      <DeleteButton onClick={clickHandler}>삭제</DeleteButton>
-    </div>
-  );
+      <div>
+          <DeleteButton onClick={clickHandler}>삭제</DeleteButton>
+      </div>
+  )
 };
 
 export default DeleteComment;

@@ -238,7 +238,7 @@ const Ranking = () => {
                       {rankingData.slice(3).map((data, idx) => (
                         <li key={data.userNickname}>
                           <div className="ranking-idx">
-                            <p>{idx + 4}</p>
+                            <p>{idx + 3}</p>
                           </div>
                           <div className="img-circle">
                             <img
