@@ -26,8 +26,6 @@ const PostPage = ({ boardCategory }: CategoryType) => {
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   const navigate = useNavigate();
 
-  console.log(boardCategory);
-
   if (userToken) {
     axios.get(url + '/api/users', config).then((res) => {
       setUserEmail(res.data.email);
