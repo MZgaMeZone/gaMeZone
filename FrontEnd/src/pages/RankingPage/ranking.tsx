@@ -11,6 +11,8 @@ import heartIcon from '../../style/icons/heart.svg';
 import dropdownIcon from '../../style/icons/dropdown.svg';
 import MainBody from '../mainPage/main-body';
 import MainFooter from '../mainPage/main-footer';
+import Top3Box from '../../components/Honors/Top3Box';
+import AllHonorsBox from '../../components/Honors/AllHonorsBox';
 
 interface gameListType {
   _id?: string;
@@ -19,7 +21,7 @@ interface gameListType {
   gameUrl?: string;
 }
 
-interface rankingDataType {
+export interface rankingDataType {
   gameId?: string;
   userNickname?: string;
   averageScore?: number;
@@ -42,13 +44,12 @@ const Ranking = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/games/`)
       .then((res) => {
-        setGameList((current) => [
+        setGameList(() => [
           {
             gameTitle: '전체 랭킹',
           },
           ...res.data,
         ]);
-        // console.log('게임데이터', res.data); <------ 미사용 콘솔 삭제
       })
       .catch((err) => console.log(err));
   }, []);
@@ -152,39 +153,24 @@ const Ranking = () => {
                 {rankingData &&
                   (selectedGame.gameTitle === '전체 랭킹' ||
                   selectedGame.gameTitle === '--- 게임을 선택해주세요 ---'
-                    ? rankingData.slice(0, 3).map((data, idx) => (
-                        <li key={data.userNickname}>
-                          <div className="ranking-idx">
-                            <p>{idx + 1}</p>
-                          </div>
-                          <div className="img-circle">
-                            <img
-                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
-                              alt="userImg"
-                            />
-                          </div>
-                          <p className="userId">{data.userNickname}</p>
-                          {data.score && (
-                            <p className="avg-score">{`SCORE: ${data.score}`}</p>
-                          )}
-                        </li>
-                      ))
-                    : rankingData.slice(0, 3).map((data, idx) => (
-                        <li key={data.userNickname}>
-                          <div className="ranking-idx">
-                            <p>{idx + 1}</p>
-                          </div>
-                          <div className="img-circle">
-                            <img
-                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
-                              alt="userImg"
-                            />
-                          </div>
-                          <p className="userId">{data.userNickname}</p>
-                          <p className="avg-score">{`AVG: ${data.averageScore}`}</p>
-                          <p className="high-score">{`HIGH: ${data.highScore}`}</p>
-                        </li>
-                      )))}
+                    ? rankingData
+                        .slice(0, 3)
+                        .map((userData, index) => (
+                          <Top3Box
+                            userData={userData}
+                            index={index}
+                            perGame={false}
+                          />
+                        ))
+                    : rankingData
+                        .slice(0, 3)
+                        .map((userData, index) => (
+                          <Top3Box
+                            userData={userData}
+                            index={index}
+                            perGame={true}
+                          />
+                        )))}
               </ul>
             </div>
           </div>
@@ -207,20 +193,12 @@ const Ranking = () => {
                   </div>
                   <div className="all-ranking-section-body">
                     <ul>
-                      {rankingData.slice(3).map((data, idx) => (
-                        <li key={data.userNickname}>
-                          <div className="ranking-idx">
-                            <p>{idx + 4}</p>
-                          </div>
-                          <div className="img-circle">
-                            <img
-                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
-                              alt="userImg"
-                            />
-                          </div>
-                          <p className="userId">{data.userNickname}</p>
-                          {data.score && <p className="score">{data.score}</p>}
-                        </li>
+                      {rankingData.slice(3).map((userData, index) => (
+                        <AllHonorsBox
+                          userData={userData}
+                          index={index}
+                          perGame={false}
+                        />
                       ))}
                     </ul>
                   </div>
@@ -235,21 +213,12 @@ const Ranking = () => {
                   </div>
                   <div className="all-ranking-section-body">
                     <ul>
-                      {rankingData.slice(3).map((data, idx) => (
-                        <li key={data.userNickname}>
-                          <div className="ranking-idx">
-                            <p>{idx + 4}</p>
-                          </div>
-                          <div className="img-circle">
-                            <img
-                              src={`${process.env.REACT_APP_API_URL}/${data.userIcon}`}
-                              alt="userImg"
-                            />
-                          </div>
-                          <p className="userId">{data.userNickname}</p>
-                          <p className="avg-score">{data.averageScore}</p>
-                          <p className="high-score">{data.highScore}</p>
-                        </li>
+                      {rankingData.slice(3).map((userData, index) => (
+                        <AllHonorsBox
+                          userData={userData}
+                          index={index}
+                          perGame={true}
+                        />
                       ))}
                     </ul>
                   </div>
