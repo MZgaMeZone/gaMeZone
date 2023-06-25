@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
-import { CategoryType } from '../../types/CommunityType';
+import { get, post } from '../../api/api';
+import UserDataType from '../../types/userType';
+import { CategoryType } from '../../types/communityType';
 
 import exitImg from '../../style/icons/x-solid.svg';
-
-const url = process.env.REACT_APP_API_URL;
-const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-};
 
 const CreatePost = ({ boardCategory }: CategoryType) => {
   const [title, setTitle] = useState<string>('');
@@ -22,9 +15,11 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(url + '/api/users', config).then((res) => {
-      setUserEmail(res.data.email);
-    });
+    const fetchData = async () => {
+      const responseData = await get<UserDataType>('/api/users');
+      setUserEmail(responseData.data.email);
+    };
+    fetchData();
   }, []);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +51,7 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
         category: boardCategory === 'freeboard' ? 'free' : 'cert',
       };
 
-      axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, postData);
+      await post('/api/posts', postData);
 
       alert('게시물이 작성되었습니다.');
       if (boardCategory === 'freeboard') {
