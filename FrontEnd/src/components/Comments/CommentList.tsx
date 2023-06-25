@@ -1,28 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
-import { CommentListProps } from '../../types/CommentType';
+import { get } from '../../api/api';
+import { CommentListProps } from '../../types/commentType';
+import UserDataType from '../../types/userType';
 import ModifiedComment from './PatchComment';
 import DeleteComment from './DeleteComment';
-
-const url = process.env.REACT_APP_API_URL;
-const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-};
+import { dateFormatter } from '../../utils/dateUtil';
 
 const CommentList = ({ comment, postId }: CommentListProps) => {
   const [patchModal, setPatchModal] = useState(false);
   const [userEmail, setUserEmail] = useState<string>('');
 
-  if (userToken) {
-    axios.get(url + '/api/users', config).then((res) => {
-      setUserEmail(res.data.email);
-    });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await get<UserDataType>('/api/users');
+      setUserEmail(responseData.data.email);
+    };
+    fetchData();
+  }, []);
 
   const togglePatchModal = () => {
     setPatchModal(!patchModal);
@@ -32,12 +28,14 @@ const CommentList = ({ comment, postId }: CommentListProps) => {
     togglePatchModal();
   };
 
+  const createdAt = dateFormatter(comment.createdAt, 'YYYY-MM-DD HH:mm:ss');
+
   return (
     <Comments>
       <Comment>{comment.content}</Comment>
       <div style={{ display: 'flex' }}>
         <Author>{comment.author.nickname}</Author>
-        <Date>{comment.createdAt}</Date>
+        <Date>{createdAt}</Date>
         {userEmail === comment.author.email && (
           <ButtonContainer>
             {patchModal ? (

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
+import { get, patch } from '../../api/api';
 import {
   CommentDataType,
   CommentDataList,
   ModifiedCommentProps,
-} from '../../types/CommentType';
+} from '../../types/commentType';
 
 const ModifiedComment = ({
   postId,
@@ -21,21 +21,24 @@ const ModifiedComment = ({
   const [Id, setId] = useState<CommentDataList>([]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/comments/post/${postId}`)
-      .then((res) => {
-        const data = res.data;
-        setContent(data);
-      });
+    const fetchData = async () => {
+      const responseData = await get<CommentDataType>(
+        `/api/comments/post/${postId}`
+      );
+      setContent(responseData.data);
+    };
+    fetchData();
   }, [postId]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/comments/comment/${commentId}`)
-      .then((res) => {
-        const data = res.data;
-        setId(data);
-      });
+    const fetchData = async () => {
+      const responseData = await get<CommentDataList>(
+        `/api/comments/comment/${commentId}`
+      );
+      setId(responseData.data);
+      console.log(responseData.data);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -71,10 +74,7 @@ const ModifiedComment = ({
         author: Id[0].author,
       };
 
-      await axios.patch(
-        `${process.env.REACT_APP_API_URL}/api/comments/${postId}`,
-        commentData
-      );
+      await patch<CommentDataType>(`/api/comments/${postId}`, commentData);
       closeModal(true);
 
       alert('댓글 수정이 완료되었습니다.');

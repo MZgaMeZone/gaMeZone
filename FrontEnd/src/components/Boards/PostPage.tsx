@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import CommentComponent from '../Comments/CommentComponent';
 import DeletePost from './DeletePostComponent';
-import { CategoryType, PostType } from '../../types/CommunityType';
+import { CategoryType, PostType } from '../../types/communityType';
 import { dateFormatter } from '../../utils/dateUtil';
 
 import exitImg from '../../style/icons/x-solid.svg';
@@ -25,8 +25,6 @@ const PostPage = ({ boardCategory }: CategoryType) => {
   const [category, setCategory] = useState<string>('');
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   const navigate = useNavigate();
-
-  console.log(boardCategory);
 
   if (userToken) {
     axios.get(url + '/api/users', config).then((res) => {

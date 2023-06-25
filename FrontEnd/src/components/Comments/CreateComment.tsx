@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
-import { CreateCommentProps } from '../../types/CommentType';
-
-const url = process.env.REACT_APP_API_URL;
-const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-};
+import { get, post } from '../../api/api';
+import UserDataType from '../../types/userType';
+import { CreateCommentProps } from '../../types/commentType';
 
 const CreateComment = ({ postId, closeModal }: CreateCommentProps) => {
   const location = useLocation();
@@ -20,9 +13,11 @@ const CreateComment = ({ postId, closeModal }: CreateCommentProps) => {
   const [userEmail, setUserEmail] = useState<string>('');
 
   useEffect(() => {
-    axios.get(url + '/api/users', config).then((res) => {
-      setUserEmail(res.data.email);
-    });
+    const fetchData = async () => {
+      const responseData = await get<UserDataType>('/api/users');
+      setUserEmail(responseData.data.email);
+    };
+    fetchData();
   }, []);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,7 +37,7 @@ const CreateComment = ({ postId, closeModal }: CreateCommentProps) => {
         post: postId,
       };
 
-      axios.post(`${process.env.REACT_APP_API_URL}/api/comments`, commentData);
+      await post('/api/comments', commentData);
       closeModal(true);
 
       alert('댓글 작성이 완료되었습니다.');

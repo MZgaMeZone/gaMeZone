@@ -9,7 +9,7 @@ import {
   CategoryType,
   PostType,
   PostListType,
-} from '../../types/CommunityType';
+} from '../../types/communityType';
 
 const userToken: string | null = localStorage.getItem('userToken');
 
