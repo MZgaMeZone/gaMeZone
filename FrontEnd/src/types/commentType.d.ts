@@ -2,6 +2,7 @@ export interface CommentDataType {
   _id: string;
   content: string;
   author: {
+    _id: string;
     nickname: string;
     email?: string;
   };
