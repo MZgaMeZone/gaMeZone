@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { get } from '../../api/api';
-import { CommentListProps } from '../../types/CommentType';
+import { CommentListProps } from '../../types/commentType';
+import UserDataType from '../../types/userType';
 import ModifiedComment from './PatchComment';
 import DeleteComment from './DeleteComment';
 import { dateFormatter } from '../../utils/dateUtil';
@@ -13,8 +14,8 @@ const CommentList = ({ comment, postId }: CommentListProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const responseData = await get<any>('/api/users');
-      setUserEmail(responseData.email);
+      const responseData = await get<UserDataType>('/api/users');
+      setUserEmail(responseData.data.email);
     };
     fetchData();
   }, []);

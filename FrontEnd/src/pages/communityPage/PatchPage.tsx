@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import { PostType, PostData } from '../../types/CommunityType';
+import { PostType, PostData } from '../../types/communityType';
 
 const ModifiedPost = () => {
   const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화

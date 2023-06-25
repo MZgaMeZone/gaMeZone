@@ -8,7 +8,7 @@ import {
   CommentDataType,
   CommentListType,
   CommentProps,
-} from '../../types/CommentType';
+} from '../../types/commentType';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 
@@ -20,8 +20,10 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const responseData = await get<any>(`/api/comments/post/${postId}`);
-      setComments(responseData);
+      const responseData = await get<CommentListType>(
+        `/api/comments/post/${postId}`
+      );
+      setComments(responseData.data);
     };
     fetchData();
   }, []);

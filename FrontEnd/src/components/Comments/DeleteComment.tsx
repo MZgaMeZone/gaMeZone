@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { del } from '../../api/api';
-import { CommentIdType } from '../../types/CommentType';
+import { CommentIdType } from '../../types/commentType';
 
 const DeleteComment = ({ commentId }: CommentIdType) => {
   const clickHandler = async () => {

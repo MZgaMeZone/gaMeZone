@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import CommentComponent from '../Comments/CommentComponent';
 import DeletePost from './DeletePostComponent';
-import { CategoryType, PostType } from '../../types/CommunityType';
+import { CategoryType, PostType } from '../../types/communityType';
 import { dateFormatter } from '../../utils/dateUtil';
 
 import exitImg from '../../style/icons/x-solid.svg';
