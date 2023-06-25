@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import styled from 'styled-components';
 
+import { get } from '../../api/api';
 import Pagination from '../../utils/Pagination';
 import { dateFormatter } from '../../utils/dateUtil';
 import {
@@ -20,20 +20,17 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
-    // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
-    if (boardCategory === 'freeboard') {
-      axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
-        const data = res.data.reverse();
-        setPosts(data);
-      });
-    } else {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/posts/cert`)
-        .then((res) => {
-          const data = res.data.reverse();
-          setPosts(data);
-        });
-    }
+    const fetchData = async () => {
+      if (boardCategory === 'freeboard') {
+        const responseData = await get<PostListType>('/api/posts');
+        // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
+        setPosts(responseData.data.reverse());
+      } else {
+        const responseData = await get<PostListType>('/api/posts/cert');
+        setPosts(responseData.data.reverse());
+      }
+    };
+    fetchData();
   }, []);
 
   const indexOfLastPost = currentPage * postsPerPage;
