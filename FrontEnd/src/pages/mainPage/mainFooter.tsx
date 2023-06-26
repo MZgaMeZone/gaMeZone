@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { MainBodyProps } from '../../types/mainType';
+import { FooterBar, StartButton, Clock, SubButton } from './mainStyle';
 
 function MainFooter(props: MainBodyProps) {
   const mainModal = props.mainModal;
@@ -98,72 +97,3 @@ function MainFooter(props: MainBodyProps) {
   );
 }
 export default MainFooter;
-
-const FooterBar = styled.div`
-  background-color: #c0c0c0;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  white-space: nowrap;
-  height: 5rem;
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
-  background: #c0c0c0;
-  border-top: #e0e0e0 solid 2px;
-  box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
-`;
-
-const StartButton = styled.button`
-  margin: 0.3rem 1rem 0.3rem 0.6rem;
-  width: 18rem;
-  height: 3.8rem;
-  background: #c0c0c0;
-  border: #e0e0e0 solid 2px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
-  text-align: center;
-  color: #242424;
-  font-size: 2.5rem;
-  padding-top: 0.6rem;
-  &:active {
-    background-color: #d9d9d9;
-    border: #e0e0e0 solid 2px;
-    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
-  }
-`;
-
-const Clock = styled.div`
-  height: 3.5rem;
-  font-size: 2.6rem;
-  margin-left: auto;
-  margin-right: 0.4rem;
-  text-align: center;
-  padding: 1rem 1rem 0 1rem;
-  white-space: nowrap;
-  width: fit-content;
-  height: 3.8rem;
-  box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.6);
-  border: #e0e0e0 solid 2px;
-  background: #d9d9d9;
-  color: #242424;
-  background-color: #e9e9e9;
-`;
-
-const SubButton = styled(Link)`
-  margin: 0.4rem;
-  border-radius: 0;
-  font-size: 3rem;
-  border: 1px none;
-  width: 20rem;
-  height: 3.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e9e9e9;
-  box-shadow: 1px 1px 1px rgb(55, 55, 55);
-  &:active {
-    background-color: #d9d9d9;
-    border: #e0e0e0 solid 2px;
-    box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
-  }
-`;
