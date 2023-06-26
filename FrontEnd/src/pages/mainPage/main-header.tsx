@@ -2,16 +2,7 @@ import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import Tracker from '../../components/Tools/countingToday';
-
-interface HitGame {
-  name: string;
-  url: string;
-  img: string;
-}
-
-interface MainHeaderProps {
-  hitGameList: HitGame[];
-}
+import { HitGame, MainHeaderProps } from '../../types/mainType';
 
 const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
   const navigate = useNavigate();
@@ -44,10 +35,13 @@ const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
           {hitGameList &&
             //hitGame은 최대 5개까지 출력함.
             hitGameList.slice(0, 5).map((item: HitGame, index: number) => (
-              <HitGame key={index} onClick={() => handleGameClick(item.url)}>
+              <HitGameButton
+                key={index}
+                onClick={() => handleGameClick(item.url)}
+              >
                 <GameImage src={item.img} alt={item.name} />
                 <span>{item.name}</span>
-              </HitGame>
+              </HitGameButton>
             ))}
         </ul>
       </HitGameBox>
@@ -69,7 +63,7 @@ const HitGameBox = styled.div`
   width: fit-content;
   height: 600px;
 `;
-const HitGame = styled.button`
+const HitGameButton = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
