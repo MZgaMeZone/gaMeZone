@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -11,30 +10,30 @@ import {
   PostType,
   PostListType,
 } from '../../types/communityType';
-import Pagination from './Pagination';
 
 const userToken: string | null = localStorage.getItem('userToken');
 
-interface postType {
-  _id: string;
-  title: string;
-  author: { nickname: string };
-  category: string;
-  createdAt: string;
-}
-
-const NoticeComponent = () => {
+const NoticeComponent = ({ boardCategory }: CategoryType) => {
   const nav = useNavigate();
-  const [posts, setPosts] = useState<postType[]>([]);
+  const [posts, setPosts] = useState<PostListType>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
     // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
-    axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
-      const data = res.data.reverse();
-      setPosts(data);
-    });
+    if (boardCategory === 'freeboard') {
+      axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
+        const data = res.data.reverse();
+        setPosts(data);
+      });
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/api/posts/cert`)
+        .then((res) => {
+          const data = res.data.reverse();
+          setPosts(data);
+        });
+    }
   }, []);
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -49,7 +48,11 @@ const NoticeComponent = () => {
           {userToken && (
             <WriteButton
               onClick={() => {
-                nav('/community/write');
+                if (boardCategory === 'freeboard') {
+                  nav('/community/write');
+                } else {
+                  nav('/community/certified/write');
+                }
               }}
             >
               글쓰기
@@ -57,17 +60,23 @@ const NoticeComponent = () => {
           )}
         </TopContainer>
         <PostContainer>
-          {currentPosts.map((post: postType, index: number) => (
+          {currentPosts.map((post: PostType, index: number) => (
             <PostItem
               key={post._id}
-              onClick={() => nav(`/community/${post._id}`)}
+              onClick={() => {
+                if (boardCategory === 'freeboard') {
+                  nav(`/community/${post._id}`);
+                } else {
+                  nav(`/community/certified/${post._id}`);
+                }
+              }}
             >
               <PostItemHeader>
                 <PostItemNumber>{posts.length - index}</PostItemNumber>
                 <PostItemTitle>{post.title}</PostItemTitle>
                 <PostItemInfo>
                   <PostDate>
-                    {moment(post.createdAt).format('YYYY-MM-DD')}
+                    {dateFormatter(post.createdAt, 'YYYY-MM-DD')}
                   </PostDate>
                   <PostUser>{post.author.nickname}</PostUser>
                 </PostItemInfo>
@@ -81,7 +90,7 @@ const NoticeComponent = () => {
         totalPosts={posts.length}
         currentPage={currentPage}
         paginate={paginate}
-      ></Pagination>
+      />
     </NoticeSection>
   );
 };
