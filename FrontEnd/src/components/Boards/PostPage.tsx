@@ -2,22 +2,15 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
+import { get } from '../../api/api';
 import CommentComponent from '../Comments/CommentComponent';
 import DeletePost from './DeletePostComponent';
-import { CategoryType, PostType } from '../../types/CommunityType';
+import UserDataType from '../../types/userType';
+import { CategoryType, PostType } from '../../types/communityType';
 import { dateFormatter } from '../../utils/dateUtil';
 
 import exitImg from '../../style/icons/x-solid.svg';
-
-const url = process.env.REACT_APP_API_URL;
-const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-    Authorization: `Bearer ${userToken}`,
-  },
-};
 
 const PostPage = ({ boardCategory }: CategoryType) => {
   const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
@@ -26,31 +19,21 @@ const PostPage = ({ boardCategory }: CategoryType) => {
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   const navigate = useNavigate();
 
-  console.log(boardCategory);
-
-  if (userToken) {
-    axios.get(url + '/api/users', config).then((res) => {
-      setUserEmail(res.data.email);
-    });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await get<UserDataType>('/api/users');
+      setUserEmail(responseData.data.email);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
-    if (boardCategory === 'freeboard') {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
-        .then((res) => {
-          const data = res.data;
-          setPost(data);
-        });
-    } else {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
-        .then((res) => {
-          const data = res.data;
-          setPost(data);
-        });
-    }
-  }, []);
+    const fetchData = async () => {
+      const responseData = await get<PostType>(`/api/posts/post/${postId}`);
+      setPost(responseData.data);
+    };
+    fetchData();
+  });
 
   useEffect(() => {
     if (post !== null && post !== undefined) {

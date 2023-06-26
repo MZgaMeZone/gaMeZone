@@ -10,8 +10,8 @@ import DefaultPage from '../../components/Games/defaultPage';
 import axios from 'axios';
 import exitImg from '../../style/icons/x-solid.svg';
 import gameFavicon from '../../style/icons/game_favicon.svg';
-import MainBody from '../mainPage/main-body';
-import MainFooter from '../mainPage/main-footer';
+import MainBody from '../mainPage/mainBody';
+import MainFooter from '../mainPage/mainFooter';
 import { fontFamily } from '@mui/system';
 
 const GameLayout = () => {

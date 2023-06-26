@@ -5,14 +5,14 @@ import '../../style/reset.css';
 import '../../style/mypage.css';
 import axios from 'axios';
 
-import Footer from '../mainPage/main-footer';
+import Footer from '../mainPage/mainFooter';
 import Container from './components/container';
 import Profile from './components/profile';
 import UserInfo from './components/userInfo';
 import UserCommu from './components/userCommu';
-import MainBody from '../mainPage/main-body';
-import MainFooter from '../mainPage/main-footer';
-import MainHeader from '../mainPage/main-header';
+import MainBody from '../mainPage/mainBody';
+import MainFooter from '../mainPage/mainFooter';
+import MainHeader from '../mainPage/mainHeader';
 
 const url = process.env.REACT_APP_API_URL;
 const userToken: string | null = localStorage.getItem('userToken');

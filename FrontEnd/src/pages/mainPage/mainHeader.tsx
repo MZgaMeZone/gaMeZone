@@ -1,17 +1,8 @@
 import React from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Tracker from '../../components/Tools/countingToday';
-
-interface HitGame {
-  name: string;
-  url: string;
-  img: string;
-}
-
-interface MainHeaderProps {
-  hitGameList: HitGame[];
-}
+import { HitGame, MainHeaderProps } from '../../types/mainType';
+import { HitGameBox, HitGameButton, GameImage } from './mainStyle';
 
 const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
   const navigate = useNavigate();
@@ -44,10 +35,13 @@ const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
           {hitGameList &&
             //hitGame은 최대 5개까지 출력함.
             hitGameList.slice(0, 5).map((item: HitGame, index: number) => (
-              <HitGame key={index} onClick={() => handleGameClick(item.url)}>
+              <HitGameButton
+                key={index}
+                onClick={() => handleGameClick(item.url)}
+              >
                 <GameImage src={item.img} alt={item.name} />
                 <span>{item.name}</span>
-              </HitGame>
+              </HitGameButton>
             ))}
         </ul>
       </HitGameBox>
@@ -56,33 +50,3 @@ const MainHeader: React.FC<MainHeaderProps> = ({ hitGameList }) => {
 };
 
 export default MainHeader;
-
-const HitGameBox = styled.div`
-  display: flex;
-  position: fixed;
-  top: 45px;
-  justify-content: flex-end;
-  // background-color: beige;
-  // margin-top: 7rem;
-  margin-right: 2rem;
-  // align-items: center;
-  width: fit-content;
-  height: 600px;
-`;
-const HitGame = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem 1rem;
-  justify-content: center;
-  padding: 1rem 1.5rem;
-  background-color: white;
-  border-radius: 20px;
-  width: 15rem;
-  height: 15rem;
-`;
-const GameImage = styled.img`
-  width: 100%;
-  height: auto;
-  // overflow: hidden;
-`;

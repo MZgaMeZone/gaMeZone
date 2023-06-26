@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
-import { PostType, PostData } from '../../types/CommunityType';
+import { get, patch } from '../../api/api';
+import { PostType, PostData } from '../../types/communityType';
 
 const ModifiedPost = () => {
   const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
@@ -16,11 +16,11 @@ const ModifiedPost = () => {
 
   //post 데이터 불러오기
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
-      .then((res) => {
-        setPost(res.data);
-      });
+    const fetchData = async () => {
+      const responseData = await get<PostType>(`/api/posts/post/${postId}`);
+      setPost(responseData.data);
+    };
+    fetchData();
   }, [postId]);
 
   //수정 시 default 값이 수정 전 데이터가 되도록 구현
@@ -48,7 +48,7 @@ const ModifiedPost = () => {
     });
   };
 
-  const handleFormSubmit = async (e: any) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (data.title.trim() === '') {
@@ -68,10 +68,7 @@ const ModifiedPost = () => {
         author: post.author._id,
       };
 
-      await axios.patch(
-        `${process.env.REACT_APP_API_URL}/api/posts/${postId}`,
-        postData
-      );
+      await patch(`/api/posts/${postId}`, postData);
 
       alert('게시물 수정이 완료되었습니다.');
       if (post.category === 'free') {
