@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { MainBodyProps } from '../../types/mainType';
 
-function MainFooter(props: any) {
+function MainFooter(props: MainBodyProps) {
   const mainModal = props.mainModal;
   const setMainModal = props.setMainModal;
   const [timer, setTimer] = React.useState('');
