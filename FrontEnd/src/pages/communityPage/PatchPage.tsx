@@ -1,38 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import styled from "styled-components";
-import axios from 'axios';
+import styled from 'styled-components';
 
-interface postsType {
-    _id: string;
-    title: string;
-    content: string;
-    category: string;
-    author: { nickname: string, _id: string};
-    createdAt: string;
-  }
-
-interface postData {
-  title: string,
-  content: string,
-}
+import { get, patch } from '../../api/api';
+import { PostType, PostData } from '../../types/communityType';
 
 const ModifiedPost = () => {
-  const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
-  const [data, setData] = useState<postData>({
-    title: "",
-    content: "",
+  const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
+  const [data, setData] = useState<PostData>({
+    title: '',
+    content: '',
   });
   const navigate = useNavigate();
-  const {postId} = useParams<{ postId: string }>();
+  const { postId } = useParams<{ postId: string }>();
 
   //post 데이터 불러오기
   useEffect(() => {
-    axios
-    .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
-    .then((res) => {
-      setPost(res.data);
-    });
+    const fetchData = async () => {
+      const responseData = await get<PostType>(`/api/posts/post/${postId}`);
+      setPost(responseData.data);
+    };
+    fetchData();
   }, [postId]);
 
   //수정 시 default 값이 수정 전 데이터가 되도록 구현
@@ -48,18 +36,19 @@ const ModifiedPost = () => {
 
   if (!post) {
     return null;
-  }; 
+  }
 
-  const dataChange = ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name, value} = e.target;
+  const dataChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
     setData({
       ...data,
-      [name]: value
-    })
-  })
-  
+      [name]: value,
+    });
+  };
 
-  const handleFormSubmit = async (e:any) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (data.title.trim() === '') {
@@ -76,16 +65,16 @@ const ModifiedPost = () => {
       const postData = {
         title: data.title,
         content: data.content,
-        author: post.author._id
+        author: post.author._id,
       };
 
-      await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, postData);
+      await patch(`/api/posts/${postId}`, postData);
 
       alert('게시물 수정이 완료되었습니다.');
-      if (post.category === "free") {
-        navigate(`/community/${postId}`)
+      if (post.category === 'free') {
+        navigate(`/community/${postId}`);
       } else {
-        navigate(`/community/certified/${postId}`)
+        navigate(`/community/certified/${postId}`);
       }
     } catch (error) {
       console.error(error);
@@ -99,18 +88,30 @@ const ModifiedPost = () => {
       <PostForm onSubmit={handleFormSubmit}>
         <TitleForm>
           <TitleLabel>제목</TitleLabel>
-          <TitleInput type="text" name="title" value={data.title} onChange={dataChange} />
+          <TitleInput
+            type="text"
+            name="title"
+            value={data.title}
+            onChange={dataChange}
+          />
         </TitleForm>
         <MainForm>
           <MainLabel>내용</MainLabel>
-          <MainInput name="content" value={data.content} onChange={dataChange} />
+          <MainInput
+            name="content"
+            value={data.content}
+            onChange={dataChange}
+          />
         </MainForm>
         <PostFooter>
-          {post.category === "free" ? <GoBack to="/community">뒤로 가기</GoBack> : <GoBack to="/community/certified">뒤로 가기</GoBack>}
+          {post.category === 'free' ? (
+            <GoBack to="/community">뒤로 가기</GoBack>
+          ) : (
+            <GoBack to="/community/certified">뒤로 가기</GoBack>
+          )}
           <PostButton type="submit">작성 완료</PostButton>
         </PostFooter>
       </PostForm>
-      
     </PostSection>
   );
 };
@@ -128,7 +129,7 @@ const PostSection = styled.div`
   border: 1px solid #000000;
   box-shadow: 3px 3px 4px #1c1c1c;
   padding: 0.5rem 0;
-`
+`;
 
 const PostHeader = styled.div`
   margin: 1rem;
@@ -136,7 +137,7 @@ const PostHeader = styled.div`
   background-color: var(--color--header);
   color: white;
   font-size: 2rem;
-`
+`;
 
 const PostForm = styled.form`
   display: flex;
@@ -144,51 +145,50 @@ const PostForm = styled.form`
   align-items: center;
   margin: 1rem;
   background-color: white;
-  
-`
+`;
 
 const TitleForm = styled.div`
   padding: 1.5rem;
   display: flex;
   align-items: center;
-`
+`;
 
 const TitleLabel = styled.p`
   margin-right: 3rem;
   font-size: 2rem;
-`
+`;
 
 const TitleInput = styled.input`
   width: 50.6rem;
   height: 4rem;
   font-size: 2rem;
   border: 1px solid black;
-`
+`;
 
 const MainForm = styled.div`
   padding-bottom: 1.5rem;
   display: flex;
   align-items: center;
-`
+`;
 
 const MainLabel = styled.p`
   margin-right: 3rem;
   font-size: 2rem;
-`
+`;
 
 const MainInput = styled.textarea`
   width: 50rem;
   height: 44rem;
   font-size: 2rem;
   border: 1px solid black;
-`
+`;
 
 const PostFooter = styled.div`
   display: flex;
   width: 120rem;
   justify-content: space-between;
   align-items: end;
-`
+`;
 
 const PostButton = styled.button`
   margin: 4rem 0 1rem;
@@ -200,10 +200,10 @@ const PostButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
 
-  &:active{
+  &:active {
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`
+`;
 
 const GoBack = styled(Link)`
   margin: 4rem 0 1rem;
@@ -213,4 +213,4 @@ const GoBack = styled(Link)`
   &:hover {
     color: blue;
   }
-`
+`;

@@ -65,7 +65,10 @@ class GameModel {
   }
   async findGamesByCategory(data) {
     try {
-      const games = await Game.find({ gameCategory: data }).exec();
+      const games = await Game.find(
+        { gameCategory: data },
+        { __v: 0, updatedAt: 0 }
+      ).exec();
       return games;
     } catch (error) {
       console.error("게임 데이터 검색 실패:", error);

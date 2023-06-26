@@ -59,7 +59,7 @@ class CategoryModel {
   }
   async findAllCategory() {
     // 모든 카테고리 검색
-    const allCategory = await Category.find({});
+    const allCategory = await Category.find({}, { _id: 1, categoryName: 1 });
     return allCategory;
   }
 }

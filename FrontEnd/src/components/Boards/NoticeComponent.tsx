@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import moment from 'moment';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Pagination from './Pagination';
+import { get } from '../../api/api';
+import Pagination from '../../utils/Pagination';
+import { dateFormatter } from '../../utils/dateUtil';
+import {
+  CategoryType,
+  PostType,
+  PostListType,
+} from '../../types/communityType';
 
 const userToken: string | null = localStorage.getItem('userToken');
 
-interface postType {
-  _id: string;
-  title: string;
-  author: { nickname: string };
-  category: string;
-  createdAt: string;
-}
-
-const NoticeComponent = () => {
+const NoticeComponent = ({ boardCategory }: CategoryType) => {
   const nav = useNavigate();
-  const [posts, setPosts] = useState<postType[]>([]);
+  const [posts, setPosts] = useState<PostListType>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   useEffect(() => {
-      // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
-    axios.get(`${process.env.REACT_APP_API_URL}/api/posts`).then((res) => {
-      const data = res.data.reverse();
-      setPosts(data);
-    });
+    const fetchData = async () => {
+      if (boardCategory === 'freeboard') {
+        const responseData = await get<PostListType>('/api/posts');
+        // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
+        setPosts(responseData.data.reverse());
+      } else {
+        const responseData = await get<PostListType>('/api/posts/cert');
+        setPosts(responseData.data.reverse());
+      }
+    };
+    fetchData();
   }, []);
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -39,26 +42,38 @@ const NoticeComponent = () => {
     <NoticeSection>
       <div>
         <TopContainer>
-          {userToken && <WriteButton
-            onClick={() => {
-              nav('/community/write');
-            }}
-          >
-            글쓰기
-          </WriteButton>}
+          {userToken && (
+            <WriteButton
+              onClick={() => {
+                if (boardCategory === 'freeboard') {
+                  nav('/community/write');
+                } else {
+                  nav('/community/certified/write');
+                }
+              }}
+            >
+              글쓰기
+            </WriteButton>
+          )}
         </TopContainer>
         <PostContainer>
-          {currentPosts.map((post: postType, index: number) => (
+          {currentPosts.map((post: PostType, index: number) => (
             <PostItem
               key={post._id}
-              onClick={() => nav(`/community/${post._id}`)}
+              onClick={() => {
+                if (boardCategory === 'freeboard') {
+                  nav(`/community/${post._id}`);
+                } else {
+                  nav(`/community/certified/${post._id}`);
+                }
+              }}
             >
               <PostItemHeader>
                 <PostItemNumber>{posts.length - index}</PostItemNumber>
                 <PostItemTitle>{post.title}</PostItemTitle>
                 <PostItemInfo>
                   <PostDate>
-                    {moment(post.createdAt).format('YYYY-MM-DD')}
+                    {dateFormatter(post.createdAt, 'YYYY-MM-DD')}
                   </PostDate>
                   <PostUser>{post.author.nickname}</PostUser>
                 </PostItemInfo>
@@ -72,7 +87,7 @@ const NoticeComponent = () => {
         totalPosts={posts.length}
         currentPage={currentPage}
         paginate={paginate}
-      ></Pagination>
+      />
     </NoticeSection>
   );
 };

@@ -1,72 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import moment from 'moment';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
+import { get } from '../../api/api';
 import CommentComponent from '../Comments/CommentComponent';
 import DeletePost from './DeletePostComponent';
+import UserDataType from '../../types/userType';
+import { CategoryType, PostType } from '../../types/communityType';
+import { dateFormatter } from '../../utils/dateUtil';
 
-import exitImg from "../../style/icons/x-solid.svg";
+import exitImg from '../../style/icons/x-solid.svg';
 
-const url = process.env.REACT_APP_API_URL;
-const userToken: string | null = localStorage.getItem('userToken');
-const config = {
-  headers: {
-  Authorization: `Bearer ${userToken}`,
-  },
-};
-
-interface postsType {
-  _id: string;
-  title: string;
-  content: string;
-  category: string;
-  author: { nickname: string, email: string };
-  createdAt: string;
-}
-
-const PostPage = () => {
-  const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
-  const [userEmail, setUserEmail] = useState<string>("");
-  const [category, setCategory] = useState<string>("")
+const PostPage = ({ boardCategory }: CategoryType) => {
+  const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
   const { postId } = useParams<{ postId: string }>(); // postId를 string으로 받아옴
   const navigate = useNavigate();
 
-  if (userToken) {
-    axios.get(url + '/api/users', config).then((res) => {
-      setUserEmail(res.data.email);
-    });
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await get<UserDataType>('/api/users');
+      setUserEmail(responseData.data.email);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
-    axios
-    .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
-    .then((res) => {
-      const data = res.data;
-      setPost(data);
-    });
-  }, []);
+    const fetchData = async () => {
+      const responseData = await get<PostType>(`/api/posts/post/${postId}`);
+      setPost(responseData.data);
+    };
+    fetchData();
+  });
 
   useEffect(() => {
     if (post !== null && post !== undefined) {
       setCategory(post.category);
     }
-  }, [post])
+  }, [post]);
 
-  if (!post) {
+  if (!post || !postId) {
     // postId에 해당하는 데이터가 없을 경우에 대한 처리
     return <div>게시물을 찾을 수 없습니다.</div>;
   }
 
   const clickHandler = () => {
     navigate(`/community/${postId}/modified`);
-  }
+  };
 
   const exitHandler = () => {
-    navigate("/");
-  }
+    navigate('/');
+  };
 
   return (
     <CommunitySection>
@@ -74,37 +60,56 @@ const PostPage = () => {
         <CommunityHeader>
           커뮤니티
           <ExitButton onClick={exitHandler}>
-          <ExitImage src={exitImg} alt="exitImg" />
+            <ExitImage src={exitImg} alt="exitImg" />
           </ExitButton>
         </CommunityHeader>
         <CommunityBody>
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>
-            <CurrentLink to="/community">자유게시판</CurrentLink>
-            <CommunityLink to="/community/certified">인증게시판</CommunityLink>
+            {boardCategory === 'freeboard' ? (
+              <>
+                <CurrentLink to="/community">자유게시판</CurrentLink>
+                <CommunityLink to="/community/certified">
+                  인증게시판
+                </CommunityLink>
+              </>
+            ) : (
+              <>
+                <CommunityLink to="/community">자유게시판</CommunityLink>
+                <CurrentLink to="/community/certified">인증게시판</CurrentLink>
+              </>
+            )}
           </Header>
           <Body>
             <TitleContainer>
               <Title>{post.title}</Title>
               <AuthorContainer>
                 <Author>{post.author.nickname}</Author>
-                <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}</Date>
+                <Date>
+                  {dateFormatter(post.createdAt, 'YYYY-MM-DD HH:mm:ss')}
+                </Date>
               </AuthorContainer>
             </TitleContainer>
             <ScrollContainer>
               <Post>
-                {userEmail === post.author.email && 
-                <ButtonContainer>
-                  <ModifiedButton onClick={clickHandler}>수정하기</ModifiedButton>
-                  <DeletePost postId={postId}/>
-                </ButtonContainer>
-                }
-                <MainText>{post.content.split("\n").map((item, index) => {
-                  return <Text key={index}>{item}</Text>
-                })}</MainText>
+                {userEmail === post.author.email && (
+                  <ButtonContainer>
+                    <ModifiedButton onClick={clickHandler}>
+                      수정하기
+                    </ModifiedButton>
+                    <DeletePost postId={postId} boardCategory={boardCategory} />
+                  </ButtonContainer>
+                )}
+                <MainText>
+                  {post.content
+                    ? post.content.split('\n').map((item, index) => {
+                        return <Text key={index}>{item}</Text>;
+                      })
+                    : ''}
+                </MainText>
               </Post>
             </ScrollContainer>
-            <CommentComponent postId={postId} category={category}/>
+            <CommentComponent postId={postId} category={category} />
           </Body>
         </CommunityBody>
       </CommunityContainer>
@@ -150,7 +155,7 @@ const ExitButton = styled.div`
   box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
     inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   cursor: pointer;
-`
+`;
 
 const ExitImage = styled.img`
   width: 65%;
@@ -158,7 +163,7 @@ const ExitImage = styled.img`
   display: flex;
   margin: 0.6rem auto;
   padding-bottom: 0.3rem;
-`
+`;
 
 const CommunityBody = styled.div`
   margin: 1rem;
@@ -214,13 +219,12 @@ const ScrollContainer = styled.div`
     border: 3px solid #ebeded;
     background: silver;
     box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
-    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
-      
+      inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
   }
   &::-webkit-scrollbar-track {
     background: #ebeded;
   }
-`
+`;
 
 const Post = styled.div`
   display: flex;
@@ -262,15 +266,15 @@ const MainText = styled.div`
 
 const Text = styled.p`
   margin-bottom: 0.4rem;
-`
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
   align-self: end;
   margin-top: 1rem;
-`
+`;
 
-const ModifiedButton   = styled.button`
+const ModifiedButton = styled.button`
   margin: 0;
   height: 3rem;
   background: #d9d9d9;
@@ -281,4 +285,4 @@ const ModifiedButton   = styled.button`
   &:active {
     box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.6);
   }
-`
+`;

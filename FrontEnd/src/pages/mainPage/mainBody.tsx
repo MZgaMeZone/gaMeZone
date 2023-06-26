@@ -1,20 +1,20 @@
 import React from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import styles from '../../../src/style/admin.module.css';
 import exitImg from '../../style/icons/x-solid.svg';
 import axios from 'axios';
-import { stringify } from 'querystring';
-type MainBodyProps = {
-  mainModal: boolean;
-  setMainModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import {
+  MainBodyProps,
+  CategoryType,
+  GameListType,
+} from '../../types/mainType';
 
 function MainBody(props: MainBodyProps) {
   const mainModal = props.mainModal;
   const [categoryModal, setCategoryModal] = React.useState<boolean>(false);
-  const [categoryList, setCategoryList] = React.useState<any[]>([]);
-  const [gameList, setGameList] = React.useState<any[]>([]);
+  const [categoryList, setCategoryList] = React.useState<CategoryType[]>([]);
+  const [gameList, setGameList] = React.useState<GameListType[]>([]);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('');
   const [countVisitor, setCountVisitor] = React.useState<number>(0);
   // 방문자수 확인
@@ -44,7 +44,6 @@ function MainBody(props: MainBodyProps) {
         `${process.env.REACT_APP_API_URL}/api/games/categories/${item}` // 됨!
       );
       const gameData = response.data;
-      // console.log(gameData);
       setGameList(gameData);
     } catch (error) {
       console.error('게임 목록 요청 실패:', error);

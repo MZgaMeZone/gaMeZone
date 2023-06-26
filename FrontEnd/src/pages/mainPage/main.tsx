@@ -1,18 +1,15 @@
-import MainFooter from './main-footer';
-import MainHeader from './main-header';
-import MainBody from './main-body';
+import MainFooter from './mainFooter';
+import MainHeader from './mainHeader';
+import MainBody from './mainBody';
 import React from 'react';
-import axios from 'axios';
-import { useNavigate, NavLink } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
-import TimeStopGame from '../../components/Games/StopWatch/timeStop';
+import { HitGame } from '../../types/mainType';
 
 const Main = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);
 
   // 더미데이터------------------------------------------------------------
   // 현재는 수동으로 관리함.
-  const hitGameList: any[] = [
+  const hitGameList: HitGame[] = [
     {
       name: '고마오',
       url: 'default',
