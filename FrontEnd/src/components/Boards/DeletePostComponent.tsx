@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 
+import { del } from '../../api/api';
 import { PostDataProps } from '../../types/communityType';
 
 const DeletePost = ({ postId, boardCategory }: PostDataProps) => {
@@ -9,7 +9,7 @@ const DeletePost = ({ postId, boardCategory }: PostDataProps) => {
 
   const clickHandler = async () => {
     try {
-      axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`);
+      await del(`/api/posts/${postId}`);
       alert('게시물이 삭제되었습니다.');
       if (boardCategory === 'freeboard') {
         navigate('/community');

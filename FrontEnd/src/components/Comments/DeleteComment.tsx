@@ -6,7 +6,7 @@ import { CommentIdType } from '../../types/commentType';
 const DeleteComment = ({ commentId }: CommentIdType) => {
   const clickHandler = async () => {
     try {
-      del(`/api/comments/${commentId}`, {});
+      await del(`/api/comments/${commentId}`, {});
       alert('댓글이 삭제되었습니다.');
       window.location.reload();
     } catch (err) {
