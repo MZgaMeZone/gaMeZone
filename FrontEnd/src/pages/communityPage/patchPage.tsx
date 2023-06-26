@@ -1,63 +1,96 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
-import { get, post } from '../../api/api';
-import UserDataType from '../../types/userType';
-import { CategoryType } from '../../types/communityType';
+import { PostType, PostData } from '../../types/communityType';
+interface postsType {
+  _id: string;
+  title: string;
+  content: string;
+  category: string;
+  author: { nickname: string; _id: string };
+  createdAt: string;
+}
 
-import exitImg from '../../style/icons/x-solid.svg';
+interface postData {
+  title: string;
+  content: string;
+}
 
-const CreatePost = ({ boardCategory }: CategoryType) => {
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [userEmail, setUserEmail] = useState<string>('');
+const ModifiedPost = () => {
+  const [post, setPost] = useState<postsType | null>(null); // post 상태를 null로 초기화
+  const [data, setData] = useState<postData>({
+    title: '',
+    content: '',
+  });
   const navigate = useNavigate();
+  const { postId } = useParams<{ postId: string }>();
 
+  //post 데이터 불러오기
   useEffect(() => {
-    const fetchData = async () => {
-      const responseData = await get<UserDataType>('/api/users');
-      setUserEmail(responseData.data.email);
-    };
-    fetchData();
-  }, []);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/posts/post/${postId}`)
+      .then((res) => {
+        setPost(res.data);
+      });
+  }, [postId]);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+  //수정 시 default 값이 수정 전 데이터가 되도록 구현
+  useEffect(() => {
+    if (post) {
+      setData((prevData) => ({
+        ...prevData,
+        title: post.title,
+        content: post.content,
+      }));
+    }
+  }, [post]);
+
+  if (!post) {
+    return null;
+  }
+
+  const dataChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (title.trim() === '') {
+    if (data.title.trim() === '') {
       alert('제목을 입력해주세요');
       return;
     }
 
-    if (content.trim() === '') {
+    if (data.content.trim() === '') {
       alert('내용을 입력해주세요');
       return;
     }
 
     try {
       const postData = {
-        author: userEmail,
-        title: title,
-        content: content,
-        category: boardCategory === 'freeboard' ? 'free' : 'cert',
+        title: data.title,
+        content: data.content,
+        author: post.author._id,
       };
 
-      await post('/api/posts', postData);
+      await axios.patch(
+        `${process.env.REACT_APP_API_URL}/api/posts/${postId}`,
+        postData
+      );
 
-      alert('게시물이 작성되었습니다.');
-      if (boardCategory === 'freeboard') {
-        navigate('/community');
+      alert('게시물 수정이 완료되었습니다.');
+      if (post.category === 'free') {
+        navigate(`/community/${postId}`);
       } else {
-        navigate('/community/certified');
+        navigate(`/community/certified/${postId}`);
       }
     } catch (error) {
       console.error(error);
@@ -65,29 +98,33 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
     }
   };
 
-  const clickHandler = () => {
-    navigate('/');
-  };
-
   return (
     <PostSection>
-      <PostHeader>
-        게시물 작성
-        <ExitButton onClick={clickHandler}>
-          <ExitImage src={exitImg} alt="exitImg" />
-        </ExitButton>
-      </PostHeader>
+      <PostHeader>게시물 작성</PostHeader>
       <PostForm onSubmit={handleFormSubmit}>
         <TitleForm>
           <TitleLabel>제목</TitleLabel>
-          <TitleInput type="text" value={title} onChange={handleTitleChange} />
+          <TitleInput
+            type="text"
+            name="title"
+            value={data.title}
+            onChange={dataChange}
+          />
         </TitleForm>
         <MainForm>
           <MainLabel>내용</MainLabel>
-          <MainInput value={content} onChange={handleContentChange} />
+          <MainInput
+            name="content"
+            value={data.content}
+            onChange={dataChange}
+          />
         </MainForm>
         <PostFooter>
-          <GoBack to="/community">뒤로 가기</GoBack>
+          {post.category === 'free' ? (
+            <GoBack to="/community">뒤로 가기</GoBack>
+          ) : (
+            <GoBack to="/community/certified">뒤로 가기</GoBack>
+          )}
           <PostButton type="submit">작성 완료</PostButton>
         </PostFooter>
       </PostForm>
@@ -95,7 +132,7 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
   );
 };
 
-export default CreatePost;
+export default ModifiedPost;
 
 const PostSection = styled.div`
   background-color: var(--background--gray);
@@ -111,30 +148,11 @@ const PostSection = styled.div`
 `;
 
 const PostHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
   margin: 1rem;
   padding: 1rem;
   background-color: var(--color--header);
   color: white;
-  font-size: 2.6rem;
-`;
-const ExitButton = styled.div`
-  width: 3rem;
-  height: 3rem;
-  margin-right: 0.7rem;
-  background: #d9d9d9;
-  box-shadow: inset -0.1rem -0.1rem 0.3rem 0rem #000000,
-    inset 0.2rem 0.2rem 0.3rem 0rem #ffffffcc;
-  cursor: pointer;
-`;
-
-const ExitImage = styled.img`
-  width: 65%;
-  height: 65%;
-  display: flex;
-  margin: 0.6rem auto;
-  padding-bottom: 0.3rem;
+  font-size: 2rem;
 `;
 
 const PostForm = styled.form`
