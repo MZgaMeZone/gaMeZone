@@ -1,6 +1,6 @@
 import React from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Tracker from '../../components/Tools/countingToday';
 import { HitGame, MainHeaderProps } from '../../types/mainType';
 

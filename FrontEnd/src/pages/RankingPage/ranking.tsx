@@ -9,8 +9,8 @@ import starIcon from '../../style/icons/star.svg';
 import crownIcon from '../../style/icons/crown.svg';
 import heartIcon from '../../style/icons/heart.svg';
 import dropdownIcon from '../../style/icons/dropdown.svg';
-import MainBody from '../mainPage/main-body';
-import MainFooter from '../mainPage/main-footer';
+import MainBody from '../mainPage/mainBody';
+import MainFooter from '../mainPage/mainFooter';
 
 interface gameListType {
   _id?: string;

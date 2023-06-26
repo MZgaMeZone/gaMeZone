@@ -8,8 +8,8 @@ import CreateCertPost from './certBoard/CreateCertPost';
 import FreePost from './freeBoard/FreePost';
 import CertPost from './certBoard/CertPost';
 import ModifiedPost from './PatchPage';
-import MainBody from '../mainPage/main-body';
-import MainFooter from '../mainPage/main-footer';
+import MainBody from '../mainPage/mainBody';
+import MainFooter from '../mainPage/mainFooter';
 
 const Community = () => {
   const [mainModal, setMainModal] = React.useState<boolean>(false);

@@ -1,7 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import { useNavigate, NavLink } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { MainBodyProps } from '../../types/mainType';
 
