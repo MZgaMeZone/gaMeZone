@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import MainBody from '../mainPage/main-body';
-import MainFooter from '../mainPage/main-footer';
+import MainBody from '../mainPage/mainBody';
+import MainFooter from '../mainPage/mainFooter';
 
 const url = process.env.REACT_APP_API_URL;
 

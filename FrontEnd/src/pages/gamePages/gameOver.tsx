@@ -6,8 +6,8 @@ import '../../style/gameOver.css';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import gameoverBgImg from '../../style/icons/gameover-bg-img.svg';
-import MainBody from '../mainPage/main-body';
-import MainFooter from '../mainPage/main-footer';
+import MainBody from '../mainPage/mainBody';
+import MainFooter from '../mainPage/mainFooter';
 import { fontFamily } from '@mui/system';
 
 interface rankingDataType {
