@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import '../../style/gameLayout.css';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import GameLoading from '../../components/Games/GameLoading';
-import GameRanking from './gameRanking';
+import GameRanking from '../../components/Games/gameRanking';
 import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
 import DefaultPage from '../../components/Games/defaultPage';
