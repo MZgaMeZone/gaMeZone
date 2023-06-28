@@ -1,13 +1,11 @@
 import React from 'react';
-import { rankingDataType } from '../../pages/RankingPage/ranking';
+import { AllHonorsBoxProps } from '../../types/gameType';
 
-interface AllHonorsBox {
-  userData: rankingDataType;
-  index: number;
-  perGame: boolean;
-}
-
-const AllHonorsBox: React.FC<AllHonorsBox> = ({ userData, index, perGame }) => {
+const AllHonorsBox: React.FC<AllHonorsBoxProps> = ({
+  userData,
+  index,
+  perGame,
+}) => {
   return (
     <li key={userData.userNickname}>
       <div className="ranking-idx">

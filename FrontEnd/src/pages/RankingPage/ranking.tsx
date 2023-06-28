@@ -13,30 +13,24 @@ import Top3Box from '../../components/Honors/Top3Box';
 import AllHonorsBox from '../../components/Honors/AllHonorsBox';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
-
-interface gameListType {
-  _id?: string;
-  gameTitle: string;
-  gameOption?: string;
-  gameUrl?: string;
-}
-
-export interface rankingDataType {
-  gameId?: string;
-  userNickname?: string;
-  averageScore?: number;
-  highScore?: number;
-  score?: number;
-  userIcon?: string;
-}
+import { GameListType } from '../../types/mainType';
+import { RankingDataType } from '../../types/gameType';
 
 const Ranking = () => {
   const [showGameList, setShowGameList] = useState(false);
-  const [gameList, setGameList] = useState<gameListType[]>([]);
-  const [selectedGame, setSelectedGame] = useState<gameListType>({
-    gameTitle: '--- 게임을 선택해주세요 ---',
+  const [gameList, setGameList] = useState<GameListType[]>([]);
+  const [selectedGame, setSelectedGame] = useState<GameListType>({
+    _id: '',
+    gameCategory: [''],
+    gameDescription: '',
+    gameImageUrl: '',
+    gameManual: '',
+    gameOption: '',
+    gameServiceStatus: '',
+    gameTitle: '전체 랭킹',
+    gameUrl: '',
   });
-  const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
+  const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
   const [mainModal, setMainModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -57,10 +51,7 @@ const Ranking = () => {
   //선택한 게임의 랭킹데이터 저장
   useEffect(() => {
     //전체 랭킹 요청
-    if (
-      selectedGame.gameTitle === '--- 게임을 선택해주세요 ---' ||
-      selectedGame.gameTitle === '전체 랭킹'
-    ) {
+    if (!selectedGame || selectedGame.gameTitle === '전체 랭킹') {
       axios
         .get(`${process.env.REACT_APP_API_URL}/api/scores/honors`)
         .then((res) => {
@@ -114,7 +105,7 @@ const Ranking = () => {
                 setShowGameList(!showGameList);
               }}
             >
-              <p>{selectedGame.gameTitle}</p>
+              <p>{selectedGame && selectedGame.gameTitle}</p>
 
               <img
                 className="dropdownIcon"
@@ -152,7 +143,7 @@ const Ranking = () => {
               <ul>
                 {rankingData &&
                   (selectedGame.gameTitle === '전체 랭킹' ||
-                  selectedGame.gameTitle === '--- 게임을 선택해주세요 ---'
+                  selectedGame.gameTitle === ''
                     ? rankingData
                         .slice(0, 3)
                         .map((userData, index) => (
@@ -183,8 +174,9 @@ const Ranking = () => {
               </div>
             </div>
             {rankingData &&
+              selectedGame &&
               (selectedGame.gameTitle === '전체 랭킹' ||
-              selectedGame.gameTitle === '--- 게임을 선택해주세요 ---' ? (
+              selectedGame.gameTitle === '' ? (
                 <>
                   <div className="all-ranking-section-subtitle">
                     <div className="subtitle1">Ranking</div>

@@ -1,11 +1,5 @@
 import React from 'react';
-import { rankingDataType } from '../../pages/RankingPage/ranking';
-
-interface Top3BoxProps {
-  userData: rankingDataType;
-  index: number;
-  perGame: boolean;
-}
+import { Top3BoxProps } from '../../types/gameType';
 
 const Top3Box: React.FC<Top3BoxProps> = ({ userData, index, perGame }) => {
   return (
@@ -20,15 +14,17 @@ const Top3Box: React.FC<Top3BoxProps> = ({ userData, index, perGame }) => {
         />
       </div>
       <p className="userId">{userData.userNickname}</p>
-      {userData.score &&
-        (perGame ? (
-          <>
-            <p className="avg-score">{`AVG: ${userData.averageScore}`}</p>
-            <p className="high-score">{`HIGH: ${userData.highScore}`}</p>
-          </>
-        ) : (
-          <p className="avg-score">{`SCORE: ${userData.score}`}</p>
-        ))}
+      {perGame
+        ? userData.averageScore &&
+          userData.highScore && (
+            <>
+              <p className="avg-score">{`AVG: ${userData.averageScore}`}</p>
+              <p className="high-score">{`HIGH: ${userData.highScore}`}</p>
+            </>
+          )
+        : userData.score && (
+            <p className="avg-score">{`SCORE: ${userData.score}`}</p>
+          )}
     </li>
   );
 };
