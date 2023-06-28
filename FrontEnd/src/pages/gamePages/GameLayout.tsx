@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import '../../style/gameLayout.css';
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import GameLoading from '../../components/Games/GameLoading';
 import GameRanking from '../../components/Games/gameRanking';
 import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
 import DefaultPage from '../../components/Games/defaultPage';
 import axios from 'axios';
-import exitImg from '../../style/icons/x-solid.svg';
 import gameFavicon from '../../style/icons/game_favicon.svg';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
+import ContainerHeader from '../../components/Common/ContainerHeader';
 import { fontFamily } from '@mui/system';
 
 const GameLayout = () => {
@@ -22,7 +22,7 @@ const GameLayout = () => {
   const [gameName, setGameName] = useState<string>('');
   const [userNickname, setUserNickname] = useState<string | null>('');
   const [userRole, setUserRole] = useState<string | null>('');
-  const navigate = useNavigate();
+
   const { id } = useParams();
 
   //게임 props로 전달받은 게임 이름 설정(헤더 타이틀에 렌더링)
@@ -94,8 +94,6 @@ const GameLayout = () => {
         backgroundColor: '#008080',
         height: '100vh',
         width: '100vw',
-        // minHeight: '880px',
-        // minWidth: '900px',
         overflow: 'hidden',
       }}
     >
@@ -104,20 +102,7 @@ const GameLayout = () => {
       ) : (
         <div className="game-body">
           <div className="game-container">
-            <div className="game-container-header">
-              <div className="game-container-header-title">
-                <img src={gameFavicon} alt="gameFavicon" />
-                <p>{gameName}</p>
-              </div>
-              <div
-                className="exit-button"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                <img src={exitImg} alt="exitImg" />
-              </div>
-            </div>
+            <ContainerHeader favicon={gameFavicon} title={gameName} />
             <nav id="game-container-nav">
               <p
                 onClick={() => {
