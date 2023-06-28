@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 import '../../style/gameOver.css';
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import gameoverBgImg from '../../style/icons/gameover-bg-img.svg';
 import MainBody from '../mainPage/mainBody';
@@ -13,12 +13,9 @@ import { fontFamily } from '@mui/system';
 
 const GameOver = () => {
   const [mainModal, setMainModal] = useState<boolean>(false);
-  const [gameName, setGameName] = useState<string>('');
   const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
-  const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state;
 
   //recorder에서 유저의 이번 회차 점수 데이터도 같이 받아옴.
   const { gameId, userNickName, userAverageScore, userHighScore } =
@@ -31,11 +28,9 @@ const GameOver = () => {
       )
       .then((res) => {
         setRankingData(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(rankingData);
   return (
     <div
       style={{
