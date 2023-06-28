@@ -5,22 +5,14 @@ import '../../style/gameRanking.css';
 import exitImg from '../../style/icons/x-solid.svg';
 import backgroundImg from '../../style/icons/ranking-background.png';
 import rankingFavicon from '../../style/icons/ranking_favicon.svg';
-
-interface rankingDataType {
-  gameId: string;
-  userNickname: string;
-  averageScore: number;
-  highScore: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { RankingDataType } from '../../types/gameType';
 
 const GameRanking = (props: {
   setShowRanking: (show: boolean) => void;
   gameId: string | undefined;
 }) => {
   const { setShowRanking, gameId } = props;
-  const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
+  const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
 
   useEffect(() => {
     axios
@@ -57,7 +49,7 @@ const GameRanking = (props: {
         <div className="ranking-list">
           <ol>
             {rankingData &&
-              rankingData.map((data: rankingDataType, idx: number) => (
+              rankingData.map((data: RankingDataType, idx: number) => (
                 <li key={data.createdAt}>
                   <span className="ranking-list-idx">{`${idx + 1}.`}</span>
                   <p className="ranking-list-userID">{data.userNickname}</p>
