@@ -1,3 +1,14 @@
+export interface manualDataType {
+  _id: string;
+  gameTitle: string;
+  gameCategory: string[];
+  gameIconUrl: string;
+  gameImageUrl: string;
+  gameDescription: string;
+  gameManual: string;
+  gameServiceStatus: string;
+}
+
 export interface RankingDataType {
   gameId?: string;
   userNickname?: string;
@@ -5,6 +16,8 @@ export interface RankingDataType {
   highScore?: number;
   score?: number;
   userIcon?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Top3BoxProps {

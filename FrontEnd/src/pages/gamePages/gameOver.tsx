@@ -8,21 +8,13 @@ import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import gameoverBgImg from '../../style/icons/gameover-bg-img.svg';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
+import { RankingDataType } from '../../types/gameType';
 import { fontFamily } from '@mui/system';
-
-interface rankingDataType {
-  gameId: string;
-  userNickname: string;
-  averageScore: number;
-  highScore: number;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const GameOver = () => {
   const [mainModal, setMainModal] = useState<boolean>(false);
   const [gameName, setGameName] = useState<string>('');
-  const [rankingData, setRankingData] = useState<rankingDataType[]>([]);
+  const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,7 +35,7 @@ const GameOver = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  console.log(rankingData);
   return (
     <div
       style={{
@@ -89,7 +81,7 @@ const GameOver = () => {
           </div>
           <div className="ranking-content">
             {rankingData &&
-              rankingData.map((data: rankingDataType, idx: number) => (
+              rankingData.map((data: RankingDataType, idx: number) => (
                 <ul className="ranking-item" key={data.createdAt}>
                   <li className="ranking-idx">{`${idx + 1}.`}</li>
                   <li className="id-li">{data.userNickname}</li>
