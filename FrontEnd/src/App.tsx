@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import TimeStopGame from './components/Games/StopWatch/timeStop';
 import Admin from './pages/adminPage/admin';
-import GameLoading from './pages/gamePages/GameLoading';
+import GameLoading from './components/Games/GameLoading';
 import GameLayout from './pages/gamePages/GameLayout';
 import GameOver from './pages/gamePages/GameOver';
 import Ranking from './pages/rankingPage/Ranking';

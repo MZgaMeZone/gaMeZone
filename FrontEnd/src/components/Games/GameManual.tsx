@@ -6,7 +6,7 @@ import exitImg from '../../style/icons/x-solid.svg';
 import middleBarIcon from '../../style/icons/manual-icon1.svg';
 import memoFavicon from '../../style/icons/memo_favicon.svg';
 import { manualDataType } from '../../types/gameType';
-import ExampleManualData from '../../components/Games/sampleManualData';
+import ExampleManualData from './sampleManualData';
 
 const GameManual = (props: {
   setShowManual: (show: boolean) => void;
