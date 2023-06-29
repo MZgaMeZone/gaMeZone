@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import '../../style/gameRanking.css';
-import exitImg from '../../style/icons/x-solid.svg';
 import backgroundImg from '../../style/icons/ranking-background.png';
-import rankingFavicon from '../../style/icons/ranking_favicon.svg';
+import rankingFavicon from '../../style/icons/ranking.svg';
 import { RankingDataType } from '../../types/gameType';
+import ContainerHeader from '../Common/ContainerHeader';
 
 const GameRanking = (props: {
   setShowRanking: (show: boolean) => void;
@@ -27,20 +27,13 @@ const GameRanking = (props: {
 
   return (
     <div className="ranking-container">
-      <div className="ranking-container-header">
-        <div className="ranking-container-header-title">
-          <img src={rankingFavicon} alt="rankingFavicon" />
-          <p>랭킹</p>
-        </div>
-        <div
-          className="exit-button"
-          onClick={() => {
-            setShowRanking(false);
-          }}
-        >
-          <img src={exitImg} alt="exitImg" />
-        </div>
-      </div>
+      <ContainerHeader
+        favicon={rankingFavicon}
+        title="랭킹"
+        onClick={() => {
+          setShowRanking(false);
+        }}
+      />
       <div
         className="ranking-container-body"
         style={{ backgroundImage: `url(${backgroundImg})` }}

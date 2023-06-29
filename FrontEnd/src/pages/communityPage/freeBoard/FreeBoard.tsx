@@ -2,24 +2,15 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import NoticeComponent from '../../../components/Boards/NoticeComponent';
-import exitImg from '../../../style/icons/x-solid.svg';
+import ContainerHeader from '../../../components/Common/ContainerHeader';
 
 const CommunityPage = () => {
   const navigate = useNavigate();
 
-  const clickHandler = () => {
-    navigate('/');
-  };
-
   return (
     <CommunitySection>
       <CommunityContainer>
-        <CommunityHeader>
-          커뮤니티
-          <ExitButton onClick={clickHandler}>
-            <ExitImage src={exitImg} alt="exitImg" />
-          </ExitButton>
-        </CommunityHeader>
+        <ContainerHeader title="커뮤니티" onClick={() => navigate(-1)} />
         <CommunityBody>
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>

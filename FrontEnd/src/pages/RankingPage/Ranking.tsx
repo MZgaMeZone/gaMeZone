@@ -3,8 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import '../../style/ranking.css';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-
-import exitImg from '../../style/icons/x-solid.svg';
 import starIcon from '../../style/icons/star.svg';
 import crownIcon from '../../style/icons/crown.svg';
 import heartIcon from '../../style/icons/heart.svg';
@@ -15,6 +13,7 @@ import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
 import { GameListType } from '../../types/mainType';
 import { RankingDataType } from '../../types/gameType';
+import ContainerHeader from '../../components/Common/ContainerHeader';
 
 const Ranking = () => {
   const [showGameList, setShowGameList] = useState(false);
@@ -77,26 +76,17 @@ const Ranking = () => {
         backgroundColor: '#008080',
         height: '100vh',
         width: '100vw',
-        // minHeight: '880px',
-        // minWidth: '900px',
         overflow: 'hidden',
       }}
     >
       <div className="rank-container">
-        <div className="rank-container-header">
-          <div className="rank-container-header-title">
-            <img src={starIcon} alt="gameFavicon" />
-            <p>명예의 전당</p>
-          </div>
-          <div
-            className="exit-button"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <img src={exitImg} alt="exitImg" />
-          </div>
-        </div>
+        <ContainerHeader
+          favicon={starIcon}
+          title="명예의 전당"
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
         <div className="rank-container-body">
           <div className="rank-nav">
             <div
