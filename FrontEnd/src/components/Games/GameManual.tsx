@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import '../../style/gameManual.css';
-import exitImg from '../../style/icons/x-solid.svg';
 import middleBarIcon from '../../style/icons/manual-icon1.svg';
 import memoFavicon from '../../style/icons/memo_favicon.svg';
 import { manualDataType } from '../../types/gameType';
-import ExampleManualData from './sampleManualData';
+import ContainerHeader from '../Common/ContainerHeader';
 
 const GameManual = (props: {
   setShowManual: (show: boolean) => void;
@@ -27,20 +26,13 @@ const GameManual = (props: {
 
   return (
     <div className="manual-container">
-      <div className="manual-container-header">
-        <div className="manual-container-header-title">
-          <img src={memoFavicon} alt="manualFavicon" />
-          <p>게임 설명</p>
-        </div>
-        <div
-          className="exit-button"
-          onClick={() => {
-            setShowManual(false);
-          }}
-        >
-          <img src={exitImg} alt="exitImg" />
-        </div>
-      </div>
+      <ContainerHeader
+        favicon={memoFavicon}
+        title="게임 설명"
+        onClick={() => {
+          setShowManual(false);
+        }}
+      />
       <div className="middle-bar">
         <pre className="middle-bar-box">
           <img

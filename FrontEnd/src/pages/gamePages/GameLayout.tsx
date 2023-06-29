@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import '../../style/gameLayout.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GameLoading from '../../components/Games/GameLoading';
-import GameRanking from '../../components/Games/gameRanking';
+import GameRanking from '../../components/Games/GameRanking';
 import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
 import DefaultPage from '../../components/Games/defaultPage';
@@ -22,7 +22,7 @@ const GameLayout = () => {
   const [gameName, setGameName] = useState<string>('');
   const [userNickname, setUserNickname] = useState<string | null>('');
   const [userRole, setUserRole] = useState<string | null>('');
-
+  const navigate = useNavigate();
   const { id } = useParams();
 
   //게임 props로 전달받은 게임 이름 설정(헤더 타이틀에 렌더링)
@@ -102,7 +102,11 @@ const GameLayout = () => {
       ) : (
         <div className="game-body">
           <div className="game-container">
-            <ContainerHeader favicon={gameFavicon} title={gameName} />
+            <ContainerHeader
+              favicon={gameFavicon}
+              title={gameName}
+              onClick={() => navigate(-1)}
+            />
             <nav id="game-container-nav">
               <p
                 onClick={() => {

@@ -6,9 +6,11 @@ import exitImg from '../../style/icons/x-solid.svg';
 function ContainerHeader({
   favicon,
   title,
+  onClick,
 }: {
   favicon: string;
   title: string;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 }) {
   const navigate = useNavigate();
 
@@ -18,11 +20,7 @@ function ContainerHeader({
         <img src={favicon} alt="gameFavicon" />
         <p>{title}</p>
       </HeaderTitle>
-      <ExitButton
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
+      <ExitButton onClick={onClick}>
         <img src={exitImg} alt="exitImg" />
       </ExitButton>
     </Header>
@@ -32,9 +30,9 @@ function ContainerHeader({
 export default ContainerHeader;
 
 const Header = styled.div`
-  width: 97.5%;
+  width: 99%;
   height: 4.8rem;
-  margin: 0.7rem auto auto auto;
+  margin: 0.5rem auto auto auto;
 
   background: #000080;
   display: flex;
@@ -45,7 +43,8 @@ const Header = styled.div`
 const HeaderTitle = styled.div`
   display: flex;
   > img {
-    width: 5.5rem;
+    width: 4.4rem;
+    height: 4.4rem;
     margin-left: 1.5rem;
   }
   > p {
