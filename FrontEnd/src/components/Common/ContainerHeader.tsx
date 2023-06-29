@@ -3,21 +3,21 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import exitImg from '../../style/icons/x-solid.svg';
 
-function ContainerHeader({
+interface ContainerHeaderProps {
+  favicon?: string;
+  title: string;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
+}
+
+const ContainerHeader: React.FC<ContainerHeaderProps> = ({
   favicon,
   title,
   onClick,
-}: {
-  favicon: string;
-  title: string;
-  onClick: React.MouseEventHandler<HTMLDivElement>;
-}) {
-  const navigate = useNavigate();
-
+}) => {
   return (
     <Header>
       <HeaderTitle>
-        <img src={favicon} alt="gameFavicon" />
+        {favicon && <img src={favicon} alt="gameFavicon" />}
         <p>{title}</p>
       </HeaderTitle>
       <ExitButton onClick={onClick}>
@@ -25,7 +25,7 @@ function ContainerHeader({
       </ExitButton>
     </Header>
   );
-}
+};
 
 export default ContainerHeader;
 
@@ -52,6 +52,7 @@ const HeaderTitle = styled.div`
     color: white;
     display: flex;
     align-items: center;
+    font-size: 2.5rem;
   }
 `;
 
