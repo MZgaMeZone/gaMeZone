@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import '../../style/gameRanking.css';
 import backgroundImg from '../../style/icons/ranking-background.png';
-import rankingFavicon from '../../style/icons/ranking_favicon.svg';
+import rankingFavicon from '../../style/icons/ranking.svg';
 import { RankingDataType } from '../../types/gameType';
 import ContainerHeader from '../Common/ContainerHeader';
 
