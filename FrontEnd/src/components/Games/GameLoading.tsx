@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import "../../style/gameLoading.css";
-import cdImg1 from "../../style/icons/cdImg1.svg";
-import cdImg2 from "../../style/icons/cdImg2.svg";
-import exitImg from "../../style/icons/x-solid.svg";
-import paperImg from "../../style/icons/paper.svg";
-import speedImg from "../../style/icons/speedImg.svg";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import '../../style/gameLoading.css';
+import cdImg1 from '../../style/icons/cdImg1.svg';
+import cdImg2 from '../../style/icons/cdImg2.svg';
+import exitImg from '../../style/icons/x-solid.svg';
+import paperImg from '../../style/icons/paper.svg';
+import speedImg from '../../style/icons/speedImg.svg';
+import ContainerHeader from '../Common/ContainerHeader';
+import loadingIcon from '../../style/icons/loading.svg';
 
 const GameLoading = () => {
+  const navigate = useNavigate();
   const [speed, setSpeed] = useState(0);
-  const [speedFontColor, setSpeedFontColor] = useState("#000");
+  const [speedFontColor, setSpeedFontColor] = useState('#000');
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,7 +26,7 @@ const GameLoading = () => {
       setSpeed(33);
     }, 3000);
     setTimeout(() => {
-      setSpeedFontColor("#ffffff");
+      setSpeedFontColor('#ffffff');
       setSpeed(68);
     }, 4000);
     setTimeout(() => {
@@ -33,12 +36,11 @@ const GameLoading = () => {
 
   return (
     <div className="loading-container">
-      <div className="loading-container-header">
-        <p className="loading-container-header-title">로딩 중</p>
-        <Link to="/" className="exit-button">
-          <img src={exitImg} alt="exitImg" />
-        </Link>
-      </div>
+      <ContainerHeader
+        favicon={loadingIcon}
+        title="로딩 중"
+        onClick={() => navigate(-1)}
+      />
       <div className="loading-container-body">
         <div>
           <div className="icon-container">
