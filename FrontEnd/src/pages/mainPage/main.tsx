@@ -11,34 +11,29 @@ const Main = () => {
   // 현재는 수동으로 관리함.
   const hitGameList: HitGame[] = [
     {
-      name: '고마오',
+      name: '두더지 잡기',
       url: 'default',
-      img: require('../../images/gomao.png'),
-    },
-    {
-      name: '귀엽네',
-      url: 'default',
-      img: require('../../images/gomao.png'),
+      img: require('../../style/icons/gameIcons/catchingAMoleGame.png'),
     },
     {
       name: '10초게임',
       url: '10seconds',
-      img: require('../../images/cute.png'),
+      img: require('../../style/icons/gameIcons/10SecondsGame.png'),
     },
     {
-      name: '게임 준비중',
+      name: '짭리오',
       url: 'default',
-      img: require('../../images/gomao.png'),
+      img: require('../../style/icons/gameIcons/mushroomGame.png'),
     },
     {
-      name: '게임 준비중',
+      name: '애니콜 폭탄게임',
       url: 'default',
-      img: require('../../images/gomao.png'),
+      img: require('../../style/icons/gameIcons/bombGame.png'),
     },
     {
-      name: '게임 준비중',
+      name: '벽돌 부수기',
       url: 'default',
-      img: require('../../images/gomao.png'),
+      img: require('../../style/icons/gameIcons/brickGame.png'),
     },
   ];
   //-----------------------------------------------------------------------

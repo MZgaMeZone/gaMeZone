@@ -190,10 +190,7 @@ export const HitGameBox = styled.div`
   position: fixed;
   top: 45px;
   justify-content: flex-end;
-  // background-color: beige;
-  // margin-top: 7rem;
   margin-right: 2rem;
-  // align-items: center;
   width: fit-content;
   height: 600px;
 `;
@@ -204,13 +201,16 @@ export const HitGameButton = styled.button`
   margin: 1rem 1rem;
   justify-content: center;
   padding: 1rem 1.5rem;
-  background-color: white;
   border-radius: 20px;
   width: 15rem;
   height: 15rem;
+  background-color: transparent;
+  font-size: 1.9rem;
+  color: white;
 `;
 export const GameImage = styled.img`
-  width: 100%;
+  width: 90%;
   height: auto;
+  margin-bottom: 0.6rem;
   // overflow: hidden;
 `;
