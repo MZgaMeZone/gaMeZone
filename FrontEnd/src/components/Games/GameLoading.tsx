@@ -8,6 +8,7 @@ import exitImg from '../../style/icons/x-solid.svg';
 import paperImg from '../../style/icons/paper.svg';
 import speedImg from '../../style/icons/speedImg.svg';
 import ContainerHeader from '../Common/ContainerHeader';
+import ButtonSmall from '../Common/ButtonSmall';
 import loadingIcon from '../../style/icons/loading.svg';
 
 const GameLoading = () => {
@@ -70,9 +71,7 @@ const GameLoading = () => {
       </div>
       <div className="loading-container-footer">
         <p>게임을 로딩 중입니다.</p>
-        <Link to="/" className="cancel-btn">
-          <div className="btn-border">Cancel</div>
-        </Link>
+        <ButtonSmall text="Cancel" onClick={() => navigate(-1)} />
       </div>
     </div>
   );

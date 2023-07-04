@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ContainerHeader from '../Common/ContainerHeader';
+import ButtonSmall from '../Common/ButtonSmall';
+import keyIcon from '../../style/icons/lock.svg';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
@@ -9,6 +13,7 @@ interface LoginFormProps {
 function LoginForm({ onLogin, onSignup }: LoginFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,30 +22,37 @@ function LoginForm({ onLogin, onSignup }: LoginFormProps) {
 
   return (
     <LoginSection>
-      <LoginContainer>
-        <LoginHeader>로그인</LoginHeader>
+      <ContainerHeader title="로그인" onClick={() => navigate(-1)} />
+      <LoginFormContainer onSubmit={handleSubmit}>
+        <ContainerBody>
+          <LoginIcon>
+            <img src={keyIcon} />
+          </LoginIcon>
+          <InputContainer>
+            <InputForm>
+              <p>Email</p>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputForm>
+            <InputForm>
+              <p>Password</p>
 
-        <LoginFormContainer onSubmit={handleSubmit}>
-          <EmailForm>
-            <p>이메일</p>
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </EmailForm>
-          <PasswordForm>
-            비밀번호
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </PasswordForm>
-          <LoginButton type="submit">로그인</LoginButton>
-          <SignupButton onClick={onSignup}>회원가입</SignupButton>
-        </LoginFormContainer>
-      </LoginContainer>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </InputForm>
+          </InputContainer>
+        </ContainerBody>
+        <ButtonContainer>
+          <ButtonSmall text="회원가입" onClick={onSignup} />
+          <ButtonSmall text="로그인" type="submit" />
+        </ButtonContainer>
+      </LoginFormContainer>
     </LoginSection>
   );
 }
@@ -56,58 +68,57 @@ const LoginSection = styled.div`
   background-color: var(--background--gray);
   border: 1px solid #000000;
   box-shadow: 3px 3px 4px #1c1c1c;
-  width: 128rem;
-  height: 72rem;
+  width: 74rem;
+  height: 35rem;
   overflow: auto;
-`;
-
-const LoginContainer = styled.div`
-  background-color: var(--background--gray);
-  padding: 0.5rem 0;
-`;
-
-const LoginHeader = styled.div`
-  margin: 1rem;
-  padding: 1rem;
-  background-color: var(--color--header);
-  color: white;
-  font-size: 2rem;
 `;
 
 const LoginFormContainer = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 12rem;
-  padding: 7rem;
+`;
+const ContainerBody = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
 `;
 
-const EmailForm = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  font-size: 3.5rem;
-  input {
-    font-size: 3rem;
-  }
-  margin: 1.5rem 0;
+const LoginIcon = styled.div`
+  width: 10rem;
+  height: 10rem;
+  margin-top: 1.5rem;
 `;
 
-const PasswordForm = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  font-size: 3.5rem;
-  input {
-    font-size: 2.5rem;
-  }
-  margin: 1.5rem 0;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 3rem;
 `;
-const LoginButton = styled.button`
-  font-size: 2.5rem;
+
+const InputForm = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  font-size: 2.7rem;
+  p {
+    display: flex;
+    align-items: center;
+  }
+  input {
+    height: 4.3rem;
+    width: 35rem;
+    font-size: 2.7rem;
+    padding-left: 2rem;
+    border: none;
+    box-shadow: inset 0.2rem 0.2rem 0.2rem 0rem #000000,
+      0.2rem 0.2rem 0.2rem 0rem #e0e0e0;
+  }
   margin: 1rem 0;
-  border: 1px solid black;
-  margin: 3rem 0 1.5rem;
 `;
-const SignupButton = styled.button`
-  font-size: 2.5rem;
-  margin: 1.5rem 0;
-  border: 1px solid black;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  div:first-child {
+    margin-right: 1rem;
+  }
 `;
