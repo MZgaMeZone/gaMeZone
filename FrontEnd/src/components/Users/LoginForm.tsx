@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ContainerHeader from '../Common/ContainerHeader';
 import ButtonSmall from '../Common/ButtonSmall';
-import keyIcon from '../../style/icons/lock.svg';
+import lockIcon from '../../style/icons/lock.svg';
+import keyIcon from '../../style/icons/key.svg';
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
@@ -22,11 +23,15 @@ function LoginForm({ onLogin, onSignup }: LoginFormProps) {
 
   return (
     <LoginSection>
-      <ContainerHeader title="로그인" onClick={() => navigate(-1)} />
+      <ContainerHeader
+        favicon={keyIcon}
+        title="로그인"
+        onClick={() => navigate(-1)}
+      />
       <LoginFormContainer onSubmit={handleSubmit}>
         <ContainerBody>
           <LoginIcon>
-            <img src={keyIcon} />
+            <img src={lockIcon} />
           </LoginIcon>
           <InputContainer>
             <InputForm>
