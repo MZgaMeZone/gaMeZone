@@ -5,6 +5,10 @@ import axios from 'axios';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
 import ContainerHeader from '../../components/Common/ContainerHeader';
+import {
+  ButtonNormalSmall,
+  ButtonDashedSmall,
+} from '../../components/Common/ButtonSmall';
 
 const url = process.env.REACT_APP_API_URL;
 
@@ -93,7 +97,7 @@ function Signup() {
           <ContainerHeader title="회원가입" onClick={() => navigate(-1)} />
           <SignupForm onSubmit={handleSubmit}>
             <SignupField>
-              이메일
+              <p>Email</p>
               <InputContainer>
                 <input
                   type="text"
@@ -104,9 +108,12 @@ function Signup() {
                 />
               </InputContainer>
               {email === '' ? (
-                <button disabled>중복확인</button>
+                <ButtonNormalSmall text="중복확인" disabled />
               ) : (
-                <button onClick={handleEmailDuplicateCheck}>중복확인</button>
+                <ButtonNormalSmall
+                  text="중복확인"
+                  onClick={handleEmailDuplicateCheck}
+                />
               )}
             </SignupField>
             <ErrorMessageContainer>
@@ -122,7 +129,7 @@ function Signup() {
               </ErrorMessageContainer>
             </ErrorMessageContainer>
             <SignupField>
-              닉네임
+              <p>Nickname</p>
               <InputContainer>
                 <input
                   type="text"
@@ -133,9 +140,12 @@ function Signup() {
                 />
               </InputContainer>
               {nickname === '' ? (
-                <button disabled>중복확인</button>
+                <ButtonNormalSmall text="중복확인" disabled />
               ) : (
-                <button onClick={handleNicknameDuplicateCheck}>중복확인</button>
+                <ButtonNormalSmall
+                  text="중복확인"
+                  onClick={handleNicknameDuplicateCheck}
+                />
               )}
             </SignupField>
             <ErrorMessageContainer>
@@ -146,7 +156,7 @@ function Signup() {
                 : ''}
             </ErrorMessageContainer>
             <SignupField>
-              비밀번호
+              <p>Password</p>
               <InputContainer>
                 <input
                   type="password"
@@ -164,7 +174,11 @@ function Signup() {
                 : ''}
             </ErrorMessageContainer>
             <SignupField>
-              비밀번호 확인
+              <p>
+                Check
+                <br />
+                Password
+              </p>
               <InputContainer>
                 <input
                   type="password"
@@ -179,15 +193,17 @@ function Signup() {
                 <p>비밀번호가 일치하지 않습니다.</p>
               )}
             </ErrorMessageContainer>
-            <FormSubmit
-              value="가입하기"
-              type="submit"
-              disabled={
-                !emailDuplicateCheck ||
-                !nicknameDuplicateCheck ||
-                !(password === passwordCheck)
-              }
-            />
+            <ButtonContainer>
+              <ButtonDashedSmall
+                text="가입하기"
+                type="submit"
+                disabled={
+                  !emailDuplicateCheck ||
+                  !nicknameDuplicateCheck ||
+                  !(password === passwordCheck)
+                }
+              />
+            </ButtonContainer>
           </SignupForm>
         </SingupContainer>
       </SingupSection>
@@ -210,8 +226,8 @@ const SingupSection = styled.div`
   background-color: var(--background--gray);
   border: 1px solid #000000;
   box-shadow: 3px 3px 4px #1c1c1c;
-  width: 90rem;
-  height: 55rem;
+  width: 85rem;
+  height: 51rem;
   overflow: auto;
 `;
 
@@ -222,14 +238,18 @@ const SingupContainer = styled.div`
 const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 4rem;
+  margin: 3rem 6rem;
 `;
 
 const SignupField = styled.div`
   display: grid;
-  grid-template-columns: 0.8fr 1.8fr 0.5fr;
+  grid-template-columns: 0.6fr 1.6fr 0.5fr;
   font-size: 2.6rem;
   margin: 1.5rem 0;
+  p {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -243,7 +263,7 @@ const InputContainer = styled.div`
   margin-right: 3rem;
   input {
     height: 4.3rem;
-    width: 35rem;
+    width: 100%;
     font-size: 2.7rem;
     padding-left: 2rem;
     border: none;
@@ -266,15 +286,16 @@ const InputContainer = styled.div`
   }
 `;
 
-const FormSubmit = styled.input`
-  font-size: 3.5rem;
-  border: 1px solid black;
-  margin: 2rem 0 0 0;
-`;
-
 const ErrorMessageContainer = styled.div`
   display: flex;
   justify-content: center;
   font-size: 1.5rem;
+  line-height: 0.2rem;
   color: red;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 `;
