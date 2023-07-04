@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ContainerHeader from '../Common/ContainerHeader';
-import ButtonSmall from '../Common/ButtonSmall';
+import {ButtonDashedSmall} from '../Common/ButtonSmall';
 import lockIcon from '../../style/icons/lock.svg';
 import keyIcon from '../../style/icons/key.svg';
 
@@ -57,8 +57,8 @@ function LoginForm({ onLogin, onSignup }: LoginFormProps) {
           </InputContainer>
         </ContainerBody>
         <ButtonContainer>
-          <ButtonSmall text="회원가입" onClick={onSignup} />
-          <ButtonSmall text="로그인" type="submit" />
+          <ButtonDashedSmall text="회원가입" onClick={onSignup} />
+          <ButtonDashedSmall text="로그인" type="submit" />
         </ButtonContainer>
       </LoginFormContainer>
     </LoginSection>
