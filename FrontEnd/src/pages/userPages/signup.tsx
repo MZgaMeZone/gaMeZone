@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
+import ContainerHeader from '../../components/Common/ContainerHeader';
 
 const url = process.env.REACT_APP_API_URL;
 
@@ -89,23 +90,25 @@ function Signup() {
     >
       <SingupSection>
         <SingupContainer>
-          <SignupHeader>회원가입</SignupHeader>
+          <ContainerHeader title="회원가입" onClick={() => navigate(-1)} />
           <SignupForm onSubmit={handleSubmit}>
-            <EmailContainer>
+            <SignupField>
               이메일
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={emailDuplicateCheck}
-                placeholder="email@email.com"
-              />{' '}
+              <InputContainer>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={emailDuplicateCheck}
+                  placeholder="email@email.com"
+                />
+              </InputContainer>
               {email === '' ? (
                 <button disabled>중복확인</button>
               ) : (
                 <button onClick={handleEmailDuplicateCheck}>중복확인</button>
               )}
-            </EmailContainer>
+            </SignupField>
             <ErrorMessageContainer>
               <ErrorMessageContainer>
                 {email &&
@@ -118,21 +121,23 @@ function Signup() {
                 )}
               </ErrorMessageContainer>
             </ErrorMessageContainer>
-            <NicknameContainer>
+            <SignupField>
               닉네임
-              <input
-                type="text"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                disabled={nicknameDuplicateCheck}
-                placeholder="nickname"
-              />{' '}
+              <InputContainer>
+                <input
+                  type="text"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                  disabled={nicknameDuplicateCheck}
+                  placeholder="nickname"
+                />
+              </InputContainer>
               {nickname === '' ? (
                 <button disabled>중복확인</button>
               ) : (
                 <button onClick={handleNicknameDuplicateCheck}>중복확인</button>
               )}
-            </NicknameContainer>
+            </SignupField>
             <ErrorMessageContainer>
               {nickname
                 ? (nickname.length < 2 || nickname.length > 10) && (
@@ -140,15 +145,17 @@ function Signup() {
                   )
                 : ''}
             </ErrorMessageContainer>
-            <PasswordContainer>
+            <SignupField>
               비밀번호
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="password"
-              />{' '}
-            </PasswordContainer>
+              <InputContainer>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="password"
+                />
+              </InputContainer>
+            </SignupField>
             <ErrorMessageContainer>
               {password
                 ? password.length < 8 && (
@@ -156,15 +163,17 @@ function Signup() {
                   )
                 : ''}
             </ErrorMessageContainer>
-            <PasswordCheckContainer>
+            <SignupField>
               비밀번호 확인
-              <input
-                type="password"
-                value={passwordCheck}
-                onChange={(e) => setPasswordCheck(e.target.value)}
-                placeholder="password"
-              />
-            </PasswordCheckContainer>
+              <InputContainer>
+                <input
+                  type="password"
+                  value={passwordCheck}
+                  onChange={(e) => setPasswordCheck(e.target.value)}
+                  placeholder="password"
+                />
+              </InputContainer>
+            </SignupField>
             <ErrorMessageContainer>
               {passwordCheck && password !== passwordCheck && (
                 <p>비밀번호가 일치하지 않습니다.</p>
@@ -201,72 +210,60 @@ const SingupSection = styled.div`
   background-color: var(--background--gray);
   border: 1px solid #000000;
   box-shadow: 3px 3px 4px #1c1c1c;
-  width: 128rem;
-  height: 72rem;
+  width: 90rem;
+  height: 55rem;
   overflow: auto;
 `;
 
 const SingupContainer = styled.div`
   background-color: var(--background--gray);
-  padding: 0.5rem 0;
-`;
-
-const SignupHeader = styled.div`
-  margin: 1rem;
-  padding: 1rem;
-  background-color: var(--color--header);
-  color: white;
-  font-size: 2rem;
 `;
 
 const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 8rem;
-  padding: 5rem;
+  margin: 4rem;
 `;
 
-const EmailContainer = styled.div`
+const SignupField = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 0.5fr;
-  font-size: 3.5rem;
-  input {
-    font-size: 3rem;
-    margin-right: 2rem;
-  }
+  grid-template-columns: 0.8fr 1.8fr 0.5fr;
+  font-size: 2.6rem;
   margin: 1.5rem 0;
 `;
 
-const NicknameContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 0.5fr;
-  font-size: 3.5rem;
+const InputContainer = styled.div`
+  background: white;
+  position: relative;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(132, 133, 132) rgb(254, 254, 254) rgb(254, 254, 254)
+    rgb(132, 133, 132);
+  margin-right: 3rem;
   input {
-    font-size: 3rem;
-    margin-right: 2rem;
+    height: 4.3rem;
+    width: 35rem;
+    font-size: 2.7rem;
+    padding-left: 2rem;
+    border: none;
+    box-shadow: inset 0.2rem 0.2rem 0.2rem 0rem #000000,
+      0.2rem 0.2rem 0.2rem 0rem #e0e0e0;
   }
-  margin: 1.5rem 0;
-`;
-
-const PasswordContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2.5fr;
-  font-size: 3.5rem;
-  input {
-    font-size: 3rem;
+  :before {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    content: '';
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(10, 10, 10) rgb(223, 223, 223) rgb(223, 223, 223)
+      rgb(10, 10, 10);
+    pointer-events: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px inset;
   }
-
-  margin: 1.5rem 0;
-`;
-
-const PasswordCheckContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2.5fr;
-  font-size: 3.5rem;
-  input {
-    font-size: 3rem;
-  }
-  margin: 1.5rem 0;
 `;
 
 const FormSubmit = styled.input`

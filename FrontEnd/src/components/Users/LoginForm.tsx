@@ -36,20 +36,23 @@ function LoginForm({ onLogin, onSignup }: LoginFormProps) {
           <InputContainer>
             <InputForm>
               <p>Email</p>
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <div>
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
             </InputForm>
             <InputForm>
               <p>Password</p>
-
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
             </InputForm>
           </InputContainer>
         </ContainerBody>
@@ -108,14 +111,37 @@ const InputForm = styled.div`
     display: flex;
     align-items: center;
   }
-  input {
-    height: 4.3rem;
-    width: 35rem;
-    font-size: 2.7rem;
-    padding-left: 2rem;
-    border: none;
-    box-shadow: inset 0.2rem 0.2rem 0.2rem 0rem #000000,
-      0.2rem 0.2rem 0.2rem 0rem #e0e0e0;
+  div {
+    background: white;
+    position: relative;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(132, 133, 132) rgb(254, 254, 254) rgb(254, 254, 254)
+      rgb(132, 133, 132);
+    input {
+      height: 4.3rem;
+      width: 35rem;
+      font-size: 2.7rem;
+      padding-left: 2rem;
+      border: none;
+      box-shadow: inset 0.2rem 0.2rem 0.2rem 0rem #000000,
+        0.2rem 0.2rem 0.2rem 0rem #e0e0e0;
+    }
+    :before {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      content: '';
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      border-style: solid;
+      border-width: 2px;
+      border-color: rgb(10, 10, 10) rgb(223, 223, 223) rgb(223, 223, 223)
+        rgb(10, 10, 10);
+      pointer-events: none;
+      box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px inset;
+    }
   }
   margin: 1rem 0;
 `;
