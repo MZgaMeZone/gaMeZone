@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import '../../style/gameLoading.css';
 import cdImg1 from '../../style/icons/cdImg1.svg';
 import cdImg2 from '../../style/icons/cdImg2.svg';
-import exitImg from '../../style/icons/x-solid.svg';
 import paperImg from '../../style/icons/paper.svg';
 import speedImg from '../../style/icons/speedImg.svg';
 import ContainerHeader from '../Common/ContainerHeader';
