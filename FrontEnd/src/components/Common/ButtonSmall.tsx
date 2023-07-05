@@ -17,10 +17,10 @@ export const ButtonDashedSmall: React.FC<ButtonSmallProps> = ({
   return (
     <ButtonContainer
       type={type || 'button'}
-      disabled={disabled ? disabled : false}
+      disabled={disabled || false}
       onClick={onClick}
     >
-      <Button border="dashed" disabled={disabled ? disabled : false}>
+      <Button border="dashed" disabled={disabled || false}>
         {text}
       </Button>
     </ButtonContainer>
@@ -35,11 +35,11 @@ export const ButtonNormalSmall: React.FC<ButtonSmallProps> = ({
 }) => {
   return (
     <ButtonContainer
-      type={type ? type : 'button'}
-      disabled={disabled ? disabled : false}
+      type={type || 'button'}
+      disabled={disabled || false}
       onClick={onClick}
     >
-      <Button border="normal" disabled={disabled ? disabled : false}>
+      <Button border="normal" disabled={disabled || false}>
         {text}
       </Button>
     </ButtonContainer>
@@ -67,6 +67,7 @@ const ButtonContainer = styled.button`
       rgb(254, 254, 254);
     box-shadow: rgb(223 223 223) 1px 1px 0px 1px inset,
       rgb(132 133 132) -1px -1px 0px 1px inset;
+    pointer-events: none;
   }
   ::after {
     content: '';
@@ -76,6 +77,7 @@ const ButtonContainer = styled.button`
     left: 0px;
     height: 100%;
     width: 100%;
+    pointer-events: none;
   }
 `;
 
