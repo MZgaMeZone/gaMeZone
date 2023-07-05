@@ -12,7 +12,7 @@ const Main = () => {
   const hitGameList: HitGame[] = [
     {
       name: '두더지 잡기',
-      url: 'default',
+      url: 'CatchMole',
       img: require('../../style/icons/gameIcons/catchingAMoleGame.png'),
     },
     {

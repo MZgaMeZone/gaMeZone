@@ -7,6 +7,7 @@ import GameLoading from '../../components/Games/GameLoading';
 import GameRanking from '../../components/Games/GameRanking';
 import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
+import CatchMoleGame from '../../components/Games/CatchMole/CatchMole'
 import DefaultPage from '../../components/Games/defaultPage';
 import gameFavicon from '../../style/icons/game_favicon.svg';
 import MainBody from '../mainPage/mainBody';
@@ -54,6 +55,9 @@ const GameLayout = () => {
   switch (id) {
     case '10seconds':
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
+      break;
+    case 'CatchMole':
+      gameComponent = <CatchMoleGame setGameName={handleGameName} />;
       break;
     default:
       gameComponent = (
