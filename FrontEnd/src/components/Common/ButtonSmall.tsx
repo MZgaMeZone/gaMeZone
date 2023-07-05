@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface ButtonSmallProps {
   text: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: 'submit' | 'reset' | 'button';
   disabled?: boolean | undefined;
 }
@@ -14,13 +14,14 @@ export const ButtonDashedSmall: React.FC<ButtonSmallProps> = ({
   type,
   disabled,
 }) => {
+  console.log(type);
   return (
-    <ButtonContainer onClick={onClick}>
-      <Button
-        border="dashed"
-        type={type ? type : 'button'}
-        disabled={disabled ? disabled : false}
-      >
+    <ButtonContainer
+      type={type || 'button'}
+      disabled={disabled ? disabled : false}
+      onClick={onClick}
+    >
+      <Button border="dashed" disabled={disabled ? disabled : false}>
         {text}
       </Button>
     </ButtonContainer>
@@ -34,27 +35,25 @@ export const ButtonNormalSmall: React.FC<ButtonSmallProps> = ({
   disabled,
 }) => {
   return (
-    <ButtonContainer onClick={onClick}>
-      <Button
-        border="normal"
-        type={type ? type : 'button'}
-        disabled={disabled ? disabled : false}
-      >
+    <ButtonContainer
+      type={type ? type : 'button'}
+      disabled={disabled ? disabled : false}
+      onClick={onClick}
+    >
+      <Button border="normal" disabled={disabled ? disabled : false}>
         {text}
       </Button>
     </ButtonContainer>
   );
 };
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.button`
   width: 13rem;
   height: 4.6rem;
   cursor: pointer;
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   padding: 0 1rem;
+  background-color: var(--background--gray);
   ::before {
     content: '';
     box-sizing: border-box;
@@ -81,9 +80,9 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Button = styled.button<{ border: string; disabled: boolean }>`
+const Button = styled.div<{ border: string; disabled: boolean }>`
   width: 100%;
-  height: 70%;
+  height: 65%;
   border: ${({ border, disabled }) =>
     border === 'normal'
       ? 'none'
@@ -92,4 +91,7 @@ const Button = styled.button<{ border: string; disabled: boolean }>`
       : '0.2rem dashed #000000'};
   background-color: var(--background--gray);
   font-size: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 `;
