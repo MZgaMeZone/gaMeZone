@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import '../../style/gameLoading.css';
 import cdImg1 from '../../style/icons/cdImg1.svg';
 import cdImg2 from '../../style/icons/cdImg2.svg';
 import paperImg from '../../style/icons/paper.svg';
