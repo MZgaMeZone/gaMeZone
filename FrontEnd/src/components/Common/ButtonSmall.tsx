@@ -14,7 +14,6 @@ export const ButtonDashedSmall: React.FC<ButtonSmallProps> = ({
   type,
   disabled,
 }) => {
-  console.log(type);
   return (
     <ButtonContainer
       type={type || 'button'}
