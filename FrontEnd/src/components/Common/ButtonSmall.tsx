@@ -3,37 +3,96 @@ import styled from 'styled-components';
 
 interface ButtonSmallProps {
   text: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: 'submit' | 'reset' | 'button';
+  disabled?: boolean | undefined;
 }
 
-const ButtonSmall: React.FC<ButtonSmallProps> = ({ text, onClick, type }) => {
+export const ButtonDashedSmall: React.FC<ButtonSmallProps> = ({
+  text,
+  onClick,
+  type,
+  disabled,
+}) => {
   return (
-    <ButtonContainer onClick={onClick}>
-      <Button type={type ? type : 'button'}>{text}</Button>
+    <ButtonContainer
+      type={type || 'button'}
+      disabled={disabled || false}
+      onClick={onClick}
+    >
+      <Button border="dashed" disabled={disabled || false}>
+        {text}
+      </Button>
     </ButtonContainer>
   );
 };
 
-export default ButtonSmall;
+export const ButtonNormalSmall: React.FC<ButtonSmallProps> = ({
+  text,
+  onClick,
+  type,
+  disabled,
+}) => {
+  return (
+    <ButtonContainer
+      type={type || 'button'}
+      disabled={disabled || false}
+      onClick={onClick}
+    >
+      <Button border="normal" disabled={disabled || false}>
+        {text}
+      </Button>
+    </ButtonContainer>
+  );
+};
 
-const ButtonContainer = styled.div`
-  padding: 0.6rem;
-  background: #d9d9d9;
-  border: 0.1rem solid #000000;
-  box-shadow: inset 0.4rem 0.4rem 0.4rem 0rem #ffffff,
-    0.2rem 0.2rem 0.2rem 0rem #000000;
+const ButtonContainer = styled.button`
+  width: 13rem;
+  height: 4.6rem;
   cursor: pointer;
+  position: relative;
+  padding: 0 1rem;
+  background-color: var(--background--gray);
+  ::before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(254, 254, 254) rgb(10, 10, 10) rgb(10, 10, 10)
+      rgb(254, 254, 254);
+    box-shadow: rgb(223 223 223) 1px 1px 0px 1px inset,
+      rgb(132 133 132) -1px -1px 0px 1px inset;
+    pointer-events: none;
+  }
+  ::after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+  }
 `;
 
-const Button = styled.button`
-  box-sizing: border-box;
-  width: 13rem;
-  height: 3.4rem;
-  border: 0.2rem dashed #000000;
-  display: flex;
+const Button = styled.div<{ border: string; disabled: boolean }>`
+  width: 100%;
+  height: 65%;
+  border: ${({ border, disabled }) =>
+    border === 'normal'
+      ? 'none'
+      : disabled
+      ? '0.2rem dashed #727272'
+      : '0.2rem dashed #000000'};
+  background-color: var(--background--gray);
+  font-size: 1.9rem;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.4rem;
-  padding-top: 0.2rem;
 `;
