@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ContainerHeader from '../Common/ContainerHeader';
-import {ButtonDashedSmall} from '../Common/ButtonSmall';
+import { ButtonDashedSmall } from '../Common/ButtonSmall';
 import lockIcon from '../../style/icons/lock.svg';
 import keyIcon from '../../style/icons/key.svg';
 
@@ -149,7 +149,7 @@ const InputForm = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  div:first-child {
+  button:first-child {
     margin-right: 1rem;
   }
 `;
