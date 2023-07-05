@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { get } from '../../api/api';
+import styled from 'styled-components';
 import starIcon from '../../style/icons/star.svg';
 import crownIcon from '../../style/icons/crown.svg';
 import heartIcon from '../../style/icons/heart.svg';
@@ -14,58 +14,50 @@ import { GameListType } from '../../types/mainType';
 import { RankingDataType } from '../../types/gameType';
 import ContainerHeader from '../../components/Common/ContainerHeader';
 
+const initialRankinData = {
+  _id: '',
+  gameCategory: [''],
+  gameDescription: '',
+  gameImageUrl: '',
+  gameManual: '',
+  gameOption: '',
+  gameServiceStatus: '',
+  gameTitle: '전체 랭킹',
+  gameUrl: '',
+};
+
 const Ranking = () => {
   const [showGameList, setShowGameList] = useState(false);
   const [gameList, setGameList] = useState<GameListType[]>([]);
-  const [selectedGame, setSelectedGame] = useState<GameListType>({
-    _id: '',
-    gameCategory: [''],
-    gameDescription: '',
-    gameImageUrl: '',
-    gameManual: '',
-    gameOption: '',
-    gameServiceStatus: '',
-    gameTitle: '전체 랭킹',
-    gameUrl: '',
-  });
+  const [selectedGame, setSelectedGame] =
+    useState<GameListType>(initialRankinData);
   const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
   const [mainModal, setMainModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/games/`)
-      .then((res) => {
-        setGameList(() => [
-          {
-            gameTitle: '전체 랭킹',
-          },
-          ...res.data,
-        ]);
-      })
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      const responseData = await get<GameListType[]>(`/api/games`);
+      setGameList(() => [initialRankinData, ...responseData.data]);
+    };
+    fetchData();
   }, []);
 
-  //선택한 게임의 랭킹데이터 저장
   useEffect(() => {
-    //전체 랭킹 요청
     if (!selectedGame || selectedGame.gameTitle === '전체 랭킹') {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/scores/honors`)
-        .then((res) => {
-          setRankingData(res.data);
-        })
-        .catch((err) => console.log(err));
+      const fetchData = async () => {
+        const responseData = await get<RankingDataType[]>(`/api/scores/honors`);
+        setRankingData(responseData.data);
+      };
+      fetchData();
     } else {
-      //선택된 게임 요청
-      axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}/honors/?num=20`
-        )
-        .then((res) => {
-          setRankingData(res.data);
-        })
-        .catch((err) => console.log(err));
+      const fetchData = async () => {
+        const responseData = await get<RankingDataType[]>(
+          `/api/scores/${selectedGame.gameUrl}/${selectedGame.gameOption}/honors/?num=20`
+        );
+        setRankingData(responseData.data);
+      };
+      fetchData();
     }
   }, [selectedGame]);
 

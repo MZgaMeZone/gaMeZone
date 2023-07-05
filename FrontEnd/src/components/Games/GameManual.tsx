@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { get } from '../../api/api';
 import styled from 'styled-components';
 import middleBarIcon from '../../style/icons/manual-icon1.svg';
 import memoFavicon from '../../style/icons/memo_favicon.svg';
@@ -14,13 +14,11 @@ const GameManual = (props: {
   const [manualData, setManualData] = useState<manualDataType>();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/games/${gameId}`)
-      .then((res) => {
-        setManualData(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      const responseData = await get<manualDataType>(`/api/games/${gameId}`);
+      setManualData(responseData.data);
+    };
+    fetchData();
   }, []);
 
   return (
