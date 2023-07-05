@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import '../../style/gameManual.css';
 import middleBarIcon from '../../style/icons/manual-icon1.svg';
 import memoFavicon from '../../style/icons/memo_favicon.svg';
 import { manualDataType } from '../../types/gameType';
@@ -25,7 +24,7 @@ const GameManual = (props: {
   }, []);
 
   return (
-    <div className="manual-container">
+    <ManualContainer>
       <ContainerHeader
         favicon={memoFavicon}
         title="게임 설명"
@@ -33,38 +32,99 @@ const GameManual = (props: {
           setShowManual(false);
         }}
       />
-      <div className="middle-bar">
-        <pre className="middle-bar-box">
-          <img
+      <MiddleBar>
+        <MiddleBarBox>
+          <MiddleBarIcon
+            direction="left"
             src={middleBarIcon}
-            className="middleIcon1"
             alt="middleBarIcon"
           />
-          <img
+          <MiddleBarIcon
+            direction="right"
             src={middleBarIcon}
-            className="middleIcon2"
             alt="middleBarIcon"
           />
           <p>
             &emsp;•&emsp;•&emsp;•&emsp;1&emsp;•&emsp;•&emsp;•&emsp;|&emsp;•&emsp;•&emsp;•&emsp;2&emsp;•&emsp;•&emsp;•&emsp;|&emsp;•&emsp;•&emsp;•&emsp;3&emsp;•&emsp;•&emsp;•&emsp;|&emsp;•&emsp;•&emsp;•&emsp;4&emsp;•&emsp;•&emsp;•&emsp;|&emsp;•&emsp;•&emsp;•&emsp;5
           </p>
-        </pre>
-      </div>
-      <div className="manual-container-body">
+        </MiddleBarBox>
+      </MiddleBar>
+      <ManualContainerBody>
         {manualData && (
           <div key={manualData._id}>
-            <p className="manual-content title1">게임 소개</p>
-            <p className="manual-content-descript">
-              {manualData.gameDescription}
-            </p>
-            <p className="manual-content title2">게임 진행 방법</p>
+            <ManuaTitle>게임 소개</ManuaTitle>
+            <ManualDescription>{manualData.gameDescription}</ManualDescription>
+            <ManuaTitle>게임 진행 방법</ManuaTitle>
 
-            <p className="manual-content-descript">{manualData.gameManual}</p>
+            <ManualDescription>{manualData.gameManual}</ManualDescription>
           </div>
         )}
-      </div>
-    </div>
+      </ManualContainerBody>
+    </ManualContainer>
   );
 };
 
 export default GameManual;
+
+const ManualContainer = styled.div`
+  font-family: 'neodgm', cursive;
+  height: 77rem;
+  width: 50rem;
+  margin: 10rem auto auto auto;
+  background: #c0c0c0;
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
+  font-size: 2.5rem;
+  display: inline-block;
+`;
+
+const MiddleBar = styled.div`
+  width: 93%;
+  height: 3.7rem;
+  margin: 0.8rem auto;
+  background-color: white;
+  box-shadow: inset 0.3rem 0.3rem 0.4rem 0.1rem #161616cc;
+`;
+
+const MiddleBarBox = styled.pre`
+  position: relative;
+  height: 100%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  p {
+    overflow: hidden;
+  }
+`;
+
+const MiddleBarIcon = styled.img<{ direction: string }>`
+  position: absolute;
+  top: 0rem;
+  left: ${({ direction }) => direction === 'left' && '-0.7rem'};
+  right: ${({ direction }) => direction === 'right' && '-0.7rem'};
+  width: 1.9rem;
+`;
+
+const ManualContainerBody = styled.div`
+  width: 93%;
+  height: 83%;
+  margin: 0 auto 1.5rem auto;
+  padding: 1rem 3rem 2rem 3rem;
+  color: rgb(0, 0, 0);
+  background-color: rgb(254, 254, 254);
+  box-shadow: inset 0.2rem 0.2rem 0.3rem 0.3rem #161616cc;
+  overflow-y: auto;
+`;
+
+const ManuaTitle = styled.p`
+  font-size: 2.7rem;
+  padding: 1rem;
+  border-top: 0.3rem dashed black;
+  border-bottom: 0.3rem dashed black;
+  margin: 3rem auto;
+`;
+
+const ManualDescription = styled.p`
+  line-height: 3.5rem;
+  font-size: 1.9rem;
+`;
