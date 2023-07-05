@@ -26,6 +26,7 @@ export const ButtonDashedSmall: React.FC<ButtonSmallProps> = ({
     </ButtonContainer>
   );
 };
+
 export const ButtonNormalSmall: React.FC<ButtonSmallProps> = ({
   text,
   onClick,
