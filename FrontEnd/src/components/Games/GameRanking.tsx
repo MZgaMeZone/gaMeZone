@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { get } from '../../api/api';
 import styled from 'styled-components';
-import axios from 'axios';
 import backgroundImg from '../../style/icons/ranking-background.png';
 import rankingFavicon from '../../style/icons/ranking.svg';
 import { RankingDataType } from '../../types/gameType';
@@ -14,14 +14,13 @@ const GameRanking = (props: {
   const [rankingData, setRankingData] = useState<RankingDataType[]>([]);
 
   useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr/nonHnors/?num=10`
-      )
-      .then((res) => {
-        setRankingData(res.data);
-      })
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      const responseData = await get<RankingDataType[]>(
+        `/api/scores/${gameId}/avr/nonHnors/?num=10`
+      );
+      setRankingData(responseData.data);
+    };
+    fetchData();
   }, []);
 
   return (

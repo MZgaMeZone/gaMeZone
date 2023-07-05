@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { get } from '../../api/api';
 import gameoverBgImg from '../../style/icons/gameover-bg-img.svg';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
@@ -13,19 +13,17 @@ const GameOver = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  //recorder에서 유저의 이번 회차 점수 데이터도 같이 받아옴.
   const { gameId, userNickName, userAverageScore, userHighScore } =
     location.state || {};
 
   useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/api/scores/${gameId}/avr/nonHonors?num=10`
-      )
-      .then((res) => {
-        setRankingData(res.data);
-      })
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      const responseData = await get<RankingDataType[]>(
+        `/api/scores/${gameId}/avr/nonHonors?num=10`
+      );
+      setRankingData(responseData.data);
+    };
+    fetchData();
   }, []);
   return (
     <div

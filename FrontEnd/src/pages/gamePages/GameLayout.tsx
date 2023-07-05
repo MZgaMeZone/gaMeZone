@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { get } from '../../api/api';
+import UserDataType from '../../types/userType';
 import GameLoading from '../../components/Games/GameLoading';
 import GameRanking from '../../components/Games/GameRanking';
 import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
 import DefaultPage from '../../components/Games/defaultPage';
-import axios from 'axios';
 import gameFavicon from '../../style/icons/game_favicon.svg';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
 import ContainerHeader from '../../components/Common/ContainerHeader';
-import { fontFamily } from '@mui/system';
 
 const GameLayout = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,7 +32,6 @@ const GameLayout = () => {
   useEffect(() => {
     if (!sessionStorage[`${id}`]) {
       sessionStorage.setItem(`${id}`, `${id} is in session`);
-      console.log(sessionStorage[`${id}`]);
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
@@ -68,22 +67,13 @@ const GameLayout = () => {
     fetchUserInfo(token);
   }, []);
   const fetchUserInfo = (token: string | null) => {
-    // 서버로 토큰을 전송하여 유저 정보를 요청하는 API 호출
     if (token) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/users`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUserNickname(res.data.nickname);
-          setUserRole(res.data.role);
-        })
-        .catch((error) => {
-          // 에러 처리
-          console.error(error);
-        });
+      const fetchData = async () => {
+        const responseData = await get<UserDataType>(`/api/users`);
+        setUserNickname(responseData.data.nickname);
+        setUserRole(responseData.data.role);
+      };
+      fetchData();
     }
   };
 
