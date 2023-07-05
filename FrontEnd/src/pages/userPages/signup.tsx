@@ -9,6 +9,7 @@ import {
   ButtonNormalSmall,
   ButtonDashedSmall,
 } from '../../components/Common/ButtonSmall';
+import smileIcon from '../../style/icons/smile.svg';
 
 const url = process.env.REACT_APP_API_URL;
 
@@ -61,6 +62,13 @@ function Signup() {
       });
   }
 
+  const handleSubmitCheck = () => {
+    if (!emailDuplicateCheck) alert('이메일 중복 확인을 해주세요.');
+    else if (!nicknameDuplicateCheck) alert('닉네임 중복 확인을 해주세요.');
+    else if (!(password === passwordCheck))
+      alert('비밀번호 일치 여부를 확인해주세요.');
+  };
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -94,7 +102,11 @@ function Signup() {
     >
       <SingupSection>
         <SingupContainer>
-          <ContainerHeader title="회원가입" onClick={() => navigate(-1)} />
+          <ContainerHeader
+            favicon={smileIcon}
+            title="회원가입"
+            onClick={() => navigate(-1)}
+          />
           <SignupForm onSubmit={handleSubmit}>
             <SignupField>
               <p>Email</p>
@@ -193,17 +205,19 @@ function Signup() {
                 <p>비밀번호가 일치하지 않습니다.</p>
               )}
             </ErrorMessageContainer>
-            <ButtonContainer>
-              <ButtonDashedSmall
-                text="가입하기"
-                type="submit"
-                disabled={
-                  !emailDuplicateCheck ||
-                  !nicknameDuplicateCheck ||
-                  !(password === passwordCheck)
-                }
-              />
-            </ButtonContainer>
+            <ContainerFooter>
+              <div onClick={handleSubmitCheck}>
+                <ButtonDashedSmall
+                  text="가입하기"
+                  type="submit"
+                  disabled={
+                    !emailDuplicateCheck ||
+                    !nicknameDuplicateCheck ||
+                    !(password === passwordCheck)
+                  }
+                />
+              </div>
+            </ContainerFooter>
           </SignupForm>
         </SingupContainer>
       </SingupSection>
@@ -294,7 +308,7 @@ const ErrorMessageContainer = styled.div`
   color: red;
 `;
 
-const ButtonContainer = styled.div`
+const ContainerFooter = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 2rem;
