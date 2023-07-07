@@ -52,7 +52,6 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
 
   const handleMoleClick = () => {
     setScore((prevScore) => prevScore + 1);
-    console.log(score);
   };
   return (
     <Container>
