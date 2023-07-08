@@ -13,10 +13,10 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   const { setGameName } = props;
   const [showReady, setshowReady] = useState<boolean>(true);
   const [showMoles, setShowMoles] = useState<number[]>([]);
-  const [leftTime, setLeftTime] = useState<number>(60);
+  const [leftTime, setLeftTime] = useState<number>(30);
   const [score, setScore] = useState(0);
   useEffect(() => {
-    setGameName('두더지 게임 준비 중');
+    setGameName('두더지 게임');
   });
 
   const handlePlayButton = () => {
@@ -38,7 +38,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
       }
       setShowMoles(BooleanArray);
       TimeDown();
-    }, 1700);
+    }, 1300);
   };
 
   const TimeDown = () => {
@@ -54,8 +54,18 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     });
   };
 
-  const handleMoleClick = () => {
-    setScore((prevScore) => prevScore + 1);
+  const handleMoleClick = (moleColor: string) => {
+    if (moleColor === 'brown') {
+      setScore((prevScore) => prevScore + 10);
+    } else if (moleColor === 'gold') {
+      setScore((prevScore) => prevScore + 30);
+    } else if (moleColor === 'black') {
+      if (score < 30) {
+        setScore(0);
+      } else {
+        setScore((prevScore) => prevScore - 30);
+      }
+    }
   };
   return (
     <Container>
@@ -90,21 +100,21 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
                     isShow={showMole}
                     src={moleImg}
                     alt="moleImg"
-                    onClick={() => handleMoleClick()}
+                    onClick={() => handleMoleClick('brown')}
                   />
                 ) : showMole < 0.98 ? (
                   <Mole
                     isShow={showMole}
                     src={goldMoleImg}
                     alt="moleImg"
-                    onClick={() => handleMoleClick()}
+                    onClick={() => handleMoleClick('gold')}
                   />
                 ) : (
                   <Mole
                     isShow={showMole}
                     src={blackMoleImg}
                     alt="moleImg"
-                    onClick={() => handleMoleClick()}
+                    onClick={() => handleMoleClick('black')}
                   />
                 ))}
             </div>
@@ -223,12 +233,12 @@ const slideInAndOut = keyframes`
 
 const GameBody = styled.div`
   width: 70%;
-  height: 84%;
+  height: 84.5%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  row-gap: 4.7rem;
+  row-gap: 4.5rem;
   cursor: pointer;
   div {
     display: flex;
@@ -251,7 +261,7 @@ const Mole = styled.img<{ isShow: number }>`
   animation: ${({ isShow }) =>
     isShow >= 0.9 &&
     css`
-      ${slideInAndOut} 1.7s linear infinite
+      ${slideInAndOut} 1.3s linear infinite
     `};
   :active {
     height: 6rem;
