@@ -23,7 +23,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   const { setGameName } = props;
   const [showReady, setshowReady] = useState<boolean>(true);
   const [showMoles, setShowMoles] = useState<number[]>([]);
-  const [leftTime, setLeftTime] = useState<number>(5);
+  const [leftTime, setLeftTime] = useState<number>(30);
   const [score, setScore] = useState(0);
   const [userData, setUserData] = useState<userDataType>({
     nickname: 'Anonymous',
@@ -66,7 +66,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
       }
       setShowMoles(showMoleArray);
       TimeDown();
-    }, 1300);
+    }, 1100);
   };
 
   const TimeDown = () => {
@@ -288,7 +288,7 @@ const Mole = styled.img<{ isShow: number }>`
   animation: ${({ isShow }) =>
     isShow >= 0.9 &&
     css`
-      ${slideInAndOut} 1.3s linear infinite
+      ${slideInAndOut} 1.1s linear infinite
     `};
   :active {
     height: 6rem;
