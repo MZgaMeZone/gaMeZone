@@ -101,12 +101,13 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
         <ReadyContainer>
           <ReadyMask></ReadyMask>
           <ReadyBody>
-            <p>PRESS PLAY</p>
+            <h2>PRESS PLAY</h2>
             <PlayButtonImg
               src={playButton}
               alt="플레이버튼"
               onClick={() => handlePlayButton()}
             />
+            <p>상단 [게임설명]을 확인해보세요!</p>
           </ReadyBody>
         </ReadyContainer>
       )}
@@ -159,6 +160,7 @@ const Container = styled.div`
   width: 80rem;
   height: 50rem;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 `;
 const GameContainer = styled.div`
   width: 80rem;
@@ -212,11 +214,15 @@ const ReadyBody = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  p {
+  color: white;
+  h2 {
     font-size: 4rem;
-    color: white;
-    padding-bottom: 3rem;
+    font-weight: normal;
     animation: ${blinkAnimation} 1s infinite;
+  }
+  p {
+    font-size: 2.3rem;
+    padding-top: 3rem;
   }
 `;
 const PlayButtonImg = styled.img`
