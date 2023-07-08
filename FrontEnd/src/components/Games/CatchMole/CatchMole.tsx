@@ -4,6 +4,7 @@ import backGroundImg from '../../../style/images/CatchMoleBackground.svg';
 import moleImg from '../../../style/images/mole.svg';
 import playButton from '../../../style/icons/play_button.svg';
 import hammer from '../../../style/icons/hammer.svg';
+import hammerDown from '../../../style/icons/hammer_down.svg';
 
 function CatchMole(props: { setGameName: (name: string) => void }) {
   const { setGameName } = props;
@@ -108,6 +109,12 @@ const GameContainer = styled.div`
   background-image: url(${backGroundImg});
   background-size: cover;
   padding: 1.5rem;
+  :hover {
+    cursor: url(${hammer}) 15 15, url(${hammer}) 15 15, auto;
+  }
+  :active {
+    cursor: url(${hammerDown}) 15 15, url(${hammerDown}) 15 15, auto;
+  }
 `;
 
 const ReadyContainer = styled.div`
@@ -192,5 +199,11 @@ const GameBody = styled.div`
       height: 8rem;
       margin-right: 1rem;
     }
+  }
+  :hover {
+    cursor: url(${hammer}) 15 15, url(${hammer}) 15 15, auto;
+  }
+  :active {
+    cursor: url(${hammerDown}) 15 15, url(${hammerDown}) 15 15, auto;
   }
 `;
