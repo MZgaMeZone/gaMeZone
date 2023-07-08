@@ -122,7 +122,7 @@ const ManuaTitle = styled.p`
   margin: 3rem auto;
 `;
 
-const ManualDescription = styled.p`
+const ManualDescription = styled.pre`
   line-height: 3.5rem;
   font-size: 1.9rem;
 `;
