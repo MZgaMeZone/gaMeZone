@@ -1,23 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { get } from '../../../api/api';
+import CatchMoleRecorder from './CatchMoleRecorder';
 import backGroundImg from '../../../style/images/CatchMoleBackground.svg';
 import moleImg from '../../../style/images/mole.svg';
 import blackMoleImg from '../../../style/images/blackMole.svg';
 import goldMoleImg from '../../../style/images/goldMole.svg';
-
 import playButton from '../../../style/icons/play_button.svg';
 import hammer from '../../../style/icons/hammer.svg';
 import hammerDown from '../../../style/icons/hammer_down.svg';
+import { useNavigate } from 'react-router-dom';
+
+interface userDataType {
+  email?: string;
+  nickname: string;
+}
+
+const userToken: string | null = localStorage.getItem('userToken');
 
 function CatchMole(props: { setGameName: (name: string) => void }) {
+  const navigate = useNavigate();
   const { setGameName } = props;
   const [showReady, setshowReady] = useState<boolean>(true);
   const [showMoles, setShowMoles] = useState<number[]>([]);
-  const [leftTime, setLeftTime] = useState<number>(30);
+  const [leftTime, setLeftTime] = useState<number>(5);
   const [score, setScore] = useState(0);
+  const [userData, setUserData] = useState<userDataType>({
+    nickname: 'Anonymous',
+  });
+
   useEffect(() => {
     setGameName('두더지 게임');
   });
+
+  useEffect(() => {
+    if (userToken) {
+      const fetchData = async () => {
+        const responseData = await get<userDataType>('/api/users');
+        setUserData(responseData.data);
+      };
+      fetchData();
+    } else {
+      setUserData({
+        nickname: 'Anonymous',
+      });
+    }
+  }, []);
 
   const handlePlayButton = () => {
     setshowReady(false);
@@ -27,31 +55,22 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   let moleInterval: NodeJS.Timer;
   const handleShowMoles = () => {
     moleInterval = setInterval(() => {
-      let BooleanArray: number[] = [];
+      let showMoleArray: number[] = [];
       for (let i = 0; i < 9; i++) {
         let randomValue = Math.random();
         if (randomValue < 0.9) {
-          BooleanArray.push(0);
+          showMoleArray.push(0);
         } else {
-          BooleanArray.push(randomValue);
+          showMoleArray.push(randomValue);
         }
       }
-      setShowMoles(BooleanArray);
+      setShowMoles(showMoleArray);
       TimeDown();
     }, 1300);
   };
 
   const TimeDown = () => {
-    setLeftTime((prevTime) => {
-      let updatedTime = prevTime;
-      if (updatedTime === 0) {
-        clearInterval(moleInterval);
-        alert('gameover');
-      } else {
-        updatedTime = prevTime - 1;
-      }
-      return updatedTime;
-    });
+    setLeftTime((prevTime) => prevTime - 1);
   };
 
   const handleMoleClick = (moleColor: string) => {
@@ -67,6 +86,15 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
       }
     }
   };
+
+  useEffect(() => {
+    if (leftTime === 0) {
+      clearInterval(moleInterval);
+      setShowMoles([]);
+      CatchMoleRecorder(navigate, score, userData);
+    }
+  }, [leftTime]);
+
   return (
     <Container>
       {showReady && (
@@ -245,7 +273,6 @@ const GameBody = styled.div`
     align-items: end;
     justify-content: center;
     overflow-y: hidden;
-    /* border: 1rem solid red; */
   }
   :hover {
     cursor: url(${hammer}) 15 15, url(${hammer}) 15 15, auto;
