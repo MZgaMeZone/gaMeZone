@@ -30,7 +30,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   });
 
   useEffect(() => {
-    setGameName('두더지 게임');
+    setGameName('두더지 잡기');
   });
 
   useEffect(() => {
