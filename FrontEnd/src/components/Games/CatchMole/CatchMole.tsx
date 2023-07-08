@@ -159,6 +159,7 @@ const Container = styled.div`
   width: 80rem;
   height: 50rem;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 `;
 const GameContainer = styled.div`
   width: 80rem;
