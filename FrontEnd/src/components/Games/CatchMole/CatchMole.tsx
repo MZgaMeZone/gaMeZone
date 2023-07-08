@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import backGroundImg from '../../../style/images/CatchMoleBackground.svg';
 import moleImg from '../../../style/images/mole.svg';
+import blackMoleImg from '../../../style/images/blackMole.svg';
+import goldMoleImg from '../../../style/images/goldMole.svg';
+
 import playButton from '../../../style/icons/play_button.svg';
 import hammer from '../../../style/icons/hammer.svg';
 import hammerDown from '../../../style/icons/hammer_down.svg';
@@ -9,7 +12,7 @@ import hammerDown from '../../../style/icons/hammer_down.svg';
 function CatchMole(props: { setGameName: (name: string) => void }) {
   const { setGameName } = props;
   const [showReady, setshowReady] = useState<boolean>(true);
-  const [showMoles, setShowMoles] = useState<boolean[]>([]);
+  const [showMoles, setShowMoles] = useState<number[]>([]);
   const [leftTime, setLeftTime] = useState<number>(60);
   const [score, setScore] = useState(0);
   useEffect(() => {
@@ -24,18 +27,18 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   let moleInterval: NodeJS.Timer;
   const handleShowMoles = () => {
     moleInterval = setInterval(() => {
-      let BooleanArray: boolean[] = [];
+      let BooleanArray: number[] = [];
       for (let i = 0; i < 9; i++) {
         let randomValue = Math.random();
         if (randomValue < 0.9) {
-          BooleanArray.push(false);
+          BooleanArray.push(0);
         } else {
-          BooleanArray.push(true);
+          BooleanArray.push(randomValue);
         }
       }
       setShowMoles(BooleanArray);
       TimeDown();
-    }, 1000);
+    }, 1700);
   };
 
   const TimeDown = () => {
@@ -81,13 +84,29 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
         <GameBody>
           {showMoles.map((showMole, index) => (
             <div key={'mole' + index}>
-              {showMole && (
-                <img
-                  src={moleImg}
-                  alt="moleImg"
-                  onClick={() => handleMoleClick()}
-                />
-              )}
+              {showMole > 0 &&
+                (showMole < 0.96 ? (
+                  <Mole
+                    isShow={showMole}
+                    src={moleImg}
+                    alt="moleImg"
+                    onClick={() => handleMoleClick()}
+                  />
+                ) : showMole < 0.98 ? (
+                  <Mole
+                    isShow={showMole}
+                    src={goldMoleImg}
+                    alt="moleImg"
+                    onClick={() => handleMoleClick()}
+                  />
+                ) : (
+                  <Mole
+                    isShow={showMole}
+                    src={blackMoleImg}
+                    alt="moleImg"
+                    onClick={() => handleMoleClick()}
+                  />
+                ))}
             </div>
           ))}
         </GameBody>
@@ -182,28 +201,59 @@ const GameHeader = styled.div`
 const LeftTime = styled.span<{ leftTime: number }>`
   color: ${({ leftTime }) => (leftTime < 11 && leftTime > 0 ? 'red' : 'white')};
 `;
+
+const slideInAndOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+`;
+
 const GameBody = styled.div`
   width: 70%;
-  height: 90%;
+  height: 84%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  row-gap: 1.5rem;
+  row-gap: 4.7rem;
   cursor: pointer;
   div {
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
-    img {
-      height: 8rem;
-      margin-right: 1rem;
-    }
+    overflow-y: hidden;
+    /* border: 1rem solid red; */
   }
   :hover {
     cursor: url(${hammer}) 15 15, url(${hammer}) 15 15, auto;
   }
   :active {
     cursor: url(${hammerDown}) 15 15, url(${hammerDown}) 15 15, auto;
+  }
+`;
+
+const Mole = styled.img<{ isShow: number }>`
+  height: 8rem;
+  margin-right: 1rem;
+  animation: ${({ isShow }) =>
+    isShow >= 0.9 &&
+    css`
+      ${slideInAndOut} 1.7s linear infinite
+    `};
+  :active {
+    height: 6rem;
   }
 `;
