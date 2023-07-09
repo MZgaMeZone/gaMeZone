@@ -161,6 +161,10 @@ const Container = styled.div`
   height: 50rem;
   position: relative;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
 `;
 const GameContainer = styled.div`
   width: 80rem;
@@ -218,11 +222,16 @@ const ReadyBody = styled.div`
   h2 {
     font-size: 4rem;
     font-weight: normal;
+    margin-top: 0;
     animation: ${blinkAnimation} 1s infinite;
   }
   p {
-    font-size: 2.3rem;
-    padding-top: 3rem;
+    font-size: 2rem;
+    position: absolute;
+    bottom: 2rem;
+    right: 50;
+    left: 50;
+    text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
   }
 `;
 const PlayButtonImg = styled.img`
