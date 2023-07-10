@@ -28,6 +28,8 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   const [userData, setUserData] = useState<userDataType>({
     nickname: 'Anonymous',
   });
+  const [throttle, setThrottle] = useState(false);
+  const [throttlingMoleId, setThrottlingMoleId] = useState(0);
 
   useEffect(() => {
     setGameName('두더지 잡기');
@@ -87,6 +89,19 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     }
   };
 
+  const throttledClickHandler = (moleColor: string, moleId: number) => {
+    if (throttle && throttlingMoleId === moleId) {
+      return;
+    }
+    setThrottle(true);
+    setThrottlingMoleId(moleId);
+    handleMoleClick(moleColor);
+
+    setTimeout(() => {
+      setThrottle(false);
+    }, 1000);
+  };
+
   useEffect(() => {
     if (leftTime === 0) {
       clearInterval(moleInterval);
@@ -129,21 +144,21 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
                     isShow={showMole}
                     src={moleImg}
                     alt="moleImg"
-                    onClick={() => handleMoleClick('brown')}
+                    onClick={() => throttledClickHandler('brown', showMole)}
                   />
                 ) : showMole < 0.98 ? (
                   <Mole
                     isShow={showMole}
                     src={goldMoleImg}
                     alt="moleImg"
-                    onClick={() => handleMoleClick('gold')}
+                    onClick={() => throttledClickHandler('gold', showMole)}
                   />
                 ) : (
                   <Mole
                     isShow={showMole}
                     src={blackMoleImg}
                     alt="moleImg"
-                    onClick={() => handleMoleClick('black')}
+                    onClick={() => throttledClickHandler('black', showMole)}
                   />
                 ))}
             </div>
