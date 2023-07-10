@@ -29,7 +29,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     nickname: 'Anonymous',
   });
   const [throttle, setThrottle] = useState(false);
-  const [throttlingMoleId, setThrottlingMoleId] = useState(0);
+  const [throttlingMoleId, setThrottlingMoleId] = useState(-1);
 
   useEffect(() => {
     setGameName('두더지 잡기');
@@ -99,6 +99,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
 
     setTimeout(() => {
       setThrottle(false);
+      setThrottlingMoleId(-1);
     }, 1000);
   };
 
