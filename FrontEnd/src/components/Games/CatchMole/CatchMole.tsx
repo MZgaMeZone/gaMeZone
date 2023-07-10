@@ -16,11 +16,10 @@ interface userDataType {
   nickname: string;
 }
 
-const userToken: string | null = localStorage.getItem('userToken');
-
 function CatchMole(props: { setGameName: (name: string) => void }) {
   const navigate = useNavigate();
   const { setGameName } = props;
+  const userToken: string | null = localStorage.getItem('userToken');
   const [showReady, setshowReady] = useState<boolean>(true);
   const [showMoles, setShowMoles] = useState<number[]>([]);
   const [leftTime, setLeftTime] = useState<number>(30);
@@ -36,16 +35,17 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   });
 
   useEffect(() => {
-    if (userToken) {
-      const fetchData = async () => {
-        const responseData = await get<userDataType>('/api/users');
-        setUserData(responseData.data);
-      };
-      fetchData();
-    } else {
+    if (!userToken) {
       setUserData({
         nickname: 'Anonymous',
       });
+    } else {
+      const fetchData = async () => {
+        const responseData = await get<userDataType>('/api/users');
+        console.log(responseData);
+        setUserData(responseData.data);
+      };
+      fetchData();
     }
   }, []);
 
