@@ -9,10 +9,12 @@ import DeleteComment from './DeleteComment';
 import { dateFormatter } from '../../utils/dateUtil';
 
 const CommentList = ({ comment, postId }: CommentListProps) => {
+  const userToken: string | null = localStorage.getItem('userToken');
   const [patchModal, setPatchModal] = useState(false);
   const [userEmail, setUserEmail] = useState<string>('');
 
   useEffect(() => {
+    if (!userToken) return;
     const fetchData = async () => {
       const responseData = await get<UserDataType>('/api/users');
       setUserEmail(responseData.data.email);

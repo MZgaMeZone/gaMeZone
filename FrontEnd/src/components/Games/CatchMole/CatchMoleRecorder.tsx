@@ -12,6 +12,7 @@ async function CatchMoleRecorder(
   score: number,
   userData: userDataType
 ) {
+  const userToken: string | null = localStorage.getItem('userToken');
   const gameResult = {
     gameId: '64a56167ca850635fec2e2e7',
     userNickname: userData.nickname,
@@ -22,6 +23,7 @@ async function CatchMoleRecorder(
     highScore: score,
   };
 
+  if (!userToken) return;
   await axios
     .post(`${process.env.REACT_APP_API_URL}/api/scores`, gameResult)
     .then((res) => {
