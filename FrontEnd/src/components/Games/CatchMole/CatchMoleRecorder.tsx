@@ -23,6 +23,15 @@ async function CatchMoleRecorder(
     highScore: score,
   };
 
+  navigate('/game/gameOver', {
+    state: {
+      gameId: gameResult.gameUrl,
+      userNickName: userData.nickname,
+      userAverageScore: score,
+      userHighScore: score,
+    },
+  });
+
   if (!userToken) return;
   await axios
     .post(`${process.env.REACT_APP_API_URL}/api/scores`, gameResult)
