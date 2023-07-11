@@ -42,7 +42,6 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     } else {
       const fetchData = async () => {
         const responseData = await get<userDataType>('/api/users');
-        console.log(responseData);
         setUserData(responseData.data);
       };
       fetchData();
