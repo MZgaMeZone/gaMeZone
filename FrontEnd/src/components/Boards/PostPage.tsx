@@ -13,6 +13,7 @@ import { dateFormatter } from '../../utils/dateUtil';
 import exitImg from '../../style/icons/x-solid.svg';
 
 const PostPage = ({ boardCategory }: CategoryType) => {
+  const userToken: string | null = localStorage.getItem('userToken');
   const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
   const [userEmail, setUserEmail] = useState<string>('');
   const [category, setCategory] = useState<string>('');
@@ -20,6 +21,7 @@ const PostPage = ({ boardCategory }: CategoryType) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!userToken) return;
     const fetchData = async () => {
       const responseData = await get<UserDataType>('/api/users');
       setUserEmail(responseData.data.email);

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import '../../style/gameLayout.css';
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
-import GameLoading from './gameLoading';
-import GameRanking from './gameRanking';
-import GameManual from './gameManual';
+import { get } from '../../api/api';
+import UserDataType from '../../types/userType';
+import GameLoading from '../../components/Games/GameLoading';
+import GameRanking from '../../components/Games/GameRanking';
+import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
+import CatchMoleGame from '../../components/Games/CatchMole/CatchMole'
 import DefaultPage from '../../components/Games/defaultPage';
-import axios from 'axios';
-import exitImg from '../../style/icons/x-solid.svg';
 import gameFavicon from '../../style/icons/game_favicon.svg';
 import MainBody from '../mainPage/mainBody';
 import MainFooter from '../mainPage/mainFooter';
-import { fontFamily } from '@mui/system';
+import ContainerHeader from '../../components/Common/ContainerHeader';
 
 const GameLayout = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -33,7 +33,6 @@ const GameLayout = () => {
   useEffect(() => {
     if (!sessionStorage[`${id}`]) {
       sessionStorage.setItem(`${id}`, `${id} is in session`);
-      console.log(sessionStorage[`${id}`]);
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
@@ -57,6 +56,9 @@ const GameLayout = () => {
     case '10seconds':
       gameComponent = <TimeStopGame setGameName={handleGameName} />;
       break;
+    case 'CatchMole':
+      gameComponent = <CatchMoleGame setGameName={handleGameName} />;
+      break;
     default:
       gameComponent = (
         <DefaultPage setGameName={handleGameName}>Invalid Game ID</DefaultPage>
@@ -69,22 +71,13 @@ const GameLayout = () => {
     fetchUserInfo(token);
   }, []);
   const fetchUserInfo = (token: string | null) => {
-    // 서버로 토큰을 전송하여 유저 정보를 요청하는 API 호출
     if (token) {
-      axios
-        .get(`${process.env.REACT_APP_API_URL}/api/users`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          setUserNickname(res.data.nickname);
-          setUserRole(res.data.role);
-        })
-        .catch((error) => {
-          // 에러 처리
-          console.error(error);
-        });
+      const fetchData = async () => {
+        const responseData = await get<UserDataType>(`/api/users`);
+        setUserNickname(responseData.data.nickname);
+        setUserRole(responseData.data.role);
+      };
+      fetchData();
     }
   };
 
@@ -94,31 +87,20 @@ const GameLayout = () => {
         backgroundColor: '#008080',
         height: '100vh',
         width: '100vw',
-        // minHeight: '880px',
-        // minWidth: '900px',
         overflow: 'hidden',
       }}
     >
       {isLoading ? (
         <GameLoading />
       ) : (
-        <div className="game-body">
-          <div className="game-container">
-            <div className="game-container-header">
-              <div className="game-container-header-title">
-                <img src={gameFavicon} alt="gameFavicon" />
-                <p>{gameName}</p>
-              </div>
-              <div
-                className="exit-button"
-                onClick={() => {
-                  navigate(-1);
-                }}
-              >
-                <img src={exitImg} alt="exitImg" />
-              </div>
-            </div>
-            <nav id="game-container-nav">
+        <GameBody>
+          <GameContainer>
+            <ContainerHeader
+              favicon={gameFavicon}
+              title={gameName}
+              onClick={() => navigate(-1)}
+            />
+            <GameContainerNav>
               <p
                 onClick={() => {
                   setShowManual(!showManual);
@@ -133,17 +115,15 @@ const GameLayout = () => {
               >
                 랭킹
               </p>
-            </nav>
-            <div className="game-container-body">{gameComponent}</div>
-            <div className="game-container-footer">
-              <div className="footer-box box1">
+            </GameContainerNav>
+            <GameContainerBody>{gameComponent}</GameContainerBody>
+            <GameContainerFooter>
+              <FooterBox long={false}>
                 {userRole ? userRole : 'guest'}
-              </div>
-              <div className="footer-box box2">
-                {userNickname ? userNickname : ''}
-              </div>
-            </div>
-          </div>
+              </FooterBox>
+              <FooterBox long>{userNickname ? userNickname : ''}</FooterBox>
+            </GameContainerFooter>
+          </GameContainer>
           <>
             {showRanking ? (
               <GameRanking setShowRanking={setShowRanking} gameId={id} />
@@ -151,7 +131,7 @@ const GameLayout = () => {
               <GameManual setShowManual={setShowManual} gameId={id} />
             ) : null}
           </>
-        </div>
+        </GameBody>
       )}
       <MainBody mainModal={mainModal} setMainModal={setMainModal}></MainBody>
       <MainFooter
@@ -163,3 +143,58 @@ const GameLayout = () => {
 };
 
 export default GameLayout;
+
+const GameBody = styled.div`
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'neodgm', cursive;
+  display: flex;
+  justify-content: center;
+`;
+
+const GameContainer = styled.div`
+  margin: 10rem auto auto auto;
+  background: #c0c0c0;
+  border: 1px solid #000000;
+  box-shadow: 3px 3px 4px #1c1c1c;
+  font-size: 2.5rem;
+  display: inline-block;
+`;
+
+const GameContainerNav = styled.nav`
+  display: flex;
+  padding: 0 2rem;
+  height: 4.5rem;
+  border-bottom: #7e7e7e 0.2rem solid;
+  p {
+    cursor: pointer;
+    font-size: 2.3rem;
+    padding: 1rem;
+    margin: 0;
+    :hover {
+      background-color: rgb(222, 222, 222);
+    }
+  }
+`;
+
+const GameContainerBody = styled.div`
+  padding: 1rem;
+`;
+const GameContainerFooter = styled.div`
+  width: 99%;
+  height: 4rem;
+  margin: 0.7rem auto;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+const FooterBox = styled.div<{ long: boolean }>`
+  flex-basis: ${({ long }) => (long ? '60%' : '30%')};
+  box-shadow: inset -3px -3px 3px rgba(255, 255, 255, 0.8),
+    inset 3px 3px 3px rgba(0, 0, 0, 0.32);
+  padding: 0.6rem 0.6rem;
+  display: flex;
+  justify-content: center;
+`;
