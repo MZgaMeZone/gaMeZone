@@ -35,9 +35,6 @@ async function CatchMoleRecorder(
   if (!userToken) return;
   await axios
     .post(`${process.env.REACT_APP_API_URL}/api/scores`, gameResult)
-    .then((res) => {
-      console.log(res.data);
-    })
     .catch((e) => console.error(e))
     .finally(() => {
       navigate('/game/gameOver', {
