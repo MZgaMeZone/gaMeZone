@@ -7,7 +7,8 @@ import GameLoading from '../../components/Games/GameLoading';
 import GameRanking from '../../components/Games/GameRanking';
 import GameManual from '../../components/Games/GameManual';
 import TimeStopGame from '../../components/Games/StopWatch/timeStop';
-import CatchMoleGame from '../../components/Games/CatchMole/CatchMole'
+import CatchMoleGame from '../../components/Games/CatchMole/CatchMole';
+import Hangman from '../../components/Games/HangMan/HangMan';
 import DefaultPage from '../../components/Games/defaultPage';
 import gameFavicon from '../../style/icons/game_favicon.svg';
 import MainBody from '../mainPage/mainBody';
@@ -58,6 +59,9 @@ const GameLayout = () => {
       break;
     case 'CatchMole':
       gameComponent = <CatchMoleGame setGameName={handleGameName} />;
+      break;
+    case 'hangman':
+      gameComponent = <Hangman setGameName={handleGameName} />;
       break;
     default:
       gameComponent = (
