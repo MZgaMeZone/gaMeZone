@@ -51,7 +51,6 @@ const Hangman = (props: { setGameName: (name: string) => void }) => {
   const incorrectLetters = guessedLetters.filter(
     (letter) => !guessWord.includes(letter)
   );
-  console.log(guessWord);
 
   // 목숨은 7개
   const gameOver = incorrectLetters.length >= 7;
