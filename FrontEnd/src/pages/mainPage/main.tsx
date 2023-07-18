@@ -21,9 +21,9 @@ const Main = () => {
       img: require('../../style/icons/gameIcons/10SecondsGame.png'),
     },
     {
-      name: '짭리오',
-      url: 'default',
-      img: require('../../style/icons/gameIcons/mushroomGame.png'),
+      name: '행맨',
+      url: 'hangman',
+      img: require('../../style/icons/gameIcons/hangman.png'),
     },
     {
       name: '애니콜 폭탄게임',

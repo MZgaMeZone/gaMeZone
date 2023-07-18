@@ -3,14 +3,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 type RecorderProps = {
-  scores: any[];
-  setScores: React.Dispatch<React.SetStateAction<any[]>>;
-  printScore: any[];
-  setPrintScore: React.Dispatch<React.SetStateAction<any[]>>;
-  gameModeChecker: string;
-  // setGameModeChecker: React.Dispatch<React.SetStateAction<string>>;
+  scores: [number, string][];
+  setScores: React.Dispatch<React.SetStateAction<[number, string][]>>;
+  printScore: string[];
   gameMode: string;
-  setGameMode: React.Dispatch<React.SetStateAction<string>>;
 };
 
 interface userDataType {
@@ -27,15 +23,8 @@ const config = {
 };
 
 function Recorder(props: RecorderProps) {
-  const scores = props.scores;
-  const setScores = props.setScores;
-  const printScore = props.printScore;
-  const setPrintScore = props.setPrintScore;
-  const gameModeChecker = props.gameModeChecker;
-  const gameMode = props.gameMode;
-  const setGameMode = props.setGameMode;
+  const { scores, setScores, printScore, gameMode } = props;
   const navigate = useNavigate();
-
   const [userData, setUserData] = useState<userDataType>({
     nickname: 'Anonymous',
   });
@@ -55,7 +44,7 @@ function Recorder(props: RecorderProps) {
 
   // 현재 저장된 기록을 제출하려고함.
   function scoreSubmit(
-    score: string[],
+    score: [number, string][],
     highscore: number,
     averagescore: string
   ) {
@@ -77,10 +66,6 @@ function Recorder(props: RecorderProps) {
   function grade(num: number): string {
     const timeGap = Math.abs(num - 10);
     let gameScore = '🤔Bad';
-    // let gameMode = "Blind";
-    // if (mode === 1) {
-    //   gameMode = "";
-    // }
     if (timeGap === 0) {
       gameScore = '👑Perfect';
     } else if (timeGap < 0.01) {
@@ -110,9 +95,9 @@ function Recorder(props: RecorderProps) {
           기록실
         </div>
         <ul id="recordboard">
-          {scores.map((score, index) => (
+          {scores.map(([time, mode]: [number, string], index: number) => (
             <li key={index}>
-              {index + 1}회차 : {score[0]}초 {grade(score[0])} [{score[1]}]
+              {index + 1}회차 : {time}초 {grade(time)} [{mode}]
             </li>
           ))}
         </ul>
@@ -123,7 +108,7 @@ function Recorder(props: RecorderProps) {
           <div id="worst-record-text">최저 기록 : {printScore[1]}%</div>
           <div id="average-gap-text">평균 기록 : {printScore[2]}%</div>
           <div id="average-gap-text">
-            당신의 평균 등급은 {grade(printScore[2] / 10)} 입니다!
+            당신의 평균 등급은 {grade(parseInt(printScore[2]) / 10)} 입니다!
           </div>
           <div id="gap-box"></div>
         </>
@@ -150,7 +135,7 @@ function Recorder(props: RecorderProps) {
             id="submit-button"
             onClick={() => {
               if (scores.length >= 5) {
-                scoreSubmit(scores, printScore[0], printScore[2]);
+                scoreSubmit(scores, parseInt(printScore[0]), printScore[2]);
                 alert('기록 제출이 완료되었습니다!');
                 setScores([]);
                 //게임 오버로 데이터 넘깁시다
