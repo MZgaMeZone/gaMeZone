@@ -4,8 +4,8 @@ import Recorder from './recorder/recorder';
 import Controller from './controller/controller';
 
 function TimeStopGame(props: { setGameName: (name: string) => void }) {
-  const [scores, setScores] = React.useState<any[]>([]);
-  const [printScore, setPrintScore] = React.useState<any[]>([]);
+  const [scores, setScores] = React.useState<[number, string][]>([]);
+  const [printScore, setPrintScore] = React.useState<string[]>([]);
   const [gameMode, setGameMode] = React.useState<string>('연습');
   const [gameModeChecker, setGameModeChecker] = React.useState('blind');
 
@@ -35,11 +35,7 @@ function TimeStopGame(props: { setGameName: (name: string) => void }) {
           scores={scores}
           printScore={printScore}
           setScores={setScores}
-          setPrintScore={setPrintScore}
-          gameModeChecker={gameModeChecker}
-          // setGameModeChecker={setGameModeChecker}
           gameMode={gameMode}
-          setGameMode={setGameMode}
         />
       </div>
     </>

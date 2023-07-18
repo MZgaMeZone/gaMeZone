@@ -2,10 +2,10 @@ import React from 'react';
 import Now from '../../../Tools/Timer';
 
 type ControllerProps = {
-  scores: any[];
-  setScores: React.Dispatch<React.SetStateAction<any[]>>;
-  printScore: any[];
-  setPrintScore: React.Dispatch<React.SetStateAction<any[]>>;
+  scores: [number, string][];
+  setScores: React.Dispatch<React.SetStateAction<[number, string][]>>;
+  printScore: string[];
+  setPrintScore: React.Dispatch<React.SetStateAction<string[]>>;
   gameModeChecker: string;
   setGameModeChecker: React.Dispatch<React.SetStateAction<string>>;
   gameMode: string;
@@ -21,15 +21,16 @@ function Controller(props: ControllerProps) {
   const [elapsedTime, setElapsedTime] = React.useState<number | null>(null);
   const [showScore, setShowScore] = React.useState(false);
   const [showTime, setShowTime] = React.useState(false);
+  const {
+    scores,
+    setScores,
+    setPrintScore,
+    gameModeChecker,
+    setGameModeChecker,
+    gameMode,
+    setGameMode,
+  } = props;
 
-  const scores = props.scores;
-  const setScores = props.setScores;
-  //   const printScore = props.printScore;
-  const setPrintScore = props.setPrintScore;
-  const gameModeChecker = props.gameModeChecker;
-  const setGameModeChecker = props.setGameModeChecker;
-  const gameMode = props.gameMode;
-  const setGameMode = props.setGameMode;
   // 게임 시작 버튼
   function gameStart() {
     const start = new Date();
@@ -58,19 +59,7 @@ function Controller(props: ControllerProps) {
       } else {
         setScores([...scores, [elapsedTime, gameModeChecker]]);
       }
-      // localStorage.setItem("score", JSON.stringify([...scores, elapsedTime])); // 로컬스토리지 사용 보류
     }
-    // ----------------로컬스토리지를 활용하는 방법 - 사용 보류 ----------------------
-    // const scoreData = localStorage.getItem("score");
-    // if (scoreData && scoreData.length > 0) {
-    //   const newScoreData = JSON.parse(scoreData);
-    //   newScoreData.push(elapsedTime);
-    //   localStorage.setItem("score", JSON.stringify(newScoreData));
-    // } else {
-    //   const newScoreData = [elapsedTime];
-    //   localStorage.setItem("score", JSON.stringify(newScoreData));
-    // }
-    // ----------------------------------------------------------------------------
   }
 
   // 게임 리셋 기능 : 버튼 및 기록 초기화
@@ -88,23 +77,6 @@ function Controller(props: ControllerProps) {
     setShowTime(!showTime);
     setGameModeChecker('visible'); // 한번이라도 모드 변경했으면 무조건 visible 모드
   }
-
-  // 경과시간을 출력하는 부분 - 기존 코드
-  // 아래 개선된 코드와 비교하여 완벽하게 이해하고 나서 삭제할 것.
-  // React.useEffect(() => {
-  //   if (initTime && !endTime) {
-  //     const nowTime = initTime[1].getTime();
-  //     const intervalId = setInterval(() => {
-  //       setElapsedTime((new Date().getTime() - nowTime) / 1000);
-  //     }, 50);
-
-  //     return () => clearInterval(intervalId);
-  //   }
-  // }, [initTime, endTime]);
-
-  // 경과시간을 출력하는 부분
-  // [효율성 개선 by GPT] (기존)setInterval => (개선)AnimationFrame
-  // 참고자료 : https://developer.mozilla.org/ko/docs/Web/API/window/requestAnimationFrame
   React.useEffect(() => {
     let intervalId: number;
     let lastTime: number;
@@ -120,22 +92,6 @@ function Controller(props: ControllerProps) {
     }
     return () => cancelAnimationFrame(intervalId);
   }, [initTime, endTime]);
-
-  // ----------------로컬스토리지를 활용하는 방법 - 사용 보류 ----------------------
-  // React.useEffect(() => {
-  //   const scoreData = localStorage.getItem("score");
-  //   if (scoreData && scoreData.length > 0) {
-  //     const parsedScoreData = JSON.parse(scoreData);
-  //     if (JSON.stringify(parsedScoreData) !== JSON.stringify(scoreData)) {
-  //       setScores(parsedScoreData);
-  //       console.log("무한루프체크5");
-  //     }
-  //   } else {
-  //     console.log("무한루프체크6");
-  //     setScores([]);
-  //   }
-  // }, []);
-  // ----------------------------------------------------------------------------
 
   // 기록된 누적 데이터의 분석을 보여주는 부분.
   React.useEffect(() => {
@@ -158,7 +114,6 @@ function Controller(props: ControllerProps) {
         ((10 - Math.abs(worstScore[0] - 10)) * 10).toFixed(2),
         ((100 * (10 - averageScore)) / 10).toFixed(2),
       ];
-
       setPrintScore(finalMessage);
     } else {
       setPrintScore([]);
