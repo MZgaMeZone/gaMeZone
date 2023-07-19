@@ -66,15 +66,15 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
         }
       }
       setShowMoles(showMoleArray);
-      TimeDown();
+      timeDown();
     }, 1100);
   };
 
-  const TimeDown = () => {
+  const timeDown = () => {
     setLeftTime((prevTime) => prevTime - 1);
   };
 
-  const handleMoleClick = (moleColor: string) => {
+  const updateScore = (moleColor: string) => {
     if (moleColor === 'brown') {
       setScore((prevScore) => prevScore + 10);
     } else if (moleColor === 'gold') {
@@ -94,7 +94,7 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     }
     setThrottle(true);
     setThrottlingMoleId(moleId);
-    handleMoleClick(moleColor);
+    updateScore(moleColor);
 
     setTimeout(() => {
       setThrottle(false);
