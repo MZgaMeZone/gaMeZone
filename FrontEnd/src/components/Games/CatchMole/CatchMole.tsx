@@ -180,6 +180,8 @@ const Container = styled.div`
   -moz-user-select: none;
   -ms-use-select: none;
   user-select: none;
+  -khtml-user-select: none;
+  -o-user-select: none;
 `;
 const GameContainer = styled.div`
   width: 80rem;
@@ -252,6 +254,11 @@ const ReadyBody = styled.div`
 const PlayButtonImg = styled.img`
   width: 15rem;
   cursor: pointer;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 `;
 
 const GameHeader = styled.div`
@@ -323,4 +330,16 @@ const Mole = styled.img<{ isShow: number }>`
   :active {
     height: 6rem;
   }
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-use-select: none;
+  user-select: none;
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
 `;
