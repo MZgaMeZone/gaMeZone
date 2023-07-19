@@ -23,28 +23,27 @@ async function CatchMoleRecorder(
     highScore: score,
   };
 
-  navigate('/game/gameOver', {
-    state: {
-      gameId: gameResult.gameUrl,
-      userNickName: userData.nickname,
-      userAverageScore: score,
-      userHighScore: score,
-    },
-  });
+  const NavigateToGameOver = () => {
+    navigate('/game/gameOver', {
+      state: {
+        gameId: gameResult.gameUrl,
+        userNickName: userData.nickname,
+        userAverageScore: score,
+        userHighScore: score,
+      },
+    });
+  };
 
-  if (!userToken) return;
+  if (!userToken) {
+    NavigateToGameOver();
+    return;
+  }
+
   await axios
     .post(`${process.env.REACT_APP_API_URL}/api/scores`, gameResult)
     .catch((e) => console.error(e))
     .finally(() => {
-      navigate('/game/gameOver', {
-        state: {
-          gameId: gameResult.gameUrl,
-          userNickName: userData.nickname,
-          userAverageScore: score,
-          userHighScore: score,
-        },
-      });
+      NavigateToGameOver();
     });
 }
 
