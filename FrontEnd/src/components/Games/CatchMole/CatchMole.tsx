@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { get } from '../../../api/api';
 import CatchMoleRecorder from './CatchMoleRecorder';
@@ -22,6 +22,9 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
   const userToken: string | null = localStorage.getItem('userToken');
   const [showReady, setshowReady] = useState<boolean>(true);
   const [showMoles, setShowMoles] = useState<number[]>([]);
+  const initialMoleScore = Array(9).fill(0);
+  const [moleScore, setMoleScore] = useState<number[]>(initialMoleScore);
+  const isDoubleProcessing = useRef(false);
   const [leftTime, setLeftTime] = useState<number>(30);
   const [score, setScore] = useState(0);
   const [userData, setUserData] = useState<userDataType>({
@@ -74,12 +77,39 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     setLeftTime((prevTime) => prevTime - 1);
   };
 
-  const updateScore = (moleColor: string) => {
+  const showSelectedMoleScore = (score: number, moleLocation: number) => {
+    if (moleScore[moleLocation] !== 0) {
+      isDoubleProcessing.current = true;
+    }
+    setMoleScore((prev) => {
+      const newMoleScoreArray = [...prev];
+      newMoleScoreArray[moleLocation] = score;
+      return newMoleScoreArray;
+    });
+
+    setTimeout(() => {
+      if (isDoubleProcessing.current) {
+        isDoubleProcessing.current = false; // useRef로 참조한 변수는 .current를 통해 현재 값을 변경할 수 있음
+        return;
+      } else {
+        setMoleScore((prev) => {
+          const newMoleScoreArray = [...prev];
+          newMoleScoreArray[moleLocation] = 0;
+          return newMoleScoreArray;
+        });
+      }
+    }, 1000);
+  };
+
+  const updateScore = (moleColor: string, moleLocation: number) => {
     if (moleColor === 'brown') {
       setScore((prevScore) => prevScore + 10);
+      showSelectedMoleScore(10, moleLocation);
     } else if (moleColor === 'gold') {
       setScore((prevScore) => prevScore + 30);
+      showSelectedMoleScore(30, moleLocation);
     } else if (moleColor === 'black') {
+      showSelectedMoleScore(-30, moleLocation);
       if (score < 30) {
         setScore(0);
       } else {
@@ -88,13 +118,18 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
     }
   };
 
-  const throttledClickHandler = (moleColor: string, moleId: number) => {
+  const throttledClickHandler = (
+    moleColor: string,
+    moleId: number,
+    moleLocation: number
+  ) => {
     if (throttle && throttlingMoleId === moleId) {
       return;
     }
+
     setThrottle(true);
     setThrottlingMoleId(moleId);
-    updateScore(moleColor);
+    updateScore(moleColor, moleLocation);
 
     setTimeout(() => {
       setThrottle(false);
@@ -137,31 +172,47 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
         </GameHeader>
         <GameBody>
           {showMoles.map((showMole, index) => (
-            <div key={'mole' + index}>
+            <MoleContainer key={'mole' + index}>
+              {moleScore[index] !== 0 && (
+                <MoleScore
+                  score={moleScore[index]}
+                  isDouble={isDoubleProcessing.current}
+                >
+                  {moleScore[index] > 0
+                    ? `+${moleScore[index]}`
+                    : moleScore[index]}
+                </MoleScore>
+              )}
               {showMole > 0 &&
                 (showMole < 0.96 ? (
                   <Mole
                     isShow={showMole}
                     src={moleImg}
                     alt="moleImg"
-                    onClick={() => throttledClickHandler('brown', showMole)}
+                    onClick={(e) =>
+                      throttledClickHandler('brown', showMole, index)
+                    }
                   />
                 ) : showMole < 0.98 ? (
                   <Mole
                     isShow={showMole}
                     src={goldMoleImg}
                     alt="moleImg"
-                    onClick={() => throttledClickHandler('gold', showMole)}
+                    onClick={(e) =>
+                      throttledClickHandler('gold', showMole, index)
+                    }
                   />
                 ) : (
                   <Mole
                     isShow={showMole}
                     src={blackMoleImg}
                     alt="moleImg"
-                    onClick={() => throttledClickHandler('black', showMole)}
+                    onClick={(e) =>
+                      throttledClickHandler('black', showMole, index)
+                    }
                   />
                 ))}
-            </div>
+            </MoleContainer>
           ))}
         </GameBody>
       </GameContainer>
@@ -171,15 +222,29 @@ function CatchMole(props: { setGameName: (name: string) => void }) {
 
 export default CatchMole;
 
-const Container = styled.div`
-  width: 80rem;
-  height: 50rem;
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
+const PreventDragImg = css`
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+`;
+
+const PreventSelect = css`
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-use-select: none;
   user-select: none;
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+`;
+
+const Container = styled.div`
+  width: 80rem;
+  height: 50rem;
+  position: relative;
+  ${PreventSelect}
 `;
 const GameContainer = styled.div`
   width: 80rem;
@@ -249,9 +314,11 @@ const ReadyBody = styled.div`
     text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
   }
 `;
+
 const PlayButtonImg = styled.img`
   width: 15rem;
   cursor: pointer;
+  ${PreventDragImg}
 `;
 
 const GameHeader = styled.div`
@@ -312,6 +379,10 @@ const GameBody = styled.div`
   }
 `;
 
+const MoleContainer = styled.div`
+  position: relative;
+`;
+
 const Mole = styled.img<{ isShow: number }>`
   height: 8rem;
   margin-right: 1rem;
@@ -323,4 +394,36 @@ const Mole = styled.img<{ isShow: number }>`
   :active {
     height: 6rem;
   }
+  ${PreventSelect}
+  ${PreventDragImg}
+  z-index: 995;
+`;
+
+const showMoleScoreAnimation = keyframes`
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+`;
+
+const MoleScore = styled.div<{ score: number; isDouble: boolean }>`
+  position: absolute;
+  font-size: 3rem;
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  color: ${({ score }) =>
+    score === 30 ? 'yellow' : score === 10 ? 'orange' : '#b4b4b4'};
+  top: 0;
+  left: 35%;
+  transform: translateX(-65%);
+  z-index: 996;
+  animation: ${showMoleScoreAnimation}
+    ${({ isDouble }) => (isDouble ? '2s' : '1s')} forwards;
 `;
