@@ -11,6 +11,7 @@ import exitImg from '../../style/icons/x-solid.svg';
 const CreatePost = ({ boardCategory }: CategoryType) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
   const [userEmail, setUserEmail] = useState<string>('');
   const navigate = useNavigate();
 
@@ -44,14 +45,19 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
     }
 
     try {
-      const postData = {
-        author: userEmail,
-        title: title,
-        content: content,
-        category: boardCategory === 'freeboard' ? 'free' : 'cert',
-      };
+      const formData = new FormData();
+      formData.append('author', userEmail);
+      formData.append('title', title);
+      formData.append('content', content);
+      formData.append(
+        'category',
+        boardCategory === 'freeboard' ? 'free' : boardCategory
+      );
+      if (file) {
+        formData.append('img', file);
+      }
 
-      await post('/api/posts', postData);
+      await post('/api/posts', formData);
 
       alert('게시물이 작성되었습니다.');
       if (boardCategory === 'freeboard') {
@@ -62,6 +68,15 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
     } catch (error) {
       console.error(error);
       alert('게시물 작성 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      setFile(selectedFile);
     }
   };
 
@@ -86,9 +101,21 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
           <MainLabel>내용</MainLabel>
           <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
+        {boardCategory === 'cert' && (
+          <ImageInput
+            type="file"
+            onChange={handleImageChange}
+            name="img"
+            accept="image/*"
+          />
+        )}
         <PostFooter>
-          <GoBack to="/community">뒤로 가기</GoBack>
-          <PostButton type="submit">작성 완료</PostButton>
+          <GoBack to="/community" boardCategory={boardCategory}>
+            뒤로 가기
+          </GoBack>
+          <PostButton type="submit" boardCategory={boardCategory}>
+            작성 완료
+          </PostButton>
         </PostFooter>
       </PostForm>
     </PostSection>
@@ -181,6 +208,10 @@ const MainInput = styled.textarea`
   border: 1px solid black;
 `;
 
+const ImageInput = styled.input`
+  align-self: end;
+`;
+
 const PostFooter = styled.div`
   display: flex;
   width: 120rem;
@@ -188,8 +219,9 @@ const PostFooter = styled.div`
   align-items: end;
 `;
 
-const PostButton = styled.button`
-  margin: 4rem 0 1rem;
+const PostButton = styled.button<CategoryType>`
+  margin: ${(props) =>
+    props.boardCategory === 'cert' ? '2rem 0 1rem' : '4rem 0 1rem'};
   word-wrap: normal;
   height: 2.5rem;
   background: #d9d9d9;
@@ -203,8 +235,9 @@ const PostButton = styled.button`
   }
 `;
 
-const GoBack = styled(Link)`
-  margin: 4rem 0 1rem;
+const GoBack = styled(Link)<CategoryType>`
+  margin: ${(props) =>
+    props.boardCategory === 'cert' ? '2rem 0 1rem' : '4rem 0 1rem'};
   padding: 1rem;
   font-size: 1.6rem;
 
