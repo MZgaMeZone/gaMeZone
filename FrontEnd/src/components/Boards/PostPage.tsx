@@ -12,6 +12,8 @@ import { dateFormatter } from '../../utils/dateUtil';
 
 import exitImg from '../../style/icons/x-solid.svg';
 
+const apiURL = process.env.REACT_APP_API_URL;
+
 const PostPage = ({ boardCategory }: CategoryType) => {
   const userToken: string | null = localStorage.getItem('userToken');
   const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
@@ -35,7 +37,7 @@ const PostPage = ({ boardCategory }: CategoryType) => {
       setPost(responseData.data);
     };
     fetchData();
-  });
+  }, []);
 
   useEffect(() => {
     if (post !== null && post !== undefined) {
@@ -103,6 +105,9 @@ const PostPage = ({ boardCategory }: CategoryType) => {
                   </ButtonContainer>
                 )}
                 <MainText>
+                  {post.image && (
+                    <CertImage src={`${apiURL}/${post.image}`} alt="인증사진" />
+                  )}
                   {post.content
                     ? post.content.split('\n').map((item, index) => {
                         return <Text key={index}>{item}</Text>;
@@ -262,12 +267,18 @@ const Author = styled.p`
 `;
 
 const MainText = styled.div`
+  display: flex;
   margin: 2rem 0 1rem;
   font-size: 2rem;
 `;
 
 const Text = styled.p`
   margin-bottom: 0.4rem;
+`;
+
+const CertImage = styled.img`
+  width: 40%;
+  margin-right: 10rem;
 `;
 
 const ButtonContainer = styled.div`

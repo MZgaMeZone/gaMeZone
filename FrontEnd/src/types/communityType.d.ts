@@ -6,6 +6,7 @@ export interface PostType {
   _id: string;
   title: string;
   content: string;
+  image?: string;
   author: {
     _id?: string;
     nickname: string;
