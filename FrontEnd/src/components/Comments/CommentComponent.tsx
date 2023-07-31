@@ -18,6 +18,8 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
   const [postModal, setPostModal] = useState(false);
   const [comments, setComments] = useState<CommentListType>([]);
 
+  const isLogin = localStorage.getItem('userToken') ? true : false;
+
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await get<CommentListType>(
@@ -62,7 +64,7 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
           paginate={paginate}
           currentPage={currentPage}
         />
-        {
+        {isLogin && (
           <div>
             {postModal ? (
               <CreateComment postId={postId} closeModal={togglePostModal} />
@@ -70,7 +72,7 @@ const CommentComponent = ({ postId, category }: CommentProps) => {
               <CommentButton onClick={togglePostModal}>댓글 쓰기</CommentButton>
             )}
           </div>
-        }
+        )}
       </Footer>
     </CommentSection>
   );

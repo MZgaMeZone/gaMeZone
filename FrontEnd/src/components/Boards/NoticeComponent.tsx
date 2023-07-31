@@ -57,7 +57,7 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
           )}
         </TopContainer>
         <PostContainer>
-          {currentPosts.map((post: PostType, index: number) => (
+          {currentPosts.map((post: PostType) => (
             <PostItem
               key={post._id}
               onClick={() => {
@@ -69,7 +69,9 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
               }}
             >
               <PostItemHeader>
-                <PostItemNumber>{posts.length - index}</PostItemNumber>
+                <PostItemNumber>
+                  {posts.length - posts.indexOf(post)}
+                </PostItemNumber>
                 <PostItemTitle>{post.title}</PostItemTitle>
                 <PostItemInfo>
                   <PostDate>
