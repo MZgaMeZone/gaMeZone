@@ -6,7 +6,7 @@ interface userDataType {
   nickname: string;
 }
 
-async function CatchMoleRecorder(
+async function HangmanRecorder(
   navigate: NavigateFunction,
   score: number,
   userData: userDataType
@@ -41,4 +41,4 @@ async function CatchMoleRecorder(
     });
 }
 
-export default CatchMoleRecorder;
+export default HangmanRecorder;

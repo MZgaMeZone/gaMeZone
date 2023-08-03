@@ -70,14 +70,14 @@ const Hangman = (props: { setGameName: (name: string) => void }) => {
     }
   }, [success]);
 
-  useEffect(() => {
+  const restartHandler = () => {
     if (gameOver) {
       setGuessWord(randomWord(wordList));
       setGuessedLetters([]);
       setScore(0);
       HangManRecorder(navigate, score, userData);
     }
-  });
+  };
 
   const continueGame = () => {
     setGuessWord(randomWord(wordList));
@@ -116,7 +116,11 @@ const Hangman = (props: { setGameName: (name: string) => void }) => {
           addGuessedLetter={addGuessLetter}
         />
       ) : (
-        ''
+        <ButtonContainer>
+          <TryAgainButton style={{ width: '25%' }} onClick={restartHandler}>
+            Try Again
+          </TryAgainButton>
+        </ButtonContainer>
       )}
     </Container>
   );
@@ -155,6 +159,11 @@ const MainContainer = styled.div`
 
 const EndGame = styled.div`
   color: ${(props: { success: boolean }) => (props.success ? 'black' : 'red')};
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: end;
 `;
 
 const TryAgainButton = styled.button`
