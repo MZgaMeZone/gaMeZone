@@ -22,7 +22,6 @@ function NicknameChange() {
       },
     };
     await axios.get(url + '/api/users', config).then((res) => {
-      console.log(res.data);
       setUserEmail(res.data.email);
       setCurrentNickname(res.data.nickname);
     });
