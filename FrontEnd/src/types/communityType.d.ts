@@ -1,5 +1,5 @@
 export interface CategoryType {
-  boardCategory: string;
+  boardcategory: string;
 }
 
 export interface PostType {
@@ -25,5 +25,5 @@ export interface PostData {
 
 export interface PostDataProps {
   postId: string | undefined;
-  boardCategory: string;
+  boardcategory: string;
 }

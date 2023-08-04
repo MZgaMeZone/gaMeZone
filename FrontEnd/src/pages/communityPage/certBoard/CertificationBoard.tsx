@@ -26,7 +26,7 @@ const CertifyBoard = () => {
             <CommunityLink to="/community">자유게시판</CommunityLink>
             <CurrentLink to="/community/certified">인증게시판</CurrentLink>
           </Header>
-          <NoticeComponent boardCategory="cert" />
+          <NoticeComponent boardcategory="cert" />
         </CommunityBody>
       </CommunityContainer>
     </CommunitySection>

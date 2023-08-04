@@ -8,7 +8,7 @@ import { CategoryType } from '../../types/communityType';
 
 import exitImg from '../../style/icons/x-solid.svg';
 
-const CreatePost = ({ boardCategory }: CategoryType) => {
+const CreatePost = ({ boardcategory }: CategoryType) => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
@@ -51,7 +51,7 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
       formData.append('content', content);
       formData.append(
         'category',
-        boardCategory === 'freeboard' ? 'free' : boardCategory
+        boardcategory === 'freeboard' ? 'free' : boardcategory
       );
       if (file) {
         formData.append('img', file);
@@ -60,7 +60,7 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
       await post('/api/posts', formData);
 
       alert('게시물이 작성되었습니다.');
-      if (boardCategory === 'freeboard') {
+      if (boardcategory === 'freeboard') {
         navigate('/community');
       } else {
         navigate('/community/certified');
@@ -101,7 +101,7 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
           <MainLabel>내용</MainLabel>
           <MainInput value={content} onChange={handleContentChange} />
         </MainForm>
-        {boardCategory === 'cert' && (
+        {boardcategory === 'cert' && (
           <ImageInput
             type="file"
             onChange={handleImageChange}
@@ -110,10 +110,10 @@ const CreatePost = ({ boardCategory }: CategoryType) => {
           />
         )}
         <PostFooter>
-          <GoBack to="/community" boardCategory={boardCategory}>
+          <GoBack to="/community" boardcategory={boardcategory}>
             뒤로 가기
           </GoBack>
-          <PostButton type="submit" boardCategory={boardCategory}>
+          <PostButton type="submit" boardcategory={boardcategory}>
             작성 완료
           </PostButton>
         </PostFooter>
@@ -221,7 +221,7 @@ const PostFooter = styled.div`
 
 const PostButton = styled.button<CategoryType>`
   margin: ${(props) =>
-    props.boardCategory === 'cert' ? '2rem 0 1rem' : '4rem 0 1rem'};
+    props.boardcategory === 'cert' ? '2rem 0 1rem' : '4rem 0 1rem'};
   word-wrap: normal;
   height: 2.5rem;
   background: #d9d9d9;
@@ -237,7 +237,7 @@ const PostButton = styled.button<CategoryType>`
 
 const GoBack = styled(Link)<CategoryType>`
   margin: ${(props) =>
-    props.boardCategory === 'cert' ? '2rem 0 1rem' : '4rem 0 1rem'};
+    props.boardcategory === 'cert' ? '2rem 0 1rem' : '4rem 0 1rem'};
   padding: 1rem;
   font-size: 1.6rem;
 
