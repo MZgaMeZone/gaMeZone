@@ -3,7 +3,7 @@ import PostPage from '../../../components/Boards/PostPage';
 const FreePost = () => {
   return (
     <div>
-      <PostPage boardCategory="freeboard" />
+      <PostPage boardcategory="freeboard" />
     </div>
   );
 };

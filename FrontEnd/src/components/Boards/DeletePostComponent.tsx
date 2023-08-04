@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { del } from '../../api/api';
 import { PostDataProps } from '../../types/communityType';
 
-const DeletePost = ({ postId, boardCategory }: PostDataProps) => {
+const DeletePost = ({ postId, boardcategory }: PostDataProps) => {
   const navigate = useNavigate();
 
   const clickHandler = async () => {
     try {
       await del(`/api/posts/${postId}`);
       alert('게시물이 삭제되었습니다.');
-      if (boardCategory === 'freeboard') {
+      if (boardcategory === 'freeboard') {
         navigate('/community');
       } else {
         navigate('/community/certified');

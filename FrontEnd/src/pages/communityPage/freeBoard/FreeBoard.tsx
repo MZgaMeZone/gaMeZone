@@ -17,7 +17,7 @@ const CommunityPage = () => {
             <CurrentLink to="/community">자유게시판</CurrentLink>
             <CommunityLink to="/community/certified">인증게시판</CommunityLink>
           </Header>
-          <NoticeComponent boardCategory="freeboard" />
+          <NoticeComponent boardcategory="freeboard" />
         </CommunityBody>
       </CommunityContainer>
     </CommunitySection>

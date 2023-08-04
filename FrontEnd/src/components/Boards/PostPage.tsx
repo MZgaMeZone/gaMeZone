@@ -14,7 +14,7 @@ import exitImg from '../../style/icons/x-solid.svg';
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-const PostPage = ({ boardCategory }: CategoryType) => {
+const PostPage = ({ boardcategory }: CategoryType) => {
   const userToken: string | null = localStorage.getItem('userToken');
   const [post, setPost] = useState<PostType | null>(null); // post 상태를 null로 초기화
   const [userEmail, setUserEmail] = useState<string>('');
@@ -70,7 +70,7 @@ const PostPage = ({ boardCategory }: CategoryType) => {
         <CommunityBody>
           <Header>
             <CommunityTitle>MZ 오락실</CommunityTitle>
-            {boardCategory === 'freeboard' ? (
+            {boardcategory === 'freeboard' ? (
               <>
                 <CurrentLink to="/community">자유게시판</CurrentLink>
                 <CommunityLink to="/community/certified">
@@ -101,7 +101,7 @@ const PostPage = ({ boardCategory }: CategoryType) => {
                     <ModifiedButton onClick={clickHandler}>
                       수정하기
                     </ModifiedButton>
-                    <DeletePost postId={postId} boardCategory={boardCategory} />
+                    <DeletePost postId={postId} boardcategory={boardcategory} />
                   </ButtonContainer>
                 )}
                 <MainText>
