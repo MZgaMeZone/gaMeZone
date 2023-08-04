@@ -13,7 +13,7 @@ import {
 
 const userToken: string | null = localStorage.getItem('userToken');
 
-const NoticeComponent = ({ boardCategory }: CategoryType) => {
+const NoticeComponent = ({ boardcategory }: CategoryType) => {
   const nav = useNavigate();
   const [posts, setPosts] = useState<PostListType>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +21,7 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (boardCategory === 'freeboard') {
+      if (boardcategory === 'freeboard') {
         const responseData = await get<PostListType>('/api/posts');
         // data가 오름차순으로 정렬되어 있어서 내림차순으로 변경
         setPosts(responseData.data.reverse());
@@ -45,7 +45,7 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
           {userToken && (
             <WriteButton
               onClick={() => {
-                if (boardCategory === 'freeboard') {
+                if (boardcategory === 'freeboard') {
                   nav('/community/write');
                 } else {
                   nav('/community/certified/write');
@@ -57,11 +57,11 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
           )}
         </TopContainer>
         <PostContainer>
-          {currentPosts.map((post: PostType, index: number) => (
+          {currentPosts.map((post: PostType) => (
             <PostItem
               key={post._id}
               onClick={() => {
-                if (boardCategory === 'freeboard') {
+                if (boardcategory === 'freeboard') {
                   nav(`/community/${post._id}`);
                 } else {
                   nav(`/community/certified/${post._id}`);
@@ -69,7 +69,9 @@ const NoticeComponent = ({ boardCategory }: CategoryType) => {
               }}
             >
               <PostItemHeader>
-                <PostItemNumber>{posts.length - index}</PostItemNumber>
+                <PostItemNumber>
+                  {posts.length - posts.indexOf(post)}
+                </PostItemNumber>
                 <PostItemTitle>{post.title}</PostItemTitle>
                 <PostItemInfo>
                   <PostDate>

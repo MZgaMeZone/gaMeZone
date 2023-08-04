@@ -104,6 +104,7 @@ const MiddleBarIcon = styled.img<{ direction: string }>`
 `;
 
 const ManualContainerBody = styled.div`
+  display: block;
   width: 93%;
   height: 83%;
   margin: 0 auto 1.5rem auto;
@@ -111,7 +112,11 @@ const ManualContainerBody = styled.div`
   color: rgb(0, 0, 0);
   background-color: rgb(254, 254, 254);
   box-shadow: inset 0.2rem 0.2rem 0.3rem 0.3rem #161616cc;
-  overflow-y: auto;
+  div {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
 `;
 
 const ManuaTitle = styled.p`
@@ -125,4 +130,5 @@ const ManuaTitle = styled.p`
 const ManualDescription = styled.pre`
   line-height: 3.5rem;
   font-size: 1.9rem;
+  white-space: normal;
 `;

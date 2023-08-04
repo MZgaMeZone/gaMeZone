@@ -1,11 +1,12 @@
 export interface CategoryType {
-  boardCategory: string;
+  boardcategory: string;
 }
 
 export interface PostType {
   _id: string;
   title: string;
   content: string;
+  image?: string;
   author: {
     _id?: string;
     nickname: string;
@@ -24,5 +25,5 @@ export interface PostData {
 
 export interface PostDataProps {
   postId: string | undefined;
-  boardCategory: string;
+  boardcategory: string;
 }

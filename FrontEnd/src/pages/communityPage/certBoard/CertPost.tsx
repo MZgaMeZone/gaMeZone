@@ -3,7 +3,7 @@ import PostPage from '../../../components/Boards/PostPage';
 const CertPost = () => {
   return (
     <div>
-      <PostPage boardCategory="cert" />
+      <PostPage boardcategory="cert" />
     </div>
   );
 };
